@@ -1,0 +1,46 @@
+{
+  "extends": ["react-app", "airbnb", "prettier", "plugin:prettier/recommended"],
+  "plugins": ["prettier", "react-hooks"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/destructuring-assignment": 0,
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-wrap-multilines": 0,
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "parent", "sibling", "index"]
+      }
+    ],
+    "import/no-named-as-default": 0,
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/prefer-default-export": 0,
+    "consistent-return": 0,
+    "no-underscore-dangle": 0,
+    "no-shadow": 0,
+    "no-prototype-builtins": 0,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+  },
+  "globals": {
+    "Headers": true,
+    "FormData": true,
+    "document": true,
+    "fetch": true,
+    "jest": true,
+    "it": true,
+    "expect": true,
+    "window": true,
+    "navigator": true,
+    "describe": true,
+    "beforeEach": true,
+    "test": true,
+    "afterEach": true
+  },
+  "parser": "babel-eslint"
+}

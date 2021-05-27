@@ -1,0 +1,31 @@
+version: "3"
+services:
+  initial-data-load-service:
+    build:
+      context: ./initial-data-load
+    volumes:
+      - ./initial-data-load/src:/home/node/src
+      - ./initial-data-load/index.js:/home/node/index.js
+    command: yarn start
+    ports:
+      - 8082:8082
+    environment:
+      MONGO_URI: mongodb://oscar-db-service/oscar
+      # default Azurite connection string from documentation for local development
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;
+      COUNTRY: ${COUNTRY}
+      UPLOAD_DATA_TYPES: ${UPLOAD_DATA_TYPES}
+      NEW_STORAGE_CONTAINERS: ${NEW_STORAGE_CONTAINERS}
+      NEW_STORAGE_QUEUES: ${NEW_STORAGE_QUEUES}
+    depends_on:
+      - azurite
+    links:
+      - azurite
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    hostname: azurite
+    ports:
+      - 10000:10000
+      - 10001:10001
+    restart: always

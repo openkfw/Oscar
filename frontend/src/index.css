@@ -1,0 +1,334 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  background-color:black;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Segoe UI, sans-serif;
+  font-weight: 600;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  flex: 1 1 auto;
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+  min-height: 0px;
+}
+
+.ol-popup {
+  background-color: rgba(75, 75, 88, 0.95);
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  min-width: 250px;
+  z-index: 200;
+  display: none;
+  color: rgb(200, 200, 200);
+}
+.ol-popup:after, .ol-popup:before, .ol-popup-top-right:before, .ol-popup-center-right:before, .ol-popup-top-right:after, .ol-popup-center-right:after   {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: rgba(75, 75, 88, 0.95);
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+.ol-popup-top-right:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  top: 0;
+  left: 100%;
+  margin-left: -48px;
+  margin-top: -22px;
+  transform: rotate(180deg);
+}
+.ol-popup-top-right:after {
+  border-top-color: rgba(75, 75, 88, 0.95);
+  border-width: 10px;
+  top: 0;
+  left: 100%;
+  margin-left: -48px;
+  margin-top: -20px;
+  transform: rotate(180deg);
+}
+.ol-popup-center-right:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: auto;
+  right: 0;
+  top: 0;
+  margin-right: -22px;
+  transform: rotate(270deg);
+}
+.ol-popup-center-right:after {
+  border-top-color: rgba(75, 75, 88, 0.95);
+  border-width: 10px;
+  left: auto;
+  right: 0;
+  top: 0;
+  margin-right: -20px;
+  transform: rotate(270deg);
+}
+.ol-popup-center-right {
+  border-top-right-radius: 0;
+}
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+.ol-popup-closer:after {
+  content: "✖";
+}
+
+.popup-header {
+  text-transform: capitalize;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffaa01;
+  cursor: pointer;
+}
+
+.popup-content {
+  font-size: 14px;
+}
+
+.popup-content ul {
+  padding-left: 15px;
+  margin: 2px;
+}
+
+.popup-content label {
+  font-weight: bold;
+  margin-right: 5px;
+  color: rgb(180, 180, 180);
+}
+
+.popup-actions {
+  border-top: 1px solid #c6c6c6;
+  line-height: 20px;
+  margin-top: 10px;
+  padding-top: 5px;
+  color: rgb(180, 180, 180);
+  text-align: left;
+}
+
+.popup-actions span {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+button {
+  z-index: 1;
+  margin: 6px;
+}
+
+.search-bar {
+  width: 330px;
+  padding: 4px 4px 4px 4px;
+  position: absolute;
+  top: 0px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  right: 64px;
+  height: 46px;
+}
+
+.featureSidebarContent {
+  height: 100%;
+}
+
+.featureDetailTitle {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.featureDetail {
+  /* background-color: rgba(255, 255, 255, 0.04); */
+  width: 100%;
+  padding-right: 16px;
+  padding-left: 16px;
+  padding-bottom: 16px;
+}
+.animatedClose {
+  animation-name: plusToClose;
+  animation-duration: 500ms;
+  transform: rotate(-45deg)
+}
+
+.action-buttons {
+  bottom: 16px;
+}
+
+.ol-zoom, .ol-zoom:hover {
+  position: fixed;
+  right: 16px;
+  bottom: 35px;
+  left: unset;
+  top: unset;
+  background: none;
+}
+
+.ol-control button, .ol-control button:hover {
+  margin-bottom: 3px;
+  background-color: rgba(34, 40, 54, 1);
+  color: white;
+  cursor: pointer;
+}
+
+.ol-zoom .ol-zoom-in, .ol-zoom .ol-zoom-out {
+  border-radius: 0;
+}
+
+.ol-control button:focus {
+  background-color: rgba(34, 40, 54, 1);
+}
+
+.ol-control button:focus {
+  outline: 0;
+}
+
+.locationBtn {
+  position: fixed;
+  right: 19px;
+  bottom: 105px;
+  width: 25.08px;
+  height: 25.08px;
+  padding: 1px;
+  color: white;
+  margin: 0;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.locationBtn:focus {
+  outline: 0;
+}
+
+.fas {
+  padding-right: 8px;
+  font-size: 1.1rem !important;
+}
+
+.mobileHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 7px;
+  background: rgb(82, 85, 97);
+}
+
+.mobileHeader::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -15px;
+  width: 80px;
+  height: 45px;
+  transform: skew(-40deg);
+  background: rgb(82, 85, 97);
+}
+
+.mobileHeader::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: -15px;
+  width: 80px;
+  height: 45px;
+  transform: skew(40deg);
+  background: rgb(82, 85, 97);
+}
+
+.mobileLogo {
+  display: block;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 5px;
+  left: 9px;
+  background: rgb(82, 85, 97) url('./data/logo_orange.png') no-repeat center center;
+}
+
+.mobileMenu {
+  position: absolute !important;
+  right: 3px;
+  color: rgb(175, 176, 178) !important;
+}
+
+.validationMessage {
+  color: red;
+  font-size: 12px;
+}
+
+@keyframes plusToClose {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(-45deg)
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    left: -330px;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    right: -330px;
+  }
+  to {
+    right: 65px;
+  }
+}
+
+@media (max-width: 415px) {
+  .ol-zoom {
+    display: none;
+  }
+}

@@ -1,0 +1,357 @@
+openapi: 3.0.0
+info:
+  title: Oscar
+  description: Oscar application REST API'
+  version: 0.0.1
+
+paths:
+  /api/attributes:
+    get:
+      summary: Gets attributes with values
+      parameters:
+        - name: dateStart
+          in: query
+          required: false
+          description: Parameter for data filtering. Updated date of returned data is greater than or equal to dateStart.
+          schema:
+            type: string
+          example: 2020-06-07T00:00:00.000Z
+        - name: dateEnd
+          in: query
+          required: false
+          description: Parameter for data filtering. Updated date of the returned data is less than or equal to dateEnd.
+          schema:
+            type: string
+          example: 2020-06-07T00:00:00.000Z
+        - name: featureId
+          in: query
+          required: false
+          description: Parameter for data filtering. Allow filtering data just for a specific feature(for example provinces).
+          schema:
+            type: array
+            items:
+              type: string
+            example: Bali
+        - name: attributeId
+          in: query
+          required: false
+          description: Parameter for data filtering. The identifier of the attribute we would like to get.
+          schema:
+            type: array
+            items:
+              type: string
+            example: "A1_recovery rate (%)"
+        - name: attributeIdCategory
+          in: query
+          required: false
+          description: Parameter for data filtering. Category of attributes.
+          schema:
+            type: array
+            items:
+              type: string
+            example: "dailyCovid19Cases"
+        - name: offset
+          in: query
+          required: false
+          description: Parameter for data filtering. The number of the starting record.
+          schema:
+            type: string
+          example: 2
+        - name: limit
+          in: query
+          required: false
+          description: Parameter for data filtering. Maximum number of rows returned.
+          schema:
+            type: string
+          example: 20
+        - name: latestValues
+          in: query
+          required: false
+          description: Parameter for data filtering. Return only items with latest values.
+          schema:
+            type: boolean
+          example: true
+      responses:
+        "200":
+          description: Successful response
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total count of data in the database matching the search criteria.
+
+  /attributes/{attributeId}/availableDates:
+    get:
+      summary: Gets available dates for attributeId
+      parameters:
+        - name: attributeId
+          in: path
+          required: true
+          description: Parameter for data filtering. The identifier of the attribute for which we want to get available dates.
+          schema:
+            type: string
+            example: "A1_recovery rate (%)"
+      responses:
+        "200":
+          description: Successful response
+
+  /api/staticLayers:
+    get:
+      summary: Gets static layers data
+      description: Gets static layers data for display in openlayers map
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StaticLayer"
+
+  /api/uploads/geojsons/{fileName}:
+    get:
+      summary: Get geojson file from storage
+      parameters:
+        - name: fileName
+          in: path
+          required: true
+          description: Name of geojson file
+          schema:
+            type: string
+            example: provinces.geojson
+      responses:
+        200:
+          description: Successful response
+
+  /api/config:
+    get:
+      summary: Getting country configuration
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Country configuration
+                properties:
+                  map:
+                    type: object
+                    description: Map configuration
+                    properties:
+                      x:
+                        type: number
+                        description: Longitude
+                      y:
+                        type: number
+                        description: Latitude
+                      zoom:
+                        type: number
+                        description: Zoom level
+                  tabs:
+                    type: object
+                    description: Tabs configuration
+                    properties:
+                      PublicTab:
+                        type: object
+                        description: Public tab
+                        $ref: "#/components/schemas/TabCofiguration"
+                      ExecutiveTab2:
+                        type: object
+                        description: Executive tab 2
+                        $ref: "#/components/schemas/TabCofiguration"
+                      OverviewTab:
+                        type: object
+                        description: Overview tab
+                        $ref: "#/components/schemas/TabCofiguration"
+                      AnalystTab:
+                        type: object
+                        description: Analyst tab
+                        $ref: "#/components/schemas/TabCofiguration"
+                      ExecutiveTab:
+                        type: object
+                        description: Executive tab
+                        $ref: "#/components/schemas/TabCofiguration"
+
+  /api/authorization:
+    get:
+      summary: User authorization
+      responses:
+        202:
+          description: Successful response
+
+components:
+  schemas:
+    StaticLayer:
+      type: object
+      description: Static layer with data
+      properties:
+        referenceId:
+          type: string
+          description: Unique id of the layer
+        geoReferenceId:
+          type: string
+          description: Unique id of geographical data for the map layer.
+        layerType:
+          type: string
+          description: Layer type
+          enum: [regions, points, geometry, group]
+        category:
+          type: string
+          enum: ["Baseline data", "Health facilities", "Covid-19"]
+        title:
+          type: string
+          description: Static layer title
+        style:
+          $ref: "#/components/schemas/StaticLayerStyle"
+        legend:
+          $ref: "#/components/schemas/StaticLayerLegend"
+        geoJSONUrl:
+          type: string
+          description: Url to geojson data source
+        layers:
+          type: array
+          items:
+            $ref: "#/components/schemas/StaticLayerObject"
+          description: Array with layers for 'group' layerType
+      required:
+        - layerType
+        - title
+
+    StaticLayerObject:
+      type: object
+      description: Static layer with data
+      properties:
+        geoReferenceId:
+          type: string
+          description: Unique id of geographical data for the map layer.
+        layerType:
+          type: string
+          description: Layer type
+          enum: [regions, points, geometry]
+        title:
+          type: string
+          description: Static layer title
+        style:
+          $ref: "#/components/schemas/StaticLayerStyle"
+        legend:
+          $ref: "#/components/schemas/StaticLayerLegend"
+        geoJSONUrl:
+          type: string
+          description: Url to geojson data source
+        description:
+          type: string
+          description: Description of layer
+        sourceWebsite:
+          type: string
+          description: link to source website
+        sourceOrganisation:
+          type: string
+          description: source organisation
+        updateDate:
+          type: string
+          description: "date of update"
+        updateFrequency:
+          type: string
+          description: how often is update performed
+        unit:
+          type: string
+          description: unit of measurement
+        reliabilityScore:
+          type: string
+          description: "score of reliability"
+        dataRetrievalDescription:
+          type: string
+          description: description of data retrieval
+        dataCalculationDescription:
+          type: string
+          description: description of data calculation
+      required:
+        - layerType
+        - title
+
+    StaticLayerStyle:
+      type: object
+      description: Static layer style
+      properties:
+        fillColor:
+          type: string
+          description: Filled color
+        min:
+          type: number
+          description: Minimum
+        max:
+          type: number
+          description: Maximum
+        strokeColor:
+          type: string
+          description: Stroke color
+        customStyleFunctionName:
+          type: string
+          description: Custom style function name
+
+    StaticLayerLegend:
+      type: object
+      description: map legend for the layer
+      properties:
+        type:
+          type: string
+          description: Type of legend data
+          enum: ["color", "colormap"]
+        color:
+          type: string
+          description: Color or colormap represented by following description
+        description:
+          type: string
+          description: Description explaining the color/colormap in map layer
+        min:
+          type: number
+          description: Minimal value, used with colormap
+        max:
+          type: number
+          description: Maximal value, used with colormap
+
+    StaticLayerDescription:
+      type: object
+      description: Description of attribute and it's value for display
+      properties:
+        descriptionText:
+          type: string
+          description: Template to use for description of value.
+          example: "This attribute has value {{property in feature or from attributes}} in units."
+        featureText:
+          type: string
+          description: Template for geo locating this attribute.
+          example: "In province {{province}}"
+        noDataMessage:
+          type: string
+          description: Text for case that no data are available for specific geographical area
+          example: No data in province available
+
+    TabCofiguration:
+      type: object
+      description: Tab configuration
+      properties:
+        index:
+          type: integer
+          description: Tab index.
+        attributeIds:
+          type: array
+          description: Array of attributeIds used in tab.
+        admin1LocalName:
+          type: string
+          description: Country's local name for admin1 level unit
+        admin1:
+          type: array
+          description: List of country's admin1 level units
+        data:
+          type: object
+          description: Dashboard data, which are not stored in the database
+          properties:
+            path:
+              type: string
+              description: Path to the data source
+            attributes:
+              type: object
+              description: Key/attribute transformation between dashboard and data source

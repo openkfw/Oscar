@@ -1,0 +1,13 @@
+{
+  "name": "oscar",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "license": "",
+  "devDependencies": {
+    "husky": "^6.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}

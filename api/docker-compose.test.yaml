@@ -1,0 +1,25 @@
+version: '3.2'
+services:
+  test-db:
+    image: mongo
+    ports:
+      - 27917:27017
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8181:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: test-db
+
+  api-test-app:
+    container_name: api-test-app
+    build:
+      context: .
+      args:
+        NPM_RC: ${NPM_RC}
+        NPM_REGISTRY: ${NPM_REGISTRY}
+        NODE_ENV: test
+    environment:
+      MONGO_URI: mongodb://test-db:27017/oscar
+    command: sh -c "./scripts/wait-for-it.sh -t 60 test-db:27917 -- yarn test"

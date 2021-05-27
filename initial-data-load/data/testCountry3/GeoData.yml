@@ -1,0 +1,6 @@
+- name: "Sample Geo Json"
+  referenceId: "sampleGeoJSON"
+  geoJSONFilename: "sampleFile.geojson"
+- name: "Sample Without Geo Json"
+  referenceId: "Sample Without Geo Json"
+  geoJSONFilename: "doesNotExist.geojson"

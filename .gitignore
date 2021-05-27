@@ -1,0 +1,69 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules
+
+# testing
+**/coverage
+
+# production
+**/build
+
+# misc
+**/.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# eslint
+.eslintcache
+
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+functions/local.settings.json
+
+# Ignored vscode files
+.vscode/
+
+# Terraform
+
+## Compiled files
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+
+## logs
+*.log
+
+## Directories
+.terraform/
+**/.terraform/*
+
+## SSH Keys
+*.pem
+
+## Backup files
+*.bak
+
+## Ignored Terraform files
+*gitignore*.tf
+
+## Ignore Mac .DS_Store files
+.DS_Store
+
+## Ignore override files as they are usually used to override resources locally and so are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+## Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+*tfplan*
+plan
+
+## Ignore CLI configuration files
+.terraformrc
+terraform.rc

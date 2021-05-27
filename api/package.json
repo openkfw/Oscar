@@ -1,0 +1,65 @@
+{
+  "name": "oscar-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API for Oscar",
+  "main": "index.js",
+  "license": "",
+  "dependencies": {
+    "@types/mongoose": "^5.10.3",
+    "applicationinsights": "^1.8.10",
+    "azure-storage": "^2.10.1",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-winston": "^3.1.0",
+    "helmet": "^3.21.1",
+    "http-status": "^1.2.0",
+    "joi": "^13.6.0",
+    "js-yaml": "^4.0.0",
+    "jwt-decode": "^3.1.2",
+    "mongoose": "^5.11.11",
+    "morgan": "^1.9.0",
+    "openapi-validator-middleware": "^3.1.0",
+    "winston": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-watch": "^6.0.1",
+    "husky": "^4.2.5",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.0.5",
+    "supertest": "^3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint:ci"
+    }
+  },
+  "resolutions": {
+    "hosted-git-info": "^3.0.8",
+    "underscore": "^1.12.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "lint": "eslint . --fix --max-warnings=0",
+    "lint:ci": "eslint . --max-warnings=0",
+    "prepush": "eslint . --max-warnings=0",
+    "test": "NODE_ENV=test jest --forceExit --verbose --colors --testTimeout=10000 --detectOpenHandles",
+    "test:coverage": "yarn test -- --coverage",
+    "test:watch": "yarn test -- --watchAll"
+  },
+  "author": ""
+}

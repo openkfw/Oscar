@@ -1,0 +1,41 @@
+version: "3"
+services:
+  api-service:
+    build:
+      context: ./api
+    restart: on-failure
+    volumes:
+      - ./api/src:/home/node/src
+      - ./api/index.js:/home/node/index.js
+    command: yarn watch
+    ports:
+      - 8080:8080
+    environment:
+      MONGO_URI: mongodb://oscar-db-service:27017/oscar
+      # default Azurite connection string from documentation for local development
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;
+      AUTHORIZE_TOKEN_ATTRIBUTE: ${AUTHORIZE_TOKEN_ATTRIBUTE}
+    links:
+      - azurite
+
+  oscar-db-service:
+    image: mongo:3.6.18-xenial
+    hostname: oscar-db-service
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: oscar-db-service
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    hostname: azurite
+    ports:
+      - 10000:10000
+      - 10001:10001
+    restart: always

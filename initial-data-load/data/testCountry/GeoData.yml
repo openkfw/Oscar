@@ -1,0 +1,3 @@
+- name: "Sample Geo Json"
+  referenceId: "sampleGeoJSON"
+  geoJSONUrl: "someUrl/1600424721066.geojson"

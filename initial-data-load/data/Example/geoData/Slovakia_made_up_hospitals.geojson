@@ -1,0 +1,142 @@
+{
+  "type": "FeatureCollection",
+  "name": "hospitals_and_healthsites",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "1",
+        "amenity": "hospital",
+        "name": "First Hospital",
+        "emergency": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.10285580280837, 48.14243354273739]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "2",
+        "amenity": "hospital",
+        "name": "Health Post",
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [18.41146120788825, 48.26760843901686]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3",
+        "amenity": "hospital",
+        "name": "Another hospital",
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21.201372405228234, 48.78844876238245]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "4",
+        "amenity": "hospital",
+        "name": "Private hospital",
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.138862350021792, 48.88264197614846]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "5",
+        "amenity": "hospital",
+        "name": "University Hospital",
+        "emergency": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.334931812206822, 48.39168596848642]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "6",
+        "amenity": "clinic",
+        "name": "Clinic at the top",
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.1338128495738, 49.1642645211601, 2]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "7",
+        "amenity": "hospital",
+        "name": "Global hospital",
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.13424209999117, 48.638878384668054]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "8",
+        "amenity": "clinic",
+        "name": "Private Clinic and Research Centre",
+
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.58190267116655, 49.015970160369235]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "9",
+        "amenity": "hospital",
+        "name": "Hospital 9",
+
+        "emergency": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [16.94033090193209, 48.61650633950004]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "10",
+        "amenity": "dentistry",
+        "name": "Dentists",
+        "emergency": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.35831340611974, 49.261746259173655]
+      }
+    }
+  ]
+}

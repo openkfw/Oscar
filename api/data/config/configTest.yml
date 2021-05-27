@@ -1,0 +1,19 @@
+map:
+  x: 2208684
+  y: 6219942
+  zoom: 8
+tabs:
+  PublicTab:
+    index: 0
+    attributeIds:
+      CASES_BY_DAY_PROVINCES: "Daily Covid19 Cases Per Admin1"
+      SEVEN_DAYS_COINCIDENCE: "7 Days Incidence Rate Per Admin1"
+      NEW_CASES_TOTAL: "Total new cases"
+      DEATHS_TOTAL: "Total death cases"
+      INFECTED_TOTAL: "Total infected cases"
+      RECOVERED_TOTAL: "Total Recovered cases"
+      DEATH_YESTERDAY_INCREASE: "Death cases increase from yesterday"
+      RECOVERED_YESTERDAY_INCREASE: "Recovered cases increase from yesterday"
+      NEW_CASE_YESTERDAY_INCREASE: "New cases increase from yesterday"
+      TOTAL_CASES_PER_ADMIN0: "Total Covid19 Cases Per Admin0"
+      TOTAL_CASES_PER_ADMIN1: "Total Covid19 Cases Per Admin1"
