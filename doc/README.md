@@ -9,9 +9,9 @@ Documentation for the Oscar application.
 - [Development](./getting-started/development.md) - How to start with development (recommended tools, how to run tests, etc.).
       
 [Tutorials](./tutorials/README.md) - Detailed guides for various scenarios.       
-- [Run application](./run-application.md) - More detailed guide.
-- [Run application with example data](./run-application-with-example-data.md) - How to run application with example data, what kind of example data do we provide and which functionality is presented with them.
-- [Run application with own data](./run-application-with-own-data.md) - How and where to add another data set into the application.
+- [Run application](./tutorials/run-application.md) - More detailed guide.
+- [Run application with example data](./tutorials/run-application-with-example-data.md) - How to run application with example data, what kind of example data do we provide and which functionality is presented with them.
+- [Run application with own data](./tutorials/run-application-with-own-data.md) - How and where to add another data set into the application.
       
 [UI](./UI/README.md) - Description of user interface.      
      
