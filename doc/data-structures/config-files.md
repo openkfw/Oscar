@@ -1,3 +1,5 @@
+# Configuration files
+
 Detailed explanations of structure of configuration files.     
 
 ## Dashboard tabs config
