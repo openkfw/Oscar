@@ -79,13 +79,13 @@ The geometrical objects in geojson (Features), can be easily linked with data in
 
 In order to correctly link all data, we recommend following this steps:      
 1. Get geojsons for all data with single coordinates per feature (one object on map), geometrical objects on map (shapes of buildings, lines of earthquake shakes, isochrones) and generic geojsons with various administrative levels. For introduction to the topic see [article at geodatasource.com](https://www.geodatasource.com/resources/tutorials/what-is-administrative-division/).    
-1. List all used geojsons in config file 'GeoData.yml' directly in COUNTRY folder. Structure of items in this config is described in detail in [Data Structures](../data-structures/config-files.md#geodata.yml).
-1. Create list of map layers in config file 'MapLayers.yml'. Before we provide you with link to structure of items as above, keep in mind, that for 'attribute', you need either to take name of property in Feature from geojson or create your own 'attribute' which will be used for data in attributes structure also. With this in mind, let's create the layers with [following structure](../data-structures/config-files.md#maplayers.yml).
+2. List all used geojsons in config file 'GeoData.yml' directly in COUNTRY folder. Structure of items in this config is described in detail in [Data Structures](../data-structures/config-files.md#geodata.yml).
+3. Create list of map layers in config file 'MapLayers.yml'. Before we provide you with link to structure of items as above, keep in mind, that for 'attribute', you need either to take name of property in Feature from geojson or create your own 'attribute' which will be used for data in attributes structure also. With this in mind, let's create the layers with [following structure](../data-structures/config-files.md#maplayers.yml).
   
-1. In this step, we can finally make first run of initial data load service with our data. Check [Run application](../getting-started/run-application.md) tutorial for details on how to start application locally.    
+4. In this step, we can finally make first run of initial data load service with our data. Check [Run application](../getting-started/run-application.md) tutorial for details on how to start application locally.    
 
 If everything went correctly, after you start application, run the service with correct environment variables and refresh web page in browser. The layers should be in [menu on frontend](../UI/map.md). For all layers with values only in geojsons, the values should be already there and the rest should have grey areas (or colour set for missing values), that we later get from attributes collection from the database.        
-1. Now is time to move to attributes to fix the empty layers and fill dashboard with data.      
+5. Now is time to move to attributes to fix the empty layers and fill dashboard with data.      
     
 ### Attributes
 This functionality is run, if environment variable `UPLOAD_DATA_TYPES=layerAttributes` is set in `./runinitialload.sh` script and stores data for specific point (or interval) in space and time in 'attributes' collection. These values are stored in ["attribute" format](../data-structures/in-database.md#attributes):
