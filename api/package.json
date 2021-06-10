@@ -49,7 +49,9 @@
   },
   "resolutions": {
     "hosted-git-info": "^3.0.8",
-    "underscore": "^1.12.1"
+    "underscore": "^1.12.1",
+    "normalize-url": "^6.0.1",
+    "ws": "^7.4.6"
   },
   "scripts": {
     "start": "node index.js",
