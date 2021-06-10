@@ -1,0 +1,50 @@
+name: Oscar's Github CI
+
+on: [push]
+
+jobs:
+  frontend-security:
+    name: Check code security of frontend
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout this Github repository
+        uses: actions/checkout@v2
+      - name: Set up and use Node 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          cd frontend 
+          yarn --frozen-lockfile
+          yarn audit
+          yarn lint:ci
+  api-security:
+    name: Check code security of api 
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2 
+      - name: Set up and use Node 14 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          cd api
+          yarn --frozen-lockfile
+          yarn audit
+          yarn lint:ci 
+  initial-data-load-security:
+    name: Check code security of initial-data-load
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2 
+      - name: Set up and use Node 14 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          cd initial-data-load
+          yarn --frozen-lockfile
+          yarn audit
+          yarn lint:ci 
