@@ -47,7 +47,10 @@
     "dot-prop": "^4.2.1",
     "hosted-git-info": "^3.0.8",
     "lodash": "^4.17.21",
-    "underscore": "^1.12.1"
+    "underscore": "^1.12.1",
+    "normalize-url": "^6.0.1",
+    "glob-parent": "^5.1.2",
+    "ws": "^7.4.6"
   },
   "scripts": {
     "start": "node index.js",
