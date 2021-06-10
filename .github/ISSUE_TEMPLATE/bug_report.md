@@ -1,5 +1,3 @@
-<!-- You can erase any parts of this template not applicable to your Bug report -->
-
 ---
 
 name: Bug report
