@@ -75,8 +75,8 @@ jobs:
         run: |
           cd api
           echo $MONGODB_PORT
-          yarn --frozen-lockfile
-          yarn test:coverage 
+          # yarn --frozen-lockfile
+          # yarn test:coverage 
   # test-initial-data-load:
   #   name: Test initial-data-load
   #   runs-on: ubuntu-20.04
