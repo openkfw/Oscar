@@ -65,39 +65,37 @@ jobs:
         uses: actions/setup-node@v2
         with: 
           node-version: '14'
-      - run: |
-          cd api
-          echo $MONGODB_HOST
-          echo $MONGODB_PORT
-          echo $MONGO_URI
-          echo $NODE_ENV
-          yarn --frozen-lockfile
-          yarn test:coverage 
+      - name: Steps for the test-api job 
         env:
           MONGODB_HOST: localhost 
           MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
           MONGO_URI: mongodb://mongo:27017/oscar
           NODE_ENV: test
-  test-initial-data-load:
-    name: Test initial-data-load
-    runs-on: ubuntu-20.04
-    services: 
-      mongodb:
-        image: mongo 
-        ports:
-        - 27017/tcp
-    steps:
-      - name: Checkout this Github repository 
-        uses: actions/checkout@v2
-      - name: Set up and use Node 14
-        uses: actions/setup-node@v2
-        with: 
-          node-version: '14'
-      - run: |
-          cd initial-data-load
+          AZURE_STORAGE_CONNECTION_STRING:  MockConnectionStringDefaultEndpointsProtocol
+        run: |
+          cd api
           yarn --frozen-lockfile
           yarn test:coverage 
-        env:
-          MONGODB_HOST: localhost 
-          MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
-          MONGO_URI: mongodb://mongo:27017/oscar
+  # test-initial-data-load:
+  #   name: Test initial-data-load
+  #   runs-on: ubuntu-20.04
+  #   services: 
+  #     mongodb:
+  #       image: mongo 
+  #       ports:
+  #       - 27017/tcp
+  #   steps:
+  #     - name: Checkout this Github repository 
+  #       uses: actions/checkout@v2
+  #     - name: Set up and use Node 14
+  #       uses: actions/setup-node@v2
+  #       with: 
+  #         node-version: '14'
+  #     - run: |
+  #         cd initial-data-load
+  #         yarn --frozen-lockfile
+  #         yarn test:coverage 
+  #       env:
+  #         MONGODB_HOST: localhost 
+  #         MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
+  #         MONGO_URI: mongodb://mongo:27017/oscar
