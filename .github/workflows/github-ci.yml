@@ -67,12 +67,17 @@ jobs:
           node-version: '14'
       - run: |
           cd api
+          echo $MONGODB_HOST
+          echo $MONGODB_PORT
+          echo $MONGO_URI
+          echo $NODE_ENV
           yarn --frozen-lockfile
           yarn test:coverage 
         env:
           MONGODB_HOST: localhost 
           MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
           MONGO_URI: mongodb://mongo:27017/oscar
+          NODE_ENV: test
   test-initial-data-load:
     name: Test initial-data-load
     runs-on: ubuntu-20.04
