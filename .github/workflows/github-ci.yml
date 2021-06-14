@@ -69,7 +69,7 @@ jobs:
         env:
           MONGODB_HOST: localhost 
           MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
-          MONGO_URI: mongodb://mongo:27017/oscar
+          MONGO_URI: mongodb://localhost:27917/oscar
           NODE_ENV: test
           AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
         run: |
