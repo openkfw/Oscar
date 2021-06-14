@@ -61,8 +61,6 @@ jobs:
         with: 
           node-version: '14'
       - run: |
-          echo $NPM_REGISTRY 
-          echo $NPM_RC 
           pwd 
           yarn --frozen-lockfile
           yarn test:coverage 
