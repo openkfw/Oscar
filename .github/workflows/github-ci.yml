@@ -53,11 +53,13 @@ jobs:
   test-api:
     name: Test the API
     runs-on: ubuntu-20.04
+    container:
+      image: node:14.7.0-alpine3.10
     services: 
       mongodb:
         image: mongo 
         ports:
-        - 27017/tcp
+        - 27017/27017
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
