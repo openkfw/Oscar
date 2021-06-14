@@ -57,7 +57,7 @@ jobs:
       mongodb:
         image: mongo 
         ports:
-        - 27017:27917
+        - 27917:27017
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
