@@ -50,8 +50,8 @@ jobs:
           yarn audit
           yarn lint:ci 
   # Test jobs
-  test-entire-app:
-    name: Test the code of the entire app
+  test-api:
+    name: Test the API
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout this Github repository 
@@ -61,6 +61,20 @@ jobs:
         with: 
           node-version: '14'
       - run: |
-          pwd 
+          cd api
+          yarn --frozen-lockfile
+          yarn test:coverage 
+  test-initial-data-load:
+    name: Test initial-data-load
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2
+      - name: Set up and use Node 14
+        uses: actions/setup-node@v2
+        with: 
+          node-version: '14'
+      - run: |
+          cd initial-data-load
           yarn --frozen-lockfile
           yarn test:coverage 
