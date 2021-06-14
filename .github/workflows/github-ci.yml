@@ -71,7 +71,7 @@ jobs:
           MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
           MONGO_URI: mongodb://mongo:27017/oscar
           NODE_ENV: test
-          AZURE_STORAGE_CONNECTION_STRING:  MockConnectionStringDefaultEndpointsProtocol
+          AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=test;AccountName=test;AccountKey=test;EndpointSuffix=test
         run: |
           cd api
           yarn --frozen-lockfile
