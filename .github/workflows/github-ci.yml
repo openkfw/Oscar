@@ -53,13 +53,11 @@ jobs:
   test-api:
     name: Test the API
     runs-on: ubuntu-20.04
-    container:
-      image: node:14.7.0-alpine3.10
     services: 
       mongodb:
         image: mongo 
         ports:
-        - 27017/27017
+        - 27017/tcp
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
@@ -71,14 +69,14 @@ jobs:
         env:
           MONGODB_HOST: localhost 
           MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
-          MONGO_URI: mongodb://mongo:27017/oscar
+          MONGO_URI: mongodb://mongo:49153/oscar
           NODE_ENV: test
           AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
         run: |
           cd api
           echo $MONGODB_PORT
-          # yarn --frozen-lockfile
-          # yarn test:coverage 
+          yarn --frozen-lockfile
+          yarn test:coverage 
   # test-initial-data-load:
   #   name: Test initial-data-load
   #   runs-on: ubuntu-20.04
