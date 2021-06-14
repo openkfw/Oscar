@@ -57,7 +57,7 @@ jobs:
       mongodb:
         image: mongo 
         ports:
-        - 27017/tcp
+        - 27017/27017
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
@@ -74,6 +74,7 @@ jobs:
           AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
         run: |
           cd api
+          echo $MONGODB_PORT
           yarn --frozen-lockfile
           yarn test:coverage 
   # test-initial-data-load:
