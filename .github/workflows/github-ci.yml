@@ -4,55 +4,60 @@ on: [push]
 
 jobs:
   # Security jobs
-  security-frontend:
-    name: Check code security of frontend
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout this Github repository
-        uses: actions/checkout@v2
-      - name: Set up and use Node 14
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: |
-          cd frontend 
-          yarn --frozen-lockfile
-          yarn audit
-          yarn lint:ci
-  security-api:
-    name: Check code security of api 
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout this Github repository 
-        uses: actions/checkout@v2 
-      - name: Set up and use Node 14 
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: |
-          cd api
-          yarn --frozen-lockfile
-          yarn audit
-          yarn lint:ci 
-  security-initial-data-load:
-    name: Check code security of initial-data-load
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout this Github repository 
-        uses: actions/checkout@v2 
-      - name: Set up and use Node 14 
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: |
-          cd initial-data-load
-          yarn --frozen-lockfile
-          yarn audit
-          yarn lint:ci 
+  # security-frontend:
+  #   name: Check code security of frontend
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout this Github repository
+  #       uses: actions/checkout@v2
+  #     - name: Set up and use Node 14
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #     - run: |
+  #         cd frontend 
+  #         yarn --frozen-lockfile
+  #         yarn audit
+  #         yarn lint:ci
+  # security-api:
+  #   name: Check code security of api 
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout this Github repository 
+  #       uses: actions/checkout@v2 
+  #     - name: Set up and use Node 14 
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #     - run: |
+  #         cd api
+  #         yarn --frozen-lockfile
+  #         yarn audit
+  #         yarn lint:ci 
+  # security-initial-data-load:
+  #   name: Check code security of initial-data-load
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout this Github repository 
+  #       uses: actions/checkout@v2 
+  #     - name: Set up and use Node 14 
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #     - run: |
+  #         cd initial-data-load
+  #         yarn --frozen-lockfile
+  #         yarn audit
+  #         yarn lint:ci 
   # Test jobs
   test-api:
     name: Test the API
     runs-on: ubuntu-20.04
+    services: 
+      mongodb:
+        image: mongo 
+        ports:
+        - 27017/tcp
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
@@ -64,9 +69,18 @@ jobs:
           cd api
           yarn --frozen-lockfile
           yarn test:coverage 
+        env:
+          MONGODB_HOST: localhost 
+          MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
+          MONGO_URI: mongodb://mongo:27017/oscar
   test-initial-data-load:
     name: Test initial-data-load
     runs-on: ubuntu-20.04
+    services: 
+      mongodb:
+        image: mongo 
+        ports:
+        - 27017/tcp
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
@@ -78,3 +92,7 @@ jobs:
           cd initial-data-load
           yarn --frozen-lockfile
           yarn test:coverage 
+        env:
+          MONGODB_HOST: localhost 
+          MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
+          MONGO_URI: mongodb://mongo:27017/oscar
