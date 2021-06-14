@@ -50,55 +50,71 @@ jobs:
   #         yarn audit
   #         yarn lint:ci 
   # Test jobs
-  test-api:
-    name: Test the API
+  # test-api:
+  #   name: Test the API
+  #   runs-on: ubuntu-20.04
+  #   services: 
+  #     mongodb:
+  #       image: mongo 
+  #       ports:
+  #       - 27917:27017
+  #   steps:
+  #     - name: Checkout this Github repository 
+  #       uses: actions/checkout@v2
+  #     - name: Set up and use Node 14
+  #       uses: actions/setup-node@v2
+  #       with: 
+  #         node-version: '14'
+  #     - name: Steps for the test-api job 
+  #       env:
+  #         MONGODB_HOST: localhost 
+  #         MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
+  #         MONGO_URI: mongodb://localhost:27917/oscar
+  #         NODE_ENV: test
+  #         AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
+  #       run: |
+  #         cd api
+  #         yarn --frozen-lockfile
+  #         yarn test:coverage 
+  # test-initial-data-load:
+  #   name: Test the initial-data-load
+  #   runs-on: ubuntu-20.04
+  #   services: 
+  #     mongodb:
+  #       image: mongo 
+  #       ports:
+  #       - 27917:27017
+  #   steps:
+  #     - name: Checkout this Github repository 
+  #       uses: actions/checkout@v2
+  #     - name: Set up and use Node 14
+  #       uses: actions/setup-node@v2
+  #       with: 
+  #         node-version: '14'
+  #     - name: Steps for the test-initial-data-load job 
+  #       env:
+  #         MONGODB_HOST: localhost 
+  #         MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
+  #         MONGO_URI: mongodb://localhost:27917/oscar
+  #         NODE_ENV: test
+  #         AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
+  #       run: |
+  #         cd initial-data-load
+  #         yarn --frozen-lockfile
+  #         yarn test:coverage 
+  # Build jobs
+  build-frontend:
+    name: Build the frontend 
     runs-on: ubuntu-20.04
-    services: 
-      mongodb:
-        image: mongo 
-        ports:
-        - 27917:27017
+    container:
+      image: doregistry.azurecr.io/3rdparty/kaniko-project/executor:debug-v0.19.0
     steps:
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
-      - name: Set up and use Node 14
-        uses: actions/setup-node@v2
-        with: 
-          node-version: '14'
-      - name: Steps for the test-api job 
-        env:
-          MONGODB_HOST: localhost 
-          MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
-          MONGO_URI: mongodb://localhost:27917/oscar
-          NODE_ENV: test
-          AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
+      - name: Build the frontend Docker image with kaniko 
+        env: 
+          PROJECT_NAME: frontend 
+          PROJECT_BUILD_TAG: ${{ secrets.BASE_IMAGE_NAME }}/${{ env.PROJECT_NAME}}:git_${{ env.GITHUB_SHA }}
         run: |
-          cd api
-          yarn --frozen-lockfile
-          yarn test:coverage 
-  test-initial-data-load:
-    name: Test the initial-data-load
-    runs-on: ubuntu-20.04
-    services: 
-      mongodb:
-        image: mongo 
-        ports:
-        - 27917:27017
-    steps:
-      - name: Checkout this Github repository 
-        uses: actions/checkout@v2
-      - name: Set up and use Node 14
-        uses: actions/setup-node@v2
-        with: 
-          node-version: '14'
-      - name: Steps for the test-initial-data-load job 
-        env:
-          MONGODB_HOST: localhost 
-          MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
-          MONGO_URI: mongodb://localhost:27917/oscar
-          NODE_ENV: test
-          AZURE_STORAGE_CONNECTION_STRING:  DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=test
-        run: |
-          cd initial-data-load
-          yarn --frozen-lockfile
-          yarn test:coverage 
+          echo $PROJECT_BUILD_TAG
+        
