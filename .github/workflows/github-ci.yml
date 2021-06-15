@@ -123,5 +123,5 @@ jobs:
         uses: docker/build-push-action@v2
         with: 
           push: true 
-          tags: oscarplatform/frontend:${{ secret.FRONTEND_IMAGE_VERSION }}
+          tags: oscarplatform/frontend:${{ secrets.FRONTEND_IMAGE_VERSION }}
         
