@@ -107,6 +107,10 @@ jobs:
     name: Build the frontend 
     runs-on: ubuntu-20.04
     steps:
+      - name: Extract branch name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -118,10 +122,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Display branch name 
+        run: echo ${{ steps.extract_branch.outputs.branch }}
       - name: Docker build and push to Docker Hub 
         id: docker_build
         uses: docker/build-push-action@v2
         with: 
+          context: ./frontend
           push: true 
-          tags: oscarplatform/frontend:${{ secrets.FRONTEND_IMAGE_VERSION }}
+          tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.branch }}
         
