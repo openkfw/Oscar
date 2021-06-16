@@ -111,7 +111,7 @@ jobs:
   #         yarn test:coverage 
   # Build jobs
   build-frontend:
-    if: ${{ github.ref == 'refs/heads/github-actions'}}
+    if: ${{ github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
     name: Build the frontend 
     runs-on: ubuntu-20.04
     steps:
