@@ -117,13 +117,14 @@ jobs:
     steps:
       - name: Extract branch name for naming the Docker image tag
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      # - name: Extract git tag name for naming the Docker image tag
-      #   shell: bash
-      #   run: echo "##[set-output name=git-tag;]$(echo ${GITHUB_REF#refs/tags/})"
-      #   id: extract_git_tag
-      #   if: ${{  }}
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Extract git tag name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/tags/})"
+        id: extract_git_tag
+        if: ${{ contains(github.ref, 'refs/tags/') }}
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -137,7 +138,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Display branch name 
         run: |
-          echo ${{ steps.extract_branch.outputs.branch }}
+          echo ${{ steps.extract_branch.outputs.docker-tag }}
+          echo ${{ steps.extract_git_tag.outputs.docker-tag }}
           echo $GITHUB_EVENT_NAME
           echo ${{ github.event }}
       - name: Docker build and push to Docker Hub 
@@ -146,5 +148,5 @@ jobs:
         with: 
           context: ./frontend
           push: true 
-          tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.branch }}
+          tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.docker-tag }}
     
