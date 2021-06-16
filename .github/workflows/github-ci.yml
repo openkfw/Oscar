@@ -143,7 +143,7 @@ jobs:
           echo $GITHUB_EVENT_NAME
           echo ${{ github.event }}
       - name: Docker build and push to Docker Hub on push to master
-        id: docker_build
+        id: docker_build_on_branch
         uses: docker/build-push-action@v2
         with: 
           context: ./frontend
@@ -151,7 +151,7 @@ jobs:
           tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/heads/') }}
       - name: Docker build and push to Docker Hub on push with git tag
-        id: docker_build
+        id: docker_build_on_tag
         uses: docker/build-push-action@v2
         with: 
           context: ./frontend
