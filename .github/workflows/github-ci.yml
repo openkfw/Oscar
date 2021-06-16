@@ -12,7 +12,7 @@ on:
 jobs:
   # Security jobs
   security-frontend:
-    name: Check code security of frontend
+    name: Security of frontend
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout this Github repository
@@ -27,7 +27,7 @@ jobs:
           yarn audit
           yarn lint:ci
   security-api:
-    name: Check code security of api 
+    name: Security of api 
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout this Github repository 
@@ -42,7 +42,7 @@ jobs:
           yarn audit
           yarn lint:ci 
   security-initial-data-load:
-    name: Check code security of initial-data-load
+    name: Security of initial-data-load
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout this Github repository 
@@ -58,7 +58,7 @@ jobs:
           yarn lint:ci 
   # Test jobs
   test-api:
-    name: Test the API
+    name: Test API
     needs: [security-frontend, security-api, security-initial-data-load]
     if: always()
     runs-on: ubuntu-20.04
@@ -86,7 +86,7 @@ jobs:
           yarn --frozen-lockfile
           yarn test:coverage 
   test-initial-data-load:
-    name: Test the initial-data-load
+    name: Test initial-data-load
     needs: [security-frontend, security-api, security-initial-data-load]
     if: always()
     runs-on: ubuntu-20.04
@@ -115,7 +115,7 @@ jobs:
           yarn test:coverage 
   # Build jobs
   build-frontend:
-    name: Build the frontend 
+    name: Build frontend 
     if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
@@ -166,8 +166,8 @@ jobs:
           tags: oscarplatform/frontend:${{ steps.extract_git_tag.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-api:
-    name: Build the api 
-    if: ${{ github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    name: Build api 
+    if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -217,8 +217,8 @@ jobs:
           tags: oscarplatform/api:${{ steps.extract_git_tag.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-initial-data-load:
-    name: Build the api 
-    if: ${{ github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    name: Build initial-data-load
+    if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
