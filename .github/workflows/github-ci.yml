@@ -116,16 +116,10 @@ jobs:
   # Build jobs
   build-frontend:
     name: Build the frontend 
-    if: ${{ github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
-      - name: Display branch name 
-        run: |
-          echo $GITHUB_EVENT_NAME
-          echo ${{ github.event.action }}
-          echo ${{ github.event }}
-          cat $GITHUB_EVENT_PATH
       - name: Extract branch name for naming the Docker image tag
         shell: bash
         run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -171,5 +165,105 @@ jobs:
           push: true 
           tags: oscarplatform/frontend:${{ steps.extract_git_tag.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
-
-    
+  build-api:
+    name: Build the api 
+    if: ${{ github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    needs: [test-api, test-initial-data-load]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Extract branch name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Extract git tag name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/tags/})"
+        id: extract_git_tag
+        if: ${{ contains(github.ref, 'refs/tags/') }}
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker build and push to Docker Hub on push to master
+        id: docker_build_on_branch
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./api 
+          push: true 
+          tags: oscarplatform/api:${{ steps.extract_branch.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Docker build and push to Docker Hub on published release 
+        id: docker_build_on_release
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./api 
+          push: true 
+          tags: oscarplatform/api:latest
+        if: ${{ github.event_name == 'release' }}
+      - name: Docker build and push to Docker Hub on push with git tag
+        id: docker_build_on_tag
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./api 
+          push: true 
+          tags: oscarplatform/api:${{ steps.extract_git_tag.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
+  build-initial-data-load:
+    name: Build the api 
+    if: ${{ github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    needs: [test-api, test-initial-data-load]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Extract branch name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Extract git tag name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/tags/})"
+        id: extract_git_tag
+        if: ${{ contains(github.ref, 'refs/tags/') }}
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker build and push to Docker Hub on push to master
+        id: docker_build_on_branch
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./initial-data-load
+          push: true 
+          tags: oscarplatform/initial-data-load:${{ steps.extract_branch.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Docker build and push to Docker Hub on published release 
+        id: docker_build_on_release
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./initial-data-load 
+          push: true 
+          tags: oscarplatform/initial-data-load:latest
+        if: ${{ github.event_name == 'release' }}
+      - name: Docker build and push to Docker Hub on push with git tag
+        id: docker_build_on_tag
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./initial-data-load 
+          push: true 
+          tags: oscarplatform/initial-data-load:${{ steps.extract_git_tag.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
