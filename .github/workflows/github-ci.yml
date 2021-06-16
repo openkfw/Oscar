@@ -1,5 +1,6 @@
 name: Oscar's Github CI
 
+# Triggers for this Github Workflow
 on:
   release:
     types: [published]
@@ -116,7 +117,7 @@ jobs:
   # Build jobs
   build-frontend:
     name: Build frontend 
-    if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -167,7 +168,7 @@ jobs:
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-api:
     name: Build api 
-    if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -218,7 +219,7 @@ jobs:
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-initial-data-load:
     name: Build initial-data-load
-    if: ${{ always() && github.ref == 'refs/heads/github-actions' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
