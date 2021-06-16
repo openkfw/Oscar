@@ -150,14 +150,6 @@ jobs:
           push: true 
           tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/heads/') }}
-      - name: Docker build and push to Docker Hub on push with git tag
-        id: docker_build_on_tag
-        uses: docker/build-push-action@v2
-        with: 
-          context: ./frontend
-          push: true 
-          tags: oscarplatform/frontend:${{ steps.extract_git_tag.outputs.docker-tag }}
-        if: ${{ contains(github.ref, 'refs/tags/') }}
       - name: Docker build and push to Docker Hub on published release 
         id: docker_build_on_release
         uses: docker/build-push-action@v2
@@ -166,5 +158,13 @@ jobs:
           push: true 
           tags: oscarplatform/frontend:latest
         if: ${{ github.event_name == 'release' }}
+      - name: Docker build and push to Docker Hub on push with git tag
+        id: docker_build_on_tag
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./frontend
+          push: true 
+          tags: oscarplatform/frontend:${{ steps.extract_git_tag.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
 
     
