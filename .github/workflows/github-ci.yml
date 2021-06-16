@@ -115,6 +115,12 @@ jobs:
     name: Build the frontend 
     runs-on: ubuntu-20.04
     steps:
+      - name: Display branch name 
+        run: |
+          echo $GITHUB_EVENT_NAME
+          echo ${{ github.event.action }}
+          echo ${{ github.event }}
+          cat $GITHUB_EVENT_PATH
       - name: Extract branch name for naming the Docker image tag
         shell: bash
         run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -136,12 +142,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Display branch name 
-        run: |
-          echo ${{ steps.extract_branch.outputs.docker-tag }}
-          echo ${{ steps.extract_git_tag.outputs.docker-tag }}
-          echo $GITHUB_EVENT_NAME
-          echo ${{ github.event }}
       - name: Docker build and push to Docker Hub on push to master
         id: docker_build_on_branch
         uses: docker/build-push-action@v2
@@ -158,5 +158,13 @@ jobs:
           push: true 
           tags: oscarplatform/frontend:${{ steps.extract_git_tag.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/tags/') }}
+      - name: Docker build and push to Docker Hub on published release 
+        id: docker_build_on_release
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./frontend
+          push: true 
+          tags: oscarplatform/frontend:latest
+        if: ${{ github.event_name == 'release' }}
 
     
