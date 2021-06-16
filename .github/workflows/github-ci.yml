@@ -5,7 +5,7 @@ on:
     types: [published]
   push:
     branches:
-      - github-actions
+      - '*'
     tags:
       - '*'  
 
@@ -111,6 +111,7 @@ jobs:
   #         yarn test:coverage 
   # Build jobs
   build-frontend:
+    if: ${{ github.ref == 'refs/heads/github-actions'}}
     name: Build the frontend 
     runs-on: ubuntu-20.04
     steps:
@@ -118,6 +119,11 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+      # - name: Extract git tag name for naming the Docker image tag
+      #   shell: bash
+      #   run: echo "##[set-output name=git-tag;]$(echo ${GITHUB_REF#refs/tags/})"
+      #   id: extract_git_tag
+      #   if: ${{  }}
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -130,7 +136,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Display branch name 
-        run: echo ${{ steps.extract_branch.outputs.branch }}
+        run: |
+          echo ${{ steps.extract_branch.outputs.branch }}
+          echo $GITHUB_EVENT_NAME
+          echo ${{ github.event }}
       - name: Docker build and push to Docker Hub 
         id: docker_build
         uses: docker/build-push-action@v2
