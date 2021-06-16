@@ -1,6 +1,13 @@
 name: Oscar's Github CI
 
-on: [push]
+on:
+  release:
+    types: [published]
+  push:
+    branches:
+      - github-actions
+    tags:
+      - '*'  
 
 jobs:
   # Security jobs
@@ -131,4 +138,4 @@ jobs:
           context: ./frontend
           push: true 
           tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.branch }}
-        
+    
