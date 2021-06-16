@@ -150,13 +150,13 @@ jobs:
           push: true 
           tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/heads/') }}
-      - name: Docker build and push to Docker Hub 
+      - name: Docker build and push to Docker Hub on push with git tag
         id: docker_build
         uses: docker/build-push-action@v2
         with: 
           context: ./frontend
           push: true 
-          tags: oscarplatform/frontend:${{ steps.extract_branch.outputs.docker-tag }}
-        if: ${{ contains(github.ref, 'refs/heads/') }}
+          tags: oscarplatform/frontend:${{ steps.extract_git_tag.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/tags/') }}
 
     
