@@ -10,7 +10,7 @@ const uploads = async () => {
   }
 
   if (config.uploadDataTypes.includes('attributes')) {
-    logger.info('Uploading example attributes...');
+    logger.info('Uploading sample attributes...');
     await uploadAttributes(config.country);
   }
 };

@@ -4,7 +4,7 @@ Overview of data structures used in application.
 
 # Map data config structure
 To import data for map view, folder with config files directly in initial-data-load folder is used. Based on 'COUNTRY' environment variable, folder with the same name as is value in this variable is selected from 'data' folder and data from config files inside are processed.    
-Example data in correct structures can be found in 'Example' folder.      
+Example data in correct structures can be found in 'Sample' folder.      
    
 Data for layers in map view is stored in three different collections in database separately.  Geographical data, informations about layers and styling and last data to be visualised.    
 ### Geographical data

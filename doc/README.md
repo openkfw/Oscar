@@ -10,7 +10,7 @@ Documentation for the Oscar application.
       
 [Tutorials](./tutorials/README.md) - Detailed guides for various scenarios.       
 - [Run application](./tutorials/run-application.md) - More detailed guide.
-- [Run application with sample data](./tutorials/run-application-with-example-data.md) - How to run OSCAR with sample data, what kind of sample data do we provide and which functionalities are available with these data sets.
+- [Run application with sample data](./tutorials/run-application-with-sample-data.md) - How to run OSCAR with sample data, what kind of sample data do we provide and which functionalities are available with these data sets.
 - [Run application with your own data](./tutorials/run-application-with-own-data.md) - How and where to add additional data sets into the application.
       
 [UI](./UI/README.md) - Description of user interface.      
