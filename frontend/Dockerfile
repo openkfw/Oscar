@@ -20,6 +20,4 @@ COPY --from=builder /app/build /usr/share/nginx/html
 COPY proxy/nginx.conf /etc/nginx/templates/default.conf.template
 COPY start.sh /etc/nginx/conf.d/start.sh
 
-USER node
-
 CMD sh /etc/nginx/conf.d/start.sh
