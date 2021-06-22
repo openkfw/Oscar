@@ -4,7 +4,7 @@
   "private": true,
   "description": "Loading of initial data",
   "main": "index.js",
-  "license": "",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@azure/storage-queue": "^12.2.0",
     "@types/mongoose": "^5.10.3",

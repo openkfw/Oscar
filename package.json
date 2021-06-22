@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
-  "license": "",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "husky": "^6.0.0"
   },

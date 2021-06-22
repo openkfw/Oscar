@@ -2,7 +2,7 @@
   "name": "oscar-frontend",
   "version": "0.1.0",
   "private": true,
-  "license": "",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
