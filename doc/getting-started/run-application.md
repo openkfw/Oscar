@@ -9,14 +9,13 @@
 The recommended option to get started with Oscar is to use the Docker-Compose.
 
 The backend required environment variables are set in the .env file.
-First of all, create env files in root, api and frontend folders with script firstInstall.sh
-In root folder run:
+First of all, create env files in api, frontend and initial-data-load folders with script firstInstall.sh
 
 ```
 ./firstInstall.sh
 ```
 
-This script will create env files with necessary env variables and also generate node modules in all three folders (root, api, frontend)
+This script will create env files with necessary env variables and also generate node modules in all three folders (api, frontend, initial-data-load)
 
 ## Start the Application inside Docker
 
