@@ -11,7 +11,7 @@ Documentation for the Oscar application.
 [Development overview](./development/README.md) - All about development.
 
 - [Development](./development/development.md) - How to start with development (recommended tools, how to run tests, etc.).
-- [Changelog](./development/changelog.md) - Chronologically ordered list of notable changes for each version of a project.
+- [Changelog](./development/changelog.md) - How to write changelog rules.
 
 [Tutorials](./tutorials/README.md) - Detailed guides for various scenarios.
 

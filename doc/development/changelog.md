@@ -1,5 +1,7 @@
 # Changelog
 
+Chronologically ordered list of notable changes for each version of a project.
+
 ## Guiding Principles
 
 - There is an entry for every single version.
