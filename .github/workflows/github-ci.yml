@@ -117,7 +117,7 @@ jobs:
   # Build jobs
   build-frontend:
     name: Build frontend 
-    if: ${{ always() && github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -142,7 +142,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Docker build and push to Docker Hub on push to master
+      - name: Docker build and push to Docker Hub on push to main
         id: docker_build_on_branch
         uses: docker/build-push-action@v2
         with: 
@@ -168,7 +168,7 @@ jobs:
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-api:
     name: Build api 
-    if: ${{ always() && github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -193,7 +193,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Docker build and push to Docker Hub on push to master
+      - name: Docker build and push to Docker Hub on push to main
         id: docker_build_on_branch
         uses: docker/build-push-action@v2
         with: 
@@ -219,7 +219,7 @@ jobs:
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-initial-data-load:
     name: Build initial-data-load
-    if: ${{ always() && github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ always() && github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -244,7 +244,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Docker build and push to Docker Hub on push to master
+      - name: Docker build and push to Docker Hub on push to main
         id: docker_build_on_branch
         uses: docker/build-push-action@v2
         with: 
