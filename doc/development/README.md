@@ -2,5 +2,5 @@
 
 How to develop the app
 
-[Development](./development/development.md)
-[Changelog](./development/changelog.md)
+- [Development](./development.md)
+- [Changelog](./changelog.md)
