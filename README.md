@@ -1,4 +1,4 @@
-![Logo |20%](./logo/Oscar_logo.svg)
+<img src='logo/Oscar_logo.svg' width='160'>
 
 # Oscar platform
 
@@ -12,8 +12,6 @@ It‘s one tool for collecting, processing (& calculating new derived) and visua
 ## Running application
 
 Oscar platform is meant to be web application run in cloud. Docker images are publicly available in [our docker hub](https://hub.docker.com/u/oscarplatform)
-
-Here I'd put just one sentence with link to specific wiki page
 
 ## Documentation
 
