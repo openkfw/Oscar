@@ -9,7 +9,7 @@ RUN yarn --frozen-lockfile
 
 COPY --chown=node:node . .
 
-ARG REACT_APP_WEBSITE_TITLE
+ARG REACT_APP_WEBSITE_TITLE=Oscar
 RUN yarn build
 
 ######
@@ -17,7 +17,7 @@ RUN yarn build
 FROM nginx:stable-alpine
 
 COPY --from=builder /app/build /usr/share/nginx/html
-COPY proxy/nginx.conf /etc/nginx/templates/default.conf.template
+COPY proxy/nginx.conf /etc/nginx/conf.d/default.conf.template
 COPY start.sh /etc/nginx/conf.d/start.sh
 
 CMD sh /etc/nginx/conf.d/start.sh
