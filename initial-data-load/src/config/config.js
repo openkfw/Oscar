@@ -9,16 +9,14 @@ const envVarsSchema = Joi.object({
   PORT: Joi.number().default(8080),
   LOG_LABEL: Joi.string().default('oscar-initial-data-upload'),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
-  AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string().default('layer-geo-data'),
-  AZURE_STORAGE_DATA_CONTAINER_NAME: Joi.string().default('raw-data'),
-  MONGO_URI:
-    process.env.NODE_ENV === 'test'
-      ? Joi.string().default('mongodb://localhost:27917/oscar')
-      : Joi.string().default('mongodb://localhost:27017/oscar'),
-  UPLOAD_DATA_TYPES: Joi.string().allow('', null).default('mapLayers,attributes'),
+  AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string(),
+  AZURE_STORAGE_DATA_CONTAINER_NAME: Joi.string(),
+  MONGO_URI: Joi.string(),
+  UPLOAD_DATA_TYPES: Joi.string().allow('', null),
   COUNTRY: Joi.string().default(''),
   NEW_STORAGE_CONTAINERS: Joi.string().allow('').default(''),
   NEW_STORAGE_QUEUES: Joi.string().allow('').default(''),
+
 })
   .unknown()
   .required();
