@@ -11,12 +11,10 @@ const envVarsSchema = Joi.object({
   MONGO_URI: Joi.string(),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string(),
-  AZURE_STORAGE_CONTAINER_NAME: Joi.string(),
   AUTHORIZE_TOKEN_ATTRIBUTE: process.env.NODE_ENV === 'test' ? Joi.bool().default(false) : Joi.bool().default(true),
-  AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE: Joi.string(),
-  AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE_VALUE: Joi.string(),
-  APPINSIGHTS_INSTRUMENTATIONKEY: Joi.string(),
-
+  AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE: Joi.string().allow(''),
+  AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE_VALUE: Joi.string().allow(''),
+  APPINSIGHTS_INSTRUMENTATIONKEY: Joi.string().allow(''),
 })
   .unknown()
   .required();
@@ -32,7 +30,6 @@ const config = {
   logLabel: envVars.LOG_LABEL,
   mongoUri: envVars.MONGO_URI,
   azureStorageConnectionString: envVars.AZURE_STORAGE_CONNECTION_STRING,
-  azureStorageContainerName: envVars.AZURE_STORAGE_CONTAINER_NAME,
   azureStorageLayerContainerName: envVars.AZURE_STORAGE_LAYER_CONTAINER_NAME,
   authorizeTokenAttribute: envVars.AUTHORIZE_TOKEN_ATTRIBUTE,
   authorizationExpectedTokenAttribute: envVars.AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE,

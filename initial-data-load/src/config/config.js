@@ -10,13 +10,11 @@ const envVarsSchema = Joi.object({
   LOG_LABEL: Joi.string().default('oscar-initial-data-upload'),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string(),
-  AZURE_STORAGE_DATA_CONTAINER_NAME: Joi.string(),
   MONGO_URI: Joi.string(),
   UPLOAD_DATA_TYPES: Joi.string().allow('', null),
   COUNTRY: Joi.string().default(''),
   NEW_STORAGE_CONTAINERS: Joi.string().allow('').default(''),
   NEW_STORAGE_QUEUES: Joi.string().allow('').default(''),
-
 })
   .unknown()
   .required();
@@ -33,7 +31,6 @@ const config = {
   mongoUri: envVars.MONGO_URI,
   azureStorageConnectionString: envVars.AZURE_STORAGE_CONNECTION_STRING,
   azureStorageLayerContainerName: envVars.AZURE_STORAGE_LAYER_CONTAINER_NAME,
-  azureStorageDataContainerName: envVars.AZURE_STORAGE_DATA_CONTAINER_NAME,
   uploadDataTypes: envVars.UPLOAD_DATA_TYPES,
   country: envVars.COUNTRY,
   newStorageContainers: envVars.NEW_STORAGE_CONTAINERS,
