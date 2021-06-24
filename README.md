@@ -19,6 +19,8 @@ We believe that OSCAR adds value by enabling a better coordinated and more effec
 
 The OSCAR application is designed as a web application that runs in the cloud. Docker images are publicly available on [our docker hub](https://hub.docker.com/u/oscarplatform)
 
+For testing and demo purposes, we prepared [small starting package](./oscar_starting_package.zip) with scripts and tutorial how to start application locally on own computer.
+
 ## Documentation
 
 Documentation for the OSCAR application can be found directly in the repository in [doc folder](./doc/README.md)
