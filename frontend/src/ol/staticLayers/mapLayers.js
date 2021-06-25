@@ -38,5 +38,13 @@ const mapLayers = [
       attributions: `© ${new Date().getFullYear()} TomTom, Microsoft`,
     }),
   }),
+  new TileLayer({
+    title: 'Here satellite Maps',
+    visible: false,
+    source: new XYZ({
+      url: `/SATELLITE/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/jpg`,
+      attributions: `© ${new Date().getFullYear()} HERE`,
+    }),
+  }),
 ];
 export default mapLayers;
