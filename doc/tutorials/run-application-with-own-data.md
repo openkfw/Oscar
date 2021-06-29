@@ -9,7 +9,7 @@ Before start:
 - dashboard tabs: ./api/data/config/config.yml           
            
 Anytime set & run 'initial-data-load' service:
-- country name: ./runinitialload.sh `COUNTRY=Example`
+- country name: ./runinitialload.sh `COUNTRY=Sample`
 - data types to be uploaded into the database: ./runinitialload.sh `UPLOAD_DATA_TYPES=mapLayers,attributes`
 - geojson data: ./initial-data-load/data/{COUNTRY}/[geoData.yml](../data-structures/config-files.md#geodata.yml)
 - map layers: ./initial-data-load/data/{COUNTRY}/[mapLayers.yml](../data-structures/config-files.yml#maplayers.yml)
@@ -27,7 +27,7 @@ If frontend is build into image, this variable needs to be present in build sett
 ### ./api/data/config/config.yml
 Dashboard tabs can be modified by setting values in config file './api/data/config/config.yml'. This file is in [yaml](https://yaml.org/) format and has following structure:       
          
-Let's look at our Example file first:    
+Let's look at our Sample file first:    
 ```
 map:
   x: 2208684
