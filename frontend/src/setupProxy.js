@@ -25,4 +25,10 @@ module.exports = (app) => {
       target: 'http://localhost:8888',
     }),
   );
+  app.use(
+    '/SATELLITE',
+    createProxyMiddleware({
+      target: 'http://localhost:8888',
+    }),
+  );
 };
