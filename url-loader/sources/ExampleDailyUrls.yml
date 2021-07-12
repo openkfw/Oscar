@@ -1,0 +1,7 @@
+- name: APIFY Covid19 statistics
+  url: https://api.apify.com/v2/key-value-stores/GlTLAdXAuOz6bLAIO/records/
+  data:
+    - query: LATEST?disableRedirect=true
+      name: "Daily Covid19 cases in Slovakia"
+      filename: slovakia_daily_cases_{{date}}.json
+      foldername: slovakia_daily_cases
