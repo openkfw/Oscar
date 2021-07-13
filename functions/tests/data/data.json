@@ -1,0 +1,6 @@
+{
+  "data": [
+    { "province": "Province 1", "covid19": 5 },
+    { "province": "Province 2", "covid19": 29 }
+  ]
+}

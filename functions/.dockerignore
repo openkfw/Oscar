@@ -1,0 +1,6 @@
+local.settings.json
+node_modules
+dist
+.env
+loaderTemplate
+tests
