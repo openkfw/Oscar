@@ -42,7 +42,7 @@ The next step will be creation of Azure functions, triggered by URL loader savin
 
 ### Reload check functionality
 
-1. This functionality makes sense just for data fetched on daily basis.
+1. This functionality makes sense just for data fetched fetched regularly.
 2. Dynamically add yesterday's date value in ISO string format: {{ISOdate}} or 'yyyymmdd' format: {{date}} to query property in configuration file based on what your API expects as a date.
 3. Run URL loader.
 4. Check which attributeIds are created in the attributes collection after running URL loader. Filter on your own those attributeIds which are related to your URL loader request.

@@ -189,10 +189,10 @@ credentials:
   username: 'username'
   password: 'password'
 data:
-  -query: URL query parameters of the API endpoint. You can use {{ISOdate}} value in query for dynamically adding yesterday’s date there in ISO format or {{date}} for 'YYYYMMDD' format.
+  -query: URL query parameters of the API endpoint. We can use {{ISOdate}} or {{date}} value in query to dynamically add yesterday's date in ISO format or 'yyyymmdd' respectively.
   name: name of attribute
-  filename: name of the file which will be saved in the Azure storage. You can use {{ISOdate}} value in query for dynamically adding yesterday’s date there in ISO format or {{date}} for 'YYYYMMDD' format.
-  foldername: name of the folder where this file will be saved in the raw-data Blob container in the Azure storage
+  filename: name of the file which will be saved in the Azure storage. We can use {{ISOdate}} or {{date}} value in query to dynamically add yesterday's date in ISO format or 'yyyymmdd' respectively.
+  foldername: name of the folder where this file will be saved in the Azure storage
   reloadCheck:
     -attributeId of data we want to upload again if their upload failed in previous days. This can happen for example if API is down.
   requestConfig:
