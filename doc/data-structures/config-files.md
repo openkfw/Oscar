@@ -178,3 +178,25 @@ module.exports = [
 ];
 
 ```
+
+## URL loader config
+
+./url-loader/sources/{configName}.yml
+
+```-name: name of the source (API)
+url: URL path of the API endpoint
+credentials:
+  username: 'username'
+  password: 'password'
+data:
+  -query: URL query parameters of the API endpoint. You can use {{ISOdate}} value in query for dynamically adding yesterday’s date there in ISO format or {{date}} for 'YYYYMMDD' format.
+  name: name of attribute
+  filename: name of the file which will be saved in the Azure storage. You can use {{ISOdate}} value in query for dynamically adding yesterday’s date there in ISO format or {{date}} for 'YYYYMMDD' format.
+  foldername: name of the folder where this file will be saved in the raw-data Blob container in the Azure storage
+  reloadCheck:
+    -attributeId of data we want to upload again if their upload failed in previous days. This can happen for example if API is down.
+  requestConfig:
+    responseType: type of the response from API, options are: ‘json’ for a JSON file (that is set by default, there is no need to add this requestConfig parameter in this case) or ‘stream’ for other type of files.
+```
+
+Required properties to use in this config file are name, url, data: filename, foldername.
