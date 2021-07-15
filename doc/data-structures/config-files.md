@@ -190,12 +190,12 @@ credentials:
   password: 'password'
 data:
   -query: URL query parameters of the API endpoint. We can use {{ISOdate}} or {{date}} value in query to dynamically add yesterday's date in ISO format or 'yyyymmdd' respectively.
-  name: name of attribute
+  name: name of attribute.
   filename: name of the file which will be saved in the Azure storage. We can use {{ISOdate}} or {{date}} value in query to dynamically add yesterday's date in ISO format or 'yyyymmdd' respectively.
-  foldername: name of the folder where this file will be saved in the Azure storage
+  foldername: name of the folder where this file will be saved in the Azure storage.
   reloadCheck:
     -attributeId of data we want to upload again if their upload failed in previous days. This can happen for example if API is down.
-  requestConfig:
+  requestConfig: configurations in header required by external API, goes directly in second parameter of axios.get().
     responseType: type of the response from API, options are: ‘json’ for a JSON file (that is set by default, there is no need to add this requestConfig parameter in this case) or ‘stream’ for other type of files.
 ```
 

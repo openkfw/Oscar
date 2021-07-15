@@ -13,8 +13,8 @@
 | USERNAME                            | no      | -                                                                 | Login credential username that is used for API authentication.                                                                                                                                                                                                                                      |
 | PASSWORD             | no       | -                                                                 | Login credential password that is used for API authentication.                                                                                                                                                                                                                                                                   |
 | URL_FILE                 | no       | -                                                                 | Name of configuration yaml file with requests to the API.    |
-| ONLY_SOURCE_NAMES                 | no       | -                                                                 | List of sources (APIs) names separated by comma. |
-| EXCEPT_SOURCE_NAMES                 | no       | -                                                                 | List of excepted sources (APIs) names separated by comma. |
+| ONLY_SOURCE_NAMES                 | no       | -                                                                 | Run only this list of sources from yaml config. |
+| EXCEPT_SOURCE_NAMES                 | no       | -                                                                 | Run all sources in yaml config file except this list. |
 | URL_LOAD_BOTTLENECK_TIME_LIMIT                 | no       | -                                                                 | Waiting time after running a request to the database before running another one.|
 | URL_LOAD_BOTTLENECK_MAX_CONCURRENT                 | no       | -                                                                 | Number of requests to the database running at the same time.
 |
@@ -25,7 +25,7 @@ Url loader fetches data from API and saves them in the Azure storage. It parses 
 
 ## YAML configuration file
 
-Url loader parses one yaml configuration file located in ./sources folder that contains array of items. Each item is related to one API request. Check example yaml file in [tutorial](../tutorials/run-application-with-data-from-API#Configuration) and all parameters short description in [configuration files](../data-structures/config-files.md#url-loader-config). For more detailed info about functionality of parameters continue with this tutorial.
+Url loader parses one yaml configuration file located in ./sources folder that contains array of items. Each item is related to one API request. Check example yaml file in [tutorial](../tutorials/run-application-with-data-from-API#Configuration) and short description of all parameters in [configuration files](../data-structures/config-files.md#url-loader-config). For more detailed info about functionality of parameters continue with this tutorial.
 
 ## Credentials
 
