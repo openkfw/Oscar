@@ -1,6 +1,6 @@
 # Services
 
-Services are used to get data, proccess them and save them in the database or storage.
+Independently running parts of application explained in detail.
 
 [Initial data load](./initial-data-load.md) - About Initial data load service, that stores data for map layers and dashboard graphs in the database and the Azure storage.
 

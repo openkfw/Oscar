@@ -1,4 +1,4 @@
-# Run Oscar application with sample data fetched from external API
+# Draft: Run Oscar application with sample data fetched from external API
 
 With the source code we provide predefined configuration file for fetching data from external API. For more info about this functionality check [URL loader service description](../services/url-loader.md).
 
@@ -21,14 +21,9 @@ URL loader configuration file and all necessary environment variables are set by
       foldername: slovakia_daily_cases
 ```
 
-## Run Oscar application
+## Run URL loader service
 
-If this is your first attempt to run the application, please consult [Getting started](../getting-started/run-application.md) first. There are some necessary prerequisities.
-Then you need to run these three scripts:
-
-`./start.sh` will start the api, frontend and database. Once you can see the frontend, you can go to next script.
-
-`./runinitialload.sh` script will run the Initial data load service to fill application with data. Wait until this is finished (you will see `Successfully uploaded all initial data.` in terminal). This script creates necessary Blob containers in Azure storage.
+Before you start the service, please make sure, that Oscar application is running on your machine. If you use config file provided in this tutorial, check also that Sample data are loaded correctly.
 
 `./runurlload.sh` script will run URL loader service to fetch data from external API and stores them in the Azure storage. Wait until this is finished (you will see `Data from ExampleDailyUrls.yml stored in storage.` in terminal). Go to the browser and reload the page. Now you have the application set.
 
