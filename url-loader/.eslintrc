@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "indent": [
+      2,
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "space-before-function-paren": [
+      2,
+      {
+        "anonymous": "always",
+        "named": "never"
+      }
+    ],
+    "no-use-before-define": [2, "nofunc"],
+    "linebreak-style": [0],
+    "comma-dangle": [0],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "import/prefer-default-export": 0,
+    "no-underscore-dangle": [0],
+    "consistent-return": [0],
+    "max-classes-per-file": [0]
+  },
+  "extends": ["airbnb/base", "plugin:prettier/recommended"],
+  "env": {
+    "node": true,
+    "jest": true
+  }
+}
