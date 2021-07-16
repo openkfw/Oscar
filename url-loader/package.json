@@ -1,0 +1,55 @@
+{
+  "name": "url-loader",
+  "version": "1.0.0",
+  "description": "Downloads files from APIs and stores them in Azure storage",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "azure-storage": "^2.10.1",
+    "bottleneck": "^2.19.5",
+    "dotenv": "^6.0.0",
+    "joi": "^13.6.0",
+    "js-yaml": "^3.14.0",
+    "mongoose": "^5.11.11",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-watch": "^6.0.1",
+    "husky": "^4.2.5",
+    "jest": "^25.5.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.0.5",
+    "supertest": "^3.0.0"
+  },
+  "resolutions": {
+    "hosted-git-info": "^3.0.8",
+    "underscore": "^1.12.1",
+    "lodash": "^4.17.21"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint:ci"
+    }
+  },
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "lint": "eslint . --fix --max-warnings=0",
+    "lint:ci": "eslint . --max-warnings=0",
+    "prepush": "eslint . --max-warnings=0",
+    "test": "NODE_ENV=test jest --forceExit --verbose --colors --testTimeout=10000 --detectOpenHandles",
+    "test:coverage": "yarn test -- --coverage",
+    "test:watch": "yarn test -- --watchAll"
+  },
+  "author": "",
+  "license": "MIT"
+}

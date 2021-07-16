@@ -11,7 +11,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      MONGO_URI: mongodb://oscar-db-service:27017/oscar
+      MONGO_URI: ${MONGO_URI}
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       AUTHORIZE_TOKEN_ATTRIBUTE: ${AUTHORIZE_TOKEN_ATTRIBUTE}
