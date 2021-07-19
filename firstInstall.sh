@@ -6,10 +6,12 @@ cd frontend
 
 [[ -e .env ]] || cp .env.example .env
 
-# install node modules in root, api and frontend folders
+# install node modules in root, api, functions and frontend folders
 yarn
 cd ../api
 yarn
+cd ../functions
+npm i
 cd ../initial-data-load
 yarn
 

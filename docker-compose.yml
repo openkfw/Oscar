@@ -22,6 +22,15 @@ services:
     links:
       - azurite
 
+  # functions:
+  #   build:
+  #     context: ./functions
+  #   restart: on-failure
+  #   environment:
+  #     MONGO_URI: mongodb://oscar-db-service:27017/oscar
+  #     AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+  #     AzureWebJobsStorage: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;
+
   oscar-db-service:
     image: mongo:3.6.18-xenial
     hostname: oscar-db-service
