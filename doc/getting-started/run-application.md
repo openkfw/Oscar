@@ -2,6 +2,8 @@
 
 ## Prerequisites
 
+Repository cloned locally in folder.
+
 - yarn (https://yarnpkg.com/getting-started/install)
 - Docker (version 17.06 or higher recommended) (https://docker.com)
 - Docker-Compose (https://docs.docker.com/compose)

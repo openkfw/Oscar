@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "loaderTemplate",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "raw-data/foldername/{filename}",
+      "connection": "AZURE_STORAGE_CONNECTION_STRING"
+    }
+  ],
+  "scriptFile": "../dist/loaderTemplate/index.js"
+}
