@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Starting package [#39](https://github.com/openkfw/Oscar/pull/39)
 - HERE satellite maps as another alternative map [#26](https://github.com/openkfw/Oscar/issues/26
+- url-loader service for fetching data from external API [#23](https://github.com/openkfw/Oscar/issues/23)
+- template for loader functions [#24](https://github.com/openkfw/Oscar/issues/24)
 
 ### Changed
 
