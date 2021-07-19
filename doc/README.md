@@ -21,11 +21,11 @@ Documentation for the Oscar application.
 [Tutorials](./tutorials/README.md) - Detailed guides for various scenarios.
 
 - [Quick start with Docker](./tutorials/quick-start.md) - How to run and test application just with Docker.
-- [Run application](./tutorials/run-application.md) - More detailed guide.
+- [Run application](./tutorials/advanced/run-application.md) - More detailed guide.
 - [Run application with sample data](./tutorials/advanced/run-application-with-sample-data.md) - How to run OSCAR with sample data, what kind of sample data do we provide and which functionalities are available with these data sets.
 - [Run application with your own data](./tutorials/advanced/run-application-with-own-data.md) - How and where to add additional data sets into the application.
 - [Draft: Fetching data from external API](./tutorials/advanced/fetching-data-from-external-api) - How to fetch data from external API and store it in OSCAR.
-- [Create new loader function](./advanced/advanced/create-new-loader-function-from-template.md) - How to use template for loader function and create custom one.
+- [Create new loader function](./tutorials/advanced/create-new-loader-function-from-template.md) - How to use template for loader function and create custom one.
 
 [UI](./UI/README.md) - Description of user interface.
 
