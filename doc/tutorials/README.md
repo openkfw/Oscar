@@ -17,3 +17,4 @@ More advanced changes, requiring development setup.
 - [Run application with own data](./advanced/run-application-with-own-data.md) - How and where to add another data set into the application.
 - [Draft: Fetching data from external API](./advanced/fetching-data-from-external-api) - How to fetch data from external API and store it in OSCAR.
 - [Create new loader function](./advanced/create-new-loader-function-from-template.md) - How to use template for loader function and create custom one.
+- [Fine-tune csv-loader function](./advanced/fine-tune-csv-loader-function.md) - How to fine-tune csv-loader, if it's not usable with default settings
