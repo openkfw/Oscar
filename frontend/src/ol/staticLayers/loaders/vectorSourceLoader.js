@@ -1,16 +1,17 @@
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 
-import { getAttributesData, getGeojsonsData } from '../../axiosRequests';
+import { getAttributesData, getGeojsonData } from '../../../axiosRequests';
 
-const loaderVectorSource = (layerData, handleIsLoading, title, type) => {
+const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
   const vectorSource = new VectorSource({
     format: new GeoJSON(),
     loader: async (extent, resolution, projection) => {
-      handleIsLoading({ title, type }, 'add');
+      const layerTitle = title.includes('Damage Assessment') ? 'Damage Assessment' : title;
+      handleIsLoading({ title: layerTitle, type }, 'add');
       const url = layerData.geoJSONUrl;
 
-      const response = await getGeojsonsData(url);
+      const response = await getGeojsonData(url);
 
       if (response) {
         if (response.features && response.features[0]) {
@@ -63,13 +64,13 @@ const loaderVectorSource = (layerData, handleIsLoading, title, type) => {
               .readFeatures(featuresStruct, { featureProjection: projection });
 
             vectorSource.addFeatures(newDbFeatures);
-            handleIsLoading(title, 'remove');
+            handleIsLoading(layerTitle, 'remove');
           } else {
             const newFeatures = vectorSource.getFormat().readFeatures(response, { featureProjection: projection });
             vectorSource.addFeatures(newFeatures);
           }
         }
-        handleIsLoading(title, 'remove');
+        handleIsLoading(layerTitle, 'remove');
       }
     },
   });
@@ -77,4 +78,4 @@ const loaderVectorSource = (layerData, handleIsLoading, title, type) => {
   return vectorSource;
 };
 
-export default loaderVectorSource;
+export default vectorSourceLoader;

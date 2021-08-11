@@ -6,7 +6,7 @@ const csv2json = require('csvtojson');
 const logger = require('../config/winston');
 const { isNumberInString } = require('../utils');
 
-const { ATTRIBUTES_COLLECTION_NAME } = require('../constants');
+const { ATTRIBUTES_COLLECTION_NAME, POINT_ATTRIBUTES_COLLECTION_NAME } = require('../constants');
 
 const createIndex = async () => {
   await mongoose.connection.db
@@ -16,6 +16,13 @@ const createIndex = async () => {
     .collection(ATTRIBUTES_COLLECTION_NAME)
     .createIndex({ date: 1, featureId: 1, attributeId: 1 });
   await mongoose.connection.db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1 });
+  await mongoose.connection.db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ geometry: '2dsphere' });
+  await mongoose.connection.db
+    .collection(POINT_ATTRIBUTES_COLLECTION_NAME)
+    .createIndex({ 'properties.attributeId': 1 });
+  await mongoose.connection.db
+    .collection(POINT_ATTRIBUTES_COLLECTION_NAME)
+    .createIndex({ 'properties.updatedDate': -1 });
 };
 
 const addAttributes = async (date, csvFile) => {

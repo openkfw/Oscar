@@ -6,5 +6,7 @@ local.settings.json
 test
 tsconfig.json
 
-loader_template
+data
+library
+templates
 tests

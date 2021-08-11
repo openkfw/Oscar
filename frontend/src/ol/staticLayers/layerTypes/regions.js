@@ -1,10 +1,10 @@
 import VectorLayer from 'ol/layer/Vector';
 
 import { regionStyleFactory } from '../styles';
-import loaderVectorSource from '../utils';
+import vectorSourceLoader from '../loaders/vectorSourceLoader';
 
 const regionsLayer = (layerData, handleIsLoading) => {
-  const vectorSource = loaderVectorSource(layerData, handleIsLoading, layerData.title, 'region');
+  const vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'region');
 
   const newLayer = new VectorLayer({
     title: layerData.title,

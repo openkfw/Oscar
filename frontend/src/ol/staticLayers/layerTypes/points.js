@@ -2,10 +2,16 @@ import VectorLayer from 'ol/layer/Vector';
 import ClusterSource from 'ol/source/Cluster';
 
 import { pointStyleFactory } from '../styles';
-import loaderVectorSource from '../utils';
+import vectorSourceLoader from '../loaders/vectorSourceLoader';
+import boxReloadVectorSourceLoader from '../loaders/boxReloadVectorSourceLoader';
 
 const pointsLayer = (layerData, handleIsLoading) => {
-  const vectorSource = loaderVectorSource(layerData, handleIsLoading, layerData.title, 'points');
+  let vectorSource;
+  if (layerData.geoReferenceId === null) {
+    vectorSource = boxReloadVectorSourceLoader(layerData, handleIsLoading, layerData.title);
+  } else {
+    vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'points');
+  }
 
   const newLayer = new VectorLayer({
     title: layerData.title,

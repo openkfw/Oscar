@@ -17,8 +17,6 @@ services:
     build:
       context: .
       args:
-        NPM_RC: ${NPM_RC}
-        NPM_REGISTRY: ${NPM_REGISTRY}
         NODE_ENV: test
     environment:
       MONGO_URI: mongodb://test-db:27017/oscar

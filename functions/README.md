@@ -14,4 +14,10 @@ Before you jump into programming, you might want to check existing functions in 
 
 ### csv_loader
 
-This function is still work in progress, will be released in version 1.1.0 with updated documentation.
+## Fetcher functions
+
+This functions connect to external API, fetch data, process it and store it directly in database, without storing raw data first in file in storage.
+
+### KOBOFetcher function
+
+This function is used for scheduled fetching of results of surveys at KOBO. Requires own connection to KOBO instance with url, connection string and asset id of survey. Before using, please read README.md file in respective folder.

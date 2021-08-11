@@ -1,9 +1,9 @@
 import VectorLayer from 'ol/layer/Vector';
-import loaderVectorSource from '../utils';
+import vectorSourceLoader from '../loaders/vectorSourceLoader';
 import { combinedStyleFactory } from '../styles';
 
 const combinedLayer = (layerData, handleIsLoading) => {
-  const vectorSource = loaderVectorSource(layerData, handleIsLoading, layerData.title, 'region');
+  const vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'region');
 
   const newLayer = new VectorLayer({
     title: layerData.title,
