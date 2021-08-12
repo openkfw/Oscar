@@ -42,7 +42,8 @@ jobs:
           cd api
           yarn --frozen-lockfile
           yarn lint:ci
-          yarn audit && if [ $? -lt 16 ]; then exit 0; else exit 1; fi
+          echo This is using the new Github file
+          yarn audit | if [ $? -lt 16 ]; then exit 0; else exit 1; fi
   security-initial-data-load:
     name: Security of initial-data-load
     runs-on: ubuntu-20.04
