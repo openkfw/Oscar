@@ -25,8 +25,9 @@ jobs:
       - run: |
           cd frontend 
           yarn --frozen-lockfile
-          yarn audit
           yarn lint:ci
+          yarn audit
+          if [ $? -lt 16 ]; then exit 0; else exit 1; fi
   security-api:
     name: Security of api 
     runs-on: ubuntu-20.04
@@ -40,8 +41,9 @@ jobs:
       - run: |
           cd api
           yarn --frozen-lockfile
+          yarn lint:ci
           yarn audit
-          yarn lint:ci 
+          if [ $? -lt 16 ]; then exit 0; else exit 1; fi
   security-initial-data-load:
     name: Security of initial-data-load
     runs-on: ubuntu-20.04
@@ -55,8 +57,9 @@ jobs:
       - run: |
           cd initial-data-load
           yarn --frozen-lockfile
+          yarn lint:ci
           yarn audit
-          yarn lint:ci 
+          if [ $? -lt 16 ]; then exit 0; else exit 1; fi
   # Test jobs
   test-api:
     name: Test API
