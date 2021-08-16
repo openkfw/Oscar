@@ -57,10 +57,40 @@ jobs:
           yarn --frozen-lockfile
           yarn audit
           yarn lint:ci 
+  security-azure-functions:
+    name: Security of functions
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2 
+      - name: Set up and use Node 14 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          cd functions
+          yarn --frozen-lockfile
+          yarn audit
+          yarn lint:ci 
+  security-url-loader:
+    name: Security of url-loader
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2 
+      - name: Set up and use Node 14 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          cd url-loader
+          yarn --frozen-lockfile
+          yarn audit
+          yarn lint:ci 
   # Test jobs
   test-api:
     name: Test API
-    needs: [security-frontend, security-api, security-initial-data-load]
+    needs: [security-frontend, security-api, security-initial-data-load, security-azure-functions, security-url-loader]
     if: always()
     runs-on: ubuntu-20.04
     services: 
@@ -267,4 +297,55 @@ jobs:
           context: ./initial-data-load 
           push: true 
           tags: oscarplatform/initial-data-load:${{ steps.extract_git_tag.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
+  build-url-loader:
+    name: Build url-loader
+    if: ${{ always() && github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/') }}
+    needs: [test-api, test-initial-data-load]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Extract branch name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Extract git tag name for naming the Docker image tag
+        shell: bash
+        run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/tags/})"
+        id: extract_git_tag
+        if: ${{ contains(github.ref, 'refs/tags/') }}
+      - name: Checkout this Github repository 
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker build and push to Docker Hub on push to main
+        id: docker_build_on_branch
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./url-loader
+          push: true 
+          tags: oscarplatform/url-loader:${{ steps.extract_branch.outputs.docker-tag }}
+        if: ${{ contains(github.ref, 'refs/heads/') }}
+      - name: Docker build and push to Docker Hub on published release 
+        id: docker_build_on_release
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./url-loader 
+          push: true 
+          tags: oscarplatform/url-loader:latest
+        if: ${{ github.event_name == 'release' }}
+      - name: Docker build and push to Docker Hub on push with git tag
+        id: docker_build_on_tag
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./url-loader 
+          push: true 
+          tags: oscarplatform/url-loader:${{ steps.extract_git_tag.outputs.docker-tag }}
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
