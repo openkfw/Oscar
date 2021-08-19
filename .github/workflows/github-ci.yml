@@ -298,7 +298,7 @@ jobs:
         if: ${{ contains(github.ref, 'refs/tags/') &&  github.event_name != 'release'}}
   build-url-loader:
     name: Build url-loader
-    # if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/') }}
+    if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/') }}
     needs: [test-api, test-initial-data-load]
     runs-on: ubuntu-20.04
     steps:
@@ -306,12 +306,12 @@ jobs:
         shell: bash
         run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-        # if: ${{ contains(github.ref, 'refs/heads/') }}
+        if: ${{ contains(github.ref, 'refs/heads/') }}
       - name: Extract git tag name for naming the Docker image tag
         shell: bash
         run: echo "##[set-output name=docker-tag;]$(echo ${GITHUB_REF#refs/tags/})"
         id: extract_git_tag
-        # if: ${{ contains(github.ref, 'refs/tags/') }}
+        if: ${{ contains(github.ref, 'refs/tags/') }}
       - name: Checkout this Github repository 
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -330,7 +330,7 @@ jobs:
           context: ./url-loader
           push: true 
           tags: oscarplatform/url-loader:${{ steps.extract_branch.outputs.docker-tag }}
-        # if: ${{ contains(github.ref, 'refs/heads/') }}
+        if: ${{ contains(github.ref, 'refs/heads/') }}
       - name: Docker build and push to Docker Hub on published release 
         id: docker_build_on_release
         uses: docker/build-push-action@v2
