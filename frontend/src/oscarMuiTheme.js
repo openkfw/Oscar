@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 
 export const mainTextColor = 'rgb(248, 248, 248)';
@@ -34,7 +34,7 @@ export const iconColor = 'rgb(248, 248, 248)';
 
 export const mainBoxShadow = '0px 1px 34px 2px rgba(39, 44, 55, 0.41)';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: 'white',

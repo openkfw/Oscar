@@ -65,8 +65,8 @@ const CurrentCovid19Situation = ({ attributeIds }) => {
   }, [attributeIds]);
 
   return (
-    <Grid className={classes.wrapper} container direction="row" justify="space-evenly" alignItems="flex-start">
-      <Grid container item xs={12} direction="row" justify="space-between" alignItems="flex-end">
+    <Grid className={classes.wrapper} container direction="row" justifyContent="space-evenly" alignItems="flex-start">
+      <Grid container item xs={12} direction="row" justifyContent="space-between" alignItems="flex-end">
         <Grid item>
           <h3 className={classes.rowTitle}>Current Covid-19 situation</h3>
         </Grid>
@@ -76,7 +76,7 @@ const CurrentCovid19Situation = ({ attributeIds }) => {
           </div>
         </Grid>
       </Grid>
-      <Grid container item xs={12} direction="row" justify="flex-start" alignItems="flex-start">
+      <Grid container item xs={12} direction="row" justifyContent="flex-start" alignItems="flex-start">
         <Grid item xs={12} md={3}>
           <OverviewTable
             data={{
