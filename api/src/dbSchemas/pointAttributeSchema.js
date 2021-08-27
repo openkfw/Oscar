@@ -25,7 +25,7 @@ const pointAttributeSchema = new mongoose.Schema({
   },
   properties: {
     attributeId: String,
-    createdDate: String,
+    date: String,
     updatedDate: String,
 
     _keys: mongoose.Schema.Types.Mixed,

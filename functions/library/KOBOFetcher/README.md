@@ -22,3 +22,37 @@ Multiple surveys from the same instance of KOBO (with the same API Token) can be
     - KOBO_question: "Question formulation" # formulation of the question in KOBO
       key: "replacement key" # key to rename the question, if not defined, KOBO_question will be used
 ```
+
+Last step to be able to display points from KOBO in the map would be to add layer to `initial-data-load` config `MapLayers.yml` and run `././runinitialload.sh`.
+
+```
+- referenceId: "referenceIdOfKoboLayer"
+  layerType: "points"
+  category: "KOBO"
+  title: "KOBO Title of Layer"
+  attribute: "attribute name" # used as attributeId
+  attributeDescription:
+    descriptionText: "Question from KOBO: {{value}}" # value should be mapped to "key" attribute from structure above
+  style:
+    fillColor:
+      type: "color"
+      value: "rgb(35, 146, 229)"
+    clusterFillColor:
+      type: "color"
+      value: "rgba(35, 146, 229, 0.7)"
+    strokeColor:
+      type: "color"
+      value: "rgb(51, 57, 71)"
+    clusterStrokeColor:
+      type: "color"
+      value: "rgb(51, 57, 71)"
+  legend:
+    - type: "color"
+      color: "rgb(35, 146, 229)"
+      description: "Description of KOBO survey for map legend"
+  metadata:
+    description: Description of KOBO source
+    sourceWebsite: https://kobo.url.info # base url for KOBO API
+    updateFrequency: every hour
+    unit: unit of value from KOBO questions
+```
