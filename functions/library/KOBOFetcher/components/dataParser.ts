@@ -22,7 +22,7 @@ const dataParser = (data: Array<any>, survey: Survey): Array<Attribute> => {
       },
       properties: {
         KOBO_uuid: item._uuid,
-        date: item._submission_time,
+        createdDate: item._submission_time,
         updatedDate: item.end,
         attributeId: survey.name,
       },

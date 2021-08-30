@@ -33,6 +33,7 @@ Last step to be able to display points from KOBO in the map would be to add laye
   attribute: "attribute name" # used as attributeId
   attributeDescription:
     descriptionText: "Question from KOBO: {{value}}" # value should be mapped to "key" attribute from structure above
+    dateText: "Reporting date: {{updatedDate}}" # latest date of data from KOBO
   style:
     fillColor:
       type: "color"
