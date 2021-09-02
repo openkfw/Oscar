@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.2.0] - 2021-09-02
+
+### Added
+
+- KOBOFetcher for connecting to KOBO API and storing data from there [#50](https://github.com/openkfw/Oscar/issues/50)
+
 ## [1.1.0] - 2021-08-23
 
 ### Added
