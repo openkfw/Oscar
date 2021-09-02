@@ -39,6 +39,9 @@ const featureToDetails = (feature, layerTitle, attributeDescription, featureId) 
       if (attributeDescription.dateText && properties.dataDate) {
         const replacedDataText = attributeDescription.dateText.replaceAll(/{{dataDate}}/g, properties.dataDate);
         replacedAttributeDescription += `<br/> ${replacedDataText}`;
+      } else if (attributeDescription.dateText && properties.updatedDate) {
+        const replacedDataText = attributeDescription.dateText.replaceAll(/{{updatedDate}}/g, properties.updatedDate);
+        replacedAttributeDescription += `<br/> ${replacedDataText}`;
       } else if (properties.date) {
         replacedAttributeDescription += `<br/> Reporting date: ${properties.date}`;
       }

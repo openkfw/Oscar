@@ -95,6 +95,38 @@ paths:
         "200":
           description: Successful response
 
+  /api/pointAttributes:
+    get:
+      summary: Getting data with single point coordinates
+      parameters:
+        - in: query
+          name: attributeId
+          schema:
+            type: string
+          description: attributeId
+          required: true
+        - in: query
+          name: bottomLeft
+          schema:
+            type: string
+            pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
+          description: Bottom left corner of selected area to fetch features from
+          required: true
+        - in: query
+          name: topRight
+          schema:
+            type: string
+            pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
+          description: Top right corner of selected area to fetch features from
+          required: true
+        - in: query
+          name: proj
+          schema:
+            type: string
+          description: Projection for coordinates values.
+      responses:
+        200:
+          description: Successful response
   /api/staticLayers:
     get:
       summary: Gets static layers data

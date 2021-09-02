@@ -1,5 +1,7 @@
 const ATTRIBUTES_COLLECTION_NAME = 'attributes';
+const POINT_ATTRIBUTES_COLLECTION_NAME = 'point_attributes';
 
 module.exports = {
   ATTRIBUTES_COLLECTION_NAME,
+  POINT_ATTRIBUTES_COLLECTION_NAME,
 };

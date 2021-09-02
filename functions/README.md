@@ -17,3 +17,10 @@ Before you jump into programming, you might want to check existing functions in 
 Basic loader for csv files from genetic folder in Azure storage. As it is, the function can load any csv file with geographical data stored in column called 'AdminArea' and all attributes in columns called by their wished 'attributeId'. Also in current database structure, only numerical values are accepted.
 The function is triggered when new file is stored in 'csvData' folder. For more details on finetuning this function, check [in the documentation](../doc/tutorials/advanced/fine-tune-csv-loader-function.md).
 
+## Fetcher functions
+
+This functions connect to external API, fetch data, process it and store it directly in database, without storing raw data first in file in storage.
+
+### KOBOFetcher function
+
+This function is used for scheduled fetching of results of surveys at KOBO. Requires own connection to KOBO instance with url, connection string and asset id of survey. Before using, please read README.md file in respective folder.

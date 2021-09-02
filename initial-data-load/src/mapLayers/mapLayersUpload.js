@@ -33,10 +33,12 @@ const addMapLayer = async (data) => {
       timeseries: data.timeseries,
     };
   }
-  const geoJson = await getOneLayerGeoData(data.geoReferenceId);
-  if (!geoJson) {
-    logger.error(`Geo data for ${data.referenceId} by id ${data.geoReferenceId} not found.`);
-    return false;
+  if (data.geoReferenceId) {
+    const geoJson = await getOneLayerGeoData(data.geoReferenceId);
+    if (!geoJson) {
+      logger.error(`Geo data for ${data.referenceId} by id ${data.geoReferenceId} not found.`);
+      return false;
+    }
   }
   return {
     referenceId: data.referenceId,

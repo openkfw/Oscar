@@ -4,6 +4,8 @@
   "description": "Functions processing data and storing it to database",
   "scripts": {
     "build": "tsc",
+    "copyymls": "copyfiles --error --up 1 data/* /home/site/wwwroot/dist/data",
+    "postbuild": "npm run copyymls",
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
@@ -12,10 +14,12 @@
     "lint:ci": "eslint . --max-warnings=0"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bottleneck": "^2.19.5",
     "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "joi": "^17.3.0",
+    "js-yaml": "^3.14.0",
     "mongoose": "^5.10.15",
     "winston": "^3.3.3"
   },
@@ -23,6 +27,7 @@
     "@azure/functions": "^1.0.2-beta2",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",

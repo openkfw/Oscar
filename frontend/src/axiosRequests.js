@@ -88,7 +88,7 @@ export const getAttributesData = async (searchParams) => {
   return finalResponseProcessed;
 };
 
-export const getGeojsonsData = async (url) => {
+export const getGeojsonData = async (url) => {
   const response = await axios.get(url);
   return response.data;
 };

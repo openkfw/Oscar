@@ -15,6 +15,7 @@ const getMapLayersWithGeoData = async () => {
     $or: [
       { geoReferenceId: { $in: geoReferenceIds } },
       { layers: { $elemMatch: { geoReferenceId: { $in: geoReferenceIds } } } },
+      { geoReferenceId: null },
     ],
   };
 

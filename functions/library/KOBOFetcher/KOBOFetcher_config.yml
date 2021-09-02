@@ -1,0 +1,7 @@
+- name: "attribute name" # used as attributeId
+  url: "https://kobo.url.info" # url address to KOBO api
+  assetId: awefgvcrty # id identifying one survey
+  keyWithCoordinates: "location key" # key or question in survey with coordinates
+  selectedKeys: # array with keys, which should be stored in our database
+    - KOBO_question: "Question formulation" # formulation of the question in KOBO
+      key: "replacement key" # key to rename the question, if not defined, KOBO_question will be used
