@@ -26,11 +26,11 @@ describe('GET api/attributes/:attributeId/availableDates', () => {
     await Attribute.insertMany(casesAttrToDb);
     const res = await request(app).get(`/api/attributes/covid19Cases/availableDates`).expect(200);
     expect(res.body).toEqual([
-      '2021-02-09T00:00:00.000Z',
-      '2021-02-10T00:00:00.000Z',
-      '2021-02-11T00:00:00.000Z',
-      '2021-02-12T00:00:00.000Z',
-      '2021-02-13T00:00:00.000Z',
+      { dataDate: 'January 2021', date: '2021-02-09T00:00:00.000Z' },
+      { dataDate: 'February 2021', date: '2021-02-10T00:00:00.000Z' },
+      { dataDate: 'March 2021', date: '2021-02-11T00:00:00.000Z' },
+      { dataDate: 'April 2021', date: '2021-02-12T00:00:00.000Z' },
+      { dataDate: 'May 2021', date: '2021-02-13T00:00:00.000Z' },
     ]);
   });
 
@@ -38,11 +38,11 @@ describe('GET api/attributes/:attributeId/availableDates', () => {
     await Attribute.insertMany([...casesAttrToDb, ...deathsAttrToDb]);
     const res = await request(app).get(`/api/attributes/covid19Cases/availableDates`).expect(200);
     expect(res.body).toEqual([
-      '2021-02-09T00:00:00.000Z',
-      '2021-02-10T00:00:00.000Z',
-      '2021-02-11T00:00:00.000Z',
-      '2021-02-12T00:00:00.000Z',
-      '2021-02-13T00:00:00.000Z',
+      { dataDate: 'January 2021', date: '2021-02-09T00:00:00.000Z' },
+      { dataDate: 'February 2021', date: '2021-02-10T00:00:00.000Z' },
+      { dataDate: 'March 2021', date: '2021-02-11T00:00:00.000Z' },
+      { dataDate: 'April 2021', date: '2021-02-12T00:00:00.000Z' },
+      { dataDate: 'May 2021', date: '2021-02-13T00:00:00.000Z' },
     ]);
   });
 
@@ -50,11 +50,20 @@ describe('GET api/attributes/:attributeId/availableDates', () => {
     await Attribute.insertMany([...casesAttrToDb, { ...casesAttrToDb[0], featureId: 'Province2' }]);
     const res = await request(app).get(`/api/attributes/covid19Cases/availableDates`).expect(200);
     expect(res.body).toEqual([
-      '2021-02-09T00:00:00.000Z',
-      '2021-02-10T00:00:00.000Z',
-      '2021-02-11T00:00:00.000Z',
-      '2021-02-12T00:00:00.000Z',
-      '2021-02-13T00:00:00.000Z',
+      { dataDate: 'January 2021', date: '2021-02-09T00:00:00.000Z' },
+      { dataDate: 'February 2021', date: '2021-02-10T00:00:00.000Z' },
+      { dataDate: 'March 2021', date: '2021-02-11T00:00:00.000Z' },
+      { dataDate: 'April 2021', date: '2021-02-12T00:00:00.000Z' },
+      { dataDate: 'May 2021', date: '2021-02-13T00:00:00.000Z' },
+    ]);
+  });
+
+  it('should return null value for dataDate if it is not in the database', async () => {
+    await Attribute.insertMany(bedOccupancyWithoutDataDateAttrToDb);
+    const res = await request(app).get(`/api/attributes/Bed occupancy rate/availableDates`).expect(200);
+    expect(res.body).toEqual([
+      { dataDate: null, date: '2021-03-28T00:00:0.000Z' },
+      { dataDate: null, date: '2021-03-29T00:00:0.000Z' },
     ]);
   });
 });

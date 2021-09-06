@@ -53,6 +53,7 @@ const createAttributesFilter = (attributeIds, attributeIdCategories, featureIds,
     }
     filter.date = { $lte: dateEnd };
   }
+
   return filter;
 };
 
@@ -222,7 +223,10 @@ const getAvailableDates = async (attributeId) => {
       },
     ])
     .toArray();
-  return dates.map((date) => date._id);
+  return dates.map((date) => ({
+    dataDate: date.dataDate,
+    date: date._id,
+  }));
 };
 
 /**
@@ -236,4 +240,9 @@ const getAvailableDates = async (attributeId) => {
 const countAttributes = (attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd) =>
   getDocumentsCount(createAttributesFilter(attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd));
 
-module.exports = { getFilteredAttributes, getLatestAttributes, getAvailableDates, countAttributes };
+module.exports = {
+  getFilteredAttributes,
+  getLatestAttributes,
+  getAvailableDates,
+  countAttributes,
+};
