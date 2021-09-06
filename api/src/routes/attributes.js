@@ -48,7 +48,8 @@ router.get(
   '/:attributeId/availableDates',
   swaggerValidation.validate,
   forwardError(async (req, res) => {
-    const items = await getAvailableDates(req.params.attributeId);
+    let items = [];
+    items = await getAvailableDates(req.params.attributeId);
     res.send(items);
   }),
 );
