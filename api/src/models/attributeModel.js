@@ -100,6 +100,7 @@ const getAttributes = async (filter, limit, offset) => {
           features: {
             $push: {
               date: '$date',
+              dataDate: '$dataDate',
               featureId: '$featureId',
               attributeId: '$attributeId',
               valueNumber: '$valueNumber',
@@ -213,6 +214,7 @@ const getAvailableDates = async (attributeId) => {
       {
         $group: {
           _id: '$date',
+          dataDate: { $first: '$dataDate' },
         },
       },
       {

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const AttributeSchema = new mongoose.Schema({
   date: String,
+  dataDate: String,
   attributeId: String,
   featureId: String,
 });
