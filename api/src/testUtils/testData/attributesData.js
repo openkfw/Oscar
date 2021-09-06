@@ -1,30 +1,35 @@
 const casesAttrToDb = [
   {
     date: '2021-02-09T00:00:00.000Z',
+    dataDate: 'January 2021',
     featureId: 'Province1',
     attributeId: 'covid19Cases',
     valueNumber: 272718,
   },
   {
     date: '2021-02-10T00:00:00.000Z',
+    dataDate: 'February 2021',
     featureId: 'Province1',
     attributeId: 'covid19Cases',
     valueNumber: 272718,
   },
   {
     date: '2021-02-11T00:00:00.000Z',
+    dataDate: 'March 2021',
     featureId: 'Province1',
     attributeId: 'covid19Cases',
     valueNumber: 272718,
   },
   {
     date: '2021-02-12T00:00:00.000Z',
+    dataDate: 'April 2021',
     featureId: 'Province1',
     attributeId: 'covid19Cases',
     valueNumber: 272718,
   },
   {
     date: '2021-02-13T00:00:00.000Z',
+    dataDate: 'May 2021',
     featureId: 'Province1',
     attributeId: 'covid19Cases',
     valueNumber: 272718,
@@ -34,30 +39,35 @@ const casesAttrToDb = [
 const deathsAttrToDb = [
   {
     date: '2021-02-04T00:00:00.000Z',
+    dataDate: 'June 2021',
     featureId: 'Province1',
     attributeId: 'covid19Deaths',
     valueNumber: 272718,
   },
   {
     date: '2021-02-05T00:00:00.000Z',
+    dataDate: 'July 2021',
     featureId: 'Province1',
     attributeId: 'covid19Deaths',
     valueNumber: 272718,
   },
   {
     date: '2021-02-06T00:00:00.000Z',
+    dataDate: 'August 2021',
     featureId: 'Province1',
     attributeId: 'covid19Deaths',
     valueNumber: 272718,
   },
   {
     date: '2021-02-07T00:00:00.000Z',
+    dataDate: 'September 2021',
     featureId: 'Province1',
     attributeId: 'covid19Deaths',
     valueNumber: 272718,
   },
   {
     date: '2021-02-08T00:00:00.000Z',
+    dataDate: 'October 2021',
     featureId: 'Province1',
     attributeId: 'covid19Deaths',
     valueNumber: 272718,
