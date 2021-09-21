@@ -2,7 +2,7 @@ import { AzureFunction, Context } from '@azure/functions';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 
 import config from './config';
 import { initializeDBConnection } from './db';

@@ -2,8 +2,7 @@ const { QueueServiceClient } = require('@azure/storage-queue');
 const logger = require('../config/winston');
 const config = require('../config/config');
 
-// eslint-disable-next-line new-cap
-const queueServiceClient = new QueueServiceClient.fromConnectionString(config.azureStorageConnectionString);
+const queueServiceClient = QueueServiceClient.fromConnectionString(config.azureStorageConnectionString);
 
 const createStorageQueue = async (queueName) => {
   logger.info(`Creating storage queue: ${queueName}`);
