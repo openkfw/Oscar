@@ -1,6 +1,6 @@
 import Bottleneck from 'bottleneck';
 import { Context } from '@azure/functions';
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 import mongoose from 'mongoose';
 import { Attribute } from './types';
 import config from './config';

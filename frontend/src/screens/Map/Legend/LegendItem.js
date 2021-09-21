@@ -90,12 +90,7 @@ const LegendItem = ({ legend }) => {
   }
 };
 
-LegendItem.defaultProps = {
-  classes: {},
-};
-
 LegendItem.propTypes = {
   legend: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any),
 };
 export default LegendItem;
