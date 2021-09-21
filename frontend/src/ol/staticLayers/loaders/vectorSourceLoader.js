@@ -15,7 +15,7 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
       if (response) {
         if (response.features && response.features[0]) {
           if (response.features[0].properties && !response.features[0].properties.hasOwnProperty(layerData.attribute)) {
-            let latestAttributes = [];
+            let attributes = [];
 
             if (layerData.attribute) {
               if (vectorSource.get('sliderDate') && layerData.timeseries) {
@@ -23,19 +23,19 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
                 searchParams.append('attributeId', layerData.attribute);
                 searchParams.append('dateStart', vectorSource.get('sliderDate'));
                 searchParams.append('dateEnd', vectorSource.get('sliderDate'));
-                latestAttributes = await getAttributesData(searchParams);
+                attributes = await getAttributesData(searchParams);
               } else {
                 const searchParams = new URLSearchParams();
                 searchParams.append('attributeId', layerData.attribute);
                 searchParams.append('latestValues', true);
-                latestAttributes = await getAttributesData(searchParams);
+                attributes = await getAttributesData(searchParams);
               }
             }
 
             const { features } = response;
 
             const enrichedFeatures = features.map((feature) => {
-              const additionalData = latestAttributes.find(
+              const additionalData = attributes.find(
                 (d) =>
                   d.featureId &&
                   feature.properties[layerData.featureId] &&

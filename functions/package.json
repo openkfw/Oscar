@@ -39,9 +39,5 @@
   },
   "engines": {
     "node": ">=8.10.0"
-  },
-  "resolutions": {
-    "hosted-git-info": "^3.0.8",
-    "underscore": "^1.12.1"
   }
 }

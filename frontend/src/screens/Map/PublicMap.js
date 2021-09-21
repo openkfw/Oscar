@@ -168,11 +168,12 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         // select correct layer and timeline, if timeseries data available
         if (modifiedLayer.get('timeseries')) {
           const availableDates = await getAvailableDates(modifiedLayer.get('attribute'));
-          if (availableDates.length > 1) {
+          if (availableDates && availableDates.length > 1) {
             setAvailableDates(availableDates);
             setTimeSeriesSlider(true);
             setModifiedLayer(modifiedLayer);
             modifiedLayer.getSource().unset('sliderDate');
+            modifiedLayer.getSource().unset('dataDate');
             modifiedLayer.getSource().refresh();
             modifiedLayer.setVisible(true);
           } else {
