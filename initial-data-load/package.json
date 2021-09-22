@@ -7,7 +7,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@azure/storage-queue": "^12.2.0",
-    "@types/mongoose": "^5.10.3",
+    "@hapi/joi": "^17.1.1",
     "axios": "^0.21.1",
     "azure-storage": "^2.10.3",
     "bottleneck": "^2.19.5",
@@ -15,7 +15,6 @@
     "dotenv": "^6.0.0",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
-    "joi": "^13.6.0",
     "js-yaml": "^4.0.0",
     "mongoose": "^5.11.11",
     "winston": "^3.2.1"

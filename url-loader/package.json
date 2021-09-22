@@ -4,6 +4,7 @@
   "description": "Downloads files from APIs and stores them in Azure storage",
   "main": "index.js",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "axios": "^0.21.1",
     "azure-storage": "^2.10.1",
     "bottleneck": "^2.19.5",
