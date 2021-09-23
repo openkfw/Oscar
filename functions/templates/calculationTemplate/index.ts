@@ -2,7 +2,7 @@ import { AzureFunction, Context } from '@azure/functions';
 import { initializeDBConnection, getFromDb, storeToDb } from './db';
 import { COLLECTION_NAME } from './constants';
 import calculate from './calculation';
-import { Attribute, AttributesFilter } from './types';
+import { Attribute, AttributesFilter, AttributesFromDB } from './types';
 
 /**
  * Function triggered by new message in Azure Storage Queue.
@@ -27,7 +27,7 @@ const calculationTemplate: AzureFunction = async (context: Context): Promise<voi
   // Get values from database
   // TODO: add attributes and dates for required data
   const attributeFilters: Array<AttributesFilter> = [];
-  const dataFromDatabase = await getFromDb(attributeFilters);
+  const dataFromDatabase: Array<AttributesFromDB> = await getFromDb(attributeFilters);
 
   // calculations
   const calculatedAttributes: Array<Attribute> = await calculate(dataFromDatabase);

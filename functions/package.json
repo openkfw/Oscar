@@ -1,7 +1,10 @@
 {
   "name": "Functions",
   "version": "1.0.0",
+  "private": true,
   "description": "Functions processing data and storing it to database",
+  "main": "index.ts",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "tsc",
     "copyymls": "copyfiles --error --up 1 data/* /home/site/wwwroot/dist/data",
