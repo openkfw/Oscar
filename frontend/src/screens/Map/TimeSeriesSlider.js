@@ -80,9 +80,10 @@ const debounceSourceChange = debounce(changeModifiedLayerSource, 200);
 const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
   const marks = [];
   const labels = [];
-  const { dataDate } = availableDates[0];
+  let dataDate;
 
   for (let i = 0; i < availableDates.length; i++) {
+    dataDate = availableDates[i].dataDate;
     if (i === 0 || i === availableDates.length - 1) {
       if (dataDate) {
         marks.push({
