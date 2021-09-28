@@ -132,7 +132,7 @@ class SwipeableDrawer extends React.Component {
             <Grid
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               onTouchStart={this.handleTouchStart}
               onTouchMove={this.handleTouchMove}
               onTouchEnd={this.handleTouchEnd}

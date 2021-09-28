@@ -20,7 +20,7 @@
     "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "js-yaml": "^3.14.0",
-    "mongoose": "^5.10.15",
+    "mongoose": "^5.13.9",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -39,9 +39,5 @@
   },
   "engines": {
     "node": ">=8.10.0"
-  },
-  "resolutions": {
-    "hosted-git-info": "^3.0.8",
-    "underscore": "^1.12.1"
   }
 }

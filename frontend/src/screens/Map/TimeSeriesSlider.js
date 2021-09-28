@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
@@ -80,22 +80,41 @@ const debounceSourceChange = debounce(changeModifiedLayerSource, 200);
 const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
   const marks = [];
   const labels = [];
+  let dataDate;
 
   for (let i = 0; i < availableDates.length; i++) {
+    dataDate = availableDates[i].dataDate;
     if (i === 0 || i === availableDates.length - 1) {
+      if (dataDate) {
+        marks.push({
+          value: new Date(availableDates[i].date).getTime(),
+          label: availableDates[i].dataDate,
+        });
+        labels.push({
+          label: availableDates[i].dataDate,
+        });
+      } else {
+        marks.push({
+          value: new Date(availableDates[i].date).getTime(),
+          label: availableDates[i].date.split('T')[0],
+        });
+        labels.push({
+          label: availableDates[i].date.split('T')[0],
+        });
+      }
+    } else if (dataDate) {
       marks.push({
-        value: new Date(availableDates[i]).getTime(),
-        label: availableDates[i].split('T')[0],
+        value: new Date(availableDates[i].date).getTime(),
       });
       labels.push({
-        label: availableDates[i].split('T')[0],
+        label: availableDates[i].dataDate,
       });
     } else {
       marks.push({
-        value: new Date(availableDates[i]).getTime(),
+        value: new Date(availableDates[i].date).getTime(),
       });
       labels.push({
-        label: availableDates[i].split('T')[0],
+        label: availableDates[i].date.split('T')[0],
       });
     }
   }
@@ -104,10 +123,6 @@ const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
   const maxValue = marks[marks.length - 1].value;
 
   const [currentValue, setCurrentValue] = useState(undefined);
-
-  useEffect(() => {
-    setCurrentValue(modifiedLayer.getSource().get('sliderDate'));
-  }, [modifiedLayer]);
 
   const valueLabelFormat = (value) => {
     if (!currentValue) {
@@ -133,7 +148,7 @@ const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
         min={minValue}
         max={maxValue}
         onChange={(_, value) => (value !== currentValue ? setCurrentValue(value) : null)}
-        onChangeCommitted={() => debounceSourceChange(currentValue, modifiedLayer)}
+        onChangeCommitted={() => debounceSourceChange(currentValue, modifiedLayer, availableDates, dataDate)}
       />
     </>
   );
