@@ -1,25 +1,16 @@
 const model = require('../models/mapLayerModel');
 const { getLayerGeoDataWithUrl } = require('../models/layerGeoDataModel');
 
-const getMapLayersWithGeoData = async () => {
+const getMapLayers = async () => {
   const haveGeoData = await getLayerGeoDataWithUrl();
-  if (!haveGeoData || haveGeoData.length === 0) {
-    return [];
-  }
-  const geoReferenceIds = haveGeoData.map((item) => item.referenceId);
   const geoJSONUrls = {};
-  haveGeoData.forEach((item) => {
-    geoJSONUrls[item.referenceId] = item.geoJSONUrl;
-  });
-  const filter = {
-    $or: [
-      { geoReferenceId: { $in: geoReferenceIds } },
-      { layers: { $elemMatch: { geoReferenceId: { $in: geoReferenceIds } } } },
-      { geoReferenceId: null },
-    ],
-  };
+  if (haveGeoData && haveGeoData.length > 0) {
+    haveGeoData.forEach((item) => {
+      geoJSONUrls[item.referenceId] = item.geoJSONUrl;
+    });
+  }
 
-  const layers = await model.getMapLayers(filter);
+  const layers = await model.getMapLayers({});
   const layersWithGeoJSONUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
       const sublayers = layer.layers.map((lr) => ({
@@ -37,4 +28,4 @@ const getMapLayersWithGeoData = async () => {
   return layersWithGeoJSONUrl;
 };
 
-module.exports = { getMapLayersWithGeoData };
+module.exports = { getMapLayers };

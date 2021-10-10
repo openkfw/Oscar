@@ -13,13 +13,6 @@ jest.mock('../config/config.js', () => {
 });
 
 describe('GET /api/staticLayers', () => {
-  it('should return empty array, if no geojson data in db', async () => {
-    await MapLayer.create(mapLayersInDb[0]);
-
-    const res = await request(app).get('/api/staticLayers/');
-    expect(res.status).toEqual(200);
-    expect(res.body).toHaveLength(0);
-  });
   it('should return all layers in db sorted by title', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     // saved in reverse order to check the sorting
