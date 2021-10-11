@@ -1,7 +1,10 @@
 const model = require('../models/mapLayerModel');
 const { getLayerGeoDataWithUrl } = require('../models/layerGeoDataModel');
 
-const getMapLayers = async () => {
+/**
+ * Returns map layers from mapLayers collection with link to GeoJson file from layerGeoData collection
+ */
+const getMapLayersWithGeoData = async () => {
   const haveGeoData = await getLayerGeoDataWithUrl();
   const geoJSONUrls = {};
   if (haveGeoData && haveGeoData.length > 0) {
@@ -28,4 +31,4 @@ const getMapLayers = async () => {
   return layersWithGeoJSONUrl;
 };
 
-module.exports = { getMapLayers };
+module.exports = { getMapLayersWithGeoData };
