@@ -20,7 +20,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
   });
-
+});
 describe('GET /api/staticLayers', () => {
   it('should return all layers in db sorted by title', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
