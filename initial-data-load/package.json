@@ -8,7 +8,7 @@
   "dependencies": {
     "@azure/storage-queue": "^12.2.0",
     "@hapi/joi": "^17.1.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "azure-storage": "^2.10.3",
     "bottleneck": "^2.19.5",
     "csvtojson": "^2.0.10",
@@ -42,14 +42,8 @@
     }
   },
   "resolutions": {
-    "bl": "^1.2.3",
-    "dot-prop": "^4.2.1",
-    "hosted-git-info": "^3.0.8",
-    "lodash": "^4.17.21",
-    "underscore": "^1.12.1",
-    "normalize-url": "^6.0.1",
-    "glob-parent": "^5.1.2",
-    "ws": "^7.4.6"
+    "ansi-regex": "^5.0.1",
+    "set-value": "^4.0.1"
   },
   "scripts": {
     "start": "node index.js",
