@@ -1,6 +1,6 @@
 # 7 days incidence rata calculation function
 
-Function that calculates 7 days incidence rate
+Function that calculates 7 days incidence rate using following formula: (positiveNumber * 100000) / population
 
 ## How to use
 
