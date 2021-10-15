@@ -7,27 +7,22 @@
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.10.0",
-    "axios": "^0.21.1",
-    "classnames": "^2.2.6",
+    "axios": "^0.21.2",
     "colormap": "^2.3.0",
     "http-proxy-middleware": "^1.0.3",
     "immutable": "^3.8.2",
     "moment": "^2.26.0",
     "ol": "^6.3.1",
-    "plotly.js": "^1.58.4",
     "plotly.js-dist": "^1.58.4",
     "prop-types": "^15.6.2",
     "react": "^17.0.1",
     "react-dom": "^16.8.0",
     "react-dropzone": "^11.0.1",
-    "react-geo": "0.0.0",
     "react-hook-form": "^6.13.1",
     "react-plotly.js": "^2.4.0",
     "react-redux": "^5.0.7",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-router-redux": "^5.0.0-alpha.4",
-    "react-scripts": "^4.0.3",
     "redux": "^3.7.2",
     "redux-axios-middleware": "^4.0.0",
     "redux-immutable": "^4.0.0",
@@ -58,7 +53,8 @@
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^4.2.5",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "react-scripts": "^4.0.3"
   },
   "husky": {
     "hooks": {
@@ -66,11 +62,13 @@
     }
   },
   "resolutions": {
-    "hosted-git-info": "^3.0.8",
+    "**/ansi-html": "npm:ansi-html-community@^0.0.8",
+    "ansi-regex": "^5.0.1",
     "browserslist": "^4.16.5",
-    "url-parse": "^1.5.2",
     "glob-parent": "^5.1.2",
-    "tar": "^4.4.18"
+    "immer": "^9.0.6",
+    "nth-check": "^2.0.1",
+    "set-value": "^4.0.1"
   },
   "author": "",
   "browserslist": {

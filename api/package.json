@@ -47,9 +47,11 @@
     }
   },
   "resolutions": {
+    "ansi-regex": "^5.0.1",
     "hosted-git-info": "^3.0.8",
     "underscore": "^1.12.1",
     "normalize-url": "^6.0.1",
+    "set-value": "^4.0.1",
     "ws": "^7.4.6"
   },
   "scripts": {
