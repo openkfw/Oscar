@@ -9,20 +9,13 @@ const { isNumberInString } = require('../utils');
 const { ATTRIBUTES_COLLECTION_NAME, POINT_ATTRIBUTES_COLLECTION_NAME } = require('../constants');
 
 const createIndex = async () => {
-  await mongoose.connection.db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
-    .createIndex({ date: -1, featureId: 1, attributeId: 1 });
-  await mongoose.connection.db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
-    .createIndex({ date: 1, featureId: 1, attributeId: 1 });
-  await mongoose.connection.db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1 });
-  await mongoose.connection.db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ geometry: '2dsphere' });
-  await mongoose.connection.db
-    .collection(POINT_ATTRIBUTES_COLLECTION_NAME)
-    .createIndex({ 'properties.attributeId': 1 });
-  await mongoose.connection.db
-    .collection(POINT_ATTRIBUTES_COLLECTION_NAME)
-    .createIndex({ 'properties.updatedDate': -1 });
+  const { db } = mongoose.connection;
+  await db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1, featureId: 1, attributeId: 1 });
+  await db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: 1, featureId: 1, attributeId: 1 });
+  await db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1 });
+  await db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ geometry: '2dsphere' });
+  await db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ 'properties.attributeId': 1 });
+  await db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ 'properties.updatedDate': -1 });
 };
 
 const addAttributes = async (date, csvFile) => {

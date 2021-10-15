@@ -17,6 +17,7 @@ const initializeDBConnection = async () => {
   await mongoose.connect(config.mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: config.dbName,
   });
   logger.info('DB Connection successful');
 };

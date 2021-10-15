@@ -11,6 +11,7 @@ const envVarsSchema = Joi.object({
     process.env.NODE_ENV === 'test'
       ? Joi.string().default('mongodb://localhost:27917/oscar')
       : Joi.string().default('mongodb://localhost:27017/oscar'),
+  DB_NAME: Joi.string(),
   LOADER_BOTTLENECK_TIME_LIMIT: Joi.number().default(1000),
   LOADER_BOTTLENECK_MAX_CONCURRENT: Joi.number().default(1),
 })
@@ -25,6 +26,7 @@ if (error) {
 const config = {
   env: envVars.NODE_ENV,
   mongoUri: envVars.MONGO_URI,
+  dbName: envVars.DB_NAME,
   bottleneckTimeLimit: envVars.POPULATION_LOAD_BOTTLENECK_TIME_LIMIT,
   bottleneckMaxConcurrent: envVars.POPULATION_LOAD_BOTTLENECK_MAX_CONCURRENT,
 };
