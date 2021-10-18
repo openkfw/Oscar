@@ -18,6 +18,7 @@ const initializeDBConnection = async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     socketTimeoutMS: 200000,
+    dbName: config.dbName,
   });
   logger.info('Successfully connected to database.');
 };
