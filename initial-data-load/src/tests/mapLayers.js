@@ -229,6 +229,11 @@ describe('Geo data', () => {
     expect(geoData).toHaveLength(2);
     expect(geoData[0].referenceId).toEqual(geoDataSource3[0].referenceId);
     expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newFilename.geojson');
+    expect(geoData[0].format).toEqual(geoDataSource3[0].format);
+    expect(geoData[0].featureIds).toEqual(geoDataSource3[0].featureIds);
+    expect(geoData[0].attributeIds).toEqual(geoDataSource3[0].attributeIds);
+    expect(geoData[0].geometryDataTypes).toEqual(geoDataSource3[0].geometryDataTypes);
+    expect(geoData[0].metadata).toEqual(geoDataSource3[0].metadata);
 
     expect(geoData[1].referenceId).toEqual(geoDataSource3[1].referenceId);
     expect(geoData[1].geoDataUrl).toBeUndefined();
