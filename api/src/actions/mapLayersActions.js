@@ -7,9 +7,9 @@ const getMapLayersWithGeoData = async () => {
     return [];
   }
   const geoReferenceIds = haveGeoData.map((item) => item.referenceId);
-  const geoJSONUrls = {};
+  const geoDataUrls = {};
   haveGeoData.forEach((item) => {
-    geoJSONUrls[item.referenceId] = item.geoJSONUrl;
+    geoDataUrls[item.referenceId] = item.geoDataUrl;
   });
   const filter = {
     $or: [
@@ -20,21 +20,21 @@ const getMapLayersWithGeoData = async () => {
   };
 
   const layers = await model.getMapLayers(filter);
-  const layersWithGeoJSONUrl = layers.map((layer) => {
+  const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
       const sublayers = layer.layers.map((lr) => ({
         ...lr,
-        geoJSONUrl: geoJSONUrls[lr.geoReferenceId],
+        geoDataUrl: geoDataUrls[lr.geoReferenceId],
       }));
       return { ...layer, layers: sublayers };
     }
 
     return {
       ...layer,
-      geoJSONUrl: geoJSONUrls[layer.geoReferenceId],
+      geoDataUrl: geoDataUrls[layer.geoReferenceId],
     };
   });
-  return layersWithGeoJSONUrl;
+  return layersWithGeoDataUrl;
 };
 
 module.exports = { getMapLayersWithGeoData };

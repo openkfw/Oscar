@@ -1,7 +1,7 @@
 const layerGeoDataInDb = {
   name: 'Sample Geo Json',
   referenceId: 'sampleGeoJSON',
-  geoJSONUrl: '/api/uploads/geojsons/1600424721066.geojson',
+  geoDataUrl: '/api/uploads/geojsons/1600424721066.geojson',
   updateDate: '1600424721492',
 };
 

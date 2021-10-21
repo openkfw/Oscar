@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const layerGeoDataSchema = new mongoose.Schema({
   referenceId: { type: String, index: { unique: true } },
   name: String,
-  geoJSONUrl: String,
+  geoDataUrl: String,
   updateDate: String,
 });
 

@@ -1,7 +1,7 @@
 const LayerGeoDataSchema = require('../dbSchemas/layerGeoDataSchema');
 
 const getLayerGeoDataWithUrl = () =>
-  LayerGeoDataSchema.find({ geoJSONUrl: { $ne: null } })
+  LayerGeoDataSchema.find({ geoDataUrl: { $ne: null } })
     .lean()
     .exec();
 

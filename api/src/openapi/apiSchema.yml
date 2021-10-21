@@ -239,9 +239,9 @@ components:
           $ref: "#/components/schemas/StaticLayerStyle"
         legend:
           $ref: "#/components/schemas/StaticLayerLegend"
-        geoJSONUrl:
+        geoDataUrl:
           type: string
-          description: Url to geojson data source
+          description: Url to geodata source
         layers:
           type: array
           items:
@@ -269,9 +269,9 @@ components:
           $ref: "#/components/schemas/StaticLayerStyle"
         legend:
           $ref: "#/components/schemas/StaticLayerLegend"
-        geoJSONUrl:
+        geoDataUrl:
           type: string
-          description: Url to geojson data source
+          description: Url to geodata source
         description:
           type: string
           description: Description of layer

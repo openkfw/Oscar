@@ -31,7 +31,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.body).toHaveLength(2);
     expect(res.body[0].geoReferenceId).toEqual(layerGeoDataInDb.referenceId);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[0].referenceId);
-    expect(res.body[0].geoJSONUrl).toEqual(layerGeoDataInDb.geoJSONUrl);
+    expect(res.body[0].geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
   });
   it('should return layer of type group with correct geoJSON links in sublayers', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
@@ -42,7 +42,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.body).toHaveLength(1);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[2].referenceId);
     res.body[0].layers.forEach((layer) => {
-      expect(layer.geoJSONUrl).toEqual(layerGeoDataInDb.geoJSONUrl);
+      expect(layer.geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
     });
   });
 });
