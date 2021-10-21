@@ -1,9 +1,38 @@
 - name: "Slovakia - regions"
   referenceId: "slovakiaRegions"
   geoDataFilename: "slovakia_regions.geojson"
+  format: "geojson"
+  featureIds: [{property: "name", values: ["Bratislavský", "Trnavský", "Trenčiansky", "Nitriansky", "Žilinský", "Banskobystrický", "Prešovský", "Košický"]}, { property: "fullname", values: ["Bratislavský kraj", "Trnavský kraj", "Trenčiansky kraj", "Nitriansky kraj", "Žilinský kraj", "Banskobystrický kraj", "Prešovský kraj", "Košický kraj"]}] 
+  attributeIds: [] 
+  geometryDataTypes: "regions"
+  metadata: 
+    description: "Regions of Slovak Republic"
+    sourceWebsite: "https://www.geoportal.sk/"
+    sourceOrganisation: "GKÚ Bratislava"
+    updateFrequency: "None"
+    unit: ""
+    dataRetrievalDescription: "Data downloaded from source, converted to geojson and uploaded manually." 
 - name: "Slovakia - districts"
   referenceId: "slovakiaDistricts"
   geoDataFilename: "slovakia_districts.geojson"
+  format: "geojson"
+  featureIds: [{property: "name", values: ["Bratislava I", "Bratislava II", "Bratislava III", "Bratislava IV", "Bratislava V", "Malacky", "Pezinok", "Senec", "Dunajská Streda", "Galanta", "Hlohovec", "Piešťany", "Senica", "Skalica", "Trnava", "Bánovce nad Bebravou", "Ilava", "Myjava", "Nové Mesto nad Váhom", "Partizánske", "Považská Bystrica", "Prievidza", "Púchov", "Trenčín", "Komárno", "Levice", "Nitra", "Nové Zámky", "Šaľa", "Topoľčany", "Zlaté Moravce", "Bytča", "Čadca", "Dolný Kubín", "Kysucké Nové Mesto", "Liptovský Mikuláš", "Martin", "Námestovo", "Ružomberok", "Turčianske Teplice", "Tvrdošín", "Žilina", "Banská Bystrica", "Banská Štiavnica", "Brezno", "Detva", "Krupina", "Lučenec", "Poltár", "Revúca", "Rimavská Sobota", "Veľký Krtíš", "Zvolen", "Žarnovica", "Žiar nad Hronom", "Bardejov", "Humenné", "Kežmarok", "Levoča", "Medzilaborce", "Poprad", "Prešov", "Sabinov", "Snina", "Stará Ľubovňa", "Stropkov", "Svidník", "Vranov nad Topľou", "Gelnica", "Košice I", "Košice II", "Košice III", "Košice IV", "Košice - okolie", "Michalovce", "Rožňava", "Sobrance", "Spišská Nová Ves", "Trebišov"]}, {property: "fullname", values: ["Bratislava I", "Bratislava II", "Bratislava III", "Bratislava IV", "Bratislava V", "Malacky", "Pezinok", "Senec", "Dunajská Streda", "Galanta", "Hlohovec", "Piešťany", "Senica", "Skalica", "Trnava", "Bánovce nad Bebravou", "Ilava", "Myjava", "Nové Mesto nad Váhom", "Partizánske", "Považská Bystrica", "Prievidza", "Púchov", "Trenčín", "Komárno", "Levice", "Nitra", "Nové Zámky", "Šaľa", "Topoľčany", "Zlaté Moravce", "Bytča", "Čadca", "Dolný Kubín", "Kysucké Nové Mesto", "Liptovský Mikuláš", "Martin", "Námestovo", "Ružomberok", "Turčianske Teplice", "Tvrdošín", "Žilina", "Banská Bystrica", "Banská Štiavnica", "Brezno", "Detva", "Krupina", "Lučenec", "Poltár", "Revúca", "Rimavská Sobota", "Veľký Krtíš", "Zvolen", "Žarnovica", "Žiar nad Hronom", "Bardejov", "Humenné", "Kežmarok", "Levoča", "Medzilaborce", "Poprad", "Prešov", "Sabinov", "Snina", "Stará Ľubovňa", "Stropkov", "Svidník", "Vranov nad Topľou", "Gelnica", "Košice I", "Košice II", "Košice III", "Košice IV", "Košice - okolie", "Michalovce", "Rožňava", "Sobrance", "Spišská Nová Ves", "Trebišov"]}]  
+  attributeIds: [] 
+  geometryDataTypes: "regions"
+  metadata:     
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."
 - name: "Hospitals and health sites"
   referenceId: "slovakiaHospitals"
   geoDataFilename: "Slovakia_made_up_hospitals.geojson"
+  format: "geojson"
+  featureIds: [{property: "name", values: ["First Hospital", "Health Post", "Another hospital", "Private hospital", "University Hospital", "Clinic at the top", "Global hospital", "Private Clinic and Research Centre", "Hospital 9", "Dentists"]}, {property: "fullname", values: []}]  
+  attributeIds: ["id", "amenity", "emergency"] 
+  geometryDataTypes: "points"
+  metadata: 
+    description: "Some made up hospitals as sample for points on map. Does not represent reality."
+    updateFrequency: "On demand"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was created by one of developers."
