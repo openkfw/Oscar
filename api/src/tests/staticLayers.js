@@ -20,7 +20,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(0);
   });
-  it('should return all layers in db sorted by title', async () => {
+  it('should return all layers in db sorted by title with geoDataUrl and metadata from layerGeoData collection', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     // saved in reverse order to check the sorting
     await MapLayer.create(mapLayersInDb[1]);
@@ -32,8 +32,9 @@ describe('GET /api/staticLayers', () => {
     expect(res.body[0].geoReferenceId).toEqual(layerGeoDataInDb.referenceId);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[0].referenceId);
     expect(res.body[0].geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
+    expect(res.body[0].metadata).toEqual(layerGeoDataInDb.metadata);
   });
-  it('should return layer of type group with correct geoJSON links in sublayers', async () => {
+  it('should return layer of type group with correct geoJSON links and metadata in sublayers', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     await GroupMapLayer.create(mapLayersInDb[2]);
 
@@ -43,6 +44,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[2].referenceId);
     res.body[0].layers.forEach((layer) => {
       expect(layer.geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
+      expect(layer.metadata).toEqual(layerGeoDataInDb.metadata);
     });
   });
 });
