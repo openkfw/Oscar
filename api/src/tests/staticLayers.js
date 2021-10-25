@@ -13,7 +13,7 @@ jest.mock('../config/config.js', () => {
 });
 
 describe('GET /api/staticLayers', () => {
-  it('should return empty array, if no geojson data in db', async () => {
+  it('should return empty array, if no geodata in db', async () => {
     await MapLayer.create(mapLayersInDb[0]);
 
     const res = await request(app).get('/api/staticLayers/');
@@ -34,7 +34,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.body[0].geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
     expect(res.body[0].metadata).toEqual(layerGeoDataInDb.metadata);
   });
-  it('should return layer of type group with correct geoJSON links and metadata in sublayers', async () => {
+  it('should return layer of type group with correct geodata links and metadata in sublayers', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     await GroupMapLayer.create(mapLayersInDb[2]);
 

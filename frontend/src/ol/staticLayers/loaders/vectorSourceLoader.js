@@ -1,7 +1,7 @@
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 
-import { getAttributesData, getGeojsonData } from '../../../axiosRequests';
+import { getAttributesData, getGeoData } from '../../../axiosRequests';
 
 const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
   const vectorSource = new VectorSource({
@@ -10,7 +10,7 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
       handleIsLoading({ title, type }, 'add');
       const url = layerData.geoDataUrl;
 
-      const response = await getGeojsonData(url);
+      const response = await getGeoData(url);
 
       if (response) {
         if (response.features && response.features[0]) {

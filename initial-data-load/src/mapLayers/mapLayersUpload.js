@@ -9,8 +9,8 @@ const addMapLayer = async (data) => {
   if (data.layerType === 'group') {
     const updatedLayers = await Promise.all([
       ...data.layers.map(async (layer) => {
-        const geoJson = await getOneLayerGeoData(layer.geoReferenceId);
-        if (geoJson) {
+        const geoData = await getOneLayerGeoData(layer.geoReferenceId);
+        if (geoData) {
           return layer;
         }
         const newLayer = { ...layer, geoReferenceId: undefined };
@@ -34,8 +34,8 @@ const addMapLayer = async (data) => {
     };
   }
   if (data.geoReferenceId) {
-    const geoJson = await getOneLayerGeoData(data.geoReferenceId);
-    if (!geoJson) {
+    const geoData = await getOneLayerGeoData(data.geoReferenceId);
+    if (!geoData) {
       logger.error(`Geo data for ${data.referenceId} by id ${data.geoReferenceId} not found.`);
       return false;
     }
