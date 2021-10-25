@@ -1,9 +1,24 @@
 const mongoose = require('mongoose');
 
-const featureIdSchema = new mongoose.Schema(
+const FeatureIdSchema = new mongoose.Schema(
   {
     property: String,
     values: [{ type: String }],
+  },
+  { _id: false },
+);
+
+const GeoMetadataSchema = new mongoose.Schema(
+  {
+    description: String,
+    sourceWebsite: String,
+    sourceOrganisation: String,
+    updateDate: String,
+    updateFrequency: String,
+    unit: String,
+    reliabilityScore: String,
+    dataRetrievalDescription: String,
+    dataCalculationDescription: String,
   },
   { _id: false },
 );
@@ -14,13 +29,13 @@ const layerGeoDataSchema = new mongoose.Schema({
   geoDataUrl: String,
   updateDate: String,
   format: String,
-  featureId: [featureIdSchema],
+  featureId: [FeatureIdSchema],
   attributeIds: [{ type: String }],
   geometryDataTypes: {
     type: String,
     enum: ['points', 'regions', 'geometry'],
   },
-  metadata: Object,
+  geoMetadata: GeoMetadataSchema,
 });
 
 module.exports = mongoose.model('LayerGeoData', layerGeoDataSchema, 'layerGeoData');

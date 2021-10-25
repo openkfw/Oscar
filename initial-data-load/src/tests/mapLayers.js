@@ -233,7 +233,7 @@ describe('Geo data', () => {
     expect(geoData[0].featureIds).toEqual(geoDataSource3[0].featureIds);
     expect(geoData[0].attributeIds).toEqual(geoDataSource3[0].attributeIds);
     expect(geoData[0].geometryDataTypes).toEqual(geoDataSource3[0].geometryDataTypes);
-    expect(geoData[0].metadata).toEqual(geoDataSource3[0].metadata);
+    expect(geoData[0].geoMetadata).toEqual(geoDataSource3[0].geoMetadata);
 
     expect(geoData[1].referenceId).toEqual(geoDataSource3[1].referenceId);
     expect(geoData[1].geoDataUrl).toBeUndefined();

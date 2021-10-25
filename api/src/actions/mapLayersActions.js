@@ -9,9 +9,11 @@ const getMapLayersWithGeoData = async () => {
   const geoReferenceIds = haveGeoData.map((item) => item.referenceId);
   const geoDataUrls = {};
   const geoMetadata = {};
+  const formats = {}
   haveGeoData.forEach((item) => {
     geoDataUrls[item.referenceId] = item.geoDataUrl;
-    geoMetadata[item.referenceId] = item.metadata;
+    geoMetadata[item.referenceId] = item.geoMetadata;
+    formats[item.referenceId] = item.format;
   });
   const filter = {
     $or: [
@@ -28,6 +30,7 @@ const getMapLayersWithGeoData = async () => {
         ...lr,
         geoDataUrl: geoDataUrls[lr.geoReferenceId],
         geoMetadata: geoMetadata[lr.geoReferenceId],
+        format: formats[lr.geoReferenceId],
       }));
       return { ...layer, layers: sublayers };
     }
@@ -36,6 +39,7 @@ const getMapLayersWithGeoData = async () => {
       ...layer,
       geoDataUrl: geoDataUrls[layer.geoReferenceId],
       geoMetadata: geoMetadata[layer.geoReferenceId],
+      format: formats[layer.geoReferenceId],
     };
   });
   return layersWithGeoDataUrl;
