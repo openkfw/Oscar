@@ -17,7 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-## [1.2.1] - 2021-09-06
+## [1.3.0] - 2021-10-15
+
+### Added
+
+- new calculation function template and tutorial [#41](https://github.com/openkfw/Oscar/issues/41)
+- calculation function for 7 days incidence rate [#42](https://github.com/openkfw/Oscar/issues/42)
+
+## [1.2.3] - 2021-09-28
+
+### Improved
+
+- further timeline enhancements
+
+## [1.2.2] - 2021-09-06
 
 ### Added
 

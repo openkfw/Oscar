@@ -92,4 +92,12 @@ module.exports = [
     date: new Date(now - 1 * oneDay).toISOString(),
     csvFileName: 'Total_Covid19_cases_per_region.csv',
   },
+  {
+    date: new Date(now - 10 * oneDay).toISOString(),
+    csvFileName: 'population_per_country.csv',
+  },
+  {
+    date: new Date(now - 10 * oneDay).toISOString(),
+    csvFileName: 'population_per_region.csv',
+  },
 ];

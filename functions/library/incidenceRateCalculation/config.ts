@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 import * as dotenv from 'dotenv';
 
 // require and configure dotenv, will load vars in .env in PROCESS.ENV
@@ -11,6 +11,8 @@ const envVarsSchema = Joi.object({
   DB_NAME: Joi.string(),
   LOAD_BOTTLENECK_TIME_LIMIT: Joi.number().default(1000),
   LOAD_BOTTLENECK_MAX_CONCURRENT: Joi.number().default(1),
+  COUNTRY: Joi.string().default(''),
+  CONFIG_FILE_PATH: Joi.string().default('../data/incidenceCalculationConfig.yml'),
 })
   .unknown()
   .required();
@@ -26,6 +28,8 @@ const config = {
   dbName: envVars.DB_NAME,
   bottleneckTimeLimit: envVars.LOAD_BOTTLENECK_TIME_LIMIT,
   bottleneckMaxConcurrent: envVars.LOAD_BOTTLENECK_MAX_CONCURRENT,
+  country: envVars.COUNTRY,
+  configFile: envVars.CONFIG_FILE_PATH,
 };
 
 export default config;

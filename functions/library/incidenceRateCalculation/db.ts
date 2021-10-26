@@ -39,6 +39,104 @@ export const initializeDBConnection = async (context: Context) => {
 };
 
 /**
+ * Get sum of cases for set date interval
+ * @param  {string} collectionName
+ * @param  {string} attributeId
+ * @param  {string} dateTo - end day for the sum interval
+ * @param  {string} dateFrom - start day for the sum interval
+ */
+export const getCasesSum = async (collectionName: string, attributeId: string, dateTo: string, dateFrom: string) => {
+  const { connection } = mongoose;
+  const { db } = connection;
+
+  const sums = await db
+    .collection(collectionName)
+    .aggregate([
+      {
+        $match: {
+          date: { $lte: dateTo, $gte: dateFrom },
+          attributeId,
+        },
+      },
+      {
+        $group: {
+          _id: { featureId: '$featureId' },
+          featureId: { $first: '$featureId' },
+          sum: { $sum: '$valueNumber' },
+          count: { $sum: 1 },
+        },
+      },
+    ])
+    .toArray();
+  return sums;
+};
+
+/**
+ * Gets population for selected list of featureIds
+ * @param  {string} collectionName
+ * @param  {string} attributeId - id of attribute with population data
+ * @param  {Array<string>} featureIds - list of featureIds to fetch population data for
+ */
+export const getPopulationDataForFeatures = async (
+  collectionName: string,
+  attributeId: string,
+  featureIds: Array<string>,
+) => {
+  const { connection } = mongoose;
+  const { db } = connection;
+
+  const populations = await db
+    .collection(collectionName)
+    .find({ attributeId, featureId: { $in: featureIds } })
+    .toArray();
+  return populations;
+};
+
+/**
+ * Count all cases in country from values from all features by attributeId and population data sum
+ * @param  {string} collectionName
+ * @param  {string} attributeId - attribute to get sum for
+ * @param  {string} populationAttributeId - attribute to get country population
+ * @param  {string} dateTo - end day for the sum interval
+ * @param  {string} dateFrom - start day for the sum interval
+ */
+export const getCountryCasesAndPopulationSum = async (
+  collectionName: string,
+  attributeId: string,
+  populationAttributeId: string,
+  dateTo: string,
+  dateFrom: string,
+) => {
+  const { connection } = mongoose;
+  const { db } = connection;
+  const mongodbFilter = [
+    {
+      date: { $lte: dateTo, $gte: dateFrom },
+      attributeId,
+    },
+    { attributeId: populationAttributeId },
+  ];
+
+  const sums = await db
+    .collection(collectionName)
+    .aggregate([
+      {
+        $match: { $or: mongodbFilter },
+      },
+      {
+        $group: {
+          _id: null,
+          featureId: { $first: '$featureId' },
+          attributeId: { $first: '$attributeId' },
+          sum: { $sum: '$valueNumber' },
+        },
+      },
+    ])
+    .toArray();
+  return sums;
+};
+
+/**
  * Store data to database.
  *
  * @param  {string} collectionName Name of the collection.

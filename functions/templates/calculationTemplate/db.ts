@@ -34,6 +34,7 @@ export const initializeDBConnection = async (context: Context) => {
     useUnifiedTopology: true,
     connectTimeoutMS: 360000,
     socketTimeoutMS: 360000,
+    dbName: config.dbName,
   });
   context.log('DB Connection successful');
 };

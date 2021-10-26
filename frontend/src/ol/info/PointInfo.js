@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Overlay from 'ol/Overlay';
 import * as olExtent from 'ol/extent';
-import classnames from 'classnames';
 
 class PointInfo extends React.Component {
   constructor(props) {
@@ -115,14 +114,10 @@ class PointInfo extends React.Component {
   };
 
   render() {
+    const centerRightClass = this.style.centerRight ? 'ol-popup-center-right' : '';
+    const topRightClass = this.style.topRight ? 'ol-popup-top-right' : '';
     return (
-      <div
-        className={classnames('ol-popup', {
-          'ol-popup-center-right': this.style.centerRight,
-          'ol-popup-top-right': this.style.topRight,
-        })}
-        id="detailsPopup"
-        ref={this.popup}>
+      <div className={`ol-popup ${centerRightClass} ${topRightClass}`} id="detailsPopup" ref={this.popup}>
         <div className="popup-header" ref={this.popupHeader} />
         <div className="popup-content" ref={this.popupContent} />
       </div>
