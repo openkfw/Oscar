@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FeatureIdSchema = new mongoose.Schema(
+const FeatureIdsSchema = new mongoose.Schema(
   {
     property: String,
     values: [{ type: String }],
@@ -29,7 +29,7 @@ const layerGeoDataSchema = new mongoose.Schema({
   geoDataUrl: String,
   updateDate: String,
   format: String,
-  featureId: [FeatureIdSchema],
+  featureIds: [FeatureIdsSchema],
   attributeIds: [{ type: String }],
   geometryDataTypes: {
     type: String,

@@ -158,7 +158,7 @@ describe('Geo data', () => {
     expect(geoData).toHaveLength(1);
     expect(geoData[0].name).toEqual(geoDataSource[0].name);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
-    expect(geoData[0].geoDataUrl).toEqual(geoDataSource[0].geoDataUrl);
+    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newName.geojson');
     expect(geoData[0].updateDate - Date.now()).toBeLessThan(60000); // less than 1min
 
     const mapData = await MapLayer.find({}).lean();

@@ -9,7 +9,7 @@ const getMapLayersWithGeoData = async () => {
   const geoReferenceIds = haveGeoData.map((item) => item.referenceId);
   const geoDataUrls = {};
   const geoMetadata = {};
-  const formats = {}
+  const formats = {};
   haveGeoData.forEach((item) => {
     geoDataUrls[item.referenceId] = item.geoDataUrl;
     geoMetadata[item.referenceId] = item.geoMetadata;
