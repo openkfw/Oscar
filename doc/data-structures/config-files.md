@@ -35,19 +35,29 @@ As there are no pre-set attributeIds in database, the attributeIds need to be us
 ```
 
 ## geoData.yml    
-File is basically one long array with items for each geojson that should be stored.      
+File is basically one long array with items for each geodata file that should be stored.
 Structure of one item:    
-_with geojson file provided by url to publicly available source_      
+_with geodata file provided by url to publicly available source_
 ```
 - name: descriptive name for human reference
-  referenceId: unique id for the geojson, the file will be referred by this value
-  geoJSONUrl: full publicly available url
+  referenceId: unique id for the geodata, the file will be referred by this value
+  geoDataUrl: full publicly available url
+  format: file format
+  featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
+  attributeIds: list of all available Features properties
+  geometryDataTypes: types of geographical data
+  geoMetadata: metadata specific for geodata file
 ```     
-_or with geojson file provided in folder './initial-data-load/data/{COUNTRY}/geoData/'_       
+_or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geoData/'_
 ```
 - name: descriptive name for human reference
-  referenceId: unique id for the geojson, the file will be referred by this value
-  geoJSONFilename: name of the file in above mentioned folder
+  referenceId: unique id for the geodata, the file will be referred by this value
+  geoDataFilename: name of the file in above mentioned folder
+  format: file format
+  featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
+  attributeIds: list of all available Features properties
+  geometryDataTypes: types of geographical data
+  geoMetadata: metadata specific for geodata file
 ```
 ## mapLayers.yml
 This config file is one long array with settings for layers in map. As there are multiple types of layers (regions, points on map, any geometrical objects or even combination of them) and also multiple sources of data for one layer, the structure of items in array may vary greatly.   
@@ -57,7 +67,7 @@ This config file is one long array with settings for layers in map. As there are
    
 ### Attributes explained
 **referenceId**: unique id for the layer, the layer will be referred by this value,      
-**geoReferenceId**: unique 'referenceId' of geojson from geoData.yml,       
+**geoReferenceId**: unique 'referenceId' of geodata file from geoData.yml,
 **category**: each layer can be organised into category based on data. In current version, validation allows only one of following: 'Baseline data', 'Health facilities' or 'Covid-19'. 
 **title**: name of the layer in layers menu in UI 
   **layerType**: the application accepts multiple types of geographical data. Either the country is divided in areas ('regions') or there are only coordinates for places ('points'). It can also have just specific geometrical objects in 'geometry' layers or even combination of points and geometry in 'combined' layer. In case there are multiple sources, the overall layer is 'group' and it has 'layers' array with multiple layers of the other types.    

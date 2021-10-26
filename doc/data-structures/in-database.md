@@ -8,20 +8,30 @@ Example data in correct structures can be found in 'Sample' folder.
    
 Data for layers in map view is stored in three different collections in database separately.  Geographical data, informations about layers and styling and last data to be visualised.    
 ### Geographical data
-Geographical data is supported only in [geojson format](https://geojson.org/) as of now.     
+Geographical data is supported in [geojson format](https://geojson.org/) as of now.
 This data is stored in cloud storage (Azure Blob Storage) and information about it is stored in 'layerGeoData' collection in following structure:     
 ```
 referenceId: unique id of this data, will be referred in specific layers
 name: name of the data, for easier human identification
-geoJSONUrl: route in api where this data can be found and fetched from
+geoDataUrl: route in api where this data can be found and fetched from
 updateDate: time of last change, added automatically in timestamp format
+format: file format
+featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
+attributeIds: list of all available Features properties
+geometryDataTypes: types of geographical data
+geoMetadata: metadata specific for geodata file
 ```    
     
 This data is loaded from 'GeoData.yml' config file directly in data/{{COUNTRY}} folder from following structure:
 ```
 referenceId: as in database
 name: as in database
-geoJSONUrl: complete url for data, the data will be fetched and stored in Azure Storage container, please consider licence before using a link with data
+geoDataUrl: complete url for data, the data will be fetched and stored in Azure Storage container, please consider licence before using a link with data
+format: file format
+featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
+attributeIds: list of all available Features properties
+geometryDataTypes: types of geographical data
+geoMetadata: information about the geodata file
 ``` 
      
 ### Layer configuration and informations     
@@ -30,7 +40,7 @@ Layer configurations are saved in 'mapLayers' collection in following structures
 #### Single map layer  
 ```
 referenceId: unique id of layer
-geoReferenceId: referenceId of document in layerGeoData collection with information about geojson file
+geoReferenceId: referenceId of document in layerGeoData collection with information about geodata file
 layerType: type of layer data, valid values: 'regions', 'points', 'geometry', 'combined'
 category: category of data, layers in menu on UI are grouped by this category
 title: user-friendly short description of data shown in UI
@@ -81,7 +91,7 @@ layerType: type of layer data, valid values: 'group'
 category: category of data, layers in menu on UI are grouped by this category
 title: user-friendly short description of data shown in UI
 layers: array with layers of structure from above
-  - geoReferenceId: id of document in layerGeoData collection with information about geojson file
+  - geoReferenceId: id of document in layerGeoData collection with information about geodata file
     layerType: type of layer data, valid values: 'regions', 'points', 'geometry', 'combined'
     title: user-friendly short description of data
     attribute: attributeId for values in database or name of property in geojson
