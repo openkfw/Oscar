@@ -1,0 +1,110 @@
+- referenceId: "slovakia_regions"
+  layerType: "regions"
+  category: "Baseline data"
+  title: "Slovakia regions"
+  featureId: "name"
+  style:
+    fillColor:
+      type: "colormap"
+      value: "blue"
+    strokeColor:
+      type: "color"
+      value: "rgba(255,255,255,0.2)"
+  legend:
+    - type: "colormap"
+      color: "blue"
+  metadata:
+    description: "Regions of Slovak Republic"
+    sourceWebsite: "https://www.geoportal.sk/"
+    sourceOrganisation: "GKÚ Bratislava"
+    updateFrequency: "None"
+    unit: ""
+    dataRetrievalDescription: "Data downloaded from source, converted to geojson and uploaded manually."
+  timeseries: false
+
+- referenceId: "dailyCasesPerAdmin1"
+  layerType: "regions"
+  category: "Covid-19"
+  title: "Daily Covid-19 cases per region"
+  attribute: "Daily Covid19 Cases Per Admin1"
+  attributeDescription:
+    descriptionText: "COVID-19 New Cases: {{Daily Covid19 Cases Per Admin1}}"
+    featureText: "{{featureId}} kraj"
+  featureId: "name"
+  style:
+    fillColor:
+      type: "colormap"
+      value: "red"
+    min: 0
+    max: 100
+    strokeColor:
+      type: "color"
+      value: "rgba(255,255,255,0.2)"
+  legend:
+    - type: "colormap"
+      color: "red"
+      min: 0
+      max: 100
+  metadata:
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."
+  timeseries: true
+
+- referenceId: "7daysIncidenceRatePerProvince"
+  layerType: "regions"
+  category: "Covid-19"
+  title: "7-day incidence rate per 100,000 population per region"
+  attribute: "7 Days Incidence Rate Per Admin1"
+  attributeDescription:
+    descriptionText: "Incidence rate: {{7 Days Incidence Rate Per Admin1}}"
+    featureText: "{{featureId}} kraj"
+  featureId: name
+  style:
+    fillColor:
+      type: "colormap"
+      value: "red"
+    min: 0
+    max: 20
+    strokeColor:
+      type: "color"
+      value: "rgba(255,255,255,0.5)"
+  legend:
+    - type: "colormap"
+      color: "red"
+      min: 0
+      max: 20
+  metadata:
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."
+  timeseries: false
+
+- referenceId: "hospitalHealthSites"
+  geoReferenceId: "slovakiaHospitals"
+  layerType: "points"
+  category: "Health facilities"
+  title: "Hospitals"
+  attribute: "name"
+  attributeDescription:
+    descriptionText: "Health site ({{amenity}}): {{name}}"
+    noDataMessage: "No site name available"
+  style:
+    fillColor:
+      type: "color"
+      value: "rgba(0, 80, 0, 1)"
+    strokeColor:
+      type: "color"
+      value: "rgba(0, 102, 0, 0.2)"
+  legend:
+    - type: "color"
+      color: "rgba(0, 80, 0, 1)"
+      description: "Hospital"
+  metadata:
+    description: "Some made up hospitals as sample for points on map. Does not represent reality."
+    updateFrequency: "On demand"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was created by one of developers."
+  timeseries: false

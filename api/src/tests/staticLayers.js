@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../config/express');
 const LayerGeoData = require('../dbSchemas/layerGeoDataSchema');
 const { MapLayer, GroupMapLayer } = require('../dbSchemas/mapLayersSchema');
-const { mapLayersInDb, layerGeoDataInDb } = require('../testUtils/testData/staticLayers');
+const { mapLayersInDb, layerGeoDataInDb, mapLayerWithoutGeodata } = require('../testUtils/testData/staticLayers');
 
 jest.mock('azure-storage');
 jest.mock('../config/config.js', () => {
@@ -14,14 +14,16 @@ jest.mock('../config/config.js', () => {
 
 describe('GET /api/staticLayers', () => {
   it('should return layer, even if no geojson data are in db', async () => {
-    await MapLayer.create(mapLayersInDb[0]);
+    await MapLayer.create(mapLayerWithoutGeodata);
 
     const res = await request(app).get('/api/staticLayers/');
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
+    expect(res.body[0].referenceId).toEqual(mapLayerWithoutGeodata.referenceId);
+    expect(res.body[0].category).toEqual(mapLayerWithoutGeodata.category);
+    expect(res.body[0].title).toEqual(mapLayerWithoutGeodata.title);
   });
-});
-describe('GET /api/staticLayers', () => {
+
   it('should return all layers in db sorted by title', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     // saved in reverse order to check the sorting
@@ -35,6 +37,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[0].referenceId);
     expect(res.body[0].geoJSONUrl).toEqual(layerGeoDataInDb.geoJSONUrl);
   });
+
   it('should return layer of type group with correct geoJSON links in sublayers', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     await GroupMapLayer.create(mapLayersInDb[2]);
