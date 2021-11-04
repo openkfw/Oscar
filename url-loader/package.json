@@ -31,7 +31,8 @@
   "resolutions": {
     "ansi-regex": "^5.0.1",
     "set-value": "^4.0.1",
-    "node-notifier": "^8.0.1" 
+    "node-notifier": "^8.0.1",
+    "validator": "^13.7.0" 
   },
   "husky": {
     "hooks": {
