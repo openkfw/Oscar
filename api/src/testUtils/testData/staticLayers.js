@@ -10,7 +10,7 @@ const layerGeoDataInDb = {
   ],
   attributeIds: ['id', 'amenity'],
   geometryDataTypes: 'points',
-  geoMetadata: {
+  metadata: {
     description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
     updateFrequency: 'never',
     unit: 'n/a',

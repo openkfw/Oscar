@@ -8,7 +8,7 @@ const FeatureIdsSchema = new mongoose.Schema(
   { _id: false },
 );
 
-const GeoMetadataSchema = new mongoose.Schema(
+const metadataSchema = new mongoose.Schema(
   {
     description: String,
     sourceWebsite: String,
@@ -35,7 +35,7 @@ const layerGeoDataSchema = new mongoose.Schema({
     type: String,
     enum: ['points', 'regions', 'geometry'],
   },
-  geoMetadata: GeoMetadataSchema,
+  metadata: metadataSchema,
 });
 
 module.exports = mongoose.model('LayerGeoData', layerGeoDataSchema, 'layerGeoData');

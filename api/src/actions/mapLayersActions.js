@@ -12,7 +12,7 @@ const getMapLayersWithGeoData = async () => {
   const formats = {};
   haveGeoData.forEach((item) => {
     geoDataUrls[item.referenceId] = item.geoDataUrl;
-    geoMetadata[item.referenceId] = item.geoMetadata;
+    geoMetadata[item.referenceId] = item.metadata;
     formats[item.referenceId] = item.format;
   });
   const filter = {
