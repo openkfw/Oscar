@@ -51,7 +51,8 @@
     "normalize-url": "^6.0.1",
     "glob-parent": "^5.1.2",
     "set-value": "^4.0.1",
-    "ws": "^7.4.6"
+    "ws": "^7.4.6",
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "node index.js",
