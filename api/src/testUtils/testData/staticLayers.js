@@ -210,11 +210,8 @@ const mapLayerWithoutGeodata = {
   },
   legend: [
     {
-      type: 'colormap',
-      color: {
-        type: 'colormap',
-        value: 'green',
-      },
+      type: 'color',
+      color: 'red',
       min: 0,
       max: 10,
       description: 'Colormap description in legend',
