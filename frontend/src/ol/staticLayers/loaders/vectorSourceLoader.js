@@ -9,8 +9,13 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
     loader: async (extent, resolution, projection) => {
       handleIsLoading({ title, type }, 'add');
       const url = layerData.geoJSONUrl;
+      let response;
 
-      const response = await getGeojsonData(url);
+      if (url) {
+        response = await getGeojsonData(url);
+      } else {
+        response = [];
+      }
 
       if (response) {
         if (response.features && response.features[0]) {
