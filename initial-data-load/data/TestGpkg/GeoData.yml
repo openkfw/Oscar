@@ -1,0 +1,12 @@
+- name: "Country - regions"
+  referenceId: "countryRegions"
+  geoDataFilename: ""
+  format: "gpkg"
+  featureIds: [{property: "name", values: []}, { property: "fullname", values: []}] 
+  attributeIds: [] 
+  geometryDataTypes: "geometry"
+  geoMetadata: 
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."

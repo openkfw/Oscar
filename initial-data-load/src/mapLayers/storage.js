@@ -19,7 +19,7 @@ const sendLayerFileAsBlob = (stream, streamLength, blobName) => {
   });
 };
 
-const saveGeoJsonFromFileToStorage = async (filePath, fileName) => {
+const saveGeoDataFromFileToStorage = async (filePath, fileName) => {
   return new Promise((resolve, reject) => {
     blobService.createBlockBlobFromLocalFile(azureStorageLayerContainerName, fileName, filePath, (err) => {
       if (err) {
@@ -31,10 +31,10 @@ const saveGeoJsonFromFileToStorage = async (filePath, fileName) => {
   });
 };
 
-const saveGeoJsonFromUrlSourceToStorage = async (sourceUrl) => {
+const saveGeoDataFromUrlSourceToStorage = async (sourceUrl) => {
   const result = await axios.get(sourceUrl, { responseType: 'stream' });
   if (result.status !== 200) {
-    logger.error(`Failed to fetch geojson data from ${sourceUrl}`);
+    logger.error(`Failed to fetch geodata from ${sourceUrl}`);
     return false;
   }
   const filename = `${Date.now()}_${sourceUrl.split('/').pop()}`;
@@ -42,4 +42,4 @@ const saveGeoJsonFromUrlSourceToStorage = async (sourceUrl) => {
   return filename;
 };
 
-module.exports = { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage };
+module.exports = { saveGeoDataFromFileToStorage, saveGeoDataFromUrlSourceToStorage };

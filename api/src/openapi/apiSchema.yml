@@ -141,14 +141,14 @@ paths:
                 items:
                   $ref: "#/components/schemas/StaticLayer"
 
-  /api/uploads/geojsons/{fileName}:
+  /api/uploads/geodata/{fileName}:
     get:
-      summary: Get geojson file from storage
+      summary: Get geodata file from storage
       parameters:
         - name: fileName
           in: path
           required: true
-          description: Name of geojson file
+          description: Name of geodata file
           schema:
             type: string
             example: provinces.geojson

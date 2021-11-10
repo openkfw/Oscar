@@ -7,7 +7,7 @@ const { azureStorageLayerContainerName } = require('../config/config');
 const router = express.Router();
 
 router.get(
-  '/geojsons/:fileName',
+  '/geodata/:fileName',
   swaggerValidation.validate,
   forwardError(async (req, res) => {
     const { fileName } = req.params;

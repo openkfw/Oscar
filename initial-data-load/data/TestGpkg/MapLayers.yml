@@ -1,0 +1,16 @@
+- referenceId: "country_regions"
+  geoReferenceId: "countryRegions"
+  layerType: "geometry"
+  category: "Baseline data"
+  title: "Country regions"
+  style:
+    fillColor:
+      type: "colormap"
+      value: "blue"
+    strokeColor:
+      type: "color"
+      value: "rgba(255,255,255,0.2)"
+  legend:
+    - type: "colormap"
+      color: "blue"
+  timeseries: false

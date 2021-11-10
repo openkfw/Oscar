@@ -158,7 +158,7 @@ describe('Geo data', () => {
     expect(geoData).toHaveLength(1);
     expect(geoData[0].name).toEqual(geoDataSource[0].name);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
-    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newName.geojson');
+    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geodata/newName.geojson');
     expect(geoData[0].updateDate - Date.now()).toBeLessThan(60000); // less than 1min
 
     const mapData = await MapLayer.find({}).lean();
@@ -228,7 +228,7 @@ describe('Geo data', () => {
     const geoData = await LayerGeoData.find({}).lean();
     expect(geoData).toHaveLength(2);
     expect(geoData[0].referenceId).toEqual(geoDataSource3[0].referenceId);
-    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newFilename.geojson');
+    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geodata/newFilename.geojson');
     expect(geoData[0].format).toEqual(geoDataSource3[0].format);
     expect(geoData[0].featureIds).toEqual(geoDataSource3[0].featureIds);
     expect(geoData[0].attributeIds).toEqual(geoDataSource3[0].attributeIds);

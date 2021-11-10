@@ -3,6 +3,7 @@ import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import { bbox } from 'ol/loadingstrategy';
 import axios from 'axios';
+import gpkgSourceLoader from '../loaders/gpkgSourceLoader';
 
 import { geometryStyleFactory } from '../styles';
 
@@ -30,13 +31,19 @@ const createVectorSource = (layerData, handleIsLoading) => {
 };
 
 const geometryLayer = (layerData, handleIsLoading) => {
+  let vectorSource;
+  if (layerData.format === 'gpkg') {
+    vectorSource = gpkgSourceLoader(layerData, handleIsLoading);
+  } else {
+    vectorSource = createVectorSource(layerData, handleIsLoading);
+  }
   const newLayer = new VectorLayer({
     title: layerData.title,
     attribute: layerData.attribute,
     attributeDescription: layerData.attributeDescription,
     featureId: layerData.featureId,
     type: layerData.layerType,
-    source: createVectorSource(layerData, handleIsLoading),
+    source: vectorSource,
     zIndex: 1,
     style: geometryStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
