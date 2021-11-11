@@ -4,7 +4,6 @@
   "private": true,
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@ngageoint/geopackage": "^3.0.9",
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.10.0",
@@ -69,7 +68,8 @@
     "glob-parent": "^5.1.2",
     "immer": "^9.0.6",
     "nth-check": "^2.0.1",
-    "set-value": "^4.0.1"
+    "set-value": "^4.0.1",
+    "canvas": "^2.6.1"
   },
   "author": "",
   "browserslist": {
