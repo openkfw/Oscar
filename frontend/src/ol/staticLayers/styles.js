@@ -144,7 +144,7 @@ export const geometryStyleFactory = (attribute, layerStyle) => {
     const value = feature.get(attribute);
     strokeParameters.color =
       getColorFromLayerStyle(value, layerStyle.strokeColor, layerStyle.min, layerStyle.max) || 'green';
-    if (layerStyle.strokeDecorations.includes('lineDash')) {
+    if (layerStyle.strokeDecorations && layerStyle.strokeDecorations.includes('lineDash')) {
       strokeParameters.lineDash = [4];
     } else {
       strokeParameters.width = 2;

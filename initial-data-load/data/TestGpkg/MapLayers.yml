@@ -5,12 +5,18 @@
   title: "Country regions"
   style:
     fillColor:
-      type: "colormap"
-      value: "blue"
+      type: "color"
+      value: "rgba(0, 102, 0, 0.5)"
     strokeColor:
       type: "color"
-      value: "rgba(255,255,255,0.2)"
+      value: "green"
   legend:
-    - type: "colormap"
-      color: "blue"
+    - type: "color"
+      color: "rgba(0, 102, 0, 0.5)"
+      description: "countryRegions"
+  metadata:
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."
   timeseries: false

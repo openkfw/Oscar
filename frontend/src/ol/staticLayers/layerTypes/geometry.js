@@ -45,7 +45,7 @@ const geometryLayer = (layerData, handleIsLoading) => {
     type: layerData.layerType,
     source: vectorSource,
     zIndex: 1,
-    style: geometryStyleFactory(layerData.attribute, layerData.style),
+    style: layerData.style ? geometryStyleFactory(layerData.attribute, layerData.style) : undefined,
     legend: layerData.legend,
   });
   newLayer.selectable = true;
