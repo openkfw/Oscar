@@ -46,6 +46,20 @@ const LegendSchema = new mongoose.Schema(
   },
   { _id: false },
 );
+const geoMetadataSchema = new mongoose.Schema(
+  {
+    description: String,
+    sourceWebsite: String,
+    sourceOrganisation: String,
+    updateDate: String,
+    updateFrequency: String,
+    unit: String,
+    reliabilityScore: String,
+    dataRetrievalDescription: String,
+    dataCalculationDescription: String
+  },
+  { _id: false },
+);
 
 const MetadataSchema = new mongoose.Schema(
   {
@@ -58,6 +72,7 @@ const MetadataSchema = new mongoose.Schema(
     reliabilityScore: String,
     dataRetrievalDescription: String,
     dataCalculationDescription: String,
+    geoMetadata: geoMetadataSchema
   },
   { _id: false },
 );

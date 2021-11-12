@@ -19,7 +19,6 @@ format: file format
 featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
 attributeIds: list of all available Features properties
 geometryDataTypes: types of geographical data
-metadata: metadata specific for geodata file
 ```    
     
 This data is loaded from 'GeoData.yml' config file directly in data/{{COUNTRY}} folder from following structure:
@@ -31,7 +30,6 @@ format: file format
 featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
 attributeIds: list of all available Features properties
 geometryDataTypes: types of geographical data
-metadata: information about the geodata file
 ``` 
      
 ### Layer configuration and informations     

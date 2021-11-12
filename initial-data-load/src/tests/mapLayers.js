@@ -165,6 +165,7 @@ describe('Geo data', () => {
     expect(mapData).toHaveLength(3);
     expect(mapData[0].referenceId).toEqual(mapLayerDataSource[0].referenceId);
     expect(mapData[0].geoReferenceId).toEqual(mapLayerDataSource[0].geoReferenceId);
+    expect(mapData[0].metadata.geometadata).toEqual(mapLayerDataSource[0].metadata.geometadata);
     expect(mapData[1].referenceId).toEqual(mapLayerDataSource[1].referenceId);
     expect(mapData[1].geoReferenceId).toEqual(mapLayerDataSource[1].geoReferenceId);
     expect(mapData[2].referenceId).toEqual(mapLayerDataSource[2].referenceId);
@@ -233,7 +234,6 @@ describe('Geo data', () => {
     expect(geoData[0].featureIds).toEqual(geoDataSource3[0].featureIds);
     expect(geoData[0].attributeIds).toEqual(geoDataSource3[0].attributeIds);
     expect(geoData[0].geometryDataTypes).toEqual(geoDataSource3[0].geometryDataTypes);
-    expect(geoData[0].metadata).toEqual(geoDataSource3[0].metadata);
 
     expect(geoData[1].referenceId).toEqual(geoDataSource3[1].referenceId);
     expect(geoData[1].geoDataUrl).toBeUndefined();

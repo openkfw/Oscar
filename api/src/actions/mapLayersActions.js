@@ -8,11 +8,9 @@ const getMapLayersWithGeoData = async () => {
   }
   const geoReferenceIds = haveGeoData.map((item) => item.referenceId);
   const geoDataUrls = {};
-  const geoMetadata = {};
   const formats = {};
   haveGeoData.forEach((item) => {
     geoDataUrls[item.referenceId] = item.geoDataUrl;
-    geoMetadata[item.referenceId] = item.metadata;
     formats[item.referenceId] = item.format;
   });
   const filter = {
@@ -29,7 +27,6 @@ const getMapLayersWithGeoData = async () => {
       const sublayers = layer.layers.map((lr) => ({
         ...lr,
         geoDataUrl: geoDataUrls[lr.geoReferenceId],
-        geoMetadata: geoMetadata[lr.geoReferenceId],
         format: formats[lr.geoReferenceId],
       }));
       return { ...layer, layers: sublayers };
@@ -38,7 +35,6 @@ const getMapLayersWithGeoData = async () => {
     return {
       ...layer,
       geoDataUrl: geoDataUrls[layer.geoReferenceId],
-      geoMetadata: geoMetadata[layer.geoReferenceId],
       format: formats[layer.geoReferenceId],
     };
   });

@@ -10,12 +10,6 @@ const layerGeoDataInDb = {
   ],
   attributeIds: ['id', 'amenity'],
   geometryDataTypes: 'points',
-  metadata: {
-    description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
-    updateFrequency: 'never',
-    unit: 'n/a',
-    dataRetrievalDescription: 'Data was randomly created.',
-  },
 };
 
 const mapLayersInDb = [
@@ -49,6 +43,18 @@ const mapLayersInDb = [
         description: 'Colormap description in legend',
       },
     ],
+    metadata: {
+      description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
+      updateFrequency: 'never',
+      unit: 'n/a',
+      dataRetrievalDescription: 'Data was randomly created.',
+      geoMetadata: { 
+        description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
+        updateFrequency: 'never',
+        unit: 'n/a',
+        dataRetrievalDescription: 'Data was randomly created.'
+      }
+    },
   },
   {
     referenceId: 'sampleMapLayer2',
@@ -165,6 +171,18 @@ const mapLayersInDb = [
     layerType: 'group',
     category: 'Health facilities',
     title: 'Sample layer of group type',
+    metadata: {
+      description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
+      updateFrequency: 'never',
+      unit: 'n/a',
+      dataRetrievalDescription: 'Data was randomly created.',
+      geoMetadata: { 
+        description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
+        updateFrequency: 'never',
+        unit: 'n/a',
+        dataRetrievalDescription: 'Data was randomly created.'
+      }
+    },
   },
 ];
 

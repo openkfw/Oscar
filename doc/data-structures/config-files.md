@@ -46,7 +46,6 @@ _with geodata file provided by url to publicly available source_
   featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
   attributeIds: list of all available Features properties
   geometryDataTypes: types of geographical data
-  metadata: metadata specific for geodata file
 ```     
 _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geoData/'_
 ```
@@ -57,7 +56,6 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
   featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
   attributeIds: list of all available Features properties
   geometryDataTypes: types of geographical data
-  metadata: metadata specific for geodata file
 ```
 ## mapLayers.yml
 This config file is one long array with settings for layers in map. As there are multiple types of layers (regions, points on map, any geometrical objects or even combination of them) and also multiple sources of data for one layer, the structure of items in array may vary greatly.   
