@@ -48,12 +48,12 @@ const mapLayersInDb = [
       updateFrequency: 'never',
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
-      geoMetadata: { 
+      geoMetadata: {
         description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
         updateFrequency: 'never',
         unit: 'n/a',
-        dataRetrievalDescription: 'Data was randomly created.'
-      }
+        dataRetrievalDescription: 'Data was randomly created.',
+      },
     },
   },
   {
@@ -176,12 +176,12 @@ const mapLayersInDb = [
       updateFrequency: 'never',
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
-      geoMetadata: { 
+      geoMetadata: {
         description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
         updateFrequency: 'never',
         unit: 'n/a',
-        dataRetrievalDescription: 'Data was randomly created.'
-      }
+        dataRetrievalDescription: 'Data was randomly created.',
+      },
     },
   },
 ];

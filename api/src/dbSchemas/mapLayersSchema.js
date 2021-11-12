@@ -56,7 +56,7 @@ const geoMetadataSchema = new mongoose.Schema(
     unit: String,
     reliabilityScore: String,
     dataRetrievalDescription: String,
-    dataCalculationDescription: String
+    dataCalculationDescription: String,
   },
   { _id: false },
 );
@@ -72,7 +72,7 @@ const MetadataSchema = new mongoose.Schema(
     reliabilityScore: String,
     dataRetrievalDescription: String,
     dataCalculationDescription: String,
-    geoMetadata: geoMetadataSchema
+    geoMetadata: geoMetadataSchema,
   },
   { _id: false },
 );
