@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const { LAYER_TYPES, GEO_FORMATS } = require('./constants');
+const MetadataSchema = require('./metadataSchema')
 
-const FeatureIdsSchema = new mongoose.Schema(
+const FeatureIdSchema = new mongoose.Schema(
   {
     property: String,
     values: [{ type: String }],
@@ -13,13 +15,17 @@ const layerGeoDataSchema = new mongoose.Schema({
   name: String,
   geoDataUrl: String,
   updateDate: String,
-  format: String,
-  featureIds: [FeatureIdsSchema],
+  format: {
+    type: String,
+    enum: GEO_FORMATS
+  },
+  featureIds: [FeatureIdSchema],
   attributeIds: [{ type: String }],
   geometryDataTypes: {
     type: String,
-    enum: ['points', 'regions', 'geometry'],
+    enum: LAYER_TYPES,
   },
+  metadata: MetadataSchema,
 });
 
 module.exports = mongoose.model('LayerGeoData', layerGeoDataSchema, 'layerGeoData');

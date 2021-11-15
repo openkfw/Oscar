@@ -155,6 +155,107 @@ const LayerInfoModal = ({ isOpen, handleModalClose, modalData, title }) => {
               </Grid>
             </Grid>
           )}
+          {modalData.geoMetadata && (
+            <>
+              <Typography variant="h2">For geographical data</Typography>
+              {modalData.geoMetadata.description && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Description
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.description}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.sourceWebsite && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Source Website
+                  </Grid>
+                  <Grid item xs={12} sm={8}>
+                    <a
+                      href={modalData.geoMetadata.sourceWebsite}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className={classes.modalRowLink}>
+                      {modalData.geoMetadata.sourceWebsite}
+                    </a>
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.sourceOrganisation && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Source Organisation
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.sourceOrganisation}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.updateDate && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Update Date
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {moment(modalData.geoMetadata.updateDate).format('YYYY-MM-DD')}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.updateFrequency && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Update Frequency
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.updateFrequency}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.unit && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Unit
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.unit}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.reliabilityScore && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Reliability Score
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.reliabilityScore}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.dataRetrievalDescription && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Data Retrieval Description
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.dataRetrievalDescription}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.dataCalculationDescription && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Data Calculation Description
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.dataCalculationDescription}
+                  </Grid>
+                </Grid>
+              )}
+            </>
+          )}
         </Grid>
       </div>
     </Modal>

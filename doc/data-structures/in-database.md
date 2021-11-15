@@ -3,15 +3,19 @@
 Overview of data structures used in application.
 
 # Map data config structure
-To import data for map view, folder with config files directly in initial-data-load folder is used. Based on 'COUNTRY' environment variable, folder with the same name as is value in this variable is selected from 'data' folder and data from config files inside are processed.    
-Example data in correct structures can be found in 'Sample' folder.      
-   
-Data for layers in map view is stored in three different collections in database separately.  Geographical data, informations about layers and styling and last data to be visualised.    
+
+To import data for map view, folder with config files directly in initial-data-load folder is used. Based on 'COUNTRY' environment variable, folder with the same name as is value in this variable is selected from 'data' folder and data from config files inside are processed.  
+Example data in correct structures can be found in 'Sample' folder.
+
+Data for layers in map view is stored in three different collections in database separately. Geographical data, informations about layers and styling and last data to be visualised.
+
 ### Geographical data
+
 Geographical data is supported in [geojson format](https://geojson.org/) as of now.
-This data is stored in cloud storage (Azure Blob Storage) and information about it is stored in 'layerGeoData' collection in following structure:     
+This data is stored in cloud storage (Azure Blob Storage) and information about it is stored in 'layerGeoData' collection in following structure:
+
 ```
-referenceId: unique id of this data, will be referred in specific layers
+referenceId: unique id of this data, will be referred in map layers
 name: name of the data, for easier human identification
 geoDataUrl: route in api where this data can be found and fetched from
 updateDate: time of last change, added automatically in timestamp format
@@ -19,9 +23,20 @@ format: file format
 featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
 attributeIds: list of all available Features properties
 geometryDataTypes: types of geographical data
-```    
-    
+metadata: information about the geographical data in file
+  description: String
+  sourceWebsite: String
+  sourceOrganization: String
+  updateDate: String
+  updateFrequency: String
+  unit: String
+  reliabilityScore: String
+  dataRetrievalDescription: String
+  dataCalculationDescription: String
+```
+
 This data is loaded from 'GeoData.yml' config file directly in data/{{COUNTRY}} folder from following structure:
+
 ```
 referenceId: as in database
 name: as in database
@@ -30,12 +45,24 @@ format: file format
 featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
 attributeIds: list of all available Features properties
 geometryDataTypes: types of geographical data
-``` 
-     
-### Layer configuration and informations     
-Layer configurations are saved in 'mapLayers' collection in following structures: 
+metadata: information about the geographical data in file
+  description: String
+  sourceWebsite: String
+  sourceOrganization: String
+  updateDate: String
+  updateFrequency: String
+  unit: String
+  reliabilityScore: String
+  dataRetrievalDescription: String
+  dataCalculationDescription: String
+```
 
-#### Single map layer  
+### Layer configuration and informations
+
+Layer configurations are saved in 'mapLayers' collection in following structures:
+
+#### Single map layer
+
 ```
 referenceId: unique id of layer
 geoReferenceId: referenceId of document in layerGeoData collection with information about geodata file
@@ -62,7 +89,7 @@ style:
   missingValueColor: color used if the value is missing
   clusterFillColor: if the features are clustered, this color is used for clustered feature
   clusterStrokeColor: if the features are clustered, this color is used for clustered feature
-  strokeDecorations: 
+  strokeDecorations:
     - 'lineDash'    lines should be dashed
     - 'widthByAttribute'      width of lines is calculated based on this attribute
 legend: array with all values for legend
@@ -80,9 +107,11 @@ metadata: information about the layer
   dataRetrievalDescription: String
   dataCalculationDescription: String
 ```
-or 
 
-#### Group map layer    
+or
+
+#### Group map layer
+
 ```
 referenceId: unique id of layer
 layerType: type of layer data, valid values: 'group'
@@ -112,7 +141,7 @@ layers: array with layers of structure from above
       missingValueColor: color used if the value is missing
       clusterFillColor: if the features are clustered, this color is used for clustered feature
       clusterStrokeColor: if the features are clustered, this color is used for clustered feature
-      strokeDecorations: 
+      strokeDecorations:
         - 'lineDash'    lines should be dashed
         - 'widthByAttribute'      lines are calculated based on this attribute
     legend: array with all values for legend
@@ -129,15 +158,18 @@ metadata: information about the layer
   reliabilityScore: String
   dataRetrievalDescription: String
   dataCalculationDescription: String
-```    
-    
+```
+
 # Attributes
-Attributes are stored in attributes collection. Each document is created for one geographical unit in official levels and for given date. They are used in [map view](../UI/map.md), linked by 'attribute' in mapLayers collection and 'attributeId' in attributes collection.     
-The data is stored in following structure:    
+
+Attributes are stored in attributes collection. Each document is created for one geographical unit in official levels and for given date. They are used in [map view](../UI/map.md), linked by 'attribute' in mapLayers collection and 'attributeId' in attributes collection.  
+The data is stored in following structure:
+
 ```
 attributeId: name of attribute, defines what the value is
 featureId: name of geographical area, defines where the value is
 date: date, defines when the data was taken, ISO string
-dataDate: specific value for date from data in format other than ISO string, or data from time interval 
-```    
+dataDate: specific value for date from data in format other than ISO string, or data from time interval
+```
+
 This data is either stored by automatic processes or can be uploaded from csv files, both from initial-data-load or from UI, if respective feature is enabled. You can find more about how to load this data in this [tutorial](../tutorials/run-application-with-own-data.md).

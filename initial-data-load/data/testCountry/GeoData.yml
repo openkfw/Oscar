@@ -1,3 +1,8 @@
 - name: "Sample Geo Json"
   referenceId: "sampleGeoJSON"
   geoDataUrl: "someUrl/1600424721066.geojson"
+  metadata:
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."

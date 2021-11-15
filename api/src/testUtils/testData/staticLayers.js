@@ -10,6 +10,12 @@ const layerGeoDataInDb = {
   ],
   attributeIds: ['id', 'amenity'],
   geometryDataTypes: 'points',
+  metadata: {
+    description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
+    updateFrequency: 'never',
+    unit: 'n/a',
+    dataRetrievalDescription: 'Data was randomly created.',
+  },
 };
 
 const mapLayersInDb = [
@@ -48,12 +54,6 @@ const mapLayersInDb = [
       updateFrequency: 'never',
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
-      geoMetadata: {
-        description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
-        updateFrequency: 'never',
-        unit: 'n/a',
-        dataRetrievalDescription: 'Data was randomly created.',
-      },
     },
   },
   {
@@ -176,13 +176,34 @@ const mapLayersInDb = [
       updateFrequency: 'never',
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
-      geoMetadata: {
-        description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
-        updateFrequency: 'never',
-        unit: 'n/a',
-        dataRetrievalDescription: 'Data was randomly created.',
-      },
     },
+  },
+  {
+    referenceId: 'sampleMapLayer4',
+    layerType: 'points',
+    category: 'Baseline data',
+    title: 'Sample map layer title4',
+    attribute: 'attributeName4',
+    attributeDescription: {
+      descriptionText: 'Attribute description4.',
+    },
+    style: {
+      fillColor: {
+        type: 'colormap',
+        value: 'green',
+      },
+      min: 0,
+      max: 10,
+    },
+    legend: [
+      {
+        type: 'colormap',
+        color: 'green',
+        min: 0,
+        max: 10,
+        description: 'Colormap description in legend4',
+      },
+    ],
   },
 ];
 

@@ -18,18 +18,11 @@
       min: 0
       max": 10
       description: "Colormap description in legend"
-  metadata: {
-    description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
-    updateFrequency: 'never',
-    unit: 'n/a',
-    dataRetrievalDescription: 'Data was randomly created.',
-    geoMetadata: { 
-      description: 'Sample data created just for this purpose. Do not represent the reality in any time.',
-      updateFrequency: 'never',
-      unit: 'n/a',
-      dataRetrievalDescription: 'Data was randomly created.'
-    }
-  }   
+  metadata:
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."
 
 - referenceId: "sampleMapLayer2"
   geoReferenceId: "sampleGeoJSON"
