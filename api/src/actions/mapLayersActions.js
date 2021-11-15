@@ -6,18 +6,20 @@ const getMapLayersWithGeoData = async () => {
   const haveGeoData = await getLayerGeoDataWithUrl();
 
   let geoReferenceIds = [];
-  let geoData = {};
+  const geoData = {};
   let filterOr = [];
 
   if (haveGeoData) {
     geoReferenceIds = haveGeoData.map((item) => item.referenceId);
     haveGeoData.forEach((item) => {
-      geoData[item.referenceId] = item
+      geoData[item.referenceId] = item;
     });
 
     // filter mapLayers only for the ones with geoData in file or potentially in database
-    filterOr = [{ geoReferenceId: { $in: geoReferenceIds } },
-    { layers: { $elemMatch: { geoReferenceId: { $in: geoReferenceIds } } } }]
+    filterOr = [
+      { geoReferenceId: { $in: geoReferenceIds } },
+      { layers: { $elemMatch: { geoReferenceId: { $in: geoReferenceIds } } } },
+    ];
   }
 
   const filter = {
@@ -27,20 +29,20 @@ const getMapLayersWithGeoData = async () => {
     ],
   };
 
-
   const layers = await model.getMapLayers(filter);
 
   const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
       const sublayers = layer.layers.map((lr) => {
         if (geoData[lr.geoDataUrl]) {
-          return ({
+          return {
             ...lr,
             geoDataUrl: geoData[lr.geoReferenceId].geoDataUrl,
             format: geoData[lr.geoReferenceId].format,
-            metadata: { geoMetadata: geoData[lr.geoReferenceId].metadata }
-          })
-        } else { return lr }
+            metadata: { geoMetadata: geoData[lr.geoReferenceId].metadata },
+          };
+        }
+        return lr;
       });
       return { ...layer, layers: sublayers };
     }
@@ -49,9 +51,10 @@ const getMapLayersWithGeoData = async () => {
         ...layer,
         geoDataUrl: geoData[layer.geoReferenceId].geoDataUrl,
         format: geoData[layer.geoReferenceId].format,
-        metadata: { ...layer.metadata, geoMetadata: geoData[layer.geoReferenceId].metadata }
+        metadata: { ...layer.metadata, geoMetadata: geoData[layer.geoReferenceId].metadata },
       };
-    } else { return layer }
+    }
+    return layer;
   });
   return layersWithGeoDataUrl;
 };

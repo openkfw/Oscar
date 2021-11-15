@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const MetadataSchema = new mongoose.Schema(
   {
@@ -14,4 +14,4 @@ const MetadataSchema = new mongoose.Schema(
   },
   { _id: false },
 );
-module.exports = MetadataSchema
+module.exports = MetadataSchema;

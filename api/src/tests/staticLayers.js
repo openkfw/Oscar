@@ -24,8 +24,6 @@ describe('GET /api/staticLayers', () => {
   it('should return point layer without geoDataReferenceId', async () => {
     await SingleMapLayer.create(mapLayersInDb[3]);
 
-    const inDB = await MapLayer.find();
-
     const res = await request(app).get('/api/staticLayers');
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
