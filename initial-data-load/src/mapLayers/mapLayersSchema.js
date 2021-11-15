@@ -49,8 +49,6 @@ const LegendSchema = new mongoose.Schema(
   { _id: false },
 );
 
-
-
 const OneMapLayerData = new mongoose.Schema(
   {
     layerType: {
