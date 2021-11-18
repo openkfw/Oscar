@@ -28,7 +28,7 @@
     "redux-axios-middleware": "^4.0.0",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "validator": "^13.5.2"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -66,11 +66,12 @@
     "**/ansi-html": "npm:ansi-html-community@^0.0.8",
     "ansi-regex": "^5.0.1",
     "browserslist": "^4.16.5",
+    "canvas": "^2.6.1",
     "glob-parent": "^5.1.2",
     "immer": "^9.0.6",
     "nth-check": "^2.0.1",
     "set-value": "^4.0.1",
-    "canvas": "^2.6.1"
+    "tar": "^4.4.18"
   },
   "author": "",
   "browserslist": {
