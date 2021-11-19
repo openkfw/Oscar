@@ -17,7 +17,7 @@ const formatLayerGeoData = async (data, country) => {
     logger.info(`Downloading geodata file ${data.geoDataUrl} for layer ${data.referenceId} from url...`);
     const filename = await saveGeoDataFromUrlSourceToStorage(data.geoDataUrl);
     if (filename) {
-      url = `/api/uploads/geodata/${filename}`; 
+      url = `/api/uploads/geodata/${filename}`;
       logger.info(`Layer ${data.name} has new URL for geodata file: ${url}`);
     }
   } else if (data.geoDataFilename) {
