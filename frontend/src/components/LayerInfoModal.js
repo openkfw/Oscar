@@ -157,7 +157,7 @@ const LayerInfoModal = ({ isOpen, handleModalClose, modalData, title }) => {
           )}
           {modalData.geoMetadata && (
             <>
-              <Typography variant="h2">For geographical data</Typography>
+              <Typography variant="h2">Geographical data info</Typography>
               {modalData.geoMetadata.description && (
                 <Grid container item xs={12} spacing={2} className={classes.modalRow}>
                   <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
