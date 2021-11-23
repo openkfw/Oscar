@@ -243,32 +243,4 @@ const newMapLayers = [
   },
 ];
 
-const mapLayerWithoutGeodata = {
-  referenceId: 'sampleMapLayer',
-  layerType: 'regions',
-  category: 'Baseline data',
-  title: 'Sample map layer title',
-  attribute: 'attributeName',
-  attributeDescription: {
-    descriptionText: 'Attribute description.',
-  },
-  style: {
-    fillColor: {
-      type: 'colormap',
-      value: 'green',
-    },
-    min: 0,
-    max: 10,
-  },
-  legend: [
-    {
-      type: 'color',
-      color: 'red',
-      min: 0,
-      max: 10,
-      description: 'Colormap description in legend',
-    },
-  ],
-};
-
-module.exports = { mapLayersInDb, layerGeoDataInDb, newMapLayers, mapLayerWithoutGeodata };
+module.exports = { mapLayersInDb, layerGeoDataInDb, newMapLayers };

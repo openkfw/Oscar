@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../config/express');
 const LayerGeoData = require('../dbSchemas/layerGeoDataSchema');
 const { MapLayer, GroupMapLayer, SingleMapLayer } = require('../dbSchemas/mapLayersSchema');
-const { mapLayersInDb, layerGeoDataInDb, mapLayerWithoutGeodata } = require('../testUtils/testData/staticLayers');
+const { mapLayersInDb, layerGeoDataInDb } = require('../testUtils/testData/staticLayers');
 
 jest.mock('azure-storage');
 jest.mock('../config/config.js', () => {
