@@ -5,30 +5,61 @@ const { getLayerGeoDataWithUrl } = require('../models/layerGeoDataModel');
  * Returns map layers from mapLayers collection with link to GeoJson file from layerGeoData collection
  */
 const getMapLayersWithGeoData = async () => {
+  // find all available geoData
   const haveGeoData = await getLayerGeoDataWithUrl();
-  const geoJSONUrls = {};
-  if (haveGeoData && haveGeoData.length > 0) {
+
+  let geoReferenceIds = [];
+  const geoData = {};
+  let filterOr = [];
+
+  if (haveGeoData) {
+    geoReferenceIds = haveGeoData.map((item) => item.referenceId);
     haveGeoData.forEach((item) => {
-      geoJSONUrls[item.referenceId] = item.geoJSONUrl;
+      geoData[item.referenceId] = item;
     });
+
+    // filter mapLayers only for the ones with geoData in file or potentially in database
+    filterOr = [
+      { geoReferenceId: { $in: geoReferenceIds } },
+      { layers: { $elemMatch: { geoReferenceId: { $in: geoReferenceIds } } } },
+    ];
   }
 
-  const layers = await model.getMapLayers({});
-  const layersWithGeoJSONUrl = layers.map((layer) => {
+  const filter = {
+    $or: [
+      ...filterOr,
+      { layerType: 'points' }, // layers with all values stored in pointAttributes collection, like disaster response functionality
+    ],
+  };
+
+  const layers = await model.getMapLayers(filter);
+
+  const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
-      const sublayers = layer.layers.map((lr) => ({
-        ...lr,
-        geoJSONUrl: geoJSONUrls[lr.geoReferenceId],
-      }));
+      const sublayers = layer.layers.map((lr) => {
+        if (geoData[lr.geoDataUrl]) {
+          return {
+            ...lr,
+            geoDataUrl: geoData[lr.geoReferenceId].geoDataUrl,
+            format: geoData[lr.geoReferenceId].format,
+            metadata: { geoMetadata: geoData[lr.geoReferenceId].metadata },
+          };
+        }
+        return lr;
+      });
       return { ...layer, layers: sublayers };
     }
-
-    return {
-      ...layer,
-      geoJSONUrl: geoJSONUrls[layer.geoReferenceId],
-    };
+    if (geoData[layer.geoReferenceId]) {
+      return {
+        ...layer,
+        geoDataUrl: geoData[layer.geoReferenceId].geoDataUrl,
+        format: geoData[layer.geoReferenceId].format,
+        metadata: { ...layer.metadata, geoMetadata: geoData[layer.geoReferenceId].metadata },
+      };
+    }
+    return layer;
   });
-  return layersWithGeoJSONUrl;
+  return layersWithGeoDataUrl;
 };
 
 module.exports = { getMapLayersWithGeoData };

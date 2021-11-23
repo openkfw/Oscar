@@ -14,13 +14,6 @@
   legend:
     - type: "colormap"
       color: "blue"
-  metadata:
-    description: "Regions of Slovak Republic"
-    sourceWebsite: "https://www.geoportal.sk/"
-    sourceOrganisation: "GKÚ Bratislava"
-    updateFrequency: "None"
-    unit: ""
-    dataRetrievalDescription: "Data downloaded from source, converted to geojson and uploaded manually."
   timeseries: false
 
 - referenceId: "dailyCasesPerAdmin1"
@@ -83,6 +76,7 @@
     updateFrequency: "never"
     unit: "n/a"
     dataRetrievalDescription: "Data was randomly created."
+
   timeseries: false
 
 - referenceId: "hospitalHealthSites"
@@ -105,9 +99,4 @@
     - type: "color"
       color: "rgba(0, 80, 0, 1)"
       description: "Hospital"
-  metadata:
-    description: "Some made up hospitals as sample for points on map. Does not represent reality."
-    updateFrequency: "On demand"
-    unit: "n/a"
-    dataRetrievalDescription: "Data was created by one of developers."
   timeseries: false

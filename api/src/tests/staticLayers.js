@@ -13,8 +13,8 @@ jest.mock('../config/config.js', () => {
 });
 
 describe('GET /api/staticLayers', () => {
-  it('should return layer, even if no geojson data are in db', async () => {
-    await SingleMapLayer.create(mapLayerWithoutGeodata);
+  it('should return empty array, if no geodata and no point layers in db', async () => {
+    await MapLayer.create(mapLayersInDb[0]);
 
     const res = await request(app).get('/api/staticLayers/');
     expect(res.status).toEqual(200);
@@ -26,7 +26,17 @@ describe('GET /api/staticLayers', () => {
     expect(res.body[0].geoJSONUrl).toEqual(undefined);
   });
 
-  it('should return all layers in db sorted by title', async () => {
+  it('should return point layer without geoDataReferenceId', async () => {
+    await SingleMapLayer.create(mapLayersInDb[3]);
+
+    const res = await request(app).get('/api/staticLayers');
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveLength(1);
+    expect(res.body[0].referenceId).toEqual(mapLayersInDb[3].referenceId);
+    expect(res.body[0].geoReferenceId).toEqual(undefined);
+  });
+
+  it.only('should return all layers in db sorted by title with data from layerGeoData collection', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     // saved in reverse order to check the sorting
     await MapLayer.create(mapLayersInDb[1]);
@@ -37,10 +47,11 @@ describe('GET /api/staticLayers', () => {
     expect(res.body).toHaveLength(2);
     expect(res.body[0].geoReferenceId).toEqual(layerGeoDataInDb.referenceId);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[0].referenceId);
-    expect(res.body[0].geoJSONUrl).toEqual(layerGeoDataInDb.geoJSONUrl);
+    expect(res.body[0].geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
+    expect(res.body[0].format).toEqual(layerGeoDataInDb.format);
+    expect(res.body[0].metadata.geoMetadata).toEqual(layerGeoDataInDb.metadata);
   });
-
-  it('should return layer of type group with correct geoJSON links in sublayers', async () => {
+  it('should return layer of type group with correct geodata links and format in sublayers', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
     await GroupMapLayer.create(mapLayersInDb[2]);
 
@@ -48,8 +59,10 @@ describe('GET /api/staticLayers', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[2].referenceId);
+    expect(res.body[0].metadata.geoMetadata).toEqual(layerGeoDataInDb.metadata);
     res.body[0].layers.forEach((layer) => {
-      expect(layer.geoJSONUrl).toEqual(layerGeoDataInDb.geoJSONUrl);
+      expect(layer.geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
+      expect(layer.format).toEqual(layerGeoDataInDb.format);
     });
   });
 });

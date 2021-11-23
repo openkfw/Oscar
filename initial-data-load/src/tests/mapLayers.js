@@ -60,7 +60,7 @@ describe('Geo data', () => {
   it('should not save geo data, if referenceId already used', async () => {
     const existingGeoData = {
       referenceId: geoDataSource[0].referenceId,
-      geoJSONUrl: '/some.other.geojson',
+      geoDataUrl: '/some.other.geojson',
       name: 'Caption',
       updateDate: Date.now(),
     };
@@ -89,13 +89,13 @@ describe('Geo data', () => {
     expect(geoData).toHaveLength(1);
     expect(geoData[0].name).toEqual(existingGeoData.name);
     expect(geoData[0].referenceId).toEqual(existingGeoData.referenceId);
-    expect(geoData[0].geoJsonUrl).toEqual(existingGeoData.geoJsonUrl);
+    expect(geoData[0].geoDataUrl).toEqual(existingGeoData.geoDataUrl);
   });
 
   it('should update map layer data, if referenceId already used', async () => {
     const existingGeoData = {
       referenceId: geoDataSource[0].referenceId,
-      geoJSONUrl: '/some.other.geojson',
+      geoDataUrl: '/some.other.geojson',
       name: 'Caption',
       updateDate: Date.now(),
     };
@@ -158,13 +158,14 @@ describe('Geo data', () => {
     expect(geoData).toHaveLength(1);
     expect(geoData[0].name).toEqual(geoDataSource[0].name);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
-    expect(geoData[0].geoJsonUrl).toEqual(geoDataSource[0].geoJsonUrl);
+    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newName.geojson');
     expect(geoData[0].updateDate - Date.now()).toBeLessThan(60000); // less than 1min
 
     const mapData = await MapLayer.find({}).lean();
     expect(mapData).toHaveLength(3);
     expect(mapData[0].referenceId).toEqual(mapLayerDataSource[0].referenceId);
     expect(mapData[0].geoReferenceId).toEqual(mapLayerDataSource[0].geoReferenceId);
+    expect(mapData[0].metadata.geometadata).toEqual(mapLayerDataSource[0].metadata.geometadata);
     expect(mapData[1].referenceId).toEqual(mapLayerDataSource[1].referenceId);
     expect(mapData[1].geoReferenceId).toEqual(mapLayerDataSource[1].geoReferenceId);
     expect(mapData[2].referenceId).toEqual(mapLayerDataSource[2].referenceId);
@@ -174,7 +175,7 @@ describe('Geo data', () => {
     mapData[2].layers.map((layer) => expect(layer.geoReferenceId).toEqual(geoDataSource[0].referenceId));
   });
 
-  it('should save without geoJSONUrl, if unable to store geojson', async () => {
+  it('should save without geoDataUrl, if unable to store geodata', async () => {
     let uploads;
     jest.isolateModules(() => {
       jest.mock('../config/config.js', () => {
@@ -197,7 +198,7 @@ describe('Geo data', () => {
     const geoData = await LayerGeoData.find({}).lean();
     expect(geoData).toHaveLength(1);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
-    expect(geoData[0].geoJSONUrl).toBeUndefined();
+    expect(geoData[0].geoDataUrl).toBeUndefined();
     const mapData = await MapLayer.find({}).lean();
     expect(mapData).toHaveLength(3);
   });
@@ -228,9 +229,14 @@ describe('Geo data', () => {
     const geoData = await LayerGeoData.find({}).lean();
     expect(geoData).toHaveLength(2);
     expect(geoData[0].referenceId).toEqual(geoDataSource3[0].referenceId);
-    expect(geoData[0].geoJSONUrl).toEqual('/api/uploads/geojsons/newFilename.geojson');
+    expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newFilename.geojson');
+    expect(geoData[0].format).toEqual(geoDataSource3[0].format);
+    expect(geoData[0].featureIds).toEqual(geoDataSource3[0].featureIds);
+    expect(geoData[0].attributeIds).toEqual(geoDataSource3[0].attributeIds);
+    expect(geoData[0].geometryDataTypes).toEqual(geoDataSource3[0].geometryDataTypes);
+    expect(geoData[0].metadata.description).toEqual(geoDataSource3[0].metadata.description);
 
     expect(geoData[1].referenceId).toEqual(geoDataSource3[1].referenceId);
-    expect(geoData[1].geoJSONUrl).toBeUndefined();
+    expect(geoData[1].geoDataUrl).toBeUndefined();
   });
 });
