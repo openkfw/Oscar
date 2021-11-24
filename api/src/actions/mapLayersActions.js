@@ -37,7 +37,7 @@ const getMapLayersWithGeoData = async () => {
   const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
       const sublayers = layer.layers.map((lr) => {
-        if (geoData[lr.geoDataUrl]) {
+        if (geoData[lr.geoReferenceId]) {
           return {
             ...lr,
             geoDataUrl: geoData[lr.geoReferenceId].geoDataUrl,
