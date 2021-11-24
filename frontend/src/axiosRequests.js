@@ -90,7 +90,10 @@ export const getAttributesData = async (searchParams) => {
 
 export const getGeoData = async (url) => {
   const response = await axios.get(url);
-  return response.data;
+  if (response && response.data) {
+    return response.data;
+  }
+  return [];
 };
 
 export const checkAuthorization = async () => {

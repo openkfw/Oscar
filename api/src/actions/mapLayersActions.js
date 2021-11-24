@@ -1,6 +1,9 @@
 const model = require('../models/mapLayerModel');
 const { getLayerGeoDataWithUrl } = require('../models/layerGeoDataModel');
 
+/**
+ * Returns map layers from mapLayers collection with link to GeoJson file from layerGeoData collection
+ */
 const getMapLayersWithGeoData = async () => {
   // find all available geoData
   const haveGeoData = await getLayerGeoDataWithUrl();
@@ -34,7 +37,7 @@ const getMapLayersWithGeoData = async () => {
   const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
       const sublayers = layer.layers.map((lr) => {
-        if (geoData[lr.geoDataUrl]) {
+        if (geoData[lr.geoReferenceId]) {
           return {
             ...lr,
             geoDataUrl: geoData[lr.geoReferenceId].geoDataUrl,
