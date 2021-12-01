@@ -95,6 +95,21 @@ paths:
         "200":
           description: Successful response
 
+  /attributes/{attributeId}/uniqueFeatures:
+    get:
+      summary: Get featureIds of values for this attributeId
+      parameters:
+        - name: attributeId
+          in: path
+          required: true
+          description: Parameter for data filtering. The identifier of the attribute for which we want to get unique featureId
+          schema:
+            type: string
+            example: "Population on admin2 level"
+      responses:
+        "200":
+          description: Successful response
+
   /api/pointAttributes:
     get:
       summary: Getting data with single point coordinates

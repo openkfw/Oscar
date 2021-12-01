@@ -203,7 +203,10 @@ const getDocumentsCount = async (filter) => {
 
   return count;
 };
-
+/**
+ * Gets all unique dates for given attributeId
+ * @param  {string} attributeId
+ */
 const getAvailableDates = async (attributeId) => {
   const { connection } = mongoose;
   const { db } = connection;
@@ -230,6 +233,31 @@ const getAvailableDates = async (attributeId) => {
 };
 
 /**
+ * Gets all unique featureIds for given attributeId
+ * @param  {string} attributeId
+ */
+const getUniqueFeatureIds = async (attributeId) => {
+  const { connection } = mongoose;
+  const { db } = connection;
+
+  const items = await db
+    .collection(ATTRIBUTES_COLLECTION_NAME)
+    .aggregate([
+      { $match: { attributeId } },
+      {
+        $group: {
+          _id: '$featureId',
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ])
+    .toArray();
+  return items.map(item => item._id);
+}
+
+/**
  * Get count of all attributes by given values
  * @param  {array} attributeIds - ids of attributes
  * @param  {array} attributeIdCategories - categories of attributes, common part of attributeId for regex search
@@ -244,5 +272,6 @@ module.exports = {
   getFilteredAttributes,
   getLatestAttributes,
   getAvailableDates,
+  getUniqueFeatureIds,
   countAttributes,
 };
