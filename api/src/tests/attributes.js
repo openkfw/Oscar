@@ -125,4 +125,4 @@ describe('GET /api/attributes/:attributeId/uniqueFeatures', () => {
     const res = await request(app).get(`/api/attributes/Bed occupancy rate/uniqueFeatures`).expect(200);
     expect(res.body).toEqual(['District1', 'District2']);
   });
-})
+});

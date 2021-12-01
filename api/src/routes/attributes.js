@@ -6,7 +6,7 @@ const {
   countAttributes,
   getFilteredAttributes,
   getAvailableDates,
-  getUniqueFeatureIds
+  getUniqueFeatureIds,
 } = require('../models/attributeModel');
 const logger = require('../config/winston');
 
@@ -55,12 +55,14 @@ router.get(
   }),
 );
 
-router.get('/:attributeId/uniqueFeatures',
+router.get(
+  '/:attributeId/uniqueFeatures',
   swaggerValidation.validate,
   forwardError(async (req, res) => {
     let items = [];
-    items = await getUniqueFeatureIds(req.params.attributeId)
-    res.send(items)
-  }));
+    items = await getUniqueFeatureIds(req.params.attributeId);
+    res.send(items);
+  }),
+);
 
 module.exports = router;

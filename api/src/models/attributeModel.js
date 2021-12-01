@@ -254,8 +254,8 @@ const getUniqueFeatureIds = async (attributeId) => {
       },
     ])
     .toArray();
-  return items.map(item => item._id);
-}
+  return items.map((item) => item._id);
+};
 
 /**
  * Get count of all attributes by given values
