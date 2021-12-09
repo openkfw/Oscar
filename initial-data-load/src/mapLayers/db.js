@@ -2,11 +2,16 @@ const mongoose = require('mongoose');
 const LayerGeoDataSchema = require('./layerGeoDataSchema');
 const { MapLayer } = require('./mapLayersSchema');
 const logger = require('../config/winston');
+const { GeoFeaturesSchema } = require('./geoFeaturesSchema');
 
 const { MAP_LAYER_COLLECTION_NAME } = require('./mapLayersSchema');
 
 const createIndex = async () => {
   await mongoose.connection.db.collection('mapLayers').createIndex({ title: 1 });
+};
+
+const createGeoDataIndex = async (collectionName) => {
+  await mongoose.connection.db.collection(collectionName).createIndex({ geometry: '2dsphere' });
 };
 
 const saveLayerGeoData = (data) => LayerGeoDataSchema.insertMany(data);
@@ -65,4 +70,17 @@ const saveMapLayers = async (singleMapLayers, groupMapLayers) => {
   }
 };
 
-module.exports = { createIndex, saveLayerGeoData, getOneLayerGeoData, saveMapLayers, getOneMapLayer };
+const storeGeoFeaturesData = (data, collectionName) => {
+  const GeoFeatureModel = mongoose.model('GeoFeature', GeoFeaturesSchema, collectionName);
+  return GeoFeatureModel.insertMany(data);
+};
+
+module.exports = {
+  createIndex,
+  createGeoDataIndex,
+  saveLayerGeoData,
+  getOneLayerGeoData,
+  saveMapLayers,
+  getOneMapLayer,
+  storeGeoFeaturesData,
+};

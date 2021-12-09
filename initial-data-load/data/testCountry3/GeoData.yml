@@ -20,3 +20,26 @@
 - name: "Sample Without Geo Json"
   referenceId: "Sample Without Geo Json"
   geoDataFilename: "doesNotExist.geojson"
+
+- name: "Sample Geo Json to store to DB"
+  referenceId: "sampleGeoJSONstoredInDB"
+  geoDataFilename: "sampleFile.geojson"
+  format: "geojson"
+  storeToDb: true
+  collectionName: "newTestGeodataCollection"
+  featureIds:
+    [
+      {
+        property: "name",
+        values: ["Name of the Feature1", "Name of the Feature2"],
+      },
+      {
+        property: "fullname",
+        values: ["Fullname of the Feature1", "Fullname of the Feature2"],
+      },
+    ]
+  attributeIds: ["id", "amenity"]
+  geometryDataTypes: "points"
+  metadata:
+    description: "This is test file in full geojson format"
+

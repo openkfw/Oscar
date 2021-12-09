@@ -1,3 +1,50 @@
+- name: "Regions of Slovakia"
+  referenceId: "slovakiaRegionsStoredInDB"
+  geoDataFilename: "slovakia_regions.geojson"
+  format: "geojson"
+  storeToDb: true
+  collectionName: "slovakiaRegionsGeoData"
+  featureIds:
+    [
+      {
+        property: "name",
+        values:
+          [
+            "Bratislavský",
+            "Trnavský",
+            "Trenčiansky",
+            "Nitriansky",
+            "Žilinský",
+            "Banskobystrický",
+            "Prešovský",
+            "Košický",
+          ],
+      },
+      {
+        property: "fullname",
+        values:
+          [
+            "Bratislavský kraj",
+            "Trnavský kraj",
+            "Trenčiansky kraj",
+            "Nitriansky kraj",
+            "Žilinský kraj",
+            "Banskobystrický kraj",
+            "Prešovský kraj",
+            "Košický kraj",
+          ],
+      },
+    ]
+  attributeIds: []
+  geometryDataTypes: "regions"
+  metadata:
+    description: "Regions of Slovak Republic"
+    sourceWebsite: "https://www.geoportal.sk/"
+    sourceOrganisation: "GKÚ Bratislava"
+    updateFrequency: "None"
+    unit: ""
+    dataRetrievalDescription: "Data downloaded from source, converted to geojson and uploaded manually."
+
 - name: "Slovakia - regions"
   referenceId: "slovakiaRegions"
   geoDataFilename: "slovakia_regions.geojson"
