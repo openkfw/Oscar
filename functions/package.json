@@ -7,7 +7,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "tsc",
-    "copyymls": "copyfiles --error --up 1 data/* /home/site/wwwroot/dist/data",
+    "copyymls": "copyfiles --up 1 data/* /home/site/wwwroot/dist/data",
     "postbuild": "npm run copyymls",
     "watch": "tsc -w",
     "prestart": "npm run build",
