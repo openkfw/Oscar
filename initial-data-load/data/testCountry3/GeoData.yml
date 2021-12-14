@@ -27,6 +27,7 @@
   format: "geojson"
   storeToDb: true
   collectionName: "newTestGeodataCollection"
+  apiUrl: "/api/geodata/newTestGeodataCollection"
   featureIds:
     [
       {

@@ -94,6 +94,7 @@ _in addition geodata can be stored in newly created database collection by addin
 ```
   storeToDb: true
   collectionName: "nameOfNewCollection"
+  apiUrl: "urlInApiThatReturnsStoredGeodata"
 ```
 
 ## mapLayers.yml

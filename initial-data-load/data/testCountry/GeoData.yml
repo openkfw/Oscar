@@ -12,6 +12,7 @@
   geoDataUrl: "someUrl/1600424721066.geojson"
   storeToDb: true
   collectionName: "testGeodataCollection"
+  apiUrl: "/api/geodata/testGeodataCollection"
   metadata:
     description: "Sample data created just for this purpose. Do not represent the reality in any time."
     updateFrequency: "never"

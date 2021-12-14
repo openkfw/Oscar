@@ -14,6 +14,10 @@ const createGeoDataIndex = async (collectionName) => {
   await mongoose.connection.db.collection(collectionName).createIndex({ geometry: '2dsphere' });
 };
 
+const deleteAllFromCollection = async (collectionName) => {
+  await mongoose.connection.db.collection(collectionName).remove({});
+};
+
 const saveLayerGeoData = (data) => LayerGeoDataSchema.insertMany(data);
 
 const getOneLayerGeoData = (referenceId) => LayerGeoDataSchema.findOne({ referenceId });
@@ -83,4 +87,5 @@ module.exports = {
   saveMapLayers,
   getOneMapLayer,
   storeGeoFeaturesData,
+  deleteAllFromCollection,
 };

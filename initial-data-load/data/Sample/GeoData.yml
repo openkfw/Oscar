@@ -4,6 +4,7 @@
   format: "geojson"
   storeToDb: true
   collectionName: "slovakiaRegionsGeoData"
+  apiUrl: "/api/geodata/slovakiaRegionsGeoData"
   featureIds:
     [
       {
