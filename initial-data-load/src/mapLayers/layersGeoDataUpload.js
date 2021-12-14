@@ -4,7 +4,13 @@ const yaml = require('js-yaml');
 const axios = require('axios');
 const logger = require('../config/winston');
 
-const { getOneLayerGeoData, saveLayerGeoData, storeGeoFeaturesData, createGeoDataIndex, deleteAllFromCollection } = require('./db');
+const {
+  getOneLayerGeoData,
+  saveLayerGeoData,
+  storeGeoFeaturesData,
+  createGeoDataIndex,
+  deleteAllFromCollection,
+} = require('./db');
 const { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage } = require('./storage');
 
 const storeGeoDataToDb = async (fromFile, data, filePath) => {
