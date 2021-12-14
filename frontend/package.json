@@ -27,7 +27,7 @@
     "redux-axios-middleware": "^4.0.0",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "validator": "^13.5.2"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",

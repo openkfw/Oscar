@@ -11,7 +11,7 @@ const createVectorSource = (layerData, handleIsLoading) => {
     loader: async (extent, resolution, projection) => {
       handleIsLoading({ title: layerData.title, type: 'geometry' }, 'add');
       try {
-        const response = await axios.get(layerData.geoJSONUrl);
+        const response = await axios.get(layerData.geoDataUrl);
         const newFeatures = vectorSource.getFormat().readFeatures(response.data, { featureProjection: projection });
         vectorSource.addFeatures(newFeatures);
       } catch (error) {

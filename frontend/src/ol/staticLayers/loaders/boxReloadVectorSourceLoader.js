@@ -4,7 +4,7 @@ import { toLonLat } from 'ol/proj';
 import { getTopRight, getBottomLeft } from 'ol/extent';
 import { bbox } from 'ol/loadingstrategy';
 
-import { getGeojsonData } from '../../../axiosRequests';
+import { getGeoData } from '../../../axiosRequests';
 
 const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
   const vectorSource = new VectorSource({
@@ -23,7 +23,7 @@ const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
       const url =
         `/api/pointAttributes?${searchParams}&bottomLeft=${bottomLeft.join(',')}` +
         `&topRight=${topRight.join(',')}&proj=${proj}`;
-      const response = await getGeojsonData(url);
+      const response = await getGeoData(url);
       if (response && response.features && response.features[0]) {
         const newFeatures = vectorSource.getFormat().readFeatures(response, { featureProjection: projection });
         vectorSource.addFeatures(newFeatures);
