@@ -64,7 +64,14 @@ describe('Geo data', () => {
       name: 'Caption',
       updateDate: Date.now(),
     };
+    const existingGeoData2 = {
+      referenceId: geoDataSource[1].referenceId,
+      geoDataUrl: '/some.geojson',
+      name: 'Caption 2',
+      updateDate: Date.now(),
+    };
     await LayerGeoData.create(existingGeoData);
+    await LayerGeoData.create(existingGeoData2);
 
     jest.mock('../config/config.js', () => {
       return {
@@ -86,7 +93,7 @@ describe('Geo data', () => {
     const collections = await mongoose.connection.db.listCollections().toArray();
     expect(collections).toHaveLength(2);
     const geoData = await LayerGeoData.find({}).lean();
-    expect(geoData).toHaveLength(1);
+    expect(geoData).toHaveLength(2);
     expect(geoData[0].name).toEqual(existingGeoData.name);
     expect(geoData[0].referenceId).toEqual(existingGeoData.referenceId);
     expect(geoData[0].geoDataUrl).toEqual(existingGeoData.geoDataUrl);
@@ -99,7 +106,14 @@ describe('Geo data', () => {
       name: 'Caption',
       updateDate: Date.now(),
     };
+    const existingGeoData2 = {
+      referenceId: geoDataSource[1].referenceId,
+      geoDataUrl: '/some.geojson',
+      name: 'Caption 2',
+      updateDate: Date.now(),
+    };
     await LayerGeoData.create(existingGeoData);
+    await LayerGeoData.create(existingGeoData2);
     const existingMapLayer = { ...mapLayerDataSource[1], title: 'First title' };
     await MapLayer.create(existingMapLayer);
     jest.mock('../config/config.js', () => {
@@ -146,6 +160,13 @@ describe('Geo data', () => {
         saveGeoJsonFromUrlSourceToStorage: () => 'newName.geojson',
       };
     });
+    jest.mock('axios', () => {
+      return {
+        get: () => {
+          return { status: 200, data: {} };
+        },
+      };
+    });
 
     let uploads;
     jest.isolateModules(() => {
@@ -153,9 +174,9 @@ describe('Geo data', () => {
     });
     await uploads();
     const collections = await mongoose.connection.db.listCollections().toArray();
-    expect(collections).toHaveLength(2);
+    expect(collections).toHaveLength(3);
     const geoData = await LayerGeoData.find({}).lean();
-    expect(geoData).toHaveLength(1);
+    expect(geoData).toHaveLength(2);
     expect(geoData[0].name).toEqual(geoDataSource[0].name);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
     expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newName.geojson');
@@ -194,9 +215,9 @@ describe('Geo data', () => {
     await uploads();
 
     const collections = await mongoose.connection.db.listCollections().toArray();
-    expect(collections).toHaveLength(2);
+    expect(collections).toHaveLength(3);
     const geoData = await LayerGeoData.find({}).lean();
-    expect(geoData).toHaveLength(1);
+    expect(geoData).toHaveLength(2);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
     expect(geoData[0].geoDataUrl).toBeUndefined();
     const mapData = await MapLayer.find({}).lean();
@@ -225,9 +246,9 @@ describe('Geo data', () => {
     });
     await uploads();
     const collections = await mongoose.connection.db.listCollections().toArray();
-    expect(collections).toHaveLength(2);
+    expect(collections).toHaveLength(3);
     const geoData = await LayerGeoData.find({}).lean();
-    expect(geoData).toHaveLength(2);
+    expect(geoData).toHaveLength(3);
     expect(geoData[0].referenceId).toEqual(geoDataSource3[0].referenceId);
     expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newFilename.geojson');
     expect(geoData[0].format).toEqual(geoDataSource3[0].format);

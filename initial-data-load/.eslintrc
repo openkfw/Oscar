@@ -29,6 +29,7 @@
     "max-classes-per-file": [0]
   },
   "extends": ["airbnb/base", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
   "env": {
     "node": true,
     "jest": true
