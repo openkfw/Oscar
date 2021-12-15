@@ -194,6 +194,11 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
     if (!mapPosition) {
       return;
     }
+    if (mapPosition) {
+      if (Number.isNaN(parseFloat(mapPosition.center[0]))) {
+        return;
+      }
+    }
     map.getView().setCenter(mapPosition.center);
     map.getView().setZoom(mapPosition.zoom);
     const hash = `#map=${map.getView().getZoom()}/${Math.round(map.getView().getCenter()[0] * 100) / 100}/${

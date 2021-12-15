@@ -1,10 +1,34 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const axios = require('axios');
 const logger = require('../config/winston');
 
-const { getOneLayerGeoData, saveLayerGeoData } = require('./db');
+const {
+  getOneLayerGeoData,
+  saveLayerGeoData,
+  storeGeoFeaturesData,
+  createGeoDataIndex,
+  deleteAllFromCollection,
+} = require('./db');
 const { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage } = require('./storage');
+
+const storeGeoDataToDb = async (fromFile, data, filePath) => {
+  let geojsonData;
+  await deleteAllFromCollection(data.collectionName);
+  if (fromFile) {
+    geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } else {
+    const result = await axios.get(data.geoDataUrl, { responseType: 'json' });
+    if (result.status !== 200) {
+      logger.error(`Failed to fetch geojson data from ${data.geoDataUrl}`);
+      return false;
+    }
+    geojsonData = result.data;
+  }
+  await createGeoDataIndex(data.collectionName);
+  await storeGeoFeaturesData(geojsonData.features, data.collectionName);
+};
 
 const formatLayerGeoData = async (data, country) => {
   const existing = await getOneLayerGeoData(data.referenceId);
@@ -13,19 +37,30 @@ const formatLayerGeoData = async (data, country) => {
     return false;
   }
   let url;
-  if (data.geoJSONUrl) {
-    logger.info(`Downloading geojson ${data.geoJSONUrl} for layer ${data.referenceId}...`);
-    const filename = await saveGeoJsonFromUrlSourceToStorage(data.geoJSONUrl);
-    if (filename) {
-      url = `/api/uploads/geojsons/${filename}`;
-      logger.info(`Layer ${data.name} has new URL for geojson: ${url}`);
+  if (data.geoDataUrl) {
+    logger.info(`Downloading geojson ${data.geoDataUrl} for layer ${data.referenceId}...`);
+    if (data.storeToDb) {
+      await storeGeoDataToDb(false, data, null);
+      url = data.apiUrl;
+      logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
+    } else {
+      const filename = await saveGeoJsonFromUrlSourceToStorage(data.geoDataUrl);
+      if (filename) {
+        url = `/api/uploads/geojsons/${filename}`;
+        logger.info(`Layer ${data.name} has new URL for geojson: ${url}`);
+      }
     }
-  } else if (data.geoJSONFilename) {
-    const filePath = path.join(__dirname, '..', '..', 'data', country, 'geoData', data.geoJSONFilename);
+  } else if (data.geoDataFilename) {
+    const filePath = path.join(__dirname, '..', '..', 'data', country, 'geoData', data.geoDataFilename);
     const hasFile = fs.existsSync(filePath);
-    if (hasFile) {
-      logger.info(`Storing geojson ${data.geoJSONFilename} for layer ${data.referenceId} from file...`);
-      const filename = await saveGeoJsonFromFileToStorage(filePath, data.geoJSONFilename);
+    if (hasFile && data.storeToDb) {
+      logger.info(`Storing geodata ${data.geoDataFilename} for layer ${data.referenceId} from file...`);
+      await storeGeoDataToDb(true, data, filePath);
+      url = data.apiUrl;
+      logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
+    } else if (hasFile && !data.storeToDb) {
+      logger.info(`Storing geojson ${data.geoDataFilename} for layer ${data.referenceId} from file...`);
+      const filename = await saveGeoJsonFromFileToStorage(filePath, data.geoDataFilename);
       if (filename) {
         url = `/api/uploads/geojsons/${filename}`;
         logger.info(`Layer ${data.name} has new URL for geojson: ${url}`);
@@ -34,7 +69,7 @@ const formatLayerGeoData = async (data, country) => {
       logger.info(`Layer ${data.name} has corrupted or missing geojson file.`);
     }
   }
-  const newDataObj = { ...data, geoJSONUrl: url, updateDate: Date.now() };
+  const newDataObj = { ...data, geoDataUrl: url, updateDate: Date.now() };
   return newDataObj;
 };
 

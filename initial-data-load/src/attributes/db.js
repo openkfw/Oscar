@@ -35,7 +35,7 @@ const addAttributes = async (date, csvFile) => {
         logger.error('Failed to parse csv file, please use , or ; as delimiter.');
         return;
       }
-      // id for feature in geojson is stored in 'AdminArea'
+      // id for feature in geodata is stored in 'AdminArea' in csv
       if (!keys.includes('AdminArea')) {
         logger.error('Unable to find geo features');
         return;
