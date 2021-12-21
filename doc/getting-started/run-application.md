@@ -2,7 +2,18 @@
 
 ## Prerequisites
 
-Repository cloned locally in folder.
+For Windows user:
+- Before cloning the repository, please make sure you are using the correct EOL (End of Line) setting. In the worst case, you will have to manually change each .js file from CRLF to LF.
+- Solution for VSCode: 
+    - Go to File/Preferences/Settings
+    - Search for EOL
+    - Please select "/n" under File:EOL
+    - Set up your Git configuration to LF with the command in terminal:  
+    ```
+    git config --global core.autocrlf false
+    ```
+
+Repository cloned locally in folder. 
 
 - yarn (https://yarnpkg.com/getting-started/install)
 - Docker (version 17.06 or higher recommended) (https://docker.com)
