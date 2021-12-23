@@ -33,7 +33,16 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
   logger.info(`Creating index on collection...`);
   await createGeoDataIndex(data.collectionName, 'bbox');
   logger.info(`Generating bounding boxes for features...`);
+
+  const { features } = geojsonData;
+  if (!features || !features.length) {
+    logger.info(`No features in file ${filePath}`);
+    return;
+  }
   const featuresWithBbox = geojsonData.features.map((feature) => {
+    if (feature.geometry.type === 'Point') {
+      return { ...feature, bbox: feature.geometry };
+    }
     const [minX, minY, maxX, maxY] = bbox.default({
       type: 'FeatureCollection',
       name: 'Polygon',
@@ -53,6 +62,7 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
       bbox: { type: 'Polygon', coordinates: generatedBBox },
     };
   });
+
   logger.info(`Storing features into database...`);
   await storeGeoFeaturesData(featuresWithBbox, data.collectionName);
 };
