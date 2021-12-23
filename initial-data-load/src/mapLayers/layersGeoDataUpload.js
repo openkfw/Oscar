@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const axios = require('axios');
-const bbox = require('@turf/bbox')
+const bbox = require('@turf/bbox');
 
 const logger = require('../config/winston');
 
@@ -17,9 +17,9 @@ const { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage } = requ
 
 const storeGeoDataToDb = async (fromFile, data, filePath) => {
   let geojsonData;
-  logger.info(`Clearing database collection ${data.collectionName}`)
+  logger.info(`Clearing database collection ${data.collectionName}`);
   await deleteAllFromCollection(data.collectionName);
-  logger.info(`Loading data from file ${filePath}`)
+  logger.info(`Loading data from file ${filePath}`);
   if (fromFile) {
     geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } else {
@@ -30,21 +30,30 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
     }
     geojsonData = result.data;
   }
-  logger.info(`Creating index on collection...`)
+  logger.info(`Creating index on collection...`);
   await createGeoDataIndex(data.collectionName, 'bbox');
-  logger.info(`Generating bounding boxes for features...`)
-  const featuresWithBbox = geojsonData.features.map(feature => {
+  logger.info(`Generating bounding boxes for features...`);
+  const featuresWithBbox = geojsonData.features.map((feature) => {
     const [minX, minY, maxX, maxY] = bbox.default({
       type: 'FeatureCollection',
-      name: 'Polygon', features: [feature]
+      name: 'Polygon',
+      features: [feature],
     });
-    const generatedBBox = [[[minX, minY], [minX, maxY], [maxX, maxY], [maxX, minY], [minX, minY]]]
-    return ({
+    const generatedBBox = [
+      [
+        [minX, minY],
+        [minX, maxY],
+        [maxX, maxY],
+        [maxX, minY],
+        [minX, minY],
+      ],
+    ];
+    return {
       ...feature,
-      bbox: { type: 'Polygon', coordinates: generatedBBox }
-    })
-  })
-  logger.info(`Storing features into database...`)
+      bbox: { type: 'Polygon', coordinates: generatedBBox },
+    };
+  });
+  logger.info(`Storing features into database...`);
   await storeGeoFeaturesData(featuresWithBbox, data.collectionName);
 };
 
