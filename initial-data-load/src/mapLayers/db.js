@@ -10,8 +10,10 @@ const createIndex = async () => {
   await mongoose.connection.db.collection('mapLayers').createIndex({ title: 1 });
 };
 
-const createGeoDataIndex = async (collectionName) => {
-  await mongoose.connection.db.collection(collectionName).createIndex({ geometry: '2dsphere' });
+const createGeoDataIndex = async (collectionName, geoKey = 'geometry') => {
+  const indexKey = {};
+  indexKey[geoKey] = '2dsphere';
+  await mongoose.connection.db.collection(collectionName).createIndex(indexKey);
 };
 
 const deleteAllFromCollection = async (collectionName) => {

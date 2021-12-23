@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const axios = require('axios');
+const bbox = require('@turf/bbox')
+
 const logger = require('../config/winston');
 
 const {
@@ -15,7 +17,9 @@ const { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage } = requ
 
 const storeGeoDataToDb = async (fromFile, data, filePath) => {
   let geojsonData;
+  logger.info(`Clearing database collection ${data.collectionName}`)
   await deleteAllFromCollection(data.collectionName);
+  logger.info(`Loading data from file ${filePath}`)
   if (fromFile) {
     geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } else {
@@ -26,8 +30,22 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
     }
     geojsonData = result.data;
   }
-  await createGeoDataIndex(data.collectionName);
-  await storeGeoFeaturesData(geojsonData.features, data.collectionName);
+  logger.info(`Creating index on collection...`)
+  await createGeoDataIndex(data.collectionName, 'bbox');
+  logger.info(`Generating bounding boxes for features...`)
+  const featuresWithBbox = geojsonData.features.map(feature => {
+    const [minX, minY, maxX, maxY] = bbox.default({
+      type: 'FeatureCollection',
+      name: 'Polygon', features: [feature]
+    });
+    const generatedBBox = [[[minX, minY], [minX, maxY], [maxX, maxY], [maxX, minY], [minX, minY]]]
+    return ({
+      ...feature,
+      bbox: { type: 'Polygon', coordinates: generatedBBox }
+    })
+  })
+  logger.info(`Storing features into database...`)
+  await storeGeoFeaturesData(featuresWithBbox, data.collectionName);
 };
 
 const formatLayerGeoData = async (data, country) => {
