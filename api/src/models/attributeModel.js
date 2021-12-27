@@ -141,6 +141,7 @@ const getFilteredAttributes = async (
 /**
  * @param  {array} attributeIds - ids of attributes
  * @param  {array} attributeIdCategories - categories of attributes, common part of attributeId for regex search
+ * @param  {array} featureIds - geographical features only to be selected
  */
 const getLatestAttributes = async (attributeIds, attributeIdCategories, featureIds) => {
   if (!(attributeIds || attributeIdCategories)) {
