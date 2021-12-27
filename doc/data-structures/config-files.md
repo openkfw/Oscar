@@ -89,6 +89,14 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
     dataCalculationDescription: String
 ```
 
+_in addition geodata can be stored in newly created database collection by adding the following into an item structure
+
+```
+  storeToDb: true
+  collectionName: "nameOfNewCollection"
+  apiUrl: "urlInApiThatReturnsStoredGeodata"
+```
+
 ## mapLayers.yml
 
 This config file is one long array with settings for layers in map. As there are multiple types of layers (regions, points on map, any geometrical objects or even combination of them) and also multiple sources of data for one layer, the structure of items in array may vary greatly.
