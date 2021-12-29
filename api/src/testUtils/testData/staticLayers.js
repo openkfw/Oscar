@@ -226,7 +226,7 @@ const newMapLayers = [
       singleDisplay: false,
       maxResolution: 1000,
       timeseries: true,
-    }
+    },
   },
   {
     referenceId: 'refId1',
