@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const POINT_ATTRIBUTES_COLLECTION = 'point_attributes';
+const POINT_ATTRIBUTES_COLLECTION = 'pointAttributes';
 
 const pointSchema = new mongoose.Schema(
   {

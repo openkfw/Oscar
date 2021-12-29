@@ -23,7 +23,7 @@ router.get(
     let items = [];
 
     if (latestValues) {
-      items = await getLatestAttributes(attributeId, attributeIdCategory).catch((e) =>
+      items = await getLatestAttributes(attributeId, attributeIdCategory, featureId).catch((e) =>
         logger.error(`Error: ${e.message}`),
       );
     } else {
