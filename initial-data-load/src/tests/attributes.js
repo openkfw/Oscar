@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { FEATURE_ATTRIBUTES_COLLECTION_NAME } = require('../constants')
+const { FEATURE_ATTRIBUTES_COLLECTION_NAME } = require('../constants');
 
 jest.mock('azure-storage');
 

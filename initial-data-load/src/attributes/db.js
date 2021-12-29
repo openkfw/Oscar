@@ -76,8 +76,12 @@ const addAttributes = async (date, csvFile) => {
       logger.error(`Failed to parse csv file:\n${error}`);
     });
   if (operations.length) {
-    await mongoose.connection.db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).bulkWrite(operations, { strict: false });
-    logger.info(`New data from file ${csvFile} successfully stored in collection ${FEATURE_ATTRIBUTES_COLLECTION_NAME}.`);
+    await mongoose.connection.db
+      .collection(FEATURE_ATTRIBUTES_COLLECTION_NAME)
+      .bulkWrite(operations, { strict: false });
+    logger.info(
+      `New data from file ${csvFile} successfully stored in collection ${FEATURE_ATTRIBUTES_COLLECTION_NAME}.`,
+    );
   } else {
     logger.info(`No values in file ${csvFile}`);
   }
