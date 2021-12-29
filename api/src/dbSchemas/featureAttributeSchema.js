@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const FEATURE_ATTRIBUTES_COLLECTION_NAME = 'featureAttributes';
+
 const AttributeSchema = new mongoose.Schema({
   date: String,
   dataDate: String,
@@ -7,23 +9,23 @@ const AttributeSchema = new mongoose.Schema({
   featureId: String,
 });
 
-const Attribute = mongoose.model('Attribute', AttributeSchema, 'attributes');
+const FeatureAttribute = mongoose.model('FeatureAttribute', AttributeSchema, FEATURE_ATTRIBUTES_COLLECTION_NAME);
 
-const NumberAttribute = Attribute.discriminator(
+const NumberAttribute = FeatureAttribute.discriminator(
   'NumberAttribute',
   new mongoose.Schema({
     valueNumber: Number,
   }),
 );
 
-const StringAttribute = Attribute.discriminator(
+const StringAttribute = FeatureAttribute.discriminator(
   'StringAttribute',
   new mongoose.Schema({
     valueString: String,
   }),
 );
 
-const DataDateAttribute = Attribute.discriminator(
+const DataDateAttribute = FeatureAttribute.discriminator(
   'DataDateAttribute',
   new mongoose.Schema({
     valueNumber: String,
@@ -31,11 +33,10 @@ const DataDateAttribute = Attribute.discriminator(
   }),
 );
 
-const ATTRIBUTES_COLLECTION_NAME = 'attributes';
 
 module.exports = {
-  ATTRIBUTES_COLLECTION_NAME,
-  Attribute,
+  FEATURE_ATTRIBUTES_COLLECTION_NAME,
+  FeatureAttribute,
   NumberAttribute,
   StringAttribute,
   DataDateAttribute,

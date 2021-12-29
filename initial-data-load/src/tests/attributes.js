@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { FEATURE_ATTRIBUTES_COLLECTION_NAME } = require('../constants')
 
 jest.mock('azure-storage');
 
@@ -18,7 +19,7 @@ describe('Layer attributes', () => {
 
     await uploads();
 
-    const inDb = await mongoose.connection.db.collection('attributes').find({}).toArray();
+    const inDb = await mongoose.connection.db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).find({}).toArray();
     expect(inDb).toHaveLength(0);
   });
 
@@ -37,7 +38,7 @@ describe('Layer attributes', () => {
 
     await uploads();
 
-    const inDb = await mongoose.connection.db.collection('attributes').find({}).toArray();
+    const inDb = await mongoose.connection.db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).find({}).toArray();
     expect(inDb).toHaveLength(7);
     expect(inDb[0].attributeId).toEqual('Sample Attribute');
     expect(inDb[0].featureId).toEqual('Province 1');

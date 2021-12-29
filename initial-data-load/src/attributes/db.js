@@ -6,13 +6,13 @@ const csv2json = require('csvtojson');
 const logger = require('../config/winston');
 const { isNumberInString } = require('../utils');
 
-const { ATTRIBUTES_COLLECTION_NAME, POINT_ATTRIBUTES_COLLECTION_NAME } = require('../constants');
+const { FEATURE_ATTRIBUTES_COLLECTION_NAME, POINT_ATTRIBUTES_COLLECTION_NAME } = require('../constants');
 
 const createIndex = async () => {
   const { db } = mongoose.connection;
-  await db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1, featureId: 1, attributeId: 1 });
-  await db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: 1, featureId: 1, attributeId: 1 });
-  await db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1 });
+  await db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1, featureId: 1, attributeId: 1 });
+  await db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).createIndex({ date: 1, featureId: 1, attributeId: 1 });
+  await db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1 });
   await db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ geometry: '2dsphere' });
   await db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ 'properties.attributeId': 1 });
   await db.collection(POINT_ATTRIBUTES_COLLECTION_NAME).createIndex({ 'properties.updatedDate': -1 });
@@ -76,8 +76,8 @@ const addAttributes = async (date, csvFile) => {
       logger.error(`Failed to parse csv file:\n${error}`);
     });
   if (operations.length) {
-    await mongoose.connection.db.collection(ATTRIBUTES_COLLECTION_NAME).bulkWrite(operations, { strict: false });
-    logger.info(`New data from file ${csvFile} successfully stored in collection ${ATTRIBUTES_COLLECTION_NAME}.`);
+    await mongoose.connection.db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).bulkWrite(operations, { strict: false });
+    logger.info(`New data from file ${csvFile} successfully stored in collection ${FEATURE_ATTRIBUTES_COLLECTION_NAME}.`);
   } else {
     logger.info(`No values in file ${csvFile}`);
   }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const APIError = require('../helpers/APIError');
-const { ATTRIBUTES_COLLECTION_NAME } = require('../dbSchemas/attributeSchema');
+const { FEATURE_ATTRIBUTES_COLLECTION_NAME } = require('../dbSchemas/featureAttributeSchema');
 const { dateIsValid } = require('../helpers/utils');
 
 /**
@@ -86,7 +86,7 @@ const getAttributes = async (filter, limit, offset) => {
   const { db } = connection;
 
   const attributes = await db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
+    .collection(FEATURE_ATTRIBUTES_COLLECTION_NAME)
     .aggregate([
       { $match: filter },
       {
@@ -153,7 +153,7 @@ const getLatestAttributes = async (attributeIds, attributeIdCategories, featureI
   const match = createAttributesFilter(attributeIds, attributeIdCategories, featureIds);
 
   const attributes = await db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
+    .collection(FEATURE_ATTRIBUTES_COLLECTION_NAME)
     .aggregate([
       { $match: match },
       {
@@ -200,7 +200,7 @@ const getDocumentsCount = async (filter) => {
   const { connection } = mongoose;
   const { db } = connection;
 
-  const count = await db.collection(ATTRIBUTES_COLLECTION_NAME).countDocuments(filter);
+  const count = await db.collection(FEATURE_ATTRIBUTES_COLLECTION_NAME).countDocuments(filter);
 
   return count;
 };
@@ -213,7 +213,7 @@ const getAvailableDates = async (attributeId) => {
   const { db } = connection;
 
   const dates = await db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
+    .collection(FEATURE_ATTRIBUTES_COLLECTION_NAME)
     .aggregate([
       { $match: { attributeId } },
       {
@@ -242,7 +242,7 @@ const getUniqueFeatureIds = async (attributeId) => {
   const { db } = connection;
 
   const items = await db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
+    .collection(FEATURE_ATTRIBUTES_COLLECTION_NAME)
     .aggregate([
       { $match: { attributeId } },
       {

@@ -1,5 +1,5 @@
 - calculatedAttribute: "7 Days Incidence Rate Per " # used as calculated attributeId in connection with country level
-  databaseCollection: "attributes" # database collection where base entries and calculated entries resides
+  databaseCollection: "featureAttributes" # database collection where base entries and calculated entries resides
   dailyCasesBaseAttribute: "Daily Covid19 Cases Per " # base attribute of daily cases used for incidence calculation
   populationBaseAttribute: "Population Per " # base attribute of population used for incidence calculation
   countryLevel0: "Admin0" # highest country level (country) to connect with cases/population attribute
