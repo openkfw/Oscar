@@ -26,7 +26,7 @@ const pointsLayer = (layerData, handleIsLoading) => {
     style: pointStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
     zIndex: 2,
-    timeseries: layerData.timeseries,
+    layerOptions: layerData.layerOptions,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

@@ -132,7 +132,11 @@ This config file is one long array with settings for layers in map. As there are
 - **dataRetrievalDescription**:,
 - **dataCalculationDescription**:,
 
-**timeseries**: true or false, whether there are values from multiple dates in database and they should be displayed on frontend in timeline. If this value is false, the latest data are fetched,
+**layerOptions**: different options that can be set on layers and change their behavior on the map
+
+- **singleDisplay**: true or false, whether the region layer must be displayed alone or could be displayed with another layers
+- **maxResolution**: number, maximum resolution on which layer is shown
+- **timeseries**: true or false, whether there are values from multiple dates in database and they should be displayed on frontend in timeline. If this value is false, the latest data are fetched,
 
 #### Style object
 

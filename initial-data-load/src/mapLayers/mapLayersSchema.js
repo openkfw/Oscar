@@ -49,6 +49,15 @@ const LegendSchema = new mongoose.Schema(
   { _id: false },
 );
 
+const LayerOptionsSchema = new mongoose.Schema(
+  {
+    singleDisplay: Boolean,
+    maxResolution: Number,
+    timeseries: Boolean,
+  },
+  { _id: false },
+);
+
 const OneMapLayerData = new mongoose.Schema(
   {
     layerType: {
@@ -62,7 +71,6 @@ const OneMapLayerData = new mongoose.Schema(
     featureId: String,
     style: StyleSchema,
     legend: [LegendSchema],
-    maxResolution: Number,
   },
   { _id: false },
 );
@@ -80,7 +88,7 @@ const MapLayerSchema = new mongoose.Schema({
   attributeTemplateName: String,
   featureId: String,
   metadata: MetadataSchema,
-  timeseries: Boolean,
+  layerOptions: LayerOptionsSchema,
 });
 
 const MapLayer = mongoose.model('MapLayer', MapLayerSchema, 'mapLayers');
@@ -94,7 +102,6 @@ const SingleMapLayer = MapLayer.discriminator(
     },
     style: StyleSchema,
     legend: [LegendSchema],
-    maxResolution: Number,
   }),
 );
 

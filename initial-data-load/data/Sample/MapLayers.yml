@@ -14,7 +14,9 @@
   legend:
     - type: "colormap"
       color: "blue"
-  timeseries: false
+  layerOptions: 
+    singleDisplay: false    
+    timeseries: false
 
 - referenceId: "dailyCasesPerAdmin1"
   geoReferenceId: "slovakiaRegions"
@@ -45,7 +47,9 @@
     updateFrequency: "never"
     unit: "n/a"
     dataRetrievalDescription: "Data was randomly created."
-  timeseries: true
+  layerOptions: 
+    singleDisplay: false    
+    timeseries: true
 
 - referenceId: "7daysIncidenceRatePerProvince"
   geoReferenceId: "slovakiaRegions"
@@ -76,8 +80,9 @@
     updateFrequency: "never"
     unit: "n/a"
     dataRetrievalDescription: "Data was randomly created."
-
-  timeseries: false
+  layerOptions: 
+    singleDisplay: false   
+    timeseries: false
 
 - referenceId: "hospitalHealthSites"
   geoReferenceId: "slovakiaHospitals"
@@ -99,4 +104,6 @@
     - type: "color"
       color: "rgba(0, 80, 0, 1)"
       description: "Hospital"
-  timeseries: false
+  layerOptions: 
+    singleDisplay: false   
+    timeseries: false

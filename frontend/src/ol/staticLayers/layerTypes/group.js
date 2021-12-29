@@ -8,7 +8,7 @@ const groupLayer = (layerData, handleIsLoading) => {
     type: layerData.layerType,
     legend: layerData.legend,
     layers: layerData.layers.map((layer) => staticLayerGenerator({ ...layer, visible: true }, handleIsLoading)),
-    timeseries: layerData.timeseries,
+    layerOptions: layerData.layerOptions,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

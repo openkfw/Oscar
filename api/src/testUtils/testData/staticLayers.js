@@ -222,7 +222,11 @@ const newMapLayers = [
     legend: {
       green: 'legend description',
     },
-    timeseries: true,
+    layerOptions: {
+      singleDisplay: false,
+      maxResolution: 1000,
+      timeseries: true,
+    }
   },
   {
     referenceId: 'refId1',

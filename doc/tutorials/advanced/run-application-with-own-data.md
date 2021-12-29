@@ -11,10 +11,10 @@ Before start:
 Anytime set & run 'initial-data-load' service:
 - country name: ./runinitialload.sh `COUNTRY=Sample`
 - data types to be uploaded into the database: ./runinitialload.sh `UPLOAD_DATA_TYPES=mapLayers,attributes`
-- geodata: ./initial-data-load/data/{COUNTRY}/[geoData.yml](../data-structures/config-files.md#geodata.yml)
-- map layers: ./initial-data-load/data/{COUNTRY}/[mapLayers.yml](../data-structures/config-files.yml#maplayers.yml)
-- data in csv files: ./initial-data-load/data/{COUNTRY}/[attributes/](../data-structures/config-files#attributes)
-- config for csv files load: ./initial-data-load/data/{COUNTRY}/attributes/[index.js](../data-structures/config-files#index.js-for-attributes)
+- geodata: ./initial-data-load/data/{COUNTRY}/[geoData.yml](../../data-structures/config-files.md#geodata.yml)
+- map layers: ./initial-data-load/data/{COUNTRY}/[mapLayers.yml](../../data-structures/config-files.yml#maplayers.yml)
+- data in csv files: ./initial-data-load/data/{COUNTRY}/[attributes/](../../data-structures/config-files#attributes)
+- config for csv files load: ./initial-data-load/data/{COUNTRY}/attributes/[index.js](../../data-structures/config-files#index.js-for-attributes)
 
 ## Configuration before start
 Some of config files need to be created before running the app as they are part of the code or their values (environment variables) are included during build.     
@@ -54,7 +54,7 @@ For map view in the UI, you can set [x,y] coordinates and zoom level to focus th
 #### tabs setting
 In first version, there is only one Tab available.     
 **index** is order of the tab in the top menu. In future versions, you can create multiple tabs and order them. Order starts at 0 and it should be sequence of consecutive numbers.      
-**attributeIds** are names of attributes stored in database for specific graphs in tab. Each preset tab has own set of constants to be matched with data in database. Specific sets of attributeIds are described in [Dashboard Tabs](../UI/dashboard-tabs.md).     
+**attributeIds** are names of attributes stored in database for specific graphs in tab. Each preset tab has own set of constants to be matched with data in database. Specific sets of attributeIds are described in [Dashboard Tabs](../../UI/dashboard-tabs.md).     
      
 ## Configuration and data in data filling service
 `initial-data-load` service prepares structure in database and storage and fills them with data. This service can be run multiple times after the structure is set up.   
@@ -79,16 +79,16 @@ The geometrical objects in geojson (Features), can be easily linked with data in
 
 In order to correctly link all data, we recommend following this steps:      
 1. Get geojsons for all data with single coordinates per feature (one object on map), geometrical objects on map (shapes of buildings, lines of earthquake shakes, isochrones) and generic geojsons with various administrative levels. For introduction to the topic see [article at geodatasource.com](https://www.geodatasource.com/resources/tutorials/what-is-administrative-division/).    
-2. List all used geojsons in config file 'GeoData.yml' directly in COUNTRY folder. Structure of items in this config is described in detail in [Data Structures](../data-structures/config-files.md#geodata.yml).
-3. Create list of map layers in config file 'MapLayers.yml'. Before we provide you with link to structure of items as above, keep in mind, that for 'attribute', you need either to take name of property in Feature from geojson or create your own 'attribute' which will be used for data in attributes structure also. With this in mind, let's create the layers with [following structure](../data-structures/config-files.md#maplayers.yml).
+2. List all used geojsons in config file 'GeoData.yml' directly in COUNTRY folder. Structure of items in this config is described in detail in [Data Structures](../../data-structures/config-files.md#geodata.yml).
+3. Create list of map layers in config file 'MapLayers.yml'. Before we provide you with link to structure of items as above, keep in mind, that for 'attribute', you need either to take name of property in Feature from geojson or create your own 'attribute' which will be used for data in attributes structure also. With this in mind, let's create the layers with [following structure](../../data-structures/config-files.md#maplayers.yml).
   
-4. In this step, we can finally make first run of initial data load service with our data. Check [Run application](../getting-started/run-application.md) tutorial for details on how to start application locally.    
+4. In this step, we can finally make first run of initial data load service with our data. Check [Run application](../../getting-started/run-application.md) tutorial for details on how to start application locally.    
 
 If everything went correctly, after you start application, run the service with correct environment variables and refresh web page in browser. The layers should be in [menu on frontend](../UI/map.md). For all layers with values only in geojsons, the values should be already there and the rest should have grey areas (or colour set for missing values), that we later get from attributes collection from the database.        
 5. Now is time to move to attributes to fix the empty layers and fill dashboard with data.      
     
 ### Attributes
-This functionality is run, if environment variable `UPLOAD_DATA_TYPES=layerAttributes` is set in `./runinitialload.sh` script and stores data for specific point (or interval) in space and time in 'attributes' collection. These values are stored in ["attribute" format](../data-structures/in-database.md#attributes):
+This functionality is run, if environment variable `UPLOAD_DATA_TYPES=layerAttributes` is set in `./runinitialload.sh` script and stores data for specific point (or interval) in space and time in 'attributes' collection. These values are stored in ["attribute" format](../../data-structures/in-database.md#attributes):
       
 #### How to get this data into database   
 Short answer is as you wish. As far as you keep the structure correct, the application can process them from database. As of now, we provide one way to store the data, but in following version, multiple ways will be presented and this tutorial will be automatically updated.       
@@ -108,4 +108,4 @@ One csv file can contain more data for the same AdminArea list. Each will be sto
 Although 'initial-data-load' has the word _initial_ in name, it can be run multiple times on already running application for data update.      
 All that is needed is replace the data in .csv files with current data, update date in index.js file and run the service again with environment variable `UPLOAD_DATA_TYPES=attributes`. 
 If the data is always uploaded for today or yesterday, this date can be set in the index.js as value relative to now (date and time in moment of running the service) and there will be only one place, where data need to be updated.    
-The data will be stored under the new date and if the date is later than the previous one, this data will be automatically used. This approach also produces sets of data for different dates that will be loaded as timeline for layers with key [timeseries: true](../UI/map.md) set in MapLayers.yml.
+The data will be stored under the new date and if the date is later than the previous one, this data will be automatically used. This approach also produces sets of data for different dates that will be loaded as timeline for layers with key [layerOptions: timeseries: true](../../UI/map.md) set in MapLayers.yml.

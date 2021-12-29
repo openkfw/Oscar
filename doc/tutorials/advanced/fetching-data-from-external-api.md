@@ -8,7 +8,7 @@ As most of the team members are from Slovakia, we chose to fetch a sample data r
 
 ## Configuration
 
-URL loader configuration file and all necessary environment variables are set by default. You can just run the scripts as in following section. You can find further description of configuration file properties [here](../data-structures/config-files.md#url-loader-config).
+URL loader configuration file and all necessary environment variables are set by default. You can just run the scripts as in following section. You can find further description of configuration file properties [here](../../data-structures/config-files.md#url-loader-config).
 
 ./url-loader/sources/ExampleDailyUrls.yml
 
@@ -29,7 +29,7 @@ Before you start the service, please make sure, that Oscar application is runnin
 
 ## What can be seen in application
 
-For now you can check just that data are saved in raw-data Blob container in [Azure Storage Explorer](../development/development.md#setup-microsoft-azure-storage-explorer). With later introduction of Azure functions linked with URL loader service, you will be able to see data on the map.
+For now you can check just that data are saved in raw-data Blob container in [Azure Storage Explorer](../../development/development.md#setup-microsoft-azure-storage-explorer). With later introduction of Azure functions linked with URL loader service, you will be able to see data on the map.
 
 ## What's next
 

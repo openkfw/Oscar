@@ -30,7 +30,7 @@ const addMapLayer = async (data) => {
       featureId: data.featureId,
       metadata: data.metadata,
       layers: updatedLayers,
-      timeseries: data.timeseries,
+      layerOptions: data.layerOptions,
     };
   }
   if (data.geoReferenceId) {
@@ -53,7 +53,7 @@ const addMapLayer = async (data) => {
     metadata: data.metadata,
     style: data.style,
     legend: data.legend,
-    timeseries: data.timeseries,
+    layerOptions: data.layerOptions,
   };
 };
 

@@ -148,17 +148,20 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         // layer is selected, deselecting
         modifiedLayer.setVisible(false);
         // for layer with time series also hide slider and clear modifiedLayer state
-        if (modifiedLayer.get('timeseries')) {
+        if (modifiedLayer.get('layerOptions').timeseries) {
           setTimeSeriesSlider(false);
           setModifiedLayer(null);
         }
       } else {
         // layer is not selected, selecting
         // deselect the rest of regions layers, if regions layer selected
-        if (modifiedLayer.get('type') === staticLayersTypes.REGIONS) {
+        if (
+          modifiedLayer.get('layerOptions').singleDisplay &&
+          modifiedLayer.get('type') === staticLayersTypes.REGIONS
+        ) {
           staticLayers.forEach((layer) => {
             if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
-              if (layer.get('timeseries') && layer.getVisible()) {
+              if (layer.get('layerOptions').timeseries && layer.getVisible()) {
                 setTimeSeriesSlider(false);
               }
               layer.setVisible(false);
@@ -166,7 +169,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
           });
         }
         // select correct layer and timeline, if timeseries data available
-        if (modifiedLayer.get('timeseries')) {
+        if (modifiedLayer.get('layerOptions').timeseries) {
           const availableDates = await getAvailableDates(modifiedLayer.get('attribute'));
           if (availableDates && availableDates.length > 1) {
             setAvailableDates(availableDates);
