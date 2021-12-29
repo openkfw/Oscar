@@ -1,12 +1,12 @@
+import { Context } from '@azure/functions';
+import csv2json from 'csvtojson';
+import { ItemFromFile } from '../types';
+
 /**
  * Load data from file based on file format
  * @param  {Buffer} incomingBlob - blob which triggered the function and is processed
  * @returns {Array<ItemFromFile>} - array with data from file
  */
-import { Context } from '@azure/functions';
-import csv2json from 'csvtojson';
-import { ItemFromFile } from '../types';
-
 const fileLoader = async (incomingBlob: Buffer, context: Context): Promise<Array<ItemFromFile>> => {
   let returnJson;
   const stringFromBuffer = incomingBlob.toString('utf8');

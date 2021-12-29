@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const axios = require('axios');
+const bbox = require('@turf/bbox');
+
 const logger = require('../config/winston');
 
 const {
@@ -15,7 +17,9 @@ const { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage } = requ
 
 const storeGeoDataToDb = async (fromFile, data, filePath) => {
   let geojsonData;
+  logger.info(`Clearing database collection ${data.collectionName}`);
   await deleteAllFromCollection(data.collectionName);
+  logger.info(`Loading data from file ${filePath}`);
   if (fromFile) {
     geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } else {
@@ -26,8 +30,41 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
     }
     geojsonData = result.data;
   }
-  await createGeoDataIndex(data.collectionName);
-  await storeGeoFeaturesData(geojsonData.features, data.collectionName);
+  logger.info(`Creating index on collection...`);
+  await createGeoDataIndex(data.collectionName, 'bbox');
+  logger.info(`Generating bounding boxes for features...`);
+
+  const { features } = geojsonData;
+  if (!features || !features.length) {
+    logger.info(`No features in file ${filePath}`);
+    return;
+  }
+  const featuresWithBbox = features.map((feature) => {
+    if (feature.geometry.type === 'Point') {
+      return { ...feature, bbox: feature.geometry };
+    }
+    const [minX, minY, maxX, maxY] = bbox.default({
+      type: 'FeatureCollection',
+      name: 'Polygon',
+      features: [feature],
+    });
+    const generatedBBox = [
+      [
+        [minX, minY],
+        [minX, maxY],
+        [maxX, maxY],
+        [maxX, minY],
+        [minX, minY],
+      ],
+    ];
+    return {
+      ...feature,
+      bbox: { type: 'Polygon', coordinates: generatedBBox },
+    };
+  });
+
+  logger.info(`Storing features into database...`);
+  await storeGeoFeaturesData(featuresWithBbox, data.collectionName);
 };
 
 const formatLayerGeoData = async (data, country) => {
@@ -40,7 +77,7 @@ const formatLayerGeoData = async (data, country) => {
   if (data.geoDataUrl) {
     logger.info(`Downloading geojson ${data.geoDataUrl} for layer ${data.referenceId}...`);
     if (data.storeToDb) {
-      await storeGeoDataToDb(false, data, null);
+      await storeGeoDataToDb(false, data, data.geoDataUrl);
       url = data.apiUrl;
       logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
     } else {
