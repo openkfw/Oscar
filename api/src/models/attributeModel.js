@@ -141,15 +141,16 @@ const getFilteredAttributes = async (
 /**
  * @param  {array} attributeIds - ids of attributes
  * @param  {array} attributeIdCategories - categories of attributes, common part of attributeId for regex search
+ * @param  {array} featureIds - geographical features only to be selected
  */
-const getLatestAttributes = async (attributeIds, attributeIdCategories) => {
+const getLatestAttributes = async (attributeIds, attributeIdCategories, featureIds) => {
   if (!(attributeIds || attributeIdCategories)) {
     throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true);
   }
   const { connection } = mongoose;
   const { db } = connection;
 
-  const match = createAttributesFilter(attributeIds, attributeIdCategories);
+  const match = createAttributesFilter(attributeIds, attributeIdCategories, featureIds);
 
   const attributes = await db
     .collection(ATTRIBUTES_COLLECTION_NAME)
