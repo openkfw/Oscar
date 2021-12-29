@@ -130,7 +130,7 @@ Functions are commented out in `./docker-compose.yml` file. Remove the #s in 'fu
 
 [Start application locally](../../getting-started/run-application.md); the function will start automatically. Once the application is running, we need to trigger this function with correct file in correct folder in Azure Storage Container. When we run it locally, the storage is also docker container on local machine. We can see logs from this container in terminal. For more info check [Development/Docker](../../development/development.md#docker). Upload the file into `raw-data` container in the folder, defined in function, in our case `jsonfiles`. Test files with correct and invalid data we used during this tutorial can be found in `./tests/data` folder. You might want to run the invalid file and check in logs how error messages look like.
 
-Check in the database at `http://localhost:8081/db/oscar/attributes`. There are the attributes stored in database with correct values.
+Check in the database at `http://localhost:8081/db/oscar/featureAttributes`. There are the attributes stored in database with correct values.
 Function is finished.
 If you have API with this file, you can fetch new data automatically with [url-loader service](../../services/url-loader.md).
 
