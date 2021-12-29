@@ -19,7 +19,7 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
   let geojsonData;
   logger.info(`Clearing database collection ${data.collectionName}`);
   await deleteAllFromCollection(data.collectionName);
-  logger.info(`Loading data from file ${filePath}`);
+  logger.info(`Loading data from file ${filePath || data.geoDataUrl}`);
   if (fromFile) {
     geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } else {
@@ -36,10 +36,10 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
 
   const { features } = geojsonData;
   if (!features || !features.length) {
-    logger.info(`No features in file ${filePath}`);
+    logger.info(`No features in file ${filePath || data.geoDataUrl}`);
     return;
   }
-  const featuresWithBbox = geojsonData.features.map((feature) => {
+  const featuresWithBbox = features.map((feature) => {
     if (feature.geometry.type === 'Point') {
       return { ...feature, bbox: feature.geometry };
     }
