@@ -1,4 +1,4 @@
-export const ATTRIBUTES_COLLECTION = 'point_attributes';
+export const ATTRIBUTES_COLLECTION = 'pointAttributes';
 
 // keys in KOBO response data to be omitted from saving into db
 export const EXCEPT_KEYS = [
