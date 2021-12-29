@@ -19,7 +19,7 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
   let geojsonData;
   logger.info(`Clearing database collection ${data.collectionName}`);
   await deleteAllFromCollection(data.collectionName);
-  logger.info(`Loading data from file ${filePath || data.geoDataUrl}`);
+  logger.info(`Loading data from file ${filePath}`);
   if (fromFile) {
     geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } else {
@@ -36,7 +36,7 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
 
   const { features } = geojsonData;
   if (!features || !features.length) {
-    logger.info(`No features in file ${filePath || data.geoDataUrl}`);
+    logger.info(`No features in file ${filePath}`);
     return;
   }
   const featuresWithBbox = features.map((feature) => {
@@ -77,7 +77,7 @@ const formatLayerGeoData = async (data, country) => {
   if (data.geoDataUrl) {
     logger.info(`Downloading geojson ${data.geoDataUrl} for layer ${data.referenceId}...`);
     if (data.storeToDb) {
-      await storeGeoDataToDb(false, data, null);
+      await storeGeoDataToDb(false, data, data.geoDataUrl);
       url = data.apiUrl;
       logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
     } else {
