@@ -7,7 +7,12 @@ const groupLayer = (layerData, handleIsLoading) => {
     title: layerData.title,
     type: layerData.layerType,
     legend: layerData.legend,
-    layers: layerData.layers.map((layer) => staticLayerGenerator({ ...layer, visible: true }, handleIsLoading)),
+    layers: layerData.layers.map((layer) =>
+      staticLayerGenerator(
+        { ...layer, visible: true, maxResolution: layerData.layerOptions.maxResolution },
+        handleIsLoading,
+      ),
+    ),
     layerOptions: layerData.layerOptions,
   });
   newLayer.selectable = true;

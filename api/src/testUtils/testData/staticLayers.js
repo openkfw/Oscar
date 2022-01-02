@@ -55,6 +55,11 @@ const mapLayersInDb = [
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
     },
+    layerOptions: {
+      singleDisplay: false,
+      maxResolution: 1000,
+      timeseries: true,
+    },
   },
   {
     referenceId: 'sampleMapLayer2',
@@ -177,6 +182,11 @@ const mapLayersInDb = [
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
     },
+    layerOptions: {
+      singleDisplay: true,
+      maxResolution: 1000,
+      timeseries: false,
+    },
   },
   {
     referenceId: 'sampleMapLayer4',
@@ -221,11 +231,6 @@ const newMapLayers = [
     max: 5,
     legend: {
       green: 'legend description',
-    },
-    layerOptions: {
-      singleDisplay: false,
-      maxResolution: 1000,
-      timeseries: true,
     },
   },
   {

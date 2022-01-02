@@ -135,6 +135,15 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
     return legends;
   };
 
+  const showTimeseriesSlider = (availableDates, layer) => {
+    setAvailableDates(availableDates);
+    setTimeSeriesSlider(true);
+    setModifiedLayer(layer);
+    layer.getSource().unset('sliderDate');
+    layer.getSource().unset('dataDate');
+    layer.getSource().refresh();
+  };
+
   const toggleStaticLayer = async (title) => {
     const staticLayersGroup = map
       .getLayers()
@@ -147,37 +156,62 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
       if (modifiedLayer.getVisible()) {
         // layer is selected, deselecting
         modifiedLayer.setVisible(false);
-        // for layer with time series also hide slider and clear modifiedLayer state
-        if (modifiedLayer.get('layerOptions').timeseries) {
+        // if any of the layers that are still visible on the map have time series, show slider for one of them
+        const timeseriesLayerIndex = staticLayers.findIndex(
+          (layer) =>
+            layer.get('title') !== title &&
+            !layer.get('layerOptions').singleDisplay &&
+            layer.get('layerOptions').timeseries &&
+            layer.getVisible(),
+        );
+        const timeseriesLayer = staticLayers[timeseriesLayerIndex];
+        if (timeseriesLayer) {
+          const availableDates = await getAvailableDates(timeseriesLayer.get('attribute'));
+          if (availableDates && availableDates.length > 1) {
+            showTimeseriesSlider(availableDates, timeseriesLayer);
+          }
+          // for last layer with time series that is being deselected, hide slider and clear modifiedLayer state
+        } else if (modifiedLayer.get('layerOptions').timeseries) {
           setTimeSeriesSlider(false);
           setModifiedLayer(null);
         }
       } else {
         // layer is not selected, selecting
-        // deselect the rest of regions layers, if regions layer selected
-        if (
-          modifiedLayer.get('layerOptions').singleDisplay &&
-          modifiedLayer.get('type') === staticLayersTypes.REGIONS
-        ) {
-          staticLayers.forEach((layer) => {
-            if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
-              if (layer.get('layerOptions').timeseries && layer.getVisible()) {
+        // deselect the rest of regions layers, if regions layer with singleDisplay true is selected
+        if (modifiedLayer.get('type') === staticLayersTypes.REGIONS) {
+          if (modifiedLayer.get('layerOptions').singleDisplay) {
+            staticLayers.forEach((layer) => {
+              if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
+                if (layer.get('layerOptions').timeseries && layer.getVisible()) {
+                  setTimeSeriesSlider(false);
+                }
+                layer.setVisible(false);
+              }
+            });
+          } else {
+            // deselect regions layer, which have singleDisplay true, if regions layer with singleDisplay false is selected
+            const singleDisplayLayerIndex = staticLayers.findIndex(
+              (layer) =>
+                layer.get('type') === staticLayersTypes.REGIONS &&
+                layer.get('title') !== title &&
+                layer.get('layerOptions').singleDisplay &&
+                layer.getVisible(),
+            );
+            const singleDisplayLayer = staticLayers[singleDisplayLayerIndex];
+            if (singleDisplayLayer) {
+              if (singleDisplayLayer.get('layerOptions').timeseries) {
                 setTimeSeriesSlider(false);
               }
-              layer.setVisible(false);
+              singleDisplayLayer.setVisible(false);
             }
-          });
+          }
         }
+
         // select correct layer and timeline, if timeseries data available
         if (modifiedLayer.get('layerOptions').timeseries) {
           const availableDates = await getAvailableDates(modifiedLayer.get('attribute'));
           if (availableDates && availableDates.length > 1) {
-            setAvailableDates(availableDates);
-            setTimeSeriesSlider(true);
-            setModifiedLayer(modifiedLayer);
-            modifiedLayer.getSource().unset('sliderDate');
-            modifiedLayer.getSource().unset('dataDate');
-            modifiedLayer.getSource().refresh();
+            showTimeseriesSlider(availableDates, modifiedLayer);
             modifiedLayer.setVisible(true);
           } else {
             modifiedLayer.setVisible(true);
