@@ -12,9 +12,9 @@ Anytime set & run 'initial-data-load' service:
 - country name: ./runinitialload.sh `COUNTRY=Sample`
 - data types to be uploaded into the database: ./runinitialload.sh `UPLOAD_DATA_TYPES=mapLayers,attributes`
 - geodata: ./initial-data-load/data/{COUNTRY}/[geoData.yml](../../data-structures/config-files.md#geodata.yml)
-- map layers: ./initial-data-load/data/{COUNTRY}/[mapLayers.yml](../../data-structures/config-files.yml#maplayers.yml)
-- data in csv files: ./initial-data-load/data/{COUNTRY}/[attributes/](../../data-structures/config-files#attributes)
-- config for csv files load: ./initial-data-load/data/{COUNTRY}/attributes/[index.js](../../data-structures/config-files#index.js-for-attributes)
+- map layers: ./initial-data-load/data/{COUNTRY}/[mapLayers.yml](../../data-structures/config-files.md#maplayers.yml)
+- data in csv files: ./initial-data-load/data/{COUNTRY}/[attributes/](../../data-structures/config-files.md#attributes)
+- config for csv files load: ./initial-data-load/data/{COUNTRY}/attributes/[index.js](../../data-structures/config-files.md#index.js-for-attributes)
 
 ## Configuration before start
 Some of config files need to be created before running the app as they are part of the code or their values (environment variables) are included during build.     
