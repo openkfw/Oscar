@@ -17,7 +17,6 @@ jest.mock('../config/config.js', () => {
 });
 
 describe('GET /api/featureAttributes', () => {
-
   it('should return 500 when attributeIdCategories and attributeId are missing', async () => {
     await DataDateAttribute.insertMany([...bedOccupancyAttrToDb]);
     await request(app).get(`/api/featureAttributes?latestValues=true`).expect(500);
@@ -25,7 +24,9 @@ describe('GET /api/featureAttributes', () => {
 
   it('should return correct data structure', async () => {
     await DataDateAttribute.insertMany([...bedOccupancyAttrToDb]);
-    const res = await request(app).get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`).expect(200);
+    const res = await request(app)
+      .get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`)
+      .expect(200);
     expect(Object.keys(res.body)).toHaveLength(1);
     expect(Object.keys(res.body)).toEqual([bedOccupancyAttrToDb[0].attributeId]);
     expect(Object.keys(res.body[bedOccupancyAttrToDb[0].attributeId][0]).includes('date')).toEqual(true);
@@ -37,7 +38,9 @@ describe('GET /api/featureAttributes', () => {
 
   it('should return one document for the last reported date for each geographic unit e.g. featureId', async () => {
     await DataDateAttribute.insertMany([bedOccupancyAttrToDb[0], bedOccupancyAttrToDb[1]]);
-    const res = await request(app).get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`).expect(200);
+    const res = await request(app)
+      .get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`)
+      .expect(200);
     expect(res.body[bedOccupancyAttrToDb[0].attributeId][0].date).toEqual(bedOccupancyAttrToDb[1].date);
     expect(res.body[bedOccupancyAttrToDb[0].attributeId]).toHaveLength(1);
   });
@@ -54,14 +57,18 @@ describe('GET /api/featureAttributes', () => {
 
   it('should return one document for the last reported date for each geographic unit e.g. featureId if reported period e.g. dataDate is missing', async () => {
     await NumberAttribute.insertMany([...bedOccupancyWithoutDataDateAttrToDb]);
-    const res = await request(app).get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`).expect(200);
+    const res = await request(app)
+      .get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`)
+      .expect(200);
     expect(res.body[bedOccupancyAttrToDb[0].attributeId][0].date).toEqual(bedOccupancyAttrToDb[1].date);
     expect(res.body[bedOccupancyAttrToDb[0].attributeId]).toHaveLength(1);
   });
 
   it('should return documents with the right attributeId from the query', async () => {
     await DataDateAttribute.insertMany([...bedOccupancyAttrToDb, ...hospitalStayAttrToDb]);
-    const res = await request(app).get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`).expect(200);
+    const res = await request(app)
+      .get(`/api/featureAttributes?attributeId=Bed occupancy rate&latestValues=true`)
+      .expect(200);
     expect(Object.keys(res.body)).toEqual([bedOccupancyAttrToDb[0].attributeId]);
   });
 
@@ -71,7 +78,6 @@ describe('GET /api/featureAttributes', () => {
     expect(Object.keys(res.body)).toHaveLength(1);
     expect(res.body[categoryStringAttr[0].attributeId]).toHaveLength(1);
   });
-
 });
 
 describe('GET api/featureAttributes/:attributeId/availableDates', () => {

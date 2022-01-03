@@ -33,7 +33,6 @@ const DataDateAttribute = FeatureAttribute.discriminator(
   }),
 );
 
-
 module.exports = {
   FEATURE_ATTRIBUTES_COLLECTION_NAME,
   FeatureAttribute,
