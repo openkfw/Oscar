@@ -160,6 +160,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         const timeseriesLayerIndex = staticLayers.findIndex(
           (layer) =>
             layer.get('title') !== title &&
+            layer.get('layerOptions') &&
             !layer.get('layerOptions').singleDisplay &&
             layer.get('layerOptions').timeseries &&
             layer.getVisible(),
@@ -179,10 +180,12 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         // layer is not selected, selecting
         // deselect the rest of regions layers, if regions layer with singleDisplay true is selected
         if (modifiedLayer.get('type') === staticLayersTypes.REGIONS) {
-          if (modifiedLayer.get('layerOptions').singleDisplay) {
+          const MLlayerOptions = modifiedLayer.get('layerOptions') || {};
+          if (MLlayerOptions.singleDisplay) {
             staticLayers.forEach((layer) => {
               if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
-                if (layer.get('layerOptions').timeseries && layer.getVisible()) {
+                const layerLayerOptions = layer.get('layerOptions') || {};
+                if (layerLayerOptions.timeseries && layer.getVisible()) {
                   setTimeSeriesSlider(false);
                 }
                 layer.setVisible(false);
@@ -194,6 +197,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
               (layer) =>
                 layer.get('type') === staticLayersTypes.REGIONS &&
                 layer.get('title') !== title &&
+                layer.get('layerOptions') &&
                 layer.get('layerOptions').singleDisplay &&
                 layer.getVisible(),
             );
@@ -208,7 +212,8 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         }
 
         // select correct layer and timeline, if timeseries data available
-        if (modifiedLayer.get('layerOptions').timeseries) {
+        const layerOptions = modifiedLayer.get('layerOptions');
+        if ((layerOptions && layerOptions.timeseries) || modifiedLayer.timeseries) {
           const availableDates = await getAvailableDates(modifiedLayer.get('attribute'));
           if (availableDates && availableDates.length > 1) {
             showTimeseriesSlider(availableDates, modifiedLayer);

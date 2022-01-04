@@ -17,7 +17,7 @@ const regionsLayer = (layerData, handleIsLoading) => {
     legend: layerData.legend,
     zIndex: 0,
     layerOptions: layerData.layerOptions,
-    maxResolution: layerData.layerOptions.maxResolution || layerData.maxResolution,
+    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

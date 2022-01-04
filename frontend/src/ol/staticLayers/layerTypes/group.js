@@ -9,7 +9,11 @@ const groupLayer = (layerData, handleIsLoading) => {
     legend: layerData.legend,
     layers: layerData.layers.map((layer) =>
       staticLayerGenerator(
-        { ...layer, visible: true, maxResolution: layerData.layerOptions.maxResolution },
+        {
+          ...layer,
+          visible: true,
+          maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
+        },
         handleIsLoading,
       ),
     ),
