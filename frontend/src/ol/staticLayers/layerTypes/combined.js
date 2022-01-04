@@ -17,7 +17,7 @@ const combinedLayer = (layerData, handleIsLoading) => {
     legend: layerData.legend,
     minZoom: 11,
     layerOptions: layerData.layerOptions,
-    maxResolution: layerData.layerOptions.maxResolution || layerData.maxResolution || undefined,
+    maxResolution: layerData.layerOptions.maxResolution || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {
