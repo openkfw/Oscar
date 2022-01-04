@@ -10,7 +10,6 @@ Before start:
 - title in UI: ./frontend/.env `REACT_APP_WEBSITE_TITLE=Oscar`
 - dashboard tabs: ./api/data/config/config.yml  
 
-
 Anytime set & run 'initial-data-load' service:
 
 - country name: ./runinitialload.sh `COUNTRY=Sample`
