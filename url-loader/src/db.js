@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('./config/config');
 const logger = require('./config/winston');
 
-const ATTRIBUTES_COLLECTION_NAME = 'attributes';
+const ATTRIBUTES_COLLECTION_NAME = 'featureAttributes';
 
 /**
  * Initialize database connection.

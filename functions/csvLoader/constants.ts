@@ -1,4 +1,4 @@
-export const ATTRIBUTES_COLLECTION = 'attributes';
+export const ATTRIBUTES_COLLECTION = 'featureAttributes';
 
 export const FEATUREID_KEY = 'AdminArea';
 export const DATE_KEY = '';

@@ -2,12 +2,12 @@
 
 Overview of data structures used in application.
 
-# Map data config structure
+## Map data config structure
 
 To import data for map view, folder with config files directly in initial-data-load folder is used. Based on 'COUNTRY' environment variable, folder with the same name as is value in this variable is selected from 'data' folder and data from config files inside are processed.  
 Example data in correct structures can be found in 'Sample' folder.
 
-Data for layers in map view is stored in three different collections in database separately. Geographical data, informations about layers and styling and last data to be visualised.
+Data for layers in map view is stored in three different collections in database separately. Geographical data, information about layers and styling and last data to be visualised.
 
 ### Geographical data
 
@@ -20,8 +20,8 @@ name: name of the data, for easier human identification
 geoDataUrl: route in api where this data can be found and fetched from
 updateDate: time of last change, added automatically in timestamp format
 format: file format
-featureIds: array with all Features properties names and fullnames of geographical areas & all existing values
-attributeIds: list of all available Features properties
+featureIds: array with all keys with properties of geographical areas & all existing values
+attributeIds: list of all available properties in features
 geometryDataTypes: types of geographical data
 metadata: information about the geographical data in file
   description: String
@@ -57,7 +57,7 @@ metadata: information about the geographical data in file
   dataCalculationDescription: String
 ```
 
-### Layer configuration and informations
+### Layer configuration and information
 
 Layer configurations are saved in 'mapLayers' collection in following structures:
 
@@ -160,9 +160,13 @@ metadata: information about the layer
   dataCalculationDescription: String
 ```
 
-# Attributes
+## Attributes
 
-Attributes are stored in attributes collection. Each document is created for one geographical unit in official levels and for given date. They are used in [map view](../UI/map.md), linked by 'attribute' in mapLayers collection and 'attributeId' in attributes collection.  
+Attributes are values with specified id/name, date when the values were obtained or created and geographical area where they are from.  
+This values are stored in two collections based on type of geographical information and where it is stored.
+For value for certain point on map with geographical information included, we have `pointAttributes` collection structured exactly like features in geojson file.
+
+In case of static set of geographical features, e.g. provinces and districts in country or a set of areas of interest, we store the values in `featureAttributes` collection in database. They are used in [map view](../UI/map.md), linked by 'attribute' in mapLayers collection and 'attributeId' in attributes collection.  
 The data is stored in following structure:
 
 ```

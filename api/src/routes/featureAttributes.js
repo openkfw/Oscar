@@ -7,7 +7,7 @@ const {
   getFilteredAttributes,
   getAvailableDates,
   getUniqueFeatureIds,
-} = require('../models/attributeModel');
+} = require('../models/featureAttributeModel');
 const logger = require('../config/winston');
 
 const router = express.Router();
