@@ -41,7 +41,7 @@ const geometryLayer = (layerData, handleIsLoading) => {
     style: geometryStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
     layerOptions: layerData.layerOptions,
-    maxResolution: layerData.layerOptions.maxResolution || layerData.maxResolution,
+    maxResolution: layerData.layerOptions.maxResolution || layerData.maxResolution || undefined,
   });
   newLayer.selectable = true;
   if (layerData.visible) {
