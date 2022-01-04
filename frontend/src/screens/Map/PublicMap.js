@@ -172,7 +172,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
             showTimeseriesSlider(availableDates, timeseriesLayer);
           }
           // for last layer with time series that is being deselected, hide slider and clear modifiedLayer state
-        } else if (modifiedLayer.get('layerOptions').timeseries) {
+        } else if (modifiedLayer.get('layerOptions') && modifiedLayer.get('layerOptions').timeseries) {
           setTimeSeriesSlider(false);
           setModifiedLayer(null);
         }
