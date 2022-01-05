@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
-import theme, { backgroundColor } from './oscarMuiTheme';
+import theme, { backgroundColor } from './utils/oscarMuiTheme';
 import MobileHeader from './components/MobileHeader';
 import PublicMap from './screens/Map/PublicMap';
 import DeviceDetection from './DeviceDetection/DeviceDetectionContainer';
@@ -77,6 +77,7 @@ export const App = () => {
                   <Route exact path={MAP_PAGE} component={PublicMap} />
                   <Navbar>
                     <Route exact path={EXEC_DASHBOARD_PAGE} component={DashboardTabs} />
+                    <Route exact path={`${EXEC_DASHBOARD_PAGE}/:tabName`} component={DashboardTabs} />
                   </Navbar>
                 </Switch>
               </div>

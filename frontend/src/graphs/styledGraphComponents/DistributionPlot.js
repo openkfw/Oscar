@@ -9,13 +9,14 @@ import {
   dashboardChartAxisColor,
   dashboardChartGridColor,
   mainBackgroundColor,
-} from '../../oscarMuiTheme';
+} from '../../utils/oscarMuiTheme';
 import EmptyChartMessage from '../EmptyChartMessage';
-import ProgressIndicator from '../../components/ProgressIndicator';
+import ProgressIndicator from '../ProgressIndicator';
 
 const Plot = createPlotlyComponent(Plotly);
 
 const DistributionPlot = ({
+  id,
   data,
   title,
   xAxisTitle,
@@ -106,6 +107,7 @@ const DistributionPlot = ({
   return (
     <Plot
       ref={el}
+      divId={id}
       data={plotData}
       layout={
         layout || {

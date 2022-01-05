@@ -8,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 
 import { actions as mapActions } from '../../../actions';
 import { SELECT_LAYERS } from '../../../constants/currentActivity';
-import { lightTextColor, accentColor } from '../../../oscarMuiTheme';
+import { lightTextColor, accentColor } from '../../../utils/oscarMuiTheme';
 
 export const LayerButton = ({ isMobile, selectingLayers, cancelSelecting, selectLayers }) => {
   const mobileStyle = {

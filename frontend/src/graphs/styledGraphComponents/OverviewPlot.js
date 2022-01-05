@@ -2,13 +2,13 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import Plotly from 'plotly.js-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
-import { mainBackgroundColor, mainTextColor } from '../../oscarMuiTheme';
-import ProgressIndicator from '../../components/ProgressIndicator';
+import { mainBackgroundColor, mainTextColor } from '../../utils/oscarMuiTheme';
+import ProgressIndicator from '../ProgressIndicator';
 import EmptyChartMessage from '../EmptyChartMessage';
 
 const Plot = createPlotlyComponent(Plotly);
 
-const OverviewPlot = ({ data, categories, title }) => {
+const OverviewPlot = ({ id, data, categories, title }) => {
   if (!data) {
     return <ProgressIndicator />;
   }
@@ -75,6 +75,7 @@ const OverviewPlot = ({ data, categories, title }) => {
 
   return (
     <Plot
+      divId={id}
       data={getDataForOverviewPlot()}
       layout={{
         plot_bgcolor: mainBackgroundColor,

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
-import { accentColor, mainBackgroundColor } from '../../oscarMuiTheme';
-import { debounce } from '../../helpers';
+import { accentColor, mainBackgroundColor } from '../../utils/oscarMuiTheme';
+import { debounce } from '../../utils/helpers';
 
 const TimeSlider = withStyles((theme) => ({
   root: {

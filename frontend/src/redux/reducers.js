@@ -7,6 +7,7 @@
 import { combineReducers } from 'redux-immutable';
 import { reducer as overview } from '../actions';
 import { reducer as pixelDetails } from '../ol/info/actions';
+import { reducer as dashboardFilters } from '../components/filters/actions';
 import { reducer as isMobile } from '../DeviceDetection/reducer';
 
 /**
@@ -16,6 +17,7 @@ export default function createReducer(asyncReducers) {
   return combineReducers({
     overview,
     pixelDetails,
+    dashboardFilters,
     isMobile,
     ...asyncReducers,
   });
