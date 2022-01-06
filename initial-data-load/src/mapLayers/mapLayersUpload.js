@@ -7,7 +7,9 @@ const { getOneLayerGeoData, saveMapLayers } = require('./db');
 
 const addMapLayer = async (data) => {
   if (data.timeseries !== undefined) {
-    logger.info(`DeprecationWarning: 'timeseries' key on the top level is deprecated. Move 'timeseries' key in 'layerOptions' key in ${data.referenceId} layer in mapLayers config.`);
+    logger.info(
+      `DeprecationWarning: 'timeseries' key on the top level is deprecated. Move 'timeseries' key in 'layerOptions' key in ${data.referenceId} layer in mapLayers config.`,
+    );
   }
   if (data.layerType === 'group') {
     const updatedLayers = await Promise.all([
