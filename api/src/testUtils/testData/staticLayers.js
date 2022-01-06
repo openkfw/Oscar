@@ -55,11 +55,7 @@ const mapLayersInDb = [
       unit: 'n/a',
       dataRetrievalDescription: 'Data was randomly created.',
     },
-    layerOptions: {
-      singleDisplay: false,
-      maxResolution: 1000,
-      timeseries: true,
-    },
+    timeseries: false,
   },
   {
     referenceId: 'sampleMapLayer2',

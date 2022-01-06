@@ -178,9 +178,9 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         }
       } else {
         // layer is not selected, selecting
-        // deselect the rest of regions layers, if regions layer with singleDisplay true is selected
         if (modifiedLayer.get('type') === staticLayersTypes.REGIONS) {
           const MLlayerOptions = modifiedLayer.get('layerOptions') || {};
+          // deselect the rest of regions layers, if regions layer with singleDisplay true is selected
           if (MLlayerOptions.singleDisplay) {
             staticLayers.forEach((layer) => {
               if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
@@ -192,7 +192,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
               }
             });
           } else {
-            // deselect regions layer, which have singleDisplay true, if regions layer with singleDisplay false is selected
+            // deselect regions layer, which has singleDisplay true, if regions layer with singleDisplay false is selected
             const singleDisplayLayerIndex = staticLayers.findIndex(
               (layer) =>
                 layer.get('type') === staticLayersTypes.REGIONS &&

@@ -88,6 +88,7 @@ const MapLayerSchema = new mongoose.Schema({
   attributeTemplateName: String,
   featureId: String,
   metadata: MetadataSchema,
+  timeseries: Boolean,
   layerOptions: LayerOptionsSchema,
 });
 
