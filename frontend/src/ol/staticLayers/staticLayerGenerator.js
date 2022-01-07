@@ -7,21 +7,27 @@ import combinedLayer from './layerTypes/combined';
 import groupLayer from './layerTypes/group';
 
 const staticLayerGenerator = (layerData, handleIsLoading) => {
+  let layerOptions;
+  if (layerData.timeseries !== null) {
+    layerOptions = { timeseries: layerData.timeseries };
+  } else {
+    layerOptions = layerData.layerOptions;
+  }
   switch (layerData.layerType) {
     case staticLayersTypes.REGIONS: {
-      return regionsLayer(layerData, handleIsLoading);
+      return regionsLayer({ ...layerData, layerOptions }, handleIsLoading);
     }
     case staticLayersTypes.POINTS: {
-      return pointsLayer(layerData, handleIsLoading);
+      return pointsLayer({ ...layerData, layerOptions }, handleIsLoading);
     }
     case staticLayersTypes.GEOMETRY: {
-      return geometryLayer(layerData, handleIsLoading);
+      return geometryLayer({ ...layerData, layerOptions }, handleIsLoading);
     }
     case staticLayersTypes.GROUP: {
-      return groupLayer(layerData, handleIsLoading);
+      return groupLayer({ ...layerData, layerOptions }, handleIsLoading);
     }
     case staticLayersTypes.COMBINED: {
-      return combinedLayer(layerData, handleIsLoading);
+      return combinedLayer({ ...layerData, layerOptions }, handleIsLoading);
     }
     // eslint-disable-next-line no-empty
     default: {

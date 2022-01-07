@@ -14,17 +14,17 @@ The data provided for dashboard graph and map layers is also made up by us and d
 
 All necessary configuration files and environment variables are set by default. You can just run the scripts as in following section.
 
-First configuration is the setup of [dashboard](../UI/dashboard-tabs.md) in ./api/data/config/config.yml. In this location we provided configuration file with map coordinates to focus on Slovakia and correct zoom level to see the whole country on screen. Second part of the file tells the dashboard graphs where in the api the data can be found.
+First configuration is the setup of [dashboard](../../UI/dashboard-tabs.md) in ./api/data/config/config.yml. In this location we provided configuration file with map coordinates to focus on Slovakia and correct zoom level to see the whole country on screen. Second part of the file tells the dashboard graphs where in the api the data can be found.
 
 Sample data themselves are stored in ./initial-data-load/data/Sample folder. Here we can find geoData.yml and geoData folder with geojson files for the geo-location part of information. First file has all the regions (admin1 level) for the country and second one stores locations of hospitals (for our purpose).
 
-Second part of the data is in mapLayers.yml, file responsible for the actual layers in menu in [map view](../UI/map.md).
+Second part of the data is in mapLayers.yml, file responsible for the actual layers in menu in [map view](../../UI/map.md).
 
 Attributes folder has config file in javascript to easily add current dates in the sample data, so all the functionality of dashboard will work without further update to the data. The data itself is stored in cvs files in this folder.
 
 ## Run Oscar application
 
-If this is your first attempt to run the application, please consult [Getting started](../getting-started/run-application.md) first. There are some necessary prerequisities.
+If this is your first attempt to run the application, please consult [Getting started](../../getting-started/run-application.md) first. There are some necessary prerequisities.
 Now you are set and ready to run the scripts. As all files are already in place, all you need is run these two scripts:
 
 `./start.sh` will start the api, frontend and database. Once you can see the frontend, you can go to next script (don't worry about the empty menu and dashboard, it will be filled in next step).
@@ -33,8 +33,8 @@ Now you are set and ready to run the scripts. As all files are already in place,
 
 ## What can be seen in application
 
-The [map view](../UI/map.md) is focused on Slovakia and in the layers menu, you can select from these layers:
+The [map view](../../UI/map.md) is focused on Slovakia and in the layers menu, you can select from these layers:
 
-![layers menu with sample layers |50%](./sampleMapLayersMenu.png)
+![layers menu with sample layers |50%](../sampleMapLayersMenu.png)
 
-Also all graphs have data, exactly as in [dashboard tabs description page](../UI/dashboard-tabs.md).
+Also all graphs have data, exactly as in [dashboard tabs description page](../../UI/dashboard-tabs.md).

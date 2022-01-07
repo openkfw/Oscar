@@ -79,7 +79,7 @@ export const regionStyleFactory = (attribute, layerStyle) => {
     let fillColor;
     const value = feature.get(attribute);
     if (isNotDefinedIncl0(value)) {
-      fillColor = layerStyle.missingValueColor || 'grey';
+      fillColor = layerStyle.missingValueColor || 'rgb(128,128,128, 0.5)';
     } else if (layerStyle.fillColor) {
       fillColor = getColorFromLayerStyle(value, layerStyle.fillColor, layerStyle.min, layerStyle.max);
     } else if (layerStyle.fillColors) {

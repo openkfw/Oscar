@@ -7,8 +7,17 @@ const groupLayer = (layerData, handleIsLoading) => {
     title: layerData.title,
     type: layerData.layerType,
     legend: layerData.legend,
-    layers: layerData.layers.map((layer) => staticLayerGenerator({ ...layer, visible: true }, handleIsLoading)),
-    timeseries: layerData.timeseries,
+    layers: layerData.layers.map((layer) =>
+      staticLayerGenerator(
+        {
+          ...layer,
+          visible: true,
+          maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
+        },
+        handleIsLoading,
+      ),
+    ),
+    layerOptions: layerData.layerOptions,
   });
   newLayer.selectable = true;
   if (layerData.visible) {
