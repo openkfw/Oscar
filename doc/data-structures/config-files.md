@@ -15,31 +15,51 @@ Map coordinates in [x,y] format and zoom level.
 
 ```
 tabs:
-  PublicTab:
-    index: 0
+  - index: 0
+    label: "Public"
+    urlIdentifier: "public"
 ```
 
-In first version we have only one tab, so the lines above should stay as they are.
+The dashboard part of config is defined as array of tabs. First, we set the index, which is used as index of the tab and defines the order, too. Following are tab label and 'urlIdentifier', which will be used in the url.
 
 ```
-    attributeIds:
+    filters:
+      - name: featureId
+        type: autocomplete
+        title: "Admin1"
+        itemsSource: "/api/attributes/Daily Covid19 Cases Per Admin1/uniqueFeatures"
 ```
 
-As there are no pre-set attributeIds in database, the attributeIds need to be used in constants for frontend.
+Each tab can have multiple filters from [predefined set](../../frontend/src/components/filters/DashboardFilter.js).
 
 ```
-      CASES_BY_DAY_PROVINCES: attributeId for new covid-19 cases on admin1 administrative geographical level
-      SEVEN_DAYS_COINCIDENCE: attributeId for 7 days incidence rate on covid-19 cases on admin1 administrative geographical level
-      NEW_CASES_TOTAL: attributeId for total cases for country from yesterday
-      DEATHS_TOTAL: attributeId for total deaths for country from yesterday
-      INFECTED_TOTAL: attributeId for total infected for country from yesterday
-      RECOVERED_TOTAL: attributeId for total recovered for country from yesterday
-      DEATH_YESTERDAY_INCREASE: attributeId for new deaths for country from yesterday
-      RECOVERED_YESTERDAY_INCREASE: attributeId for newly recovered for country from yesterday
-      NEW_CASE_YESTERDAY_INCREASE: attributeId for new cases for country from yesterday
-      TOTAL_CASES_PER_ADMIN0: first common part of attributeIds on admin0 level
-      TOTAL_CASES_PER_ADMIN1: first common part of attributeIds on admin1 level
+    graphs:
+      - category: "covid19Graphs"
+        graphName: "SevenDaysIncidenceRate"
+        id: "SevenDaysIncidenceRate"
+        key: "currentPSevenDaysIncidenceRaterotectedAreasSituation"
+        attributeId: "7 Days Incidence Rate Per Admin1"
 ```
+
+Graphs can be also selected from options in [OscarGraph.js](../../frontend/src/components/graphs/OscarGraph.js) with options required by specified component.
+
+```
+    printGraphs:
+      - htmlId: "CurrentCovid19Situation"
+        type: "htmlViaCanvas"
+      - htmlId: "SevenDaysIncidenceRate"
+        type: "plotlyGraph"
+      - htmlId: "CasesPerDayByProvince"
+        type: "plotlyGraph"
+      - htmlId: "totalCasesAdmin0Graph"
+        type: "plotlyGraph"
+        size: 0.5
+      - htmlId: "totalCasesAdmin1Graph"
+        type: "plotlyGraph"
+        size: 0.5
+```
+
+Last defined are print settings for graphs which should be exported in pdf generated from tab. 'htmlId' refers to 'id' on item in graphs array. Type depends on how the graph component is composed. Size parameter defines width of the graph on generated document (A4 format). Last two graphs in this example will be side by side.
 
 ## geoData.yml
 
@@ -89,7 +109,7 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
     dataCalculationDescription: String
 ```
 
-_in addition geodata can be stored in newly created database collection by adding the following into an item structure
+\_in addition geodata can be stored in newly created database collection by adding the following into an item structure
 
 ```
   storeToDb: true

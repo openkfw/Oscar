@@ -9,13 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- new route for unique featureIds for one attributeId [#86](https://github.com/openkfw/Oscar/pull/86/files)
+- option to store geographical data in database collection [#85](https://github.com/openkfw/Oscar/issues/85) [#94](https://github.com/openkfw/Oscar/pull/94)
+- pdf button for exporting dashboard tab as pdf document
+
 ### Changed
+
+- dashboard config specifying tabs and graphs, not selecting from existing
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- allow empty data folder in functions [#70](https://github.com/openkfw/Oscar/issues/70)
+- NaN appearing in url in map view and breaking the map [#90](https://github.com/openkfw/Oscar/pull/90)
+
+## [1.3.1] - 2021-11-26
+
+### Updates
+
+- updated geodata structure [#77](https://github.com/openkfw/Oscar/pull/77) [#79](https://github.com/openkfw/Oscar/pull/79) [#81](https://github.com/openkfw/Oscar/pull/81)
 
 ## [1.3.0] - 2021-10-15
 
