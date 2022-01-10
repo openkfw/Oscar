@@ -41,6 +41,7 @@
   "main": "index.js",
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.7",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^8.0.0",
@@ -54,7 +55,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^4.2.5",
     "prettier": "^2.2.1",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "5.0.0"
   },
   "husky": {
     "hooks": {
@@ -62,13 +63,9 @@
     }
   },
   "resolutions": {
-    "**/ansi-html": "npm:ansi-html-community@^0.0.8",
-    "ansi-regex": "^5.0.1",
-    "browserslist": "^4.16.5",
-    "glob-parent": "^5.1.2",
-    "immer": "^9.0.6",
     "nth-check": "^2.0.1",
-    "set-value": "^4.0.1"
+    "postcss": "^8.2.13",
+    "node-forge": "^1.0.0"
   },
   "author": "",
   "browserslist": {
