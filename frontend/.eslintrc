@@ -42,5 +42,5 @@
     "test": true,
     "afterEach": true
   },
-  "parser": "babel-eslint"
+  "parser": "@babel/eslint-parser"
 }
