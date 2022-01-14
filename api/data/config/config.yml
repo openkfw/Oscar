@@ -3,17 +3,57 @@ map:
   y: 6219942
   zoom: 8
 tabs:
-  PublicTab:
-    index: 0
-    attributeIds:
-      CASES_BY_DAY_PROVINCES: "Daily Covid19 Cases Per Admin1"
-      SEVEN_DAYS_COINCIDENCE: "7 Days Incidence Rate Per Admin1"
-      NEW_CASES_TOTAL: "Total new cases"
-      DEATHS_TOTAL: "Total death cases"
-      INFECTED_TOTAL: "Total infected cases"
-      RECOVERED_TOTAL: "Total Recovered cases"
-      DEATH_YESTERDAY_INCREASE: "Death cases increase from yesterday"
-      RECOVERED_YESTERDAY_INCREASE: "Recovered cases increase from yesterday"
-      NEW_CASE_YESTERDAY_INCREASE: "New cases increase from yesterday"
-      TOTAL_CASES_PER_ADMIN0: "Total Covid19 Cases Per Admin0"
-      TOTAL_CASES_PER_ADMIN1: "Total Covid19 Cases Per Admin1"
+  - index: 0
+    label: "Public"
+    urlIdentifier: "public"
+    filters:
+      - name: featureId
+        type: autocomplete
+        title: "Admin1"
+        itemsSource: "/api/attributes/Daily Covid19 Cases Per Admin1/uniqueFeatures"
+    graphs:
+      - category: "covid19Graphs"
+        graphName: "CurrentCovid19Situation"
+        id: "CurrentCovid19Situation"
+        key: "CurrentCovid19Situation"
+        attributeIds:
+          NEW_CASES_TOTAL: "Total new cases"
+          DEATHS_TOTAL: "Total death cases"
+          INFECTED_TOTAL: "Total infected cases"
+          RECOVERED_TOTAL: "Total Recovered cases"
+          DEATH_YESTERDAY_INCREASE: "Death cases increase from yesterday"
+          RECOVERED_YESTERDAY_INCREASE: "Recovered cases increase from yesterday"
+          NEW_CASE_YESTERDAY_INCREASE: "New cases increase from yesterday"
+      - category: "covid19Graphs"
+        graphName: "SevenDaysIncidenceRate"
+        id: "SevenDaysIncidenceRate"
+        key: "currentPSevenDaysIncidenceRaterotectedAreasSituation"
+        attributeId: "7 Days Incidence Rate Per Admin1"
+      - category: "covid19Graphs"
+        graphName: "CasesPerDayByProvince"
+        id: "CasesPerDayByProvince"
+        key: "CasesPerDayByProvince"
+        attributeId: "Daily Covid19 Cases Per Admin1"
+      - category: "covid19Graphs"
+        graphName: "TotalCasesDistribution"
+        id: "TotalCasesDistribution"
+        key: "TotalCasesDistribution"
+        graphsIds:
+          admin0: "totalCasesAdmin0Graph"
+          admin1: "totalCasesAdmin1Graph"
+        attributeCategories:
+          - "Total Covid19 Cases Per Admin0"
+          - "Total Covid19 Cases Per Admin1"
+    printGraphs:
+      - htmlId: "CurrentCovid19Situation"
+        type: "htmlViaCanvas"
+      - htmlId: "SevenDaysIncidenceRate"
+        type: "plotlyGraph"
+      - htmlId: "CasesPerDayByProvince"
+        type: "plotlyGraph"
+      - htmlId: "totalCasesAdmin0Graph"
+        type: "plotlyGraph"
+        size: 0.5
+      - htmlId: "totalCasesAdmin1Graph"
+        type: "plotlyGraph"
+        size: 0.5

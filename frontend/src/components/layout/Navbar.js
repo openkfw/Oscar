@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
-import { mainBackgroundColor, backgroundColor } from '../../oscarMuiTheme';
+import { mainBackgroundColor, backgroundColor } from '../../utils/oscarMuiTheme';
 import logo from '../../data/logo_orange.png';
 import MenuList from './MenuList';
 

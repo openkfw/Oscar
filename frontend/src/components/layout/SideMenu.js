@@ -8,7 +8,7 @@ import connect from 'react-redux/lib/connect/connect';
 import Drawer from '@material-ui/core/Drawer';
 import { actions as mapActions } from '../../actions';
 import { NO_ACTIVITY, MENU_OPENED } from '../../constants/currentActivity';
-import { mainBackgroundColor } from '../../oscarMuiTheme';
+import { mainBackgroundColor } from '../../utils/oscarMuiTheme';
 import MenuList from './MenuList';
 
 const useStyles = makeStyles(() => ({

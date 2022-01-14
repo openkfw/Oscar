@@ -8,7 +8,7 @@ import {
   dashboardCardGreyColor,
   mainBackgroundColor,
   mainBoxShadow,
-} from '../../oscarMuiTheme';
+} from '../../utils/oscarMuiTheme';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -65,10 +65,12 @@ const OverviewTable = ({ data, color, highlightedPrefix, primaryText, secondaryT
       <span className={`${classes.cardTitle}`} style={{ color }}>
         {highlightedPrefix} <span className={classes.cardText}>{primaryText}</span>
       </span>
-      <span className={classes.increaseText}>
-        {`+ ${data.secondaryValue === 0 ? 0 : data.secondaryValue || 'n/a'}`}
-        <span className={classes.cardText}> {secondaryText} from</span> previous day
-      </span>
+      {secondaryText && (
+        <span className={classes.increaseText}>
+          {`+ ${data.secondaryValue === 0 ? 0 : data.secondaryValue || 'n/a'}`}
+          <span className={classes.cardText}> {secondaryText} from</span> previous day
+        </span>
+      )}
     </Card>
   );
 };

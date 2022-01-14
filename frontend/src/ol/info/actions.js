@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { roundNumber, isNotDefinedIncl0 } from '../../helpers';
+import { roundNumber, isNotDefinedIncl0 } from '../../utils/helpers';
 
 export const PIXEL_DETAILS = 'PIXEL_DETAILS';
 export const SET_PIXEL_COORDINATES = 'SET_PIXEL_COORDINATES';

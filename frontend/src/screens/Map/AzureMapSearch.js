@@ -20,9 +20,9 @@ import { findPlace } from '../../axiosRequests';
 import { selectedPlaceVectorSource } from '../../ol/place';
 import FabIconButton from '../../components/FabIconButton';
 import Place from '../../components/Place';
-import { mainBackgroundColor, buttonBackgroundColor, iconColor } from '../../oscarMuiTheme';
-import { foundPointAddressString } from '../../helpers';
-import validations from '../../validations';
+import { mainBackgroundColor, buttonBackgroundColor, iconColor } from '../../utils/oscarMuiTheme';
+import { foundPointAddressString } from '../../utils/helpers';
+import validations from '../../utils/validations';
 
 const buttonStyle = {
   color: iconColor,

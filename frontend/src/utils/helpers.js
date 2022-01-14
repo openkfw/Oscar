@@ -1,3 +1,8 @@
+import moment from 'moment';
+
+export const showDate = (timestamp) => moment(timestamp).format('LL');
+export const showDateAndTime = (timestamp) => moment(timestamp).format('YYYY-MM-DD kk:mm');
+
 export const isNotDefinedIncl0 = (value) => value === undefined || value === null || value === 'N/A' || value === '';
 
 /**
