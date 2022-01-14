@@ -12,6 +12,7 @@
     "joi": "^13.6.0",
     "js-yaml": "^3.14.0",
     "mongoose": "^5.11.11",
+    "underscore": "^1.12.1",
     "winston": "^3.2.1"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import LinePlot from '../styledGraphComponents/LinePlot';
 import { getAttributesData } from '../../axiosRequests';
-import { getStartDate } from '../../helpers';
+import { getStartDate } from '../../utils/helpers';
 import {
   dashboardChartRedColor,
   dashboardChartGreenColor,
@@ -10,11 +10,12 @@ import {
   dashboardChartBlueColor,
   dashboardChartPurpleColor,
   dashboardChartLightBlueColor,
-} from '../../oscarMuiTheme';
+} from '../../utils/oscarMuiTheme';
 
-const CasesPerDayByProvince = ({ attributeId }) => {
+const CasesPerDayByProvince = ({ attributeId, id }) => {
   const [casesByDayProvince, setCasesByDayProvince] = useState([]);
   useEffect(() => {
+    let isMounted = true;
     async function fetchData() {
       const searchParams = new URLSearchParams();
       searchParams.append('attributeId', attributeId);
@@ -34,14 +35,20 @@ const CasesPerDayByProvince = ({ attributeId }) => {
           dates: dataByFeature[featureId].map((feature) => feature.date.split('T')[0]),
           values: dataByFeature[featureId].map((feature) => feature.value),
         }));
-        setCasesByDayProvince(plotData);
+        if (isMounted) {
+          setCasesByDayProvince(plotData);
+        }
       }
     }
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [attributeId]);
 
   return (
     <LinePlot
+      id={id}
       title="Cases per day by province"
       data={casesByDayProvince}
       yAxisTitle="Number of cases"

@@ -7,14 +7,15 @@ import {
   mainTextColor,
   dashboardChartAxisColor,
   dashboardChartGridColor,
-} from '../../oscarMuiTheme';
+} from '../../utils/oscarMuiTheme';
 
-import ProgressIndicator from '../../components/ProgressIndicator';
+import ProgressIndicator from '../ProgressIndicator';
 import EmptyChartMessage from '../EmptyChartMessage';
 
 const Plot = createPlotlyComponent(Plotly);
 
 const LinePlot = ({
+  id,
   data,
   title,
   mode,
@@ -48,6 +49,27 @@ const LinePlot = ({
 
     const plotData = items.map((item, idx) => {
       colorCounter += 5;
+      let line;
+      let marker = {};
+      if (colors) {
+        line = colors[idx];
+        marker = {
+          color: colors[idx],
+        };
+      } else if (item.color) {
+        line = item.dash ? { color: item.color, dash: item.dash } : item.color;
+        marker = item.dash
+          ? {
+              color: item.color,
+              dash: item.dash,
+            }
+          : {
+              color: item.color,
+            };
+      } else {
+        line = { color: `rgba(200,${colorCounter},0,0.5)` };
+        marker = { color: `rgba(200,${colorCounter},0,0.5)` };
+      }
       return {
         type,
         mode,
@@ -55,10 +77,8 @@ const LinePlot = ({
         name: item[lineNameField],
         x: item[xAxisField],
         y: item[yAxisField],
-        line: colors ? colors[idx] : { color: `rgba(200,${colorCounter},0,0.5)` },
-        marker: {
-          color: colors ? colors[idx] : { color: `rgba(200,${colorCounter},0,0.5)` },
-        },
+        line,
+        marker,
         textposition: textPosition,
         hovertemplate: hoverTemplate,
         stackgroup: stackGroup,
@@ -69,6 +89,7 @@ const LinePlot = ({
 
   return (
     <Plot
+      divId={id}
       data={getDataForLinePlot()}
       layout={
         layout || {
@@ -92,6 +113,7 @@ const LinePlot = ({
               size: 12,
             },
             gridcolor: dashboardChartGridColor,
+            dtick: 'M12',
           },
           yaxis: {
             title: yAxisTitle,
@@ -142,6 +164,7 @@ LinePlot.defaultProps = {
 };
 
 LinePlot.propTypes = {
+  id: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({})),
   xAxisTitle: PropTypes.string,
   yAxisTitle: PropTypes.string,

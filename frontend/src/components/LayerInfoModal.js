@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
-import { mainTextColor, accentColor, mainBackgroundColor, greyTextColor } from '../oscarMuiTheme';
+import { mainTextColor, accentColor, mainBackgroundColor, greyTextColor } from '../utils/oscarMuiTheme';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

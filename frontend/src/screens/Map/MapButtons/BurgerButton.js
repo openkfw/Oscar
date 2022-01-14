@@ -8,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 
 import { actions as mapActions } from '../../../actions';
 import { MENU_OPENED, NO_ACTIVITY } from '../../../constants/currentActivity';
-import { lightTextColor, accentColor } from '../../../oscarMuiTheme';
+import { lightTextColor, accentColor } from '../../../utils/oscarMuiTheme';
 
 const BurgerButton = ({ isMobile, menuOpened, openMenu }) => {
   const desktopStyle = {

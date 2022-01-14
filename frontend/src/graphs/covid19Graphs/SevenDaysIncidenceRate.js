@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import LinePlot from '../styledGraphComponents/LinePlot';
 import { getAttributesData } from '../../axiosRequests';
-import { getStartDate } from '../../helpers';
+import { getStartDate } from '../../utils/helpers';
 import {
   dashboardChartRedColor,
   dashboardChartGreenColor,
@@ -10,12 +10,13 @@ import {
   dashboardChartBlueColor,
   dashboardChartPurpleColor,
   dashboardChartLightBlueColor,
-} from '../../oscarMuiTheme';
+} from '../../utils/oscarMuiTheme';
 
-const SevenDaysIncidenceRate = ({ attributeId }) => {
+const SevenDaysIncidenceRate = ({ attributeId, id }) => {
   // 7 days incidence
   const [sevenDays, setSevenDays] = useState([]);
   useEffect(() => {
+    let isMounted = true;
     async function fetchData() {
       const searchParams = new URLSearchParams();
       searchParams.append('attributeId', attributeId);
@@ -35,14 +36,20 @@ const SevenDaysIncidenceRate = ({ attributeId }) => {
           dates: dataByFeature[featureId].map((feature) => feature.date),
           values: dataByFeature[featureId].map((feature) => feature.value),
         }));
-        setSevenDays(plotData);
+        if (isMounted) {
+          setSevenDays(plotData);
+        }
       }
     }
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [attributeId]);
 
   return (
     <LinePlot
+      id={id}
       title="7 day Covid-19 incidence per 100,000 population"
       data={sevenDays}
       yAxisTitle="Ratio"

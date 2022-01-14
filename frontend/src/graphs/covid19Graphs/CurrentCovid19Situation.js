@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { getAttributesData } from '../../axiosRequests';
 import OverviewTable from '../styledGraphComponents/OverviewTable';
-import { dashboardDateColor, mainTextColor } from '../../oscarMuiTheme';
+import { backgroundColor, dashboardDateColor, mainTextColor } from '../../utils/oscarMuiTheme';
 
 const useStyles = makeStyles({
   rowTitle: {
@@ -16,6 +16,7 @@ const useStyles = makeStyles({
     height: '100%',
     color: mainTextColor,
     paddingBottom: '39px',
+    backgroundColor,
   },
   date: {
     color: dashboardDateColor,
@@ -25,11 +26,12 @@ const useStyles = makeStyles({
   },
 });
 
-const CurrentCovid19Situation = ({ attributeIds }) => {
+const CurrentCovid19Situation = ({ attributeIds, id }) => {
   const classes = useStyles();
   const [overviewData, setOverviewData] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
     // load overview data into state
     const overviewDataFetching = async () => {
       const searchParams = new URLSearchParams();
@@ -41,6 +43,7 @@ const CurrentCovid19Situation = ({ attributeIds }) => {
       searchParams.append('attributeId', attributeIds.RECOVERED_YESTERDAY_INCREASE);
       searchParams.append('attributeId', attributeIds.NEW_CASE_YESTERDAY_INCREASE);
       searchParams.append('latestValues', true);
+
       try {
         const overviewChartData = await getAttributesData(searchParams);
         const chartData = {
@@ -56,75 +59,90 @@ const CurrentCovid19Situation = ({ attributeIds }) => {
           totalRecovered: overviewChartData[0][attributeIds.RECOVERED_TOTAL][0].value,
           totalDeaths: overviewChartData[0][attributeIds.DEATHS_TOTAL][0].value,
         };
-        setOverviewData(chartData);
+        if (isMounted) {
+          setOverviewData(chartData);
+        }
       } catch {
-        setOverviewData([]);
+        if (isMounted) {
+          setOverviewData([]);
+        }
       }
     };
     overviewDataFetching();
+    return () => {
+      isMounted = false;
+    };
   }, [attributeIds]);
 
   return (
-    <Grid className={classes.wrapper} container direction="row" justifyContent="space-evenly" alignItems="flex-start">
-      <Grid container item xs={12} direction="row" justifyContent="space-between" alignItems="flex-end">
-        <Grid item>
-          <h3 className={classes.rowTitle}>Current Covid-19 situation</h3>
+    <>
+      <Grid
+        className={classes.wrapper}
+        id={id}
+        container
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="flex-start">
+        <Grid container item xs={12} direction="row" justifyContent="space-between" alignItems="flex-end">
+          <Grid item>
+            <h3 className={classes.rowTitle}>Current Covid-19 situation</h3>
+          </Grid>
+          <Grid item className={classes.wholeDate}>
+            <div>
+              <span className={classes.date}>Date:</span> {overviewData.dateTotal || 'n/a'}
+            </div>
+          </Grid>
         </Grid>
-        <Grid item className={classes.wholeDate}>
-          <div>
-            <span className={classes.date}>Date:</span> {overviewData.dateTotal || 'n/a'}
-          </div>
+        <Grid container item xs={12} direction="row" justifyContent="flex-start" alignItems="flex-start">
+          <Grid item xs={12} md={3}>
+            <OverviewTable
+              data={{
+                primaryValue: overviewData.totalCases,
+                secondaryValue: overviewData.newCases,
+              }}
+              highlightedPrefix="Total"
+              primaryText="cases"
+              secondaryText="cases"
+              color="rgba(243, 214, 62, 1)"
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <OverviewTable
+              data={{
+                primaryValue: overviewData.totalRecovered,
+                secondaryValue: overviewData.recovered,
+              }}
+              highlightedPrefix="Recovered"
+              secondaryText="cases"
+              color="rgba(87, 243, 62, 1)"
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <OverviewTable
+              data={{
+                primaryValue: overviewData.totalDeaths,
+                secondaryValue: overviewData.deaths,
+              }}
+              highlightedPrefix="Deaths"
+              secondaryText="cases"
+              color="rgba(243, 62, 62, 1)"
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <OverviewTable
+              data={{
+                primaryValue: overviewData.totalInfected,
+                secondaryValue: overviewData.newCases,
+              }}
+              highlightedPrefix="Currently"
+              primaryText="infected"
+              secondaryText="cases"
+              color="rgba(243, 150, 62, 1)"
+            />
+          </Grid>
         </Grid>
       </Grid>
-      <Grid container item xs={12} direction="row" justifyContent="flex-start" alignItems="flex-start">
-        <Grid item xs={12} md={3}>
-          <OverviewTable
-            data={{
-              primaryValue: overviewData.totalCases,
-              secondaryValue: overviewData.newCases,
-            }}
-            highlightedPrefix="Total"
-            primaryText="cases"
-            secondaryText="cases"
-            color="rgba(243, 214, 62, 1)"
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <OverviewTable
-            data={{
-              primaryValue: overviewData.totalRecovered,
-              secondaryValue: overviewData.recovered,
-            }}
-            highlightedPrefix="Recovered"
-            secondaryText="cases"
-            color="rgba(87, 243, 62, 1)"
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <OverviewTable
-            data={{
-              primaryValue: overviewData.totalDeaths,
-              secondaryValue: overviewData.deaths,
-            }}
-            highlightedPrefix="Deaths"
-            secondaryText="cases"
-            color="rgba(243, 62, 62, 1)"
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <OverviewTable
-            data={{
-              primaryValue: overviewData.totalInfected,
-              secondaryValue: overviewData.newCases,
-            }}
-            highlightedPrefix="Currently"
-            primaryText="infected"
-            secondaryText="cases"
-            color="rgba(243, 150, 62, 1)"
-          />
-        </Grid>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 export default CurrentCovid19Situation;

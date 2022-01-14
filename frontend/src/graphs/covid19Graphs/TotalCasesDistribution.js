@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TotalCasesDistributionGraph = ({ attributeCategories }) => {
+const TotalCasesDistributionGraph = ({ attributeCategories, graphsIds }) => {
   const classes = useStyles();
   const [data, setData] = useState(undefined);
   const [selectedProvince, setSelectedProvince] = useState(undefined);
@@ -148,6 +148,7 @@ const TotalCasesDistributionGraph = ({ attributeCategories }) => {
     <Grid container direction="row" alignItems="center">
       <Grid item xs={12} md={6} className={classes.chart}>
         <DistributionPlot
+          id={graphsIds.admin0}
           data={provinceGraphData}
           xAxisTitle="Province"
           yAxisTitle="Number of cases"
@@ -161,6 +162,7 @@ const TotalCasesDistributionGraph = ({ attributeCategories }) => {
       </Grid>
       <Grid item xs={12} md={6} className={classes.chart}>
         <DistributionPlot
+          id={graphsIds.admin1}
           data={ageGraphData}
           xAxisTitle="Age"
           yAxisTitle="Number of cases"
