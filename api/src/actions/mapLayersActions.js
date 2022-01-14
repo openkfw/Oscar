@@ -29,6 +29,7 @@ const getMapLayersWithGeoData = async () => {
     $or: [
       ...filterOr,
       { layerType: 'points' }, // layers with all values stored in pointAttributes collection, like disaster response functionality
+      { layerType: 'tile' }, // layers with tile data at external url
     ],
   };
 
