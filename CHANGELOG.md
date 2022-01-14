@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+- 'timeseries' key on the top level is now deprecated and moved to 'layerOptions' key. New 'layerOptions' key should be defined in ./initial-data-load/data/{country}/MapLayers.yml configuration file on the top level and 'timeseries' key with its value should be moved there. 'layerOptions' present different options that can be set on layers and change their behavior on the map. You can find out more about these settings in [docs](./doc/data-structures/config-files.md#Attributes-explained).
+
 ### Removed
 
 ### Fixed

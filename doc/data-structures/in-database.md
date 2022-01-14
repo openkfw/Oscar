@@ -76,7 +76,6 @@ attributeDescription:
   noDataMessage: if value for the geographical unit is not available, this message will be displayed
   dateText: month for which the data applies, in this format: 'Reported period: {{dataDate}}'
 featureId: property name in geojson for geographical information
-timeseries: boolean value, whether timeseries data are available
 style:
   fillColor:
     type: type of color information, valid values: 'color', 'colormap'
@@ -106,6 +105,10 @@ metadata: information about the layer
   reliabilityScore: String
   dataRetrievalDescription: String
   dataCalculationDescription: String
+layerOptions:   
+  singleDisplay: boolean value, whether region layer should be displayed alone or can be displayed with other region layers
+  maxResolution: number, max resolution on which layer is shown
+  timeseries: boolean value, whether timeseries data are available
 ```
 
 or
@@ -128,7 +131,6 @@ layers: array with layers of structure from above
       noDataMessage: if value for the geographical unit not available, this message will be displayed
       dateText: month for which the data applies, in this format: 'Reported period: {{dataDate}}'
     featureId: property name in geojson for geographical information to match with data from database
-    timeseries: boolean value, whether timeseries data are available
     style:
       fillColor:
         type: type of color information, valid values: 'color', 'colormap'
@@ -158,6 +160,10 @@ metadata: information about the layer
   reliabilityScore: String
   dataRetrievalDescription: String
   dataCalculationDescription: String
+layerOptions:   
+  singleDisplay: boolean value, whether region layer should be displayed alone or can be displayed with other region layers
+  maxResolution: number, max resolution on which layer is shown
+  timeseries: boolean value, whether timeseries data are available  
 ```
 
 # Attributes

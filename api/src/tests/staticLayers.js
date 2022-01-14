@@ -45,6 +45,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.body[0].geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
     expect(res.body[0].format).toEqual(layerGeoDataInDb.format);
     expect(res.body[0].metadata.geoMetadata).toEqual(layerGeoDataInDb.metadata);
+    expect(res.body[0].timeseries).toEqual(mapLayersInDb[0].timeseries);
   });
   it('should return layer of type group with correct geodata links and format in sublayers', async () => {
     await LayerGeoData.create(layerGeoDataInDb);
@@ -54,6 +55,7 @@ describe('GET /api/staticLayers', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[2].referenceId);
+    expect(res.body[0].layerOptions).toEqual(mapLayersInDb[2].layerOptions);
     res.body[0].layers.forEach((layer) => {
       expect(layer.geoDataUrl).toEqual(layerGeoDataInDb.geoDataUrl);
       expect(layer.format).toEqual(layerGeoDataInDb.format);

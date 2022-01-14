@@ -40,6 +40,8 @@ const geometryLayer = (layerData, handleIsLoading) => {
     zIndex: 1,
     style: geometryStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
+    layerOptions: layerData.layerOptions,
+    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

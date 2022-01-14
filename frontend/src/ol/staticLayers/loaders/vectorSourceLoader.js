@@ -18,7 +18,7 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
             let attributes = [];
 
             if (layerData.attribute) {
-              if (vectorSource.get('sliderDate') && layerData.timeseries) {
+              if (vectorSource.get('sliderDate') && layerData.layerOptions.timeseries) {
                 const searchParams = new URLSearchParams();
                 searchParams.append('attributeId', layerData.attribute);
                 searchParams.append('dateStart', vectorSource.get('sliderDate'));

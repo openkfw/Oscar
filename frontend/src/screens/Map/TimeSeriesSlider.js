@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
@@ -123,6 +123,10 @@ const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
   const maxValue = marks[marks.length - 1].value;
 
   const [currentValue, setCurrentValue] = useState(undefined);
+
+  useEffect(() => {
+    setCurrentValue(undefined);
+  }, [modifiedLayer]);
 
   const valueLabelFormat = (value) => {
     if (!currentValue) {
