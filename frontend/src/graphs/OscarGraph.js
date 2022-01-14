@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import CasesByProvincePieChart from './covid19Graphs/CasesByProvincePieChart';
 import CasesPerDayByProvince from './covid19Graphs/CasesPerDayByProvince';
 import CurrentCovid19Situation from './covid19Graphs/CurrentCovid19Situation';
 import SevenDaysIncidenceRate from './covid19Graphs/SevenDaysIncidenceRate';
@@ -32,7 +31,6 @@ const InvalidGraphMessage = (props) => (
 class OscarGraph extends Component {
   graphs = {
     covid19Graphs: {
-      CasesByProvincePieChart,
       CasesPerDayByProvince,
       CurrentCovid19Situation,
       SevenDaysIncidenceRate,
