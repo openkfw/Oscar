@@ -25,7 +25,7 @@ const pointsLayer = (layerData, handleIsLoading) => {
     }),
     style: pointStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
-    zIndex: 2,
+    zIndex: 3,
     layerOptions: layerData.layerOptions,
     maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });

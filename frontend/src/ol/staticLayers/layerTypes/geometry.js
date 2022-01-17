@@ -37,7 +37,7 @@ const geometryLayer = (layerData, handleIsLoading) => {
     featureId: layerData.featureId,
     type: layerData.layerType,
     source: createVectorSource(layerData, handleIsLoading),
-    zIndex: 1,
+    zIndex: 2,
     style: geometryStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
     layerOptions: layerData.layerOptions,
