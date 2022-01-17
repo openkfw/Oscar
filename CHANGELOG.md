@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- added option to use tile layers in map with data provided by external url [#103](https://github.com/openkfw/Oscar/pull/103/files)
 - new route for unique featureIds for one attributeId [#86](https://github.com/openkfw/Oscar/pull/86/files)
 - option to store geographical data in database collection [#85](https://github.com/openkfw/Oscar/issues/85) [#94](https://github.com/openkfw/Oscar/pull/94)
 - pdf button for exporting dashboard tab as pdf document

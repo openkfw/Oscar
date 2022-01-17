@@ -61,6 +61,8 @@ const addMapLayer = async (data) => {
     legend: data.legend,
     timeseries: data.timeseries,
     layerOptions: data.layerOptions,
+    tileDataUrl: data.tileDataUrl,
+    tileAttributions: data.tileAttributions,
   };
 };
 

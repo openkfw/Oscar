@@ -15,7 +15,7 @@ const regionsLayer = (layerData, handleIsLoading) => {
     source: vectorSource,
     style: regionStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
-    zIndex: 0,
+    zIndex: 1,
     layerOptions: layerData.layerOptions,
     maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });

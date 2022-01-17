@@ -12,7 +12,7 @@ const combinedLayer = (layerData, handleIsLoading) => {
     featureId: layerData.featureId,
     type: layerData.layerType,
     source: vectorSource,
-    zIndex: 1,
+    zIndex: 2,
     style: combinedStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
     minZoom: 11,

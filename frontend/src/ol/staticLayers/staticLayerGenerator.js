@@ -3,6 +3,7 @@ import regionsLayer from './layerTypes/regions';
 import pointsLayer from './layerTypes/points';
 import geometryLayer from './layerTypes/geometry';
 import combinedLayer from './layerTypes/combined';
+import tileLayer from './layerTypes/tiles';
 // eslint-disable-next-line import/no-cycle
 import groupLayer from './layerTypes/group';
 
@@ -28,6 +29,9 @@ const staticLayerGenerator = (layerData, handleIsLoading) => {
     }
     case staticLayersTypes.COMBINED: {
       return combinedLayer({ ...layerData, layerOptions }, handleIsLoading);
+    }
+    case staticLayersTypes.TILE: {
+      return tileLayer({ ...layerData, layerOptions }, handleIsLoading);
     }
     // eslint-disable-next-line no-empty
     default: {
