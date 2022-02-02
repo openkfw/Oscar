@@ -15,6 +15,11 @@ npm i
 cd ../initial-data-load
 yarn
 
+# create .env file in minikube folder
+cd ../minikube
+
+[[ -e .env ]] || cp .env.example .env
+
 # text about succesfull instalation
 green=`tput setaf 2`
 echo "

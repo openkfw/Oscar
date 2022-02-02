@@ -1,0 +1,44 @@
+version: "3"
+services:
+  reverse_proxy:
+    image: nginx:alpine
+    volumes:
+      - /minikube_volume/frontend/proxy/nginx.conf:/etc/nginx/conf.d/default.conf.template
+      - /minikube_volume/frontend/proxy/.htpasswd:/etc/nginx/conf.d/.htpasswd
+      - /minikube_volume/frontend/proxy/index.html:/usr/share/nginx/html/index.html
+      - /minikube_volume/frontend/start.sh:/usr/share/nginx/html/start.sh
+    command: sh /usr/share/nginx/html/start.sh
+    environment:
+      REACT_APP_WEBSITE_TITLE: ${REACT_APP_WEBSITE_TITLE}
+      ENABLE_SOURCE_MAPS: ${ENABLE_SOURCE_MAPS:-false}
+      AZURE_MAPS_CONNECTION_STRING: ${AZURE_MAPS_CONNECTION_STRING}
+      HERE_MAPS_CONNECTION_STRING: ${HERE_MAPS_CONNECTION_STRING}
+    restart: on-failure
+
+  oauth_proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy
+    environment:
+      OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_CLIENT_ID: ${OAUTH2_PROXY_CLIENT_ID}
+      OAUTH2_PROXY_CLIENT_SECRET: ${OAUTH2_PROXY_CLIENT_SECRET}
+      OAUTH2_PROXY_LOGIN_URL: ${OAUTH2_PROXY_LOGIN_URL}
+      OAUTH2_PROXY_REDEEM_URL: ${OAUTH2_PROXY_REDEEM_URL}
+      OAUTH2_PROXY_OIDC_ISSUER_URL: ${OAUTH2_PROXY_OIDC_ISSUER_URL}
+      OAUTH2_PROXY_OIDC_JWKS_URL: ${OAUTH2_PROXY_OIDC_JWKS_URL}
+      OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: "true"
+      OAUTH2_PROXY_USER_ID_CLAIM: oid
+      OAUTH2_PROXY_SCOPE: ${OAUTH2_PROXY_SCOPE}
+      OAUTH2_PROXY_EMAIL_DOMAINS: "*"
+      OAUTH2_PROXY_EMAIL_DOMAIN: "*"
+      OAUTH2_PROXY_UPSTREAMS: http://reverse_proxy:80
+      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4180
+      OAUTH2_PROXY_REDIRECT_URL: http://localhost:8888/oauth2/callback
+      OAUTH2_PROXY_COOKIE_SECURE: "false"
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: "true"
+      OAUTH2_PROXY_ERRORS_TO_INFO_LOG: "true"
+      OAUTH2_PROXY_COOKIE_SECRET: ${OAUTH2_PROXY_COOKIE_SECRET}
+      OAUTH2_PROXY_PROXY_WEBSOCKETS: "true"
+      OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: "true"
+    ports:
+      - 8888:4180
+    restart: on-failure

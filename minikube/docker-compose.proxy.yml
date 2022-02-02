@@ -1,0 +1,18 @@
+version: "3"
+services:
+  reverse_proxy:
+    image: nginx:alpine
+    ports:
+      - 8888:80
+    volumes:
+      - /minikube_volume/frontend/proxy/nginx.conf:/etc/nginx/conf.d/default.conf.template
+      - /minikube_volume/frontend/proxy/.htpasswd:/etc/nginx/conf.d/.htpasswd
+      - /minikube_volume/frontend/proxy/index.html:/usr/share/nginx/html/index.html
+      - /minikube_volume/frontend/start.sh:/usr/share/nginx/html/start.sh
+    command: sh /usr/share/nginx/html/start.sh
+    environment:
+      REACT_APP_WEBSITE_TITLE: ${REACT_APP_WEBSITE_TITLE}
+      ENABLE_SOURCE_MAPS: ${ENABLE_SOURCE_MAPS:-false}
+      AZURE_MAPS_CONNECTION_STRING: ${AZURE_MAPS_CONNECTION_STRING}
+      HERE_MAPS_CONNECTION_STRING: ${HERE_MAPS_CONNECTION_STRING}
+    restart: always
