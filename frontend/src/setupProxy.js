@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const API_IP = process.env.API_IP || 'localhost'
+const API_IP = process.env.API_IP || 'localhost';
 
 module.exports = (app) => {
   app.use(
