@@ -2,6 +2,7 @@ version: '3.2'
 services:
   test-db:
     image: mongo
+    hostname: test-db
     ports:
       - 27917:27017
   mongo-express:
@@ -18,6 +19,7 @@ services:
       context: .
       args:
         NODE_ENV: test
+    restart: on-failure
     environment:
       MONGO_URI: mongodb://test-db:27017/oscar
-    command: sh -c "./scripts/wait-for-it.sh -t 60 test-db:27917 -- yarn test"
+    command: yarn test

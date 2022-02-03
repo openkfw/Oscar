@@ -114,7 +114,7 @@ yarn start
 
 - Whole minikube cluster can be destroyed by
 ```
-minikube destroy
+minikube delete
 
 ## Service
 
