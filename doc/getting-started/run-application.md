@@ -116,6 +116,12 @@ yarn start
 ```
 minikube delete
 
+## Unit testing services with minikube
+1. after starting app with `start.sh` in minikube folder
+2. open directory of service you want to test i.e. `api`
+3. run commands `eval $(minikube docker-env)` to connect to docker-env in minikube and `export MONGO_URI=mongodb://$(minikube ip):27017/testDb` to create new mongoDB in already running container
+4. run `yarn test` or `yarn test:coverage` or `yarn test:watch`
+
 ## Service
 
 The application contains service, which are not part of automatic start script and can be run to load initial data. This service can be run by script in Docker after the application and database are set up.
