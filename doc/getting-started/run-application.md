@@ -69,14 +69,14 @@ minikube config set memory 8g
 ```
 minikube start --disk-size 80000mb
 ```
-- from project root folder mount volume to minikube, bellow command will mount files from project to /minikube_volume folder inside minikube, this is where Docker will access the volumes, thus it needed to be updated in docker-compose files. Don't close this window or else the volume will be unmounted
+- from project root folder mount volume to minikube, below command will mount files from project to /minikube_volume folder inside minikube, this is where Docker will access the volumes, thus it needed to be updated in docker-compose files. Don't close this window or else the volume will be unmounted
 ```
 minikube mount ./:/minikube_volume
 ```
 
-Move your .env file to this folder, or it will be created on firs run of bellow script.
+Move your .env file to this folder, or it will be created on first run of below script.
 The backend services and MongoDB database can be run in docker with frontend starting locally by this helper script in the `minikube` folder.
-Run the script bellow in new terminal tab
+Run the script below in new terminal tab
 
 ```
 cd ./minikube
