@@ -105,6 +105,9 @@ const formatLayerGeoData = async (data, country) => {
     } else {
       logger.info(`Layer ${data.name} has corrupted or missing geojson file.`);
     }
+  } else if (!data.geoDataFilename && !data.geoDataUrl && data.apiUrl && data.collectionName) {
+    await createGeoDataIndex(data.collectionName);
+    url = data.apiUrl;
   }
   const newDataObj = { ...data, geoDataUrl: url, updateDate: Date.now() };
   return newDataObj;
