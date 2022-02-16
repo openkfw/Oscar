@@ -9,7 +9,7 @@
     "@azure/storage-queue": "^12.2.0",
     "@hapi/joi": "^17.1.1",
     "@turf/bbox": "^6.5.0",
-    "axios": "^0.21.2",
+    "axios": "^0.26.0",
     "azure-storage": "^2.10.3",
     "bottleneck": "^2.19.5",
     "csvtojson": "^2.0.10",
