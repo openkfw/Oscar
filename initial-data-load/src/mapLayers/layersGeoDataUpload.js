@@ -74,6 +74,10 @@ const formatLayerGeoData = async (data, country) => {
     return false;
   }
   let url;
+  if (data.collectionName && data.apiUrl) {
+    await createGeoDataIndex(data.collectionName);
+    url = data.apiUrl;
+  }
   if (data.geoDataUrl) {
     logger.info(`Downloading geojson ${data.geoDataUrl} for layer ${data.referenceId}...`);
     if (data.storeToDb) {
