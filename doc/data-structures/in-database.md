@@ -140,6 +140,7 @@ layers: array with layers of structure from above
       strokeColor:
         type: type of color information, valid values: 'color', 'colormap'
         value: string with color in one of standard formats or name of predefined colormap
+      strokeWidth: number, thickness of drawn lines
       missingValueColor: color used if the value is missing
       clusterFillColor: if the features are clustered, this color is used for clustered feature
       clusterStrokeColor: if the features are clustered, this color is used for clustered feature
@@ -161,8 +162,9 @@ metadata: information about the layer
   dataRetrievalDescription: String
   dataCalculationDescription: String
 layerOptions:   
-  singleDisplay: boolean value, whether region layer should be displayed alone or can be displayed with other region layers
+  boxReload: boolean value, whether the data are loaded only for bounding box
   maxResolution: number, max resolution on which layer is shown
+  singleDisplay: boolean value, whether region layer should be displayed alone or can be displayed with other region layers
   timeseries: boolean value, whether timeseries data are available  
 ```
 
