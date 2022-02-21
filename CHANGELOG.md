@@ -5,14 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.2] - 2022-02-21
 
 ### Added
 
-- added option to use tile layers in map with data provided by external url [#103](https://github.com/openkfw/Oscar/pull/103/files)
-- added new layerOption for sending correct request to api in case of specified bounding box [!109](https://github.com/openkfw/Oscar/pull/109)
-- new route for unique featureIds for one attributeId [#86](https://github.com/openkfw/Oscar/pull/86/files)
 - option to store geographical data in database collection [#85](https://github.com/openkfw/Oscar/issues/85) [#94](https://github.com/openkfw/Oscar/pull/94)
+- new route for unique featureIds for one attributeId [#86](https://github.com/openkfw/Oscar/pull/86/files)
+- added option for displaying multiple regions layers [#97](https://github.com/openkfw/Oscar/pull/97)
+- configurable dashboard tabs [#102](https://github.com/openkfw/Oscar/pull/102)
+- added option to use tile layers in map with data provided by external url [#103](https://github.com/openkfw/Oscar/pull/103/files)
+- scripts for starting application in minikube [#104](https://github.com/openkfw/Oscar/pull/104)
+- enabled creating geoData with empty database with geoIndex [#105](https://github.com/openkfw/Oscar/pull/105)
+- added new layerOption for sending correct request to api in case of specified bounding box [#109](https://github.com/openkfw/Oscar/pull/109)
 - pdf button for exporting dashboard tab as pdf document
 
 ### Changed
@@ -27,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- security updates
 - allow empty data folder in functions [#70](https://github.com/openkfw/Oscar/issues/70)
 - NaN appearing in url in map view and breaking the map [#90](https://github.com/openkfw/Oscar/pull/90)
 
