@@ -25,6 +25,7 @@ const StyleSchema = new mongoose.Schema(
     min: Number,
     max: Number,
     strokeColor: mongoose.Schema.Types.Mixed,
+    strokeWidth: Number,
     missingValueColor: String,
     clusterFillColor: String,
     clusterStrokeColor: String,
@@ -51,8 +52,9 @@ const LegendSchema = new mongoose.Schema(
 
 const LayerOptionsSchema = new mongoose.Schema(
   {
-    singleDisplay: Boolean,
+    boxReload: Boolean,
     maxResolution: Number,
+    singleDisplay: Boolean,
     timeseries: Boolean,
   },
   { _id: false },
