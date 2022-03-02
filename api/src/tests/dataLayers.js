@@ -1,8 +1,8 @@
 const request = require('supertest');
 
 const app = require('../config/express');
-const LayerGeoData = require('../dbSchemas/layerGeoDataSchema');
-const { MapLayer, GroupMapLayer, SingleMapLayer } = require('../dbSchemas/mapLayersSchema');
+const LayerGeoData = require('../database/mongoDb/dbSchemas/layerGeoDataSchema');
+const { MapLayer, GroupMapLayer, SingleMapLayer } = require('../database/mongoDb/dbSchemas/mapLayersSchema');
 const { mapLayersInDb, layerGeoDataInDb } = require('../testUtils/testData/staticLayers');
 
 jest.mock('azure-storage');

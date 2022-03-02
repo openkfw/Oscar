@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const config = require('./config/config');
-const logger = require('./config/winston');
+const config = require('../../config/config');
+const logger = require('../../config/winston');
 
 const initializeDBConnection = async () => {
   logger.info(`Connecting to database`);

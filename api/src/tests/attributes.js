@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../config/express');
-const { Attribute, DataDateAttribute, NumberAttribute } = require('../dbSchemas/attributeSchema');
+const { Attribute, DataDateAttribute, NumberAttribute } = require('../database/mongoDb/dbSchemas/attributeSchema');
 const {
   casesAttrToDb,
   deathsAttrToDb,
