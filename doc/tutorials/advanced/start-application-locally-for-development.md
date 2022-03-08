@@ -33,6 +33,10 @@ This part is done in single start script:
 ```
 ./start.sh
 ```
+or
+```
+./start_postgis.sh
+```
 
 First, docker will fetch required images, build new images with our code and settings and create containers. The images are stored for later use, so next time you run this script, it will be faster.
 After all backend containers are started, it proceeds to frontend and opens the application directly in browser.

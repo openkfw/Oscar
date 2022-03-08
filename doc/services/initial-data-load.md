@@ -23,6 +23,6 @@ Initial data load service sets up database structure, indexes and storage struct
 - Geographical location data for map layer, that are stored in geojson format.
 - Data related to the point or area for map layer, that are stored in geojson or csv format.
 
-Once everything is set you can start the application with `start.sh` script, run this service (even more than once) with `runinitialload.sh` script and refresh web page in browser. You can see map layers in map view and graphs filled with data on the dashboard.
+Once everything is set you can start the application with `start.sh` script or `start_postgis.sh` for version with Postgis DB, run this service (even more than once) with `runinitialload.sh` script and refresh web page in browser. You can see map layers in map view and graphs filled with data on the dashboard.
 
 For a detailed description how to achieve this check [Run application with own data](../tutorials/run-application-with-own-data.md).
