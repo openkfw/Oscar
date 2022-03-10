@@ -13,6 +13,7 @@ const {
 jest.mock('../config/config.js', () => {
   return {
     authorizeTokenAttribute: false,
+    mongoUri: 'qwertyuiop',
   };
 });
 
