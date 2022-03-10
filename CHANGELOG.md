@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+- route '/api/staticLayers', use '/api/dataLayers' [111]()
+
 ### Removed
 
 ## [1.3.2] - 2022-02-21

@@ -1,7 +1,7 @@
 const config = require('../config/config');
 const APIError = require('../helpers/APIError');
 
-const mongoDb = require('../database/mongoDb/models/layerModel');
+const mongoDb = require('./mongoDb/models/layerModel');
 
 /**
  * Returns all map layers with correctly defined geographical data

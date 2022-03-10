@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const LayerGeoData = require('../mapLayers/layerGeoDataSchema');
-const { MapLayer } = require('../mapLayers/mapLayersSchema');
+const LayerGeoData = require('../database/mongoDb/schemas/layerGeoDataSchema');
+const { MapLayer } = require('../database/mongoDb/schemas/mapLayersSchema');
 
 jest.mock('azure-storage');
 

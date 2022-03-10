@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerValidation = require('../config/swagger');
 const { forwardError } = require('../helpers/utils');
 
-const { getPointAttributes } = require('../actions/pointAttributesActions');
+const { getPointAttributes } = require('../database/pointAttributes');
 
 const router = express.Router();
 

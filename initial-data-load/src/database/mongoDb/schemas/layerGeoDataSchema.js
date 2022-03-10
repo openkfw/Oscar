@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { LAYER_TYPES, GEO_FORMATS } = require('./constants');
+const { LAYER_TYPES, GEO_FORMATS } = require('../../../mapLayers/constants');
 const MetadataSchema = require('./metadataSchema');
 
 const FeatureIdSchema = new mongoose.Schema(

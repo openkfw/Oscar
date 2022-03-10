@@ -1,11 +1,11 @@
 const logger = require('./src/config/winston');
 const uploads = require('./src/index');
 const setupAzure = require('./src/azureStorage/azureStorageSetup');
-const { initializeDBConnection, disconnectFromDB } = require('./src/db');
+const { initializeDb, disconnectFromDB } = require('./src/database/index');
 
 const main = async () => {
   try {
-    await initializeDBConnection();
+    await initializeDb();
 
     await setupAzure();
 

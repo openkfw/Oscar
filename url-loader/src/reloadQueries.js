@@ -1,5 +1,6 @@
 const logger = require('./config/winston');
-const { initializeDBConnection, disconnectFromDB, getLatestAttributeDate, createIndexes } = require('./db');
+const { initializeDb, disconnectFromDB } = require('./database');
+const { setupCollectionForAttributes, getLatestAttributeDate } = require('./database/attributes');
 const { getDatesFrom, dateObjectToISODate } = require('./utils');
 
 const isDateYesterday = (date) => {
@@ -13,8 +14,8 @@ const isDateYesterday = (date) => {
 const reloadQueries = async (requestQuery) => {
   const { request } = requestQuery;
   logger.info(`Searching for latest data for query ${request.name}`);
-  await initializeDBConnection();
-  await createIndexes();
+  await initializeDb();
+  await setupCollectionForAttributes();
   try {
     // check last date for data in collection
     const numberOfChecks = request.reloadCheck.length;

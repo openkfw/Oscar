@@ -3,7 +3,7 @@ const APIError = require('../helpers/APIError');
 const logger = require('../config/winston');
 const { DEFAULT_GET_LIMIT, DEFAULT_GET_OFFSET } = require('../constants');
 
-const mongoDb = require('../database/mongoDb/models/attributeModel');
+const mongoDb = require('./mongoDb/models/attributeModel');
 
 const getLatestAttributes = () => {
   if (config.mongoUri && config.mongoUri !== '') {

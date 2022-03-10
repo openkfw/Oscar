@@ -3,7 +3,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 const logger = require('../config/winston');
-const { getOneLayerGeoData, saveMapLayers } = require('./db');
+const { getOneLayerGeoData, saveMapLayers } = require('../database/layers');
 
 const addMapLayer = async (data) => {
   if (data.timeseries !== undefined) {
@@ -76,7 +76,7 @@ const uploadMapLayers = async (country) => {
       const dataForDb = await Promise.all([...checkedAndPreparedData]);
       const singleMapData = dataForDb.filter((item) => item && item.layerType !== 'group');
       const groupMapData = dataForDb.filter((item) => item && item.layerType === 'group');
-      await saveMapLayers(singleMapData, groupMapData);
+      await saveMapLayers([...singleMapData, ...groupMapData]);
     } else {
       logger.error(`Data for country ${country} not found.`);
     }

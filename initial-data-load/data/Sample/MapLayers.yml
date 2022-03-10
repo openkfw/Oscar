@@ -14,8 +14,8 @@
   legend:
     - type: "colormap"
       color: "blue"
-  layerOptions: 
-    singleDisplay: false    
+  layerOptions:
+    singleDisplay: false
     timeseries: false
 
 - referenceId: "dailyCasesPerAdmin1"
@@ -47,8 +47,8 @@
     updateFrequency: "never"
     unit: "n/a"
     dataRetrievalDescription: "Data was randomly created."
-  layerOptions: 
-    singleDisplay: false    
+  layerOptions:
+    singleDisplay: false
     timeseries: true
 
 - referenceId: "7daysIncidenceRatePerProvince"
@@ -80,8 +80,8 @@
     updateFrequency: "never"
     unit: "n/a"
     dataRetrievalDescription: "Data was randomly created."
-  layerOptions: 
-    singleDisplay: false   
+  layerOptions:
+    singleDisplay: false
     timeseries: false
 
 - referenceId: "hospitalHealthSites"
@@ -104,6 +104,6 @@
     - type: "color"
       color: "rgba(0, 80, 0, 1)"
       description: "Hospital"
-  layerOptions: 
-    singleDisplay: false   
+  layerOptions:
+    singleDisplay: false
     timeseries: false

@@ -1,4 +1,4 @@
-const createBlobContainer = require('./createBlobContainer');
+const { createBlobContainer } = require('./blobContainer');
 const { createStorageQueue } = require('./storageQueue');
 const config = require('../config/config');
 const logger = require('../config/winston');

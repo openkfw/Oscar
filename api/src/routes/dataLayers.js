@@ -1,7 +1,7 @@
 const express = require('express');
 const swaggerValidation = require('../config/swagger');
 const { forwardError } = require('../helpers/utils');
-const { getMapLayersWithGeoData } = require('../actions/mapLayersActions');
+const { getMapLayersWithGeoData } = require('../database/layers');
 
 const router = express.Router();
 

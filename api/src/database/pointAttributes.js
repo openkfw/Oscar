@@ -1,7 +1,7 @@
 const config = require('../config/config');
 const APIError = require('../helpers/APIError');
 
-const mongoDb = require('../database/mongoDb/models/pointAttributesModel');
+const mongoDb = require('./mongoDb/models/pointAttributesModel');
 
 /**
  * @param  {string} attributeId

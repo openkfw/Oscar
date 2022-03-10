@@ -16,7 +16,7 @@ const BboxSchema = new mongoose.Schema(
   { _id: false },
 );
 
-const GeoFeaturesSchema = new mongoose.Schema({
+const GeoFeatureSchema = new mongoose.Schema({
   type: String,
   properties: mongoose.Schema.Types.Mixed,
   geometry: GeometrySchema,
@@ -24,5 +24,5 @@ const GeoFeaturesSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  GeoFeaturesSchema,
+  GeoFeatureSchema,
 };

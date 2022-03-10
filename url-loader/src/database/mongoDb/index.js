@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const config = require('./config/config');
-const logger = require('./config/winston');
-
-const ATTRIBUTES_COLLECTION_NAME = 'attributes';
+const config = require('../../config/config');
+const logger = require('../../config/winston');
 
 /**
  * Initialize database connection.
@@ -30,31 +28,25 @@ const initializeDBConnection = async () => {
   logger.info('Successfully connected to database.');
 };
 
-/**
- * Creates DB indexes.
- */
-const createIndexes = async () => {
-  logger.info('Creating DB indexes...');
-  await mongoose.connection.db.collection(ATTRIBUTES_COLLECTION_NAME).createIndex({ date: -1 });
-  logger.info('Indexes created successfully...');
+const createRegularIndex = (collectionName, keys) =>
+  mongoose.connection.db.collection(collectionName).createIndex(keys);
+
+const createGeoDataIndex = async (collectionName, geoKey = 'geometry') => {
+  const indexKey = {};
+  indexKey[geoKey] = '2dsphere';
+  await mongoose.connection.db.collection(collectionName).createIndex(indexKey);
 };
 
-/**
- * Find latest date for data for given attributeId
- * @param  {string} attributeId
- */
-const getLatestAttributeDate = async (attributeId) => {
-  const { connection } = mongoose;
-  const { db } = connection;
-
-  const date = await db
-    .collection(ATTRIBUTES_COLLECTION_NAME)
-    .find({ attributeId })
-    .sort({ date: -1 })
-    .limit(1)
-    .toArray();
-  if (date.length) {
-    return date[0].date;
+const createCollection = async (collectionName, index, geoIndex) => {
+  if (!collectionName || collectionName === '') {
+    logger.error('Collection name missing, unable to create');
+    return;
+  }
+  if (index) {
+    createRegularIndex(collectionName, index);
+  }
+  if (geoIndex) {
+    createGeoDataIndex(collectionName, geoIndex);
   }
 };
 
@@ -69,9 +61,17 @@ const disconnectFromDB = async () => {
   logger.info('Successfully disconnected from database.');
 };
 
+const removeDB = async () => {
+  await mongoose.deleteModel(/.+/);
+  await mongoose.connection.dropDatabase();
+  logger.info('Successfully dropped database.');
+};
+
 module.exports = {
   initializeDBConnection,
+  createRegularIndex,
+  createGeoDataIndex,
+  createCollection,
   disconnectFromDB,
-  getLatestAttributeDate,
-  createIndexes,
+  removeDB,
 };
