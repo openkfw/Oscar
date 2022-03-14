@@ -27,7 +27,7 @@ Attributes folder has config file in javascript to easily add current dates in t
 If this is your first attempt to run the application, please consult [Getting started](../../getting-started/run-application.md) first. There are some necessary prerequisities.
 Now you are set and ready to run the scripts. As all files are already in place, all you need is run these two scripts:
 
-`./start.sh` will start the api, frontend and database. Once you can see the frontend, you can go to next script (don't worry about the empty menu and dashboard, it will be filled in next step).
+`./start.sh` or `./start_postgis.sh` will start the api, frontend and database. Once you can see the frontend, you can go to next script (don't worry about the empty menu and dashboard, it will be filled in next step).
 
 `./runinitialload.sh` Second script will run the initial-data-load service to fill application with data. Wait until this is finished (you will see `Successfully uploaded all initial data.` in console, where you run the script). Return to the browser and reload the page. Now you have the application set.
 

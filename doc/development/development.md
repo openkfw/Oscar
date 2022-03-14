@@ -86,7 +86,7 @@ is a tool for defining and running multi-container Docker applications. With Doc
 
 1. Define your app’s environment with a Dockerfile
 2. Define the services that make up your app in docker-compose.yml
-3. Run `docker compose up` to start and run your app (that is done in ./start.sh script)
+3. Run `docker compose up` to start and run your app (that is done in ./start.sh script or in ./start_postgis.sh)
 
 We have more Docker Compose files in the Oscar application.
 
@@ -137,7 +137,7 @@ This project is based on the [create-react-app starter kit](https://github.com/f
 Locally the app runs in the Development Mode. In this mode performance is degraded but developer experience is best.
 
 - Run `yarn` to install all the packages
-- You can start only frontend with `yarn start` in ./frontend folder, but frontend is strongly data-based so for most functionality you need to run api also. This is done by simply starting all necessary services with `./start.sh`from root folder.
+- You can start only frontend with `yarn start` in ./frontend folder, but frontend is strongly data-based so for most functionality you need to run api also. This is done by simply starting all necessary services with `./start.sh` or `./start_postgis.sh` from root folder.
 
 Open [localhost on port 3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes thanks to Hot reloading. You may also see any lint errors in the terminal. In Production mode code is transpiled to be compatible to older browser versions and the application is minimized, uglyfied and bundled into a single file for maximum performance. The production mode outputs static files which need to be hosted on a separate webserver.
 
@@ -166,6 +166,8 @@ Schema of endpoints can be found in [apiSchema.yml](../api/src/openapi/apiSchema
 
 ## Database
 
+Database used in local development is determined by running either `start.sh` script for running environment with MongoDB or `start_postgis.sh` for running with Postgis.
+
 ### MongoDB
 
 For local development we are using [MongoDB](https://www.mongodb.com/). MongoDB is a general purpose distributed database that stores data in [JSON-like documents](https://docs.mongodb.com/manual/reference/bson-types/). Group of documents is called collection. MongoDb is running on localhost on port 27017. It is created and started as a Docker container when you use ./start.sh script to run the application. When you stop this script, database will be removed and all data deleted. For MongoDB administration we are using Mongo Express.
@@ -185,6 +187,19 @@ For easy access to database structure and quick editing of stored documents, we 
 ### Mongoose
 
 [Mongoose](https://mongoosejs.com/) is an Object Data Modeling (ODM) Node.js library that provides schema based translation of javascript objects to MongoDB documents and vice versa. We use it to communicate with MongoDB in our services api and initial-data-load.
+
+### Postgis
+
+For local development we also use dockerized [Postgis](https://postgis.net/) which is based on [Postgres](https://www.postgresql.org/) with added GIS pluggins. Locally it runs on port 5432. It is created and started as a Docker container when you use ./start_postgis.sh script to run the application. For Postgis administration we are using PgAdmin.
+
+### PgAdmin
+
+For easy access to database structure and quick editing of stored tables, we use web-based PostgreSQL [admin interface](https://www.pgadmin.org/) that is running on [localhost on port 8184](http://localhost:8184) after you start the application with ./start_postgis.sh script. You can use it to connect to multiple databases, view, add and delete databases etc.
+
+- Run `./start_postgis.sh` to start the app.
+- Log in using `admin@test.com` and `adminPass` defined in environmental variables.
+- In the admin you can see list of database servers.
+- Click on Test and under it click on oscar.
 
 ## Azure Blob Storage
 
@@ -208,7 +223,7 @@ Azure Blob Storage is Microsoft's object storage solution for the cloud. Blob St
 
 Now you have successfully connected to the service in Storage account.
 
-1. In terminal start app with `./start.sh` a run `./runinitialload.sh` to have data in the Azurite.
+1. In terminal start app with `./start.sh` or `./start_postgis.sh` a run `./runinitialload.sh` to have data in the Azurite.
 2. Click on Toggle Explorer button in the left sidebar.
 3. In Microsoft Azure Storage Explorer click on Refresh All.
 4. Path to Blob Containers is Local & Attached -> Storage Accounts -> Display name.

@@ -37,6 +37,10 @@ The backend services and MongoDB database can be run in docker with frontend sta
 ```
 ./start.sh
 ```
+or
+```
+./start_postgis.sh
+```
 
 Use 'docker ps' to check on the running containers. You should see the following output:
 
@@ -49,7 +53,7 @@ e5f8694a9ae6   mongo:3.6.18-xenial                       "docker-entrypoint.s…
 237e52634948   mongo-express                             "tini -- /docker-ent…"   35 seconds ago   Up 30 seconds   0.0.0.0:8081->8081/tcp, :::8081->8081/tcp                               oscar_mongo-express_1
 ```
 
-After startup, there is a MongoDB explorer UI available here: http://localhost:8081/
+After startup, there is a MongoDB explorer UI available here: http://localhost:8081/ or PgAdmin http://localhost:8184/ where you can log in using `admin@test.com` and `adminPass` defined in environmental variables.
 Oscar application will start here: http://localhost:3000/
 
 ## Start the Application inside Minikube on Mac
@@ -82,6 +86,10 @@ Run the script below in new terminal tab
 cd ./minikube
 ./start.sh
 ```
+or
+```
+./start_postgis.sh
+```
 
 It will connect docker to the runtime in minikube and export minikube ip as env variable so it can be used by React proxy.
 
@@ -95,12 +103,22 @@ minikube ip
 ```
 and pasting provided ip in browser with port 8081
 
+Or if app is being run by `./start_postgis.sh` there is PgAdmin UI for Postgis database available by running
+```
+./pgadmin.sh
+```
+or by running command
+```
+minikube ip
+```
+and pasting provided ip in browser with port 8184, after that you can log in using `admin@test.com` and `adminPass` defined in environmental variables.
+
 - before running other services like initial-data-load in another terminal, docker needs to be connected to minikube by running
 ```
 eval $(minikube docker-env)
 ```
 
-- if React frontend will be started separately from `./start.sh` script minikube ip needs to be exported in that terminal window before running `yarn start`
+- if React frontend will be started separately from `./start.sh` or `./start_postgis.sh` script minikube ip needs to be exported in that terminal window before running `yarn start`
 ```
 export API_IP=$(minikube ip)
 cd ../frontend
@@ -117,7 +135,7 @@ yarn start
 minikube delete
 
 ## Unit testing services with minikube
-1. after starting app with `start.sh` in minikube folder
+1. after starting app with `start.sh` or `start_postgis.sh` in minikube folder
 2. open directory of service you want to test i.e. `api`
 3. run commands `eval $(minikube docker-env)` to connect to docker-env in minikube and `export MONGO_URI=mongodb://$(minikube ip):27017/testDb` to create new mongoDB in already running container
 4. run `yarn test` or `yarn test:coverage` or `yarn test:watch`
