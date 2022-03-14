@@ -166,7 +166,7 @@ Schema of endpoints can be found in [apiSchema.yml](../api/src/openapi/apiSchema
 
 ## Database
 
-Database used in local development is determined by running either `start.sh` script for running evironment with MongoDB or `start_postgis.sh` for running with Postgis.
+Database used in local development is determined by running either `start.sh` script for running environment with MongoDB or `start_postgis.sh` for running with Postgis.
 
 ### MongoDB
 
