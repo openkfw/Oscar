@@ -10,7 +10,7 @@ const envVarsSchema = Joi.object({
   LOG_LABEL: Joi.string().default('oscar-initial-data-upload'),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string(),
-  MONGO_URI: Joi.string(),
+  MONGO_URI: Joi.string().allow(''),
   DB_NAME: Joi.string(),
   UPLOAD_DATA_TYPES: Joi.string().allow('', null),
   COUNTRY: Joi.string().default(''),

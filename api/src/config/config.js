@@ -8,7 +8,7 @@ const envVarsSchema = Joi.object({
   NODE_ENV: Joi.string().allow('development', 'production', 'test', 'provision').default('development'),
   PORT: Joi.number().default(8080),
   LOG_LABEL: Joi.string().default('oscar-api'),
-  MONGO_URI: Joi.string(),
+  MONGO_URI: Joi.string().allow(''),
   DB_NAME: Joi.string(),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string(),
