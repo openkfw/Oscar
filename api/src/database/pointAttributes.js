@@ -9,7 +9,7 @@ const mongoDb = require('./mongoDb/models/pointAttributesModel');
  * @param  {string} topRight - top right corner, string with lon, lat divided by ','
  */
 const getPointAttributes = async (attributeId, bottomLeft, topRight) => {
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     return mongoDb.getFilteredPointAttributes(attributeId, bottomLeft, topRight);
   }
   throw new APIError('No connection string to database', 500, false);

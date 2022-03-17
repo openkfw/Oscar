@@ -6,21 +6,21 @@ const { DEFAULT_GET_LIMIT, DEFAULT_GET_OFFSET } = require('../constants');
 const mongoDb = require('./mongoDb/models/attributeModel');
 
 const getLatestAttributes = () => {
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     return mongoDb.getLatestAttributes;
   }
   throw new APIError('No connection string to database', 500, false);
 };
 
 const getFilteredAttributes = () => {
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     return mongoDb.getFilteredAttributes;
   }
   throw new APIError('No connection string to database', 500, false);
 };
 
 const countAttributes = () => {
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     return mongoDb.countAttributes;
   }
   throw new APIError('No connection string to database', 500, false);
@@ -33,7 +33,7 @@ const countAttributes = () => {
 const getAttributes = async (filters, options) => {
   let items = [];
   let count = 0;
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     if (filters.latestValues) {
       items = await getLatestAttributes()(filters.attributeId, filters.attributeIdCategory, filters.featureId).catch(
         (e) => logger.error(`Error: ${e.message}`),
@@ -67,7 +67,7 @@ const getAttributes = async (filters, options) => {
  * @param  {string} attributeId
  */
 const getAvailableDates = (attributeId) => {
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     return mongoDb.getAvailableDates(attributeId);
   }
   throw new APIError('No connection string to database', 500, false);
@@ -78,7 +78,7 @@ const getAvailableDates = (attributeId) => {
  * @param  {string} attributeId
  */
 const getUniqueFeatureIds = (attributeId) => {
-  if (config.mongoUri && config.mongoUri !== '') {
+  if (config.mongoUri) {
     return mongoDb.getUniqueFeatureIds(attributeId);
   }
   throw new APIError('No connection string to database', 500, false);

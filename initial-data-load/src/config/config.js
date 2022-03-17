@@ -11,7 +11,7 @@ const envVarsSchema = Joi.object({
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_LAYER_CONTAINER_NAME: Joi.string(),
   MONGO_URI: Joi.string().allow(''),
-  DB_NAME: Joi.string(),
+  DB_NAME: Joi.string().allow(''),
   UPLOAD_DATA_TYPES: Joi.string().allow('', null),
   COUNTRY: Joi.string().default(''),
   NEW_STORAGE_CONTAINERS: Joi.string().allow('').default(''),
