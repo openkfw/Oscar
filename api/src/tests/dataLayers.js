@@ -1,22 +1,23 @@
 const request = require('supertest');
 
 const app = require('../config/express');
-const LayerGeoData = require('../dbSchemas/layerGeoDataSchema');
-const { MapLayer, GroupMapLayer, SingleMapLayer } = require('../dbSchemas/mapLayersSchema');
+const LayerGeoData = require('../database/mongoDb/dbSchemas/layerGeoDataSchema');
+const { MapLayer, GroupMapLayer, SingleMapLayer } = require('../database/mongoDb/dbSchemas/mapLayersSchema');
 const { mapLayersInDb, layerGeoDataInDb } = require('../testUtils/testData/staticLayers');
 
 jest.mock('azure-storage');
 jest.mock('../config/config.js', () => {
   return {
     authorizeTokenAttribute: false,
+    mongoUri: 'qwertyuiop',
   };
 });
 
-describe('GET /api/staticLayers', () => {
+describe('GET /api/dataLayers', () => {
   it('should return empty array, if no geodata and no point layers in db', async () => {
     await MapLayer.create(mapLayersInDb[0]);
 
-    const res = await request(app).get('/api/staticLayers/');
+    const res = await request(app).get('/api/dataLayers/');
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(0);
   });
@@ -24,7 +25,7 @@ describe('GET /api/staticLayers', () => {
   it('should return point layer without geoDataReferenceId', async () => {
     await SingleMapLayer.create(mapLayersInDb[3]);
 
-    const res = await request(app).get('/api/staticLayers');
+    const res = await request(app).get('/api/dataLayers');
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[3].referenceId);
@@ -37,7 +38,7 @@ describe('GET /api/staticLayers', () => {
     await MapLayer.create(mapLayersInDb[1]);
     await MapLayer.create(mapLayersInDb[0]);
 
-    const res = await request(app).get('/api/staticLayers/');
+    const res = await request(app).get('/api/dataLayers/');
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(2);
     expect(res.body[0].geoReferenceId).toEqual(layerGeoDataInDb.referenceId);
@@ -51,7 +52,7 @@ describe('GET /api/staticLayers', () => {
     await LayerGeoData.create(layerGeoDataInDb);
     await GroupMapLayer.create(mapLayersInDb[2]);
 
-    const res = await request(app).get('/api/staticLayers/');
+    const res = await request(app).get('/api/dataLayers/');
     expect(res.status).toEqual(200);
     expect(res.body).toHaveLength(1);
     expect(res.body[0].referenceId).toEqual(mapLayersInDb[2].referenceId);

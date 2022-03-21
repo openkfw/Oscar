@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const config = require('./config/config');
-const logger = require('./config/winston');
+const config = require('../../config/config');
+const logger = require('../../config/winston');
 
 const initializeDBConnection = async () => {
-  logger.info(`Connecting to database ...`);
+  logger.info(`Connecting to database`);
   if (process.env.NODE_ENV !== 'test') {
     await mongoose.set('debug', (collectionName, method, query, doc) => {
       logger.debug(`Mongoose - ${method} on collection ${collectionName} `, {
@@ -17,21 +17,20 @@ const initializeDBConnection = async () => {
   await mongoose.connect(config.mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    socketTimeoutMS: 200000,
     dbName: config.dbName,
   });
-  logger.info('Successfully connected to database.');
+  logger.info('DB Connection successful');
 };
 
 const disconnectFromDB = async () => {
   await mongoose.disconnect();
-  logger.info('Successfully disconnected from database.');
+  logger.info('Disconnected from DB successfully');
 };
 
 const removeDB = async () => {
   await mongoose.deleteModel(/.+/);
   await mongoose.connection.dropDatabase();
-  logger.info('Database dropped successfully');
+  logger.info('DB dropped successfully');
 };
 
 module.exports = {

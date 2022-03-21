@@ -10,7 +10,7 @@ const envVarsSchema = Joi.object({
   LOG_LABEL: Joi.string().default('oscar-url-loader-service'),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_DATA_CONTAINER_NAME: Joi.string(),
-  MONGO_URI: Joi.string(),
+  MONGO_URI: Joi.string().allow(''),
   DB_NAME: Joi.string(),
   USERNAME: Joi.string().allow(''),
   PASSWORD: Joi.string().allow(''),

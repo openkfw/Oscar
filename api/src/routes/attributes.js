@@ -1,18 +1,9 @@
 const express = require('express');
 const swaggerValidation = require('../config/swagger');
 const { forwardError } = require('../helpers/utils');
-const {
-  getLatestAttributes,
-  countAttributes,
-  getFilteredAttributes,
-  getAvailableDates,
-  getUniqueFeatureIds,
-} = require('../models/attributeModel');
-const logger = require('../config/winston');
+const { getAttributes, getAvailableDates, getUniqueFeatureIds } = require('../database/attributes');
 
 const router = express.Router();
-const DEFAULT_LIMIT = 100;
-const DEFAULT_OFFSET = 0;
 
 router.get(
   '/',
@@ -20,27 +11,12 @@ router.get(
   forwardError(async (req, res) => {
     const { limit, offset, dateStart, dateEnd, attributeId, attributeIdCategory, featureId, latestValues } = req.query;
 
-    let items = [];
+    const { items, count } = await getAttributes(
+      { attributeId, attributeIdCategory, featureId, dateStart, dateEnd, latestValues },
+      { limit, offset },
+    );
+    res.set('X-Total-Count', count);
 
-    if (latestValues) {
-      items = await getLatestAttributes(attributeId, attributeIdCategory, featureId).catch((e) =>
-        logger.error(`Error: ${e.message}`),
-      );
-    } else {
-      const dataLimit = Number.parseInt(limit, 10) || DEFAULT_LIMIT;
-      const dataOffset = Number.parseInt(offset, 10) || DEFAULT_OFFSET;
-      const count = await countAttributes(attributeId, attributeIdCategory, featureId, dateStart, dateEnd);
-      res.set('X-Total-Count', count);
-      items = await getFilteredAttributes(
-        attributeId,
-        attributeIdCategory,
-        featureId,
-        dateStart,
-        dateEnd,
-        dataLimit,
-        dataOffset,
-      ).catch((e) => logger.error(`Error: ${e.message}`));
-    }
     res.send(items);
   }),
 );

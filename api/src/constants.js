@@ -1,0 +1,7 @@
+const DEFAULT_GET_LIMIT = 100;
+const DEFAULT_GET_OFFSET = 0;
+
+module.exports = {
+  DEFAULT_GET_LIMIT,
+  DEFAULT_GET_OFFSET,
+};

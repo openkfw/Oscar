@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const LayerGeoData = require('../mapLayers/layerGeoDataSchema');
-const { MapLayer } = require('../mapLayers/mapLayersSchema');
+const LayerGeoData = require('../database/mongoDb/schemas/layerGeoDataSchema');
+const { MapLayer } = require('../database/mongoDb/schemas/mapLayersSchema');
 
 jest.mock('azure-storage');
 
@@ -23,6 +23,7 @@ describe('Geo data', () => {
   it('should save nothing, if data for country not found', async () => {
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         country: 'nonexistent',
       };
@@ -43,6 +44,7 @@ describe('Geo data', () => {
   it('should save nothing, if file from country missing', async () => {
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         country: 'testCountry2',
       };
@@ -75,13 +77,14 @@ describe('Geo data', () => {
 
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         country: 'testCountry',
       };
     });
-    jest.mock('../mapLayers/storage.js', () => {
+    jest.mock('../azureStorage/blobContainer.js', () => {
       return {
-        saveGeoJsonFromUrlSourceToStorage: () => 'newName.geojson',
+        storeFromUrlAsBlob: () => 'newFilename.geojson',
       };
     });
 
@@ -118,13 +121,14 @@ describe('Geo data', () => {
     await MapLayer.create(existingMapLayer);
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         country: 'testCountry',
       };
     });
-    jest.mock('../mapLayers/storage.js', () => {
+    jest.mock('../azureStorage/blobContainer.js', () => {
       return {
-        saveGeoJsonFromUrlSourceToStorage: () => 'newName.geojson',
+        storeFromUrlAsBlob: () => 'newFilename.geojson',
       };
     });
 
@@ -151,13 +155,14 @@ describe('Geo data', () => {
   it('should save data for country from config', async () => {
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         country: 'testCountry',
       };
     });
-    jest.mock('../mapLayers/storage.js', () => {
+    jest.mock('../azureStorage/blobContainer.js', () => {
       return {
-        saveGeoJsonFromUrlSourceToStorage: () => 'newName.geojson',
+        storeFromUrlAsBlob: () => 'newName.geojson',
       };
     });
     jest.mock('axios', () => {
@@ -201,13 +206,14 @@ describe('Geo data', () => {
     jest.isolateModules(() => {
       jest.mock('../config/config.js', () => {
         return {
+          mongoUri: 'qwertyuiop',
           uploadDataTypes: 'mapLayers',
           country: 'testCountry',
         };
       });
-      jest.mock('../mapLayers/storage.js', () => {
+      jest.mock('../azureStorage/blobContainer.js', () => {
         return {
-          saveGeoJsonFromUrlSourceToStorage: () => false,
+          storeFromUrlAsBlob: () => false,
         };
       });
       uploads = require('../index'); // eslint-disable-line  global-require
@@ -233,13 +239,14 @@ describe('Geo data', () => {
     jest.isolateModules(() => {
       jest.mock('../config/config.js', () => {
         return {
+          mongoUri: 'qwertyuiop',
           uploadDataTypes: 'mapLayers',
           country: 'testCountry3',
         };
       });
-      jest.mock('../mapLayers/storage.js', () => {
+      jest.mock('../azureStorage/blobContainer.js', () => {
         return {
-          saveGeoJsonFromFileToStorage: () => 'newFilename.geojson',
+          storeLocalFileAsBlob: () => 'newFilename.geojson',
         };
       });
       uploads = require('../index'); // eslint-disable-line  global-require

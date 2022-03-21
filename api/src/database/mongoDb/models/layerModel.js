@@ -1,5 +1,15 @@
-const model = require('../models/mapLayerModel');
-const { getLayerGeoDataWithUrl } = require('../models/layerGeoDataModel');
+const { MapLayer } = require('../dbSchemas/mapLayersSchema');
+const LayerGeoDataSchema = require('../dbSchemas/layerGeoDataSchema');
+
+const getMapLayers = async (filter) => {
+  const items = await MapLayer.find(filter).sort({ title: 'asc' }).lean().exec();
+  return items;
+};
+
+const getLayerGeoDataWithUrl = () =>
+  LayerGeoDataSchema.find({ geoDataUrl: { $ne: null } })
+    .lean()
+    .exec();
 
 /**
  * Returns map layers from mapLayers collection with link to GeoJson file from layerGeoData collection
@@ -33,7 +43,7 @@ const getMapLayersWithGeoData = async () => {
     ],
   };
 
-  const layers = await model.getMapLayers(filter);
+  const layers = await getMapLayers(filter);
 
   const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
@@ -63,4 +73,4 @@ const getMapLayersWithGeoData = async () => {
   return layersWithGeoDataUrl;
 };
 
-module.exports = { getMapLayersWithGeoData };
+module.exports = { getMapLayers, getLayerGeoDataWithUrl, getMapLayersWithGeoData };

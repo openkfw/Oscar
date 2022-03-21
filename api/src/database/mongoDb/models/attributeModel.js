@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const APIError = require('../helpers/APIError');
+const APIError = require('../../../helpers/APIError');
 const { ATTRIBUTES_COLLECTION_NAME } = require('../dbSchemas/attributeSchema');
-const { dateIsValid } = require('../helpers/utils');
+const { dateIsValid } = require('../../../helpers/utils');
 
 /**
  * Compose filter from settings from query
@@ -18,7 +18,7 @@ const createAttributesFilter = (attributeIds, attributeIdCategories, featureIds,
     let attributeIdsArray = [];
     let attributeCategoryArray = [];
     if (attributeIds) {
-      attributeIdsArray = Array.isArray(attributeIds) ? attributeIds : attributeIds.split('');
+      attributeIdsArray = Array.isArray(attributeIds) ? attributeIds : [attributeIds];
       filter.attributeId = { $in: attributeIdsArray };
     }
     if (attributeIdCategories) {

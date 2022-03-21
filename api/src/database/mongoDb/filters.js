@@ -1,3 +1,9 @@
+/**
+ * Add $geoIntersects filter for mongoose filter query
+ * @param  {object} filter - existing filter object
+ * @param  {string} bottomLeft - bottom left corner of boundingBox window, string 'lon,lat'
+ * @param  {string} topRight - top right corner of boundingBox window, string 'lon,lat'
+ */
 const filterCoordinates = (filter, bottomLeft, topRight) => {
   const bottomLeftArr = bottomLeft.split(',').map((point) => parseFloat(point));
   const topRightArr = topRight.split(',').map((point) => parseFloat(point));

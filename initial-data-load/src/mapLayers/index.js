@@ -1,10 +1,10 @@
 const logger = require('../config/winston');
 const mapLayersUpload = require('./mapLayersUpload');
 const geoDataUpload = require('./layersGeoDataUpload');
-const { createIndex } = require('./db');
+const { setupCollections } = require('../database/layers');
 
 module.exports = async (country) => {
-  await createIndex();
+  await setupCollections();
   logger.info('Uploading geo data for map layers...');
   await geoDataUpload(country);
 
