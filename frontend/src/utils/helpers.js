@@ -28,6 +28,38 @@ export const getStartDate = (numberOfDays) => {
   return isoRequiredDay;
 };
 
+/**
+ * Check if the value is in interval (min, max>
+ * @param  {} value
+ * @param  {} min
+ * @param  {} max
+ */
+export const isInInterval = (value, min, max) => {
+  // the interval is not defined
+  if (!min && min !== 0 && !max && max !== 0) {
+    return false;
+  }
+  // min value is not defined
+  if (!min && min !== 0) {
+    if (value <= max) {
+      return true;
+    }
+    return false;
+  }
+  // max is not defined
+  if (!max && max !== 0) {
+    if (value > min) {
+      return true;
+    }
+    return false;
+  }
+  // regular case
+  if (min < value && value <= max) {
+    return true;
+  }
+  return false;
+};
+
 export const foundPointAddressString = (address) => {
   if (!address) {
     return 'Unknown address';

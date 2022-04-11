@@ -11,6 +11,7 @@ export const staticLayersTypes = {
 export const staticLayerColorTypes = {
   COLOR: 'color',
   COLORMAP: 'colormap',
+  INTERVALS: 'intervals',
 };
 // map legend types
 export const mapLegendTypes = {
