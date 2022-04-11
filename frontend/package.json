@@ -24,7 +24,7 @@
     "http-proxy-middleware": "^1.0.3",
     "immutable": "^3.8.2",
     "jspdf": "^2.4.0",
-    "moment": "^2.26.0",
+    "moment": "^2.29.2",
     "ol": "^6.3.1",
     "plotly.js-dist": "^1.58.4",
     "prop-types": "^15.6.2",
