@@ -55,10 +55,13 @@ For map view in the UI, you can set [x,y] coordinates and zoom level to focus th
 In first version, there is only one Tab available.     
 **index** is order of the tab in the top menu. In future versions, you can create multiple tabs and order them. Order starts at 0 and it should be sequence of consecutive numbers.      
 **attributeIds** are names of attributes stored in database for specific graphs in tab. Each preset tab has own set of constants to be matched with data in database. Specific sets of attributeIds are described in [Dashboard Tabs](../../UI/dashboard-tabs.md).     
-     
+  
 ## Configuration and data in data filling service
-`initial-data-load` service prepares structure in database and storage and fills them with data. This service can be run multiple times after the structure is set up.   
+
+`initial-data-load` service prepares structure in database and storage and fills them with data. This service can be run multiple times after the structure is set up.  
+
 ### Requirements for first run
+
 On first run, this service is setting up database structure, indexes and storage structure necessary for data storing. To enable complete flexibility later, some of these values need to be set via environment variables.      
 Make sure that following values are present for first run (they are set in ./runinitialload.sh script). Fill in your own COUNTRY and run the script in terminal.    
 ```
