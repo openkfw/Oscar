@@ -171,11 +171,19 @@ Style and legend values are specific for each type or geographical data as well 
 For style, on the lowest level, the color object is defined in following structure:
 
 ```
-type: 'color'/'colormap'
+type: 'color'/'colormap/intervals'
 value:
 ```
 
 The application accepts types: 'color', which is basically string with color in any css accepted format (usually color name or rgba value) and 'colormap' which has fixed list of available maps: ['blue', 'green', 'red', 'hot'].
+
+ìntervals`: Also new type is introduced for data which can be ordered and compared. The 'value' is array of objects with three necessary values:
+```
+min: min value, this value IS NOT included
+max: max value, this value IS included
+color: string with color in any css accepted format (usually color name or rgba value)
+```
+If min value is omitted, all values less than max value are considered in this interval. Likewise, if max value is omitted, all values more than min value are considered in this interval.
 
 ##### regions layer with attribute data in categories
 

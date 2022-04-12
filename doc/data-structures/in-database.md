@@ -78,8 +78,8 @@ attributeDescription:
 featureId: property name in geojson for geographical information
 style:
   fillColor:
-    type: type of color information, valid values: 'color', 'colormap'
-    value: string with color in one of standard formats or name of predefined colormap
+    type: type of color information, valid values: 'color', 'colormap', 'intervals'
+    value: string with color in one of standard formats or name of predefined colormap or array of 'min' 'max' and 'color' values for 'intervals' type
   min: minimal value for colormap for correct color scaling
   max: maximal value for colormap for correct color scaling
   strokeColor:

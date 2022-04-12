@@ -7,7 +7,7 @@ import Text from 'ol/style/Text';
 
 import colormap from 'colormap';
 import { staticLayerColorTypes } from '../../constants';
-import { isNotDefinedIncl0 } from '../../utils/helpers';
+import { isInInterval, isNotDefinedIncl0 } from '../../utils/helpers';
 
 // Styling based on feature attributes - trying generic
 export const colormaps = {
@@ -57,6 +57,10 @@ const getColorFromLayerStyle = (value, colorStyle, min, max) => {
       const f = 1 - Math.pow(Math.max(0, Math.min((numericalValue - min) / (max - min), 1)), 0.5);
       const index = Math.round(f * (50 - 1));
       return colorMap[index];
+    }
+    if (colorStyle.type === staticLayerColorTypes.INTERVALS) {
+      const interval = colorStyle.value.find((item) => isInInterval(value, item.min, item.max));
+      return interval.color;
     }
   } else {
     // different styles dependent on value

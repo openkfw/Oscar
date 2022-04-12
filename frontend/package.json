@@ -27,6 +27,7 @@
     "moment": "^2.29.2",
     "ol": "^6.3.1",
     "plotly.js-dist": "^1.58.4",
+    "postcss": "^8.2.13",
     "prop-types": "^15.6.2",
     "react": "^17.0.1",
     "react-dom": "^16.8.0",

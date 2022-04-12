@@ -107,3 +107,52 @@
   layerOptions:
     singleDisplay: false
     timeseries: false
+
+- referenceId: "dailyCasesPerAdmin1_C"
+  geoReferenceId: "slovakiaRegions"
+  layerType: "regions"
+  category: "Covid-19"
+  title: "Daily cases by value categories"
+  attribute: "Daily Covid19 Cases Per Admin1"
+  attributeDescription:
+    descriptionText: "COVID-19 New Cases: {{Daily Covid19 Cases Per Admin1}}"
+    featureText: "{{featureId}} kraj"
+  featureId: "name"
+  style:
+    fillColor:
+      type: "intervals"
+      value:
+        - max: 0
+          color: "blue"
+        - min: 0
+          max: 10
+          color: "green"
+        - min: 10
+          max: 50
+          color: "orange"
+        - min: 50
+          color: "red"
+    strokeColor:
+      type: "color"
+      value: "rgba(255,255,255,0.2)"
+  legend:
+    - type: "color"
+      color: "blue"
+      description: "0 cases"
+    - type: "color"
+      color: "green"
+      description: "1 - 10 cases"
+    - type: "color"
+      color: "orange"
+      description: "11 - 50 cases"
+    - type: "color"
+      color: "red"
+      description: "51 + cases"
+  metadata:
+    description: "Sample data created just for this purpose. Do not represent the reality in any time."
+    updateFrequency: "never"
+    unit: "n/a"
+    dataRetrievalDescription: "Data was randomly created."
+  layerOptions:
+    singleDisplay: false
+    timeseries: true
