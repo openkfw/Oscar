@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+- new color style type 'intervals' [117](https://github.com/openkfw/Oscar/pull/120)
 
 ### Changed
 

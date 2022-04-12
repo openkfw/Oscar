@@ -90,7 +90,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
       }),
       layers: basicLayers,
       view: new View({
-        center: mapPosition ? mapPosition.center : [],
+        center: mapPosition ? mapPosition.center : undefined,
         zoom: mapPosition ? mapPosition.zoom : null,
         minZoom: 2,
       }),
