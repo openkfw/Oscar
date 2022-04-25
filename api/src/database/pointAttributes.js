@@ -14,4 +14,17 @@ const getPointAttributes = async (attributeId, bottomLeft, topRight) => {
   }
   throw new APIError('No connection string to database', 500, false);
 };
-module.exports = { getPointAttributes };
+
+/**
+ * Returns array with unique values for given property in items with given attributeId
+ * @param  {string} attributeId
+ * @param  {string} property - key in properties object in item
+ */
+const getUniqueValues = async (attributeId, property) => {
+  if (config.mongoUri) {
+    return mongoDb.getUniqueValues(attributeId, property);
+  }
+  throw new APIError('No connection string to database', 500, false);
+};
+
+module.exports = { getPointAttributes, getUniqueValues };
