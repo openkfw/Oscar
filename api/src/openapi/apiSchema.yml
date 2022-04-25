@@ -142,6 +142,28 @@ paths:
       responses:
         200:
           description: Successful response
+
+  /api/pointAttributes/{attributeId}/unique/{property}:
+    get:
+      summary: Unique values for property
+      description: Get list of all unique values for given property on attributes
+      parameters:
+        - in: path
+          name: attributeId
+          schema:
+            type: string
+          description: attributeId
+          required: true
+        - in: path
+          name: property
+          schema:
+            type: string
+          description: property on attribute
+          required: true
+      responses:
+        "200":
+          description: Successful response
+
   /api/staticLayers:
     get:
       summary: Gets static layers data

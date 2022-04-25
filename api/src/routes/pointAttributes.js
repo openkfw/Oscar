@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerValidation = require('../config/swagger');
 const { forwardError } = require('../helpers/utils');
 
-const { getPointAttributes } = require('../database/pointAttributes');
+const { getPointAttributes, getUniqueValues } = require('../database/pointAttributes');
 
 const router = express.Router();
 
@@ -27,6 +27,16 @@ router.get(
       name: attributeId || 'pointAttributes',
       features: [],
     });
+  }),
+);
+
+router.get(
+  '/:attributeId/unique/:property',
+  swaggerValidation.validate,
+  forwardError(async (req, res) => {
+    let items = [];
+    items = await getUniqueValues(req.params.attributeId, req.params.property);
+    res.send(items);
   }),
 );
 

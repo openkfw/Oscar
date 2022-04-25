@@ -12,6 +12,11 @@ const AttributeDescriptionSchema = new mongoose.Schema(
   { _id: false },
 );
 
+const AttributeDataSchema = new mongoose.Schema({
+  attributeId: String,
+  availableDatesSource: String,
+});
+
 const StyleSchema = new mongoose.Schema(
   {
     fillColors: {
@@ -70,9 +75,12 @@ const OneMapLayerData = new mongoose.Schema(
     title: String,
     attribute: String,
     attributeDescription: AttributeDescriptionSchema,
+    attributeData: AttributeDataSchema,
     featureId: String,
     style: StyleSchema,
     legend: [LegendSchema],
+    tileDataUrl: String,
+    tileAttributions: String,
   },
   { _id: false },
 );
@@ -92,6 +100,8 @@ const MapLayerSchema = new mongoose.Schema({
   metadata: MetadataSchema,
   timeseries: Boolean,
   layerOptions: LayerOptionsSchema,
+  tileDataUrl: String,
+  tileAttributions: String,
 });
 
 const MapLayer = mongoose.model('MapLayer', MapLayerSchema, 'mapLayers');

@@ -54,6 +54,7 @@ const addMapLayer = async (data) => {
     title: data.title,
     attribute: data.attribute,
     attributeDescription: data.attributeDescription,
+    attributeData: data.attributeData,
     attributeTemplateName: data.attributeTemplateName,
     featureId: data.featureId,
     metadata: data.metadata,
