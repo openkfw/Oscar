@@ -33,7 +33,7 @@ const getUniqueValues = async (attributeId, property) => {
       { $match: { 'properties.attributeId': attributeId } },
       {
         $group: {
-          _id: `properties.${property}`,
+          _id: `$properties.${property}`,
         },
       },
       { $sort: { _id: 1 } },
