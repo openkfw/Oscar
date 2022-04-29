@@ -7,12 +7,22 @@ const mongoDb = require('./mongoDb/models/pointAttributesModel');
  * @param  {string} attributeId
  * @param  {string} bottomLeft - bottom left corner, string with lon,lat divided by ','
  * @param  {string} topRight - top right corner, string with lon, lat divided by ','
+ * @param  {string} dateStart - start of date interval
+ * @param  {string} dateEnd - end of date interval
+ * @param  {boolean} lastDate - return values in database for last date
  */
-const getPointAttributes = async (attributeId, bottomLeft, topRight) => {
-  if (config.mongoUri) {
-    return mongoDb.getFilteredPointAttributes(attributeId, bottomLeft, topRight);
+const getPointAttributes = async (attributeId, bottomLeft, topRight, dateStart, dateEnd, lastDate) => {
+  if (lastDate) {
+    if (config.mongoUri) {
+      return mongoDb.getLastDatePointAttributes(attributeId, bottomLeft, topRight);
+    }
+    throw new APIError('No connection string to database', 500, false);
+  } else {
+    if (config.mongoUri) {
+      return mongoDb.getFilteredPointAttributes(attributeId, bottomLeft, topRight, dateStart, dateEnd);
+    }
+    throw new APIError('No connection string to database', 500, false);
   }
-  throw new APIError('No connection string to database', 500, false);
 };
 
 /**

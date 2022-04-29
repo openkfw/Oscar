@@ -120,6 +120,27 @@ paths:
             type: string
           description: attributeId
           required: true
+        - name: dateStart
+          in: query
+          required: false
+          description: Parameter for data filtering. Updated date of returned data is greater than or equal to dateStart.
+          schema:
+            type: string
+          example: 2020-06-07
+        - name: dateEnd
+          in: query
+          required: false
+          description: Parameter for data filtering. Updated date of the returned data is less than or equal to dateEnd.
+          schema:
+            type: string
+          example: 2020-06-07
+        - name: lastDate
+          in: query
+          required: false
+          description: Parameter for data filtering. Return only items with last values.
+          schema:
+            type: boolean
+          example: true
         - in: query
           name: bottomLeft
           schema:
