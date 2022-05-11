@@ -21,10 +21,12 @@ const storeFile = async (url, requestData, credentials) => {
     response = await axios.get(fullUrl, requestConfig);
     if (response.status !== 200) {
       logger.error(`Failed to fetch data from ${fullUrl}:\n${response.message || response.body}`);
+      process.exitCode = 1;
       return;
     }
   } catch (error) {
     logger.error(`Request to ${fullUrl} failed with:\n${error}`);
+    process.exitCode = 1;
     return;
   }
   try {
@@ -44,10 +46,12 @@ const storeFile = async (url, requestData, credentials) => {
         logger.info(`File ${parsedFilename} was successfully stored.`);
       } else {
         logger.error(`Response for ${fullUrl} is not stream.`);
+        process.exitCode = 1;
       }
     }
   } catch (error) {
     logger.error(`Failed to save data into ${parsedFilename}:\n${error}`);
+    process.exitCode = 1;
   }
 };
 
