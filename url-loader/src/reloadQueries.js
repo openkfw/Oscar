@@ -52,6 +52,7 @@ const reloadQueries = async (requestQuery) => {
     }));
   } catch (err) {
     logger.error(err);
+    process.exitCode = 1;
   } finally {
     await disconnectFromDB();
   }
