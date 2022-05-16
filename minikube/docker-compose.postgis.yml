@@ -1,7 +1,8 @@
 version: "3"
 services:
   db-service:
-    image: postgis/postgis:13-3.2
+    build:
+      context: ../postgis_init
     hostname: db-service
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
