@@ -6,12 +6,12 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
   CREATE TABLE attributes (
     attribute_id          VARCHAR         NOT NULL, 
-    attribute_type        VARCHAR         NOT NULL, 
-    attribute_key         VARCHAR         NOT NULL, 
-    name                  VARCHAR         NOT NULL, 
-    geo_data              JSONB           NOT NULL,
-    detail                JSONB           NOT NULL,
-    metadata              JSONB           NOT NULL,
+    attribute_type        VARCHAR, 
+    attribute_key         VARCHAR, 
+    name                  VARCHAR, 
+    geo_data              JSONB,
+    detail                JSONB,
+    metadata              JSONB,
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
@@ -23,11 +23,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     id                    UUID            NOT NULL DEFAULT uuid_generate_v4(),
     attribute_id          VARCHAR         NOT NULL references attributes(attribute_id), 
     feature_id            VARCHAR         NOT NULL, 
-    feature_id_lvl        VARCHAR         NOT NULL,
+    feature_id_lvl        VARCHAR,
     value                 VARCHAR         NOT NULL,
     value_type            VARCHAR         NOT NULL,
     date_ISO              VARCHAR         NOT NULL,
-    date_data             VARCHAR         NOT NULL,
+    date_data             VARCHAR,
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),

@@ -1,20 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const axios = require('axios');
-const bbox = require('@turf/bbox');
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
+import axios from 'axios';
+import config from '../config/config';
+import logger from '../config/winston';
 
-const config = require('../config/config');
-const logger = require('../config/winston');
+import { createCollection, clearCollection } from '../database';
+import { getOneLayerGeoData, saveGeoData } from '../database/layers';
+import { storeGeoFeaturesData } from '../database/geoFeatureCollections';
 
-const { createCollection } = require('../database');
-const { getOneLayerGeoData, saveGeoData } = require('../database/layers');
-const { storeGeoFeaturesData } = require('../database/geoFeatureCollections');
+import { storeLocalFileAsBlob, storeFromUrlAsBlob } from '../azureStorage/blobContainer';
+import { GeoDataConfigItem } from '../types';
 
-const { storeLocalFileAsBlob, storeFromUrlAsBlob } = require('../azureStorage/blobContainer');
-const { clearCollection } = require('../database');
+const bbox: any = require('@turf/bbox');
 
-const storeGeoDataToDb = async (fromFile, data, filePath) => {
+const storeGeoDataToDb = async (fromFile: boolean, data: GeoDataConfigItem, filePath: string) => {
   let geojsonData;
   logger.info(`Clearing database collection ${data.collectionName}`);
   await clearCollection(data.collectionName);
@@ -66,7 +66,7 @@ const storeGeoDataToDb = async (fromFile, data, filePath) => {
   await storeGeoFeaturesData(data.collectionName, featuresWithBbox);
 };
 
-const formatLayerGeoData = async (data, country) => {
+const formatLayerGeoData = async (data: GeoDataConfigItem, dataset: string) => {
   const existing = await getOneLayerGeoData(data.referenceId);
   if (existing) {
     logger.info(`Layer ${data.name} already exists. Skipping...`);
@@ -91,7 +91,7 @@ const formatLayerGeoData = async (data, country) => {
       }
     }
   } else if (data.geoDataFilename) {
-    const filePath = path.join(__dirname, '..', '..', 'data', country, 'geoData', data.geoDataFilename);
+    const filePath = path.join(__dirname, '..', '..', 'data', dataset, 'geoData', data.geoDataFilename);
     const hasFile = fs.existsSync(filePath);
     if (hasFile && data.storeToDb) {
       logger.info(`Storing geodata ${data.geoDataFilename} for layer ${data.referenceId} from file...`);
@@ -117,28 +117,28 @@ const formatLayerGeoData = async (data, country) => {
   return newDataObj;
 };
 
-const geoDataUpload = async (country) => {
-  if (country) {
+const geoDataUpload = async (dataset: string) => {
+  if (dataset) {
     let hasFile = false;
     try {
-      hasFile = fs.existsSync(path.join(__dirname, '..', '..', 'data', country, 'GeoData.yml'));
+      hasFile = fs.existsSync(path.join(__dirname, '..', '..', 'data', dataset, 'GeoData.yml'));
     } catch (err) {
-      logger.error(`GeoData for country ${country} not found:\n${err}`);
+      logger.error(`GeoData for dataset ${dataset} not found:\n${err}`);
     }
     if (hasFile) {
       const layersGeoData = await yaml.load(
-        fs.readFileSync(path.join(__dirname, '..', '..', 'data', country, 'GeoData.yml'), 'utf8'),
+        fs.readFileSync(path.join(__dirname, '..', '..', 'data', dataset, 'GeoData.yml'), 'utf8'),
       );
-      const savingGeoJsons = layersGeoData.map((item) => formatLayerGeoData(item, country));
+      const savingGeoJsons = layersGeoData.map((item) => formatLayerGeoData(item, dataset));
       let geoDataForDb = await Promise.all([...savingGeoJsons]);
       geoDataForDb = geoDataForDb.filter((item) => item);
       await saveGeoData(geoDataForDb);
-      logger.info(`LayerGeoData for country ${country} successfully saved to database.`);
+      logger.info(`LayerGeoData for dataset ${dataset} successfully saved to database.`);
     } else {
-      logger.error(`Data for country ${country} not found.`);
+      logger.error(`Data for dataset ${dataset} not found.`);
     }
   } else {
-    logger.info('Layer geo data upload: No country for data upload specified.');
+    logger.info('Layer geo data upload: No dataset for data upload specified.');
   }
 };
-module.exports = geoDataUpload;
+export default geoDataUpload;

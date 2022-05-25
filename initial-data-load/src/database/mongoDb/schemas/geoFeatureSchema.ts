@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const GeometrySchema = new mongoose.Schema(
   {
@@ -23,6 +23,4 @@ const GeoFeatureSchema = new mongoose.Schema({
   bbox: BboxSchema,
 });
 
-module.exports = {
-  GeoFeatureSchema,
-};
+export default GeoFeatureSchema;

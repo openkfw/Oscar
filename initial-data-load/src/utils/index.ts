@@ -1,4 +1,5 @@
-const isNumberInString = (value) => {
+// eslint-disable-next-line import/prefer-default-export
+export const isNumberInString = (value) => {
   if (typeof value === 'number') {
     return value;
   }
@@ -12,5 +13,3 @@ const isNumberInString = (value) => {
   }
   return null;
 };
-
-module.exports = { isNumberInString };

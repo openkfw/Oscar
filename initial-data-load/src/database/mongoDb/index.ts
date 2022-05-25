@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const Bottleneck = require('bottleneck');
-const config = require('../../config/config');
-const logger = require('../../config/winston');
+import mongoose, { ConnectOptions } from 'mongoose';
+import Bottleneck from 'bottleneck';
+import config from '../../config/config';
+import logger from '../../config/winston';
 
-const initializeDBConnection = async () => {
+export const initializeDBConnection = async () => {
   logger.info(`Connecting to database`);
   if (process.env.NODE_ENV !== 'test') {
     await mongoose.set('debug', (collectionName, method, query, doc) => {
@@ -20,20 +20,20 @@ const initializeDBConnection = async () => {
     useUnifiedTopology: true,
     socketTimeoutMS: 200000,
     dbName: config.dbName,
-  });
+  } as ConnectOptions);
   logger.info('Successfully connected to database.');
 };
 
-const createRegularIndex = (collectionName, keys) =>
+export const createRegularIndex = (collectionName, keys) =>
   mongoose.connection.db.collection(collectionName).createIndex(keys);
 
-const createGeoDataIndex = async (collectionName, geoKey = 'geometry') => {
+export const createGeoDataIndex = async (collectionName, geoKey = 'geometry') => {
   const indexKey = {};
   indexKey[geoKey] = '2dsphere';
   await mongoose.connection.db.collection(collectionName).createIndex(indexKey);
 };
 
-const createCollection = async (collectionName, index, geoIndex) => {
+export const createCollection = async (collectionName, index, geoIndex) => {
   if (!collectionName || collectionName === '') {
     logger.error('Collection name missing, unable to create');
     return;
@@ -46,16 +46,16 @@ const createCollection = async (collectionName, index, geoIndex) => {
   }
 };
 
-const deleteAllFromCollection = async (collectionName) => {
-  await mongoose.connection.db.collection(collectionName).remove({});
+export const deleteAllFromCollection = async (collectionName) => {
+  await mongoose.connection.db.collection(collectionName).deleteMany({});
 };
 
 const limiter = new Bottleneck({
-  maxConcurrent: config.bottleneckMaxConcurent,
-  minTime: config.bottleneckTimeLimit,
+  maxConcurrent: 1,
+  minTime: 5000,
 });
 
-const bulkStoreToDb = async (collectionName, operations, options) => {
+export const bulkStoreToDb = async (collectionName, operations, options) => {
   // bulkWrite is split to smaller batches as it takes more than 1 minute
   // CosmosDB with MongoDB driver has max 1 minute operation execution time
   // for some mongo queries it is possible to set maxTimeMS, to set this for a linger time but not for bulkWrite
@@ -76,18 +76,18 @@ const bulkStoreToDb = async (collectionName, operations, options) => {
   await Promise.all(allTasks);
 };
 
-const disconnectFromDB = async () => {
+export const disconnectFromDB = async () => {
   await mongoose.disconnect();
   logger.info('Successfully disconnected from database.');
 };
 
-const removeDB = async () => {
+export const removeDB = async () => {
   await mongoose.deleteModel(/.+/);
   await mongoose.connection.dropDatabase();
   logger.info('Successfully dropped database.');
 };
 
-module.exports = {
+export default {
   initializeDBConnection,
   createRegularIndex,
   createGeoDataIndex,

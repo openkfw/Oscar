@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const { LAYER_TYPES, GEO_FORMATS } = require('../../../mapLayers/constants');
-const MetadataSchema = require('./metadataSchema');
+import mongoose from 'mongoose';
+import { LAYER_TYPES, GEO_FORMATS } from '../../../mapLayers/constants';
+import MetadataSchema from './metadataSchema';
 
 const FeatureIdSchema = new mongoose.Schema(
   {
@@ -28,4 +28,4 @@ const layerGeoDataSchema = new mongoose.Schema({
   metadata: MetadataSchema,
 });
 
-module.exports = mongoose.model('LayerGeoData', layerGeoDataSchema, 'layerGeoData');
+export default mongoose.model('LayerGeoData', layerGeoDataSchema, 'layerGeoData');

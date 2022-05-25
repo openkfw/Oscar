@@ -1,11 +1,21 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
+import logger from '../../config/winston';
 
-const logger = require('../config/winston');
-const { getOneLayerGeoData, saveMapLayers } = require('../database/layers');
+import { createRegularIndex, createGeoDataIndex, bulkStoreToDb } from '.';
+import { MAP_LAYER_COLLECTION_NAME, MapLayer } from './schemas/mapLayersSchema';
+import LayerGeoDataSchema from './schemas/layerGeoDataSchema';
+import { MapLayerConfigItem, MongoDbMapLayer } from '../../types';
 
-const addMapLayer = async (data) => {
+export const createIndexes = async () => {
+  await createRegularIndex(MAP_LAYER_COLLECTION_NAME, { title: 1 });
+  await createGeoDataIndex(MAP_LAYER_COLLECTION_NAME);
+};
+
+// geoData collection
+export const saveGeoData = async (data) => LayerGeoDataSchema.insertMany(data);
+export const getOneLayerGeoData = (referenceId) => LayerGeoDataSchema.findOne({ referenceId });
+
+// mapLayers collection
+const oneMapLayerItem = async (data: MapLayerConfigItem) => {
   if (data.timeseries !== undefined) {
     logger.info(
       `DeprecationWarning: 'timeseries' key on the top level is deprecated. Move 'timeseries' key in 'layerOptions' key in ${data.referenceId} layer in mapLayers config.`,
@@ -67,25 +77,39 @@ const addMapLayer = async (data) => {
   };
 };
 
-const uploadMapLayers = async (country) => {
-  if (country) {
-    const filePath = path.join(__dirname, '..', '..', 'data', country, 'MapLayers.yml');
-    const hasFile = fs.existsSync(filePath);
-    if (hasFile) {
-      const mapLayers = await yaml.load(fs.readFileSync(filePath, 'utf8'));
-      const checkedAndPreparedData = mapLayers.map((layer) => addMapLayer(layer));
-      const dataForDb = await Promise.all([...checkedAndPreparedData]);
-      const singleMapData = dataForDb.filter((item) => item && item.layerType !== 'group');
-      const groupMapData = dataForDb.filter((item) => item && item.layerType === 'group');
-      await saveMapLayers([...singleMapData, ...groupMapData]);
-    } else {
-      logger.error(`Data for country ${country} not found.`);
-    }
-  } else {
-    logger.info('Map layer upload: No country for data upload specified.');
-  }
+export const saveMapLayers = async (mapLayers: Array<MapLayerConfigItem>) => {
+  const checkedAndPreparedData = mapLayers.map((layer) => oneMapLayerItem(layer));
+  const layerDataResults = await Promise.all([...checkedAndPreparedData]);
 
-  logger.info('Finished map layers loading.');
+  const temp: any = layerDataResults.filter((item) => item);
+  const layerData: Array<MongoDbMapLayer> = temp;
+
+  const operations = layerData.map((layer) => ({
+    updateOne: {
+      filter: { referenceId: layer.referenceId },
+      update: {
+        $set: layer,
+      },
+      upsert: true,
+    },
+  }));
+
+  if (operations && operations.length) {
+    await bulkStoreToDb(MAP_LAYER_COLLECTION_NAME, operations, { bulkSize: 20 });
+    logger.info(`Successfully stored ${operations.length} items to collection ${MAP_LAYER_COLLECTION_NAME}.`);
+  } else {
+    logger.info(`No items to store in collection ${MAP_LAYER_COLLECTION_NAME}`);
+  }
 };
 
-module.exports = uploadMapLayers;
+export const getOneMapLayer = (referenceId) => MapLayer.findOne({ referenceId });
+
+export const setupCollections = createIndexes;
+export default {
+  createIndexes,
+  saveGeoData,
+  getOneLayerGeoData,
+  saveMapLayers,
+  getOneMapLayer,
+  setupCollections: createIndexes,
+};

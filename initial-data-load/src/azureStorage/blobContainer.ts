@@ -1,12 +1,12 @@
-const azureStorage = require('azure-storage');
-const axios = require('axios');
+import azureStorage from 'azure-storage';
+import axios from 'axios';
 
-const config = require('../config/config');
-const logger = require('../config/winston');
+import config from '../config/config';
+import logger from '../config/winston';
 
 const blobService = azureStorage.createBlobService(config.azureStorageConnectionString);
 
-const createBlobContainer = (containerName) => {
+export const createBlobContainer = (containerName: string): Promise<void> => {
   logger.info(`Creating blob container: ${containerName}`);
   return new Promise((resolve, reject) => {
     blobService.createContainerIfNotExists(containerName, (error, result) => {
@@ -24,7 +24,7 @@ const createBlobContainer = (containerName) => {
   });
 };
 
-const storeStreamAsBlob = (stream, streamLength, containerName, blobName) => {
+export const storeStreamAsBlob = (stream, streamLength, containerName, blobName): Promise<void> => {
   return new Promise((resolve, reject) => {
     blobService.createBlockBlobFromStream(containerName, blobName, stream, streamLength, (err) => {
       if (err) {
@@ -36,7 +36,7 @@ const storeStreamAsBlob = (stream, streamLength, containerName, blobName) => {
   });
 };
 
-const storeLocalFileAsBlob = (filePath, fileName, containerName) => {
+export const storeLocalFileAsBlob = (filePath: string, fileName: string, containerName: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     blobService.createBlockBlobFromLocalFile(containerName, fileName, filePath, (err) => {
       if (err) {
@@ -48,7 +48,7 @@ const storeLocalFileAsBlob = (filePath, fileName, containerName) => {
   });
 };
 
-const storeFromUrlAsBlob = async (sourceUrl, containerName) => {
+export const storeFromUrlAsBlob = async (sourceUrl: string, containerName: string) => {
   const result = await axios.get(sourceUrl, { responseType: 'stream' });
   if (result.status !== 200) {
     logger.error(`Failed to fetch geojson data from ${sourceUrl}`);
@@ -58,5 +58,3 @@ const storeFromUrlAsBlob = async (sourceUrl, containerName) => {
   await storeStreamAsBlob(result.data, result.headers['content-length'], containerName, fileName);
   return fileName;
 };
-
-module.exports = { createBlobContainer, storeStreamAsBlob, storeLocalFileAsBlob, storeFromUrlAsBlob };

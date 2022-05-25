@@ -20,12 +20,12 @@ describe('Geo data', () => {
     );
   });
 
-  it('should save nothing, if data for country not found', async () => {
+  it('should save nothing, if data for dataset not found', async () => {
     jest.mock('../config/config.js', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
-        country: 'nonexistent',
+        dataset: 'nonexistent',
       };
     });
 
@@ -41,12 +41,12 @@ describe('Geo data', () => {
     expect(mapData).toHaveLength(0);
   });
 
-  it('should save nothing, if file from country missing', async () => {
+  it('should save nothing, if file from dataset missing', async () => {
     jest.mock('../config/config.js', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
-        country: 'testCountry2',
+        dataset: 'testCountry2',
       };
     });
 
@@ -79,7 +79,7 @@ describe('Geo data', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
-        country: 'testCountry',
+        dataset: 'testCountry',
       };
     });
     jest.mock('../azureStorage/blobContainer.js', () => {
@@ -123,7 +123,7 @@ describe('Geo data', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
-        country: 'testCountry',
+        dataset: 'testCountry',
       };
     });
     jest.mock('../azureStorage/blobContainer.js', () => {
@@ -152,12 +152,12 @@ describe('Geo data', () => {
     mapData[2].layers.map((layer) => expect(layer.geoReferenceId).toEqual(geoDataSource[0].referenceId));
   });
 
-  it('should save data for country from config', async () => {
+  it('should save data for dataset from config', async () => {
     jest.mock('../config/config.js', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
-        country: 'testCountry',
+        dataset: 'testCountry',
       };
     });
     jest.mock('../azureStorage/blobContainer.js', () => {
@@ -208,7 +208,7 @@ describe('Geo data', () => {
         return {
           mongoUri: 'qwertyuiop',
           uploadDataTypes: 'mapLayers',
-          country: 'testCountry',
+          dataset: 'testCountry',
         };
       });
       jest.mock('../azureStorage/blobContainer.js', () => {
@@ -241,7 +241,7 @@ describe('Geo data', () => {
         return {
           mongoUri: 'qwertyuiop',
           uploadDataTypes: 'mapLayers',
-          country: 'testCountry3',
+          dataset: 'testCountry3',
         };
       });
       jest.mock('../azureStorage/blobContainer.js', () => {

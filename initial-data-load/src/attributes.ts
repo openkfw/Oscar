@@ -1,23 +1,29 @@
-const fs = require('fs');
-const path = require('path');
-const Bottleneck = require('bottleneck');
-const csv2json = require('csvtojson');
+import fs from 'fs';
+import path from 'path';
+import Bottleneck from 'bottleneck';
+import csv2json from 'csvtojson';
 
-const logger = require('./config/winston');
-const { setupCollections, saveAttributes } = require('./database/attributes');
-const { isNumberInString } = require('./utils');
+import logger from './config/winston';
+import { setupCollections, saveAttributes } from './database/attributes';
+import { isNumberInString } from './utils';
+import { APIRegionAttribute, AttributesFileConfigItem } from './types';
 
 const limiter = new Bottleneck({
   maxConcurrent: 1,
 });
 
-const saveAttributesFromFile = async (date, csvFile) => {
+/**
+ * Load values from file and store them in database
+ * @param  {string} date - specified date for the data in file
+ * @param  {string} csvFile - file name of CSV file
+ */
+const saveAttributesFromFile = async (date: string, csvFile: string) => {
   logger.info(`Saving attributes from file ${csvFile}`);
   const hasFile = fs.existsSync(path.join(__dirname, csvFile));
   if (!hasFile) {
     logger.error(`File not found: ${csvFile}`);
   }
-  const attributeData = [];
+  const attributeData: Array<APIRegionAttribute> = [];
 
   await csv2json({ delimiter: [',', ';'] })
     .fromFile(path.join(__dirname, csvFile))
@@ -40,15 +46,17 @@ const saveAttributesFromFile = async (date, csvFile) => {
       keys.forEach((key) => {
         const value = row[key];
         if (value || value === 0) {
-          const item = {
+          const item: APIRegionAttribute = {
             date,
             featureId: geoFeature,
             attributeId: key,
+            value,
           };
           if (isNumberInString(value) !== null) {
-            item.valueNumber = Number.parseFloat(value);
+            // item.valueNumber = Number.parseFloat(value);
+            item.valueType = 'number';
           } else {
-            item.valueString = value;
+            item.valueType = 'text';
           }
           attributeData.push(item);
         }
@@ -67,29 +75,32 @@ const saveAttributesFromFile = async (date, csvFile) => {
   }
 };
 
-const uploadAttributes = async (country) => {
+/**
+ * Uploads attributes from folder with dataset
+ * @param  {string} dataSet - name of folder with dataset
+ */
+// eslint-disable-next-line import/prefer-default-export
+export const uploadAttributes = async (dataSet: string) => {
   await setupCollections();
 
-  if (country) {
-    const hasFolder = fs.existsSync(path.join(__dirname, '..', 'data', country, 'attributes'));
-    const hasFile = fs.existsSync(path.join(__dirname, '..', 'data', country, 'attributes', 'index.js'));
+  if (dataSet) {
+    const hasFolder = fs.existsSync(path.join(__dirname, '..', 'data', dataSet, 'attributes'));
+    const hasFile = fs.existsSync(path.join(__dirname, '..', 'data', dataSet, 'attributes', 'index.js'));
     if (hasFolder && hasFile) {
-      logger.info(`Saving attributes for country ${country}`);
+      logger.info(`Saving attributes for dataset ${dataSet}`);
       // eslint-disable-next-line
-      const uploadData = require(`../data/${country}/attributes/index.js`);
+      const uploadData: Array<AttributesFileConfigItem> = require(`../data/${dataSet}/attributes/index.js`);
       const uploads = uploadData.map((data) =>
         limiter.schedule(() =>
-          saveAttributesFromFile(data.date, path.join('..', 'data', country, 'attributes', data.csvFileName)),
+          saveAttributesFromFile(data.date, path.join('..', 'data', dataSet, 'attributes', data.csvFileName)),
         ),
       );
       await Promise.all([...uploads]);
-      logger.info(`Attribute data for country ${country} successfully uploaded.`);
+      logger.info(`Attribute data for dataset ${dataSet} successfully uploaded.`);
     } else {
-      logger.error(`Data for country ${country} not found.`);
+      logger.error(`Attribute data for dataset ${dataSet} not found.`);
     }
   } else {
-    logger.info('Layer attributes upload: No country for data upload specified.');
+    logger.info('Layer attributes upload: No dataset for data upload specified.');
   }
 };
-
-module.exports = { uploadAttributes };

@@ -1,7 +1,7 @@
-const logger = require('./src/config/winston');
-const uploads = require('./src/index');
-const setupAzure = require('./src/azureStorage/azureStorageSetup');
-const { initializeDb, disconnectFromDB } = require('./src/database/index');
+import logger from './src/config/winston';
+import uploads from './src/index';
+import setupAzure from './src/azureStorage/azureStorageSetup';
+import { initializeDb, disconnectFromDB } from './src/database/index';
 
 const main = async () => {
   try {

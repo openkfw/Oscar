@@ -1,9 +1,10 @@
 module.exports = {
-  moduleFileExtensions: ['js'],
-  testMatch: ['**/src/tests/*.js'],
+  moduleFileExtensions: ['js', 'ts'],
+  preset: 'ts-jest',
+  testMatch: ['**/src/tests/*.ts'],
   testEnvironment: 'node',
-  setupFilesAfterEnv: ['./src/testUtils/setup.js'],
+  setupFilesAfterEnv: ['./src/testUtils/setup.ts'],
   modulePaths: ['<rootDir>'],
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
-  collectCoverageFrom: ['src/**/{!(test|config),}.js', '!src/index.js'],
+  collectCoverageFrom: ['src/**/{!(test|config),}.ts', '!src/index.ts'],
 };

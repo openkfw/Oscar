@@ -1,10 +1,10 @@
-const { QueueServiceClient } = require('@azure/storage-queue');
-const logger = require('../config/winston');
-const config = require('../config/config');
+import { QueueServiceClient } from '@azure/storage-queue';
+import logger from '../config/winston';
+import config from '../config/config';
 
 const queueServiceClient = QueueServiceClient.fromConnectionString(config.azureStorageConnectionString);
 
-const createStorageQueue = async (queueName) => {
+const createStorageQueue = async (queueName: string) => {
   logger.info(`Creating storage queue: ${queueName}`);
   try {
     const queueClient = queueServiceClient.getQueueClient(queueName);
@@ -14,4 +14,4 @@ const createStorageQueue = async (queueName) => {
   }
 };
 
-module.exports = { createStorageQueue };
+export default createStorageQueue;

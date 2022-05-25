@@ -3,65 +3,61 @@
   "version": "1.0.0",
   "private": true,
   "description": "Loading of initial data",
-  "main": "index.js",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@azure/storage-queue": "^12.2.0",
+    "@azure/storage-queue": "^12.7.0",
     "@hapi/joi": "^17.1.1",
     "@turf/bbox": "^6.5.0",
     "axios": "^0.26.0",
     "azure-storage": "^2.10.3",
     "bottleneck": "^2.19.5",
+    "copyfiles": "^2.4.1",
     "csvtojson": "^2.0.10",
-    "dotenv": "^6.0.0",
+    "dotenv": "^10.0.0",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
-    "js-yaml": "^4.0.0",
-    "mongoose": "^5.11.11",
-    "underscore": "^1.12.1",
-    "winston": "^3.2.1",
-    "ws": "^7.4.6"
+    "js-yaml": "^4.1.0",
+    "knex": "^1.0.4",
+    "knex-postgis": "^0.14.2",
+    "mongoose": "^6.0.13",
+    "pg": "^8.7.3",
+    "typescript": "^4.6.4",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.20.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-watch": "^6.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "@types/jest": "^26.0.20",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-watch": "^7.0.0",
     "husky": "^4.2.5",
     "jest": "^26.6.3",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.0.5",
-    "supertest": "^3.0.0"
+    "prettier": "^2.2.1",
+    "supertest": "^3.0.0",
+    "ts-jest": "^26.4.4"
   },
-  "engines": {
-    "node": ">=8.10.0"
+  "resolutions": {
+    "node-fetch": "^2.6.7"
   },
   "husky": {
     "hooks": {
       "pre-push": "npm run lint:ci"
     }
   },
-  "resolutions": {
-    "ansi-regex": "^5.0.1",
-    "bl": "^1.2.3",
-    "dot-prop": "^4.2.1",
-    "hosted-git-info": "^3.0.8",
-    "json-schema": "^0.4.0",
-    "lodash": "^4.17.21",
-    "underscore": "^1.12.1",
-    "normalize-url": "^6.0.1",
-    "glob-parent": "^5.1.2",
-    "set-value": "^4.0.1",
-    "ws": "^7.4.6",
-    "validator": "^13.7.0",
-    "node-fetch": "^2.6.7"
+  "engines": {
+    "node": ">=8.10.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "build": "tsc --build tsconfig.json",
+    "watch": "tsc -w",
+    "prestart": "npm run build --scripts-prepend-node-path",
+    "start": "node dist/index.js",
+    "copyymls": "copyfiles --error --verbose  data/**/*.* data/**/**/*.* data/**/**/**/*.* /app/dist",
+    "postbuild": "npm run copyymls --scripts-prepend-node-path",
     "lint": "eslint . --fix --max-warnings=0",
     "lint:ci": "eslint . --max-warnings=0",
     "prepush": "eslint . --max-warnings=0",

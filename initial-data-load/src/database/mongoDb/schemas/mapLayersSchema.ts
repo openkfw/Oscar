@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const { LAYER_TYPES } = require('../../../mapLayers/constants');
-const MetadataSchema = require('./metadataSchema');
+import mongoose from 'mongoose';
+import { LAYER_TYPES } from '../../../mapLayers/constants';
+import MetadataSchema from './metadataSchema';
 
 const AttributeDescriptionSchema = new mongoose.Schema(
   {
@@ -104,9 +104,9 @@ const MapLayerSchema = new mongoose.Schema({
   tileAttributions: String,
 });
 
-const MapLayer = mongoose.model('MapLayer', MapLayerSchema, 'mapLayers');
+export const MapLayer = mongoose.model('MapLayer', MapLayerSchema, 'mapLayers');
 
-const SingleMapLayer = MapLayer.discriminator(
+export const SingleMapLayer = MapLayer.discriminator(
   'SingleMapLayer',
   new mongoose.Schema({
     layerType: {
@@ -118,7 +118,7 @@ const SingleMapLayer = MapLayer.discriminator(
   }),
 );
 
-const GroupMapLayer = MapLayer.discriminator(
+export const GroupMapLayer = MapLayer.discriminator(
   'GroupMapLayer',
   new mongoose.Schema({
     layerType: {
@@ -129,11 +129,4 @@ const GroupMapLayer = MapLayer.discriminator(
   }),
 );
 
-const MAP_LAYER_COLLECTION_NAME = 'mapLayers';
-
-module.exports = {
-  MapLayer,
-  SingleMapLayer,
-  GroupMapLayer,
-  MAP_LAYER_COLLECTION_NAME,
-};
+export const MAP_LAYER_COLLECTION_NAME = 'mapLayers';

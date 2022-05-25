@@ -10,8 +10,15 @@ services:
     ports:
       - 8082:8082
     environment:
+      # mongoDb connection
       MONGO_URI: ${MONGO_URI}
       DB_NAME: ${DB_NAME}
+      # postgis connection
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       COUNTRY: ${COUNTRY}

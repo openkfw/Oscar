@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 jest.mock('azure-storage');
 
 describe('Layer attributes', () => {
-  it('should save nothing, if data for country not found', async () => {
+  it('should save nothing, if data for dataset not found', async () => {
     jest.mock('../config/config.js', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'attributes',
-        country: 'testCountry2',
+        dataset: 'testCountry2',
       };
     });
 
@@ -28,7 +28,7 @@ describe('Layer attributes', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'attributes',
-        country: 'testCountry',
+        dataset: 'testCountry',
       };
     });
 

@@ -1,7 +1,7 @@
-const { createBlobContainer } = require('./blobContainer');
-const { createStorageQueue } = require('./storageQueue');
-const config = require('../config/config');
-const logger = require('../config/winston');
+import { createBlobContainer } from './blobContainer';
+import createStorageQueue from './storageQueue';
+import config from '../config/config';
+import logger from '../config/winston';
 /**
  * creates azure storage containers and queues from lists from env variables NEW_STORAGE_CONTAINERS and NEW_STORAGE_QUEUES
  */
@@ -23,4 +23,5 @@ const setupAzureStorage = async () => {
     }
   }
 };
-module.exports = setupAzureStorage;
+
+export default setupAzureStorage;

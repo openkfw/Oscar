@@ -9,21 +9,21 @@ const getLatestAttributes = () => {
   if (config.mongoUri) {
     return mongoDb.getLatestAttributes;
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 
 const getFilteredAttributes = () => {
   if (config.mongoUri) {
     return mongoDb.getFilteredAttributes;
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 
 const countAttributes = () => {
   if (config.mongoUri) {
     return mongoDb.countAttributes;
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 /**
  * Get attributes from database collection
@@ -70,7 +70,7 @@ const getAvailableDates = (attributeId) => {
   if (config.mongoUri) {
     return mongoDb.getAvailableDates(attributeId);
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 
 /**
@@ -81,7 +81,7 @@ const getUniqueFeatureIds = (attributeId) => {
   if (config.mongoUri) {
     return mongoDb.getUniqueFeatureIds(attributeId);
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 
 module.exports = { getAttributes, getAvailableDates, getUniqueFeatureIds };
