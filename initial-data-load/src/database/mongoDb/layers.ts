@@ -16,11 +16,6 @@ export const getOneLayerGeoData = (referenceId) => LayerGeoDataSchema.findOne({ 
 
 // mapLayers collection
 const oneMapLayerItem = async (data: MapLayerConfigItem) => {
-  if (data.timeseries !== undefined) {
-    logger.info(
-      `DeprecationWarning: 'timeseries' key on the top level is deprecated. Move 'timeseries' key in 'layerOptions' key in ${data.referenceId} layer in mapLayers config.`,
-    );
-  }
   if (data.layerType === 'group') {
     const updatedLayers = await Promise.all([
       ...data.layers.map(async (layer) => {
@@ -45,7 +40,6 @@ const oneMapLayerItem = async (data: MapLayerConfigItem) => {
       featureId: data.featureId,
       metadata: data.metadata,
       layers: updatedLayers,
-      timeseries: data.timeseries,
       layerOptions: data.layerOptions,
     };
   }
@@ -70,7 +64,6 @@ const oneMapLayerItem = async (data: MapLayerConfigItem) => {
     metadata: data.metadata,
     style: data.style,
     legend: data.legend,
-    timeseries: data.timeseries,
     layerOptions: data.layerOptions,
     tileDataUrl: data.tileDataUrl,
     tileAttributions: data.tileAttributions,

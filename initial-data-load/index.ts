@@ -1,7 +1,7 @@
 import logger from './src/config/winston';
 import uploads from './src/index';
 import setupAzure from './src/azureStorage/azureStorageSetup';
-import { initializeDb, disconnectFromDB } from './src/database/index';
+import { initializeDb, disconnectFromDB } from './src/database';
 
 const main = async () => {
   try {

@@ -27,8 +27,13 @@ export const disconnectFromDB = () => {
   throw new Error('No credentials for database');
 };
 
-export const clearCollection = (collectionName) => {
+/**
+ * Clears all data in given collection/table
+ * @param  {string} collectionName - name of collection in mongodb or table in postgres
+ */
+export const clearCollection = (collectionName: string) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.clearTable(collectionName);
   }
   if (config.mongoUri) {
     return mongoDb.deleteAllFromCollection(collectionName);
@@ -38,6 +43,7 @@ export const clearCollection = (collectionName) => {
 
 export const createCollection = (collectionName, index, geoIndex) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.createGeometryTable(collectionName);
   }
   if (config.mongoUri) {
     return mongoDb.createCollection(collectionName, index, geoIndex);

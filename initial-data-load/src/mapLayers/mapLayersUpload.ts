@@ -15,7 +15,22 @@ const uploadMapLayers = async (dataset: string) => {
     const filePath = path.join(__dirname, '..', '..', 'data', dataset, 'MapLayers.yml');
     const hasFile = fs.existsSync(filePath);
     if (hasFile) {
-      const mapLayers: Array<MapLayerConfigItem> = await yaml.load(fs.readFileSync(filePath, 'utf8'));
+      let mapLayers: Array<MapLayerConfigItem> = await yaml.load(fs.readFileSync(filePath, 'utf8'));
+      // modifying various old config  structures to current
+      mapLayers = mapLayers.map((lyr) => {
+        const layer = lyr;
+        if (!lyr.attributeData) {
+          layer.attributeData = { attributeId: lyr.attribute };
+        }
+        if (layer.timeseries !== undefined) {
+          logger.info(
+            `DeprecationWarning: 'timeseries' key on the top level is deprecated. Move 'timeseries' key in 'layerOptions' key in ${layer.referenceId} layer in mapLayers config.`,
+          );
+          layer.layerOptions = { ...layer.layerOptions, timeseries: layer.timeseries };
+          delete layer.timeseries;
+        }
+        return layer;
+      });
       await saveMapLayers(mapLayers);
     } else {
       logger.error(`Data for dataset ${dataset} not found.`);

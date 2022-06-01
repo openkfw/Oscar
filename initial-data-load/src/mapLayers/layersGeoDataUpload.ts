@@ -130,10 +130,14 @@ const geoDataUpload = async (dataset: string) => {
         fs.readFileSync(path.join(__dirname, '..', '..', 'data', dataset, 'GeoData.yml'), 'utf8'),
       );
       const savingGeoJsons = layersGeoData.map((item) => formatLayerGeoData(item, dataset));
-      let geoDataForDb = await Promise.all([...savingGeoJsons]);
+      let geoDataForDb: Array<GeoDataConfigItem> = await Promise.all([...savingGeoJsons]);
       geoDataForDb = geoDataForDb.filter((item) => item);
-      await saveGeoData(geoDataForDb);
-      logger.info(`LayerGeoData for dataset ${dataset} successfully saved to database.`);
+      if (geoDataForDb.length) {
+        await saveGeoData(geoDataForDb);
+        logger.info(`LayerGeoData for dataset ${dataset} successfully saved to database.`);
+      } else {
+        logger.info(`No new layerGeoData from dataset ${dataset}`);
+      }
     } else {
       logger.error(`Data for dataset ${dataset} not found.`);
     }

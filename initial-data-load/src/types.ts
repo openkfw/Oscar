@@ -102,10 +102,10 @@ export interface MapLayerConfigItem {
 // MONGODB //
 export interface MongoDbMapLayer {
   referenceId: string;
-  georeferenceid?: string;
+  geoReferenceId?: string;
   category: string;
   title: string;
-  attributedata: {
+  attributeData: {
     attributeId: string;
     availableDatesSource?: string;
   };
@@ -177,7 +177,7 @@ export interface PostgresRegionAttribute {
   feature_id_lvl?: string;
   value: string;
   value_type: string;
-  date_ISO: string;
+  date_iso: string;
   date_data?: string;
   created_date?: number;
   uprated_date?: number;
