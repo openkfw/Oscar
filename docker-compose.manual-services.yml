@@ -14,6 +14,7 @@ services:
       DB_NAME: ${DB_NAME}
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+      DATASET: ${DATASET}
       COUNTRY: ${COUNTRY}
       UPLOAD_DATA_TYPES: ${UPLOAD_DATA_TYPES}
       NEW_STORAGE_CONTAINERS: ${NEW_STORAGE_CONTAINERS}

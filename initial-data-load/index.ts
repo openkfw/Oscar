@@ -16,6 +16,7 @@ const main = async () => {
     logger.error(`Initial data upload failed with:\n${error}`);
   } finally {
     await disconnectFromDB();
+    process.exit();
   }
 };
 

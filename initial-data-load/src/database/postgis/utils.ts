@@ -30,13 +30,13 @@ export const attributesItemFromData = (attributeId: string, data) => ({
   attribute_type: data.attributeType,
   name: data.name,
   geo_data: data.geoData,
-  metadata: data.metadata,
+  metadata: data.metadata || {},
 });
 
 export const layerGeoDataToDBFormat = (item) => ({
   reference_id: item.referenceId,
   name: item.name,
-  format: item.format,
+  format: item.format || 'geojson', // no other formats supported yet
   geo_data_url: item.geoDataUrl,
   data: {
     featureIds: item.featureIds,
@@ -53,10 +53,11 @@ export const mapLayerToDBFormat = (item) => ({
   category: item.category,
   title: item.title,
   attribute_id: item.attributeData.attributeId,
-  attribute_description: item.attributeDescription || {},
-  styles: item.style || {},
-  legend: item.legend || {},
+  attribute_description: item.attributeDescription || null,
+  styles: item.style || null,
+  legend: item.legend || null,
   layer_options: item.layerOptions || {},
+  layers: item.layers || null,
 });
 
 export const attributeTypeFromMapLayerType = (layerType: string) => {

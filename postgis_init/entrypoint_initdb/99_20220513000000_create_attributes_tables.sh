@@ -11,6 +11,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     name                  VARCHAR, 
     geo_data              JSONB,
     detail                JSONB,
+    data                  JSONB,
     metadata              JSONB,
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
@@ -26,7 +27,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     feature_id_lvl        VARCHAR,
     value                 VARCHAR         NOT NULL,
     value_type            VARCHAR         NOT NULL,
-    date_ISO              VARCHAR         NOT NULL,
+    date_iso              VARCHAR         NOT NULL,
     date_data             VARCHAR,
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),

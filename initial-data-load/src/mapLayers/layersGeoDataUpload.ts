@@ -5,19 +5,17 @@ import axios from 'axios';
 import config from '../config/config';
 import logger from '../config/winston';
 
-import { createCollection, clearCollection } from '../database';
+import { createOrClearCollection } from '../database';
 import { getOneLayerGeoData, saveGeoData } from '../database/layers';
 import { storeGeoFeaturesData } from '../database/geoFeatureCollections';
 
 import { storeLocalFileAsBlob, storeFromUrlAsBlob } from '../azureStorage/blobContainer';
-import { GeoDataConfigItem } from '../types';
+import { GeoDataConfigItem, GeoJson } from '../types';
 
 const bbox: any = require('@turf/bbox');
 
 const storeGeoDataToDb = async (fromFile: boolean, data: GeoDataConfigItem, filePath: string) => {
-  let geojsonData;
-  logger.info(`Clearing database collection ${data.collectionName}`);
-  await clearCollection(data.collectionName);
+  let geojsonData: GeoJson;
   logger.info(`Loading data from file ${filePath}`);
   if (fromFile) {
     geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -29,8 +27,8 @@ const storeGeoDataToDb = async (fromFile: boolean, data: GeoDataConfigItem, file
     }
     geojsonData = result.data;
   }
-  logger.info(`Creating index on collection...`);
-  await createCollection(data.collectionName, undefined, 'bbox');
+  logger.info(`Creating or clearing collection for geo data...`);
+  await createOrClearCollection(data.collectionName, undefined, 'bbox');
   logger.info(`Generating bounding boxes for features...`);
 
   const { features } = geojsonData;
@@ -74,7 +72,6 @@ const formatLayerGeoData = async (data: GeoDataConfigItem, dataset: string) => {
   }
   let url;
   if (data.collectionName && data.apiUrl) {
-    await createCollection(data.collectionName, undefined, 'geometry');
     url = data.apiUrl;
   }
   if (data.geoDataUrl) {

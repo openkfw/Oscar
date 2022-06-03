@@ -51,4 +51,14 @@ export const createCollection = (collectionName, index, geoIndex) => {
   throw new Error('No credentials for database');
 };
 
-export default { initializeDb, disconnectFromDB, clearCollection, createCollection };
+export const createOrClearCollection = async (collectionName: string, index, geoIndex) => {
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.clearOrCreateTable(collectionName);
+  }
+  if (config.mongoUri) {
+    await mongoDb.deleteAllFromCollection(collectionName);
+    return mongoDb.createCollection(collectionName, index, geoIndex);
+  }
+};
+
+export default { initializeDb, disconnectFromDB, clearCollection, createCollection, createOrClearCollection };

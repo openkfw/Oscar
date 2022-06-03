@@ -2,6 +2,28 @@ export interface KnexConfig {
   [key: string]: object;
 }
 
+export interface GeoJsonFeature {
+  type: string;
+  geometry: {
+    type: string;
+    coordinates: Array<any>;
+  };
+  properties: object;
+  id?: string;
+}
+
+export interface GeoJson {
+  type: string;
+  name: string;
+  crs: {
+    type: string;
+    properties: {
+      name: string;
+    };
+  };
+  features: Array<GeoJsonFeature>;
+}
+
 export interface Metadata {
   description?: string;
   sourceWebsite?: string;

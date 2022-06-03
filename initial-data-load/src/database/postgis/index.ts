@@ -31,6 +31,16 @@ export const disconnect = async () => {
   }
 };
 
+export const checkIfTableExists = (tableName: string, db = getDb()) => db.schema.hasTable(tableName);
+
+export const createGeometryTable = (tableName: string, db = getDb()) =>
+  db.schema.createTable(tableName, (table) => {
+    table.text('type');
+    table.json('properties');
+    table.geometry('geometry');
+    table.geometry('bbox');
+  });
+
 /**
  * Clear all rows from table
  * @param  {string} tableName
@@ -41,4 +51,13 @@ export const clearTable = async (tableName: string, db = getDb()) => {
   logger.info(`Table ${tableName} was successfully cleared`);
 };
 
-export default { getDb, disconnect, clearTable };
+export const clearOrCreateTable = async (tableName: string, db = getDb()) => {
+  const exists = await checkIfTableExists(tableName, db);
+  if (exists) {
+    await clearTable(tableName);
+  } else {
+    await createGeometryTable(tableName);
+  }
+};
+
+export default { getDb, disconnect, createGeometryTable, clearTable, checkIfTableExists, clearOrCreateTable };
