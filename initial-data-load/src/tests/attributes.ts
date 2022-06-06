@@ -4,7 +4,7 @@ jest.mock('azure-storage');
 
 describe('Layer attributes', () => {
   it('should save nothing, if data for dataset not found', async () => {
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'attributes',
@@ -16,15 +16,14 @@ describe('Layer attributes', () => {
     jest.isolateModules(() => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-
-    await uploads();
+    await uploads.default();
 
     const inDb = await mongoose.connection.db.collection('attributes').find({}).toArray();
     expect(inDb).toHaveLength(0);
   });
 
   it('should upload data with correct date', async () => {
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'attributes',
@@ -37,7 +36,7 @@ describe('Layer attributes', () => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
 
-    await uploads();
+    await uploads.default();
 
     const inDb = await mongoose.connection.db.collection('attributes').find({}).toArray();
     expect(inDb).toHaveLength(7);

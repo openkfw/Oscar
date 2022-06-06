@@ -16,7 +16,7 @@ const envVarsSchema = Joi.object({
   POSTGRES_PASSWORD: Joi.string().allow('', null),
   POSTGRES_DB: Joi.string().allow('', null),
   POSTGRES_HOST: Joi.string().allow('', null),
-  POSTGRES_PORT: Joi.number().allow(null),
+  POSTGRES_PORT: Joi.number().allow('', null),
   UPLOAD_DATA_TYPES: Joi.string().allow('', null),
   COUNTRY: Joi.string().default('').allow('', null),
   DATASET: Joi.string().allow(null),

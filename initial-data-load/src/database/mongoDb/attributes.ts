@@ -17,17 +17,27 @@ const createIndexesForAttributesCollections = async () => {
 const saveAttributes = async (data: Array<APIRegionAttribute>) => {
   // will not fit the types soon, needs to map from API format to mongoDb
   if (data.length) {
-    const operations = data.map((itemData) => ({
-      replaceOne: {
-        filter: {
-          date: itemData.date,
-          featureId: itemData.featureId,
-          attributeId: itemData.attributeId,
+    const operations = data.map((itemData) => {
+      const dbData = itemData;
+      if (dbData.valueType === 'number') {
+        dbData.valueNumber = Number.parseFloat(dbData.value, 10);
+      } else if (dbData.valueType === 'text') {
+        dbData.valueString = dbData.value;
+      }
+      delete dbData.value;
+      delete dbData.valueType;
+      return {
+        replaceOne: {
+          filter: {
+            date: itemData.date,
+            featureId: itemData.featureId,
+            attributeId: itemData.attributeId,
+          },
+          replacement: dbData,
+          upsert: true,
         },
-        replacement: itemData,
-        upsert: true,
-      },
-    }));
+      };
+    });
     // could not find correct type for BulkWriteOptions
     await mongoose.connection.db.collection(ATTRIBUTES_COLLECTION_NAME).bulkWrite(operations, { strict: false } as any);
   } else {

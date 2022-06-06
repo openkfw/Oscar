@@ -21,7 +21,7 @@ describe('Geo data', () => {
   });
 
   it('should save nothing, if data for dataset not found', async () => {
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
@@ -34,15 +34,16 @@ describe('Geo data', () => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
 
-    await uploads();
-    const geoData = await LayerGeoData.find({}).lean();
+    await uploads.default();
+
+    const geoData = await LayerGeoData.default.find({}).lean();
     expect(geoData).toHaveLength(0);
     const mapData = await MapLayer.find({}).lean();
     expect(mapData).toHaveLength(0);
   });
 
   it('should save nothing, if file from dataset missing', async () => {
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
@@ -54,8 +55,8 @@ describe('Geo data', () => {
     jest.isolateModules(() => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-    await uploads();
-    const geoData = await LayerGeoData.find({}).lean();
+    await uploads.default();
+    const geoData = await LayerGeoData.default.find({}).lean();
     expect(geoData).toHaveLength(0);
   });
 
@@ -72,17 +73,17 @@ describe('Geo data', () => {
       name: 'Caption 2',
       updateDate: Date.now(),
     };
-    await LayerGeoData.create(existingGeoData);
-    await LayerGeoData.create(existingGeoData2);
+    await LayerGeoData.default.create(existingGeoData);
+    await LayerGeoData.default.create(existingGeoData2);
 
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         dataset: 'testCountry',
       };
     });
-    jest.mock('../azureStorage/blobContainer.js', () => {
+    jest.mock('../azureStorage/blobContainer.ts', () => {
       return {
         storeFromUrlAsBlob: () => 'newFilename.geojson',
       };
@@ -92,10 +93,10 @@ describe('Geo data', () => {
     jest.isolateModules(() => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-    await uploads();
+    await uploads.default();
     const collections = await mongoose.connection.db.listCollections().toArray();
     expect(collections).toHaveLength(2);
-    const geoData = await LayerGeoData.find({}).lean();
+    const geoData = await LayerGeoData.default.find({}).lean();
     expect(geoData).toHaveLength(2);
     expect(geoData[0].name).toEqual(existingGeoData.name);
     expect(geoData[0].referenceId).toEqual(existingGeoData.referenceId);
@@ -115,18 +116,18 @@ describe('Geo data', () => {
       name: 'Caption 2',
       updateDate: Date.now(),
     };
-    await LayerGeoData.create(existingGeoData);
-    await LayerGeoData.create(existingGeoData2);
+    await LayerGeoData.default.create(existingGeoData);
+    await LayerGeoData.default.create(existingGeoData2);
     const existingMapLayer = { ...mapLayerDataSource[1], title: 'First title' };
     await MapLayer.create(existingMapLayer);
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         dataset: 'testCountry',
       };
     });
-    jest.mock('../azureStorage/blobContainer.js', () => {
+    jest.mock('../azureStorage/blobContainer.ts', () => {
       return {
         storeFromUrlAsBlob: () => 'newFilename.geojson',
       };
@@ -136,7 +137,7 @@ describe('Geo data', () => {
     jest.isolateModules(() => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-    await uploads();
+    await uploads.default();
     const collections = await mongoose.connection.db.listCollections().toArray();
     expect(collections).toHaveLength(2);
     const mapData = await MapLayer.find({}).lean();
@@ -153,14 +154,14 @@ describe('Geo data', () => {
   });
 
   it('should save data for dataset from config', async () => {
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         mongoUri: 'qwertyuiop',
         uploadDataTypes: 'mapLayers',
         dataset: 'testCountry',
       };
     });
-    jest.mock('../azureStorage/blobContainer.js', () => {
+    jest.mock('../azureStorage/blobContainer.ts', () => {
       return {
         storeFromUrlAsBlob: () => 'newName.geojson',
       };
@@ -177,10 +178,10 @@ describe('Geo data', () => {
     jest.isolateModules(() => {
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-    await uploads();
+    await uploads.default();
     const collections = await mongoose.connection.db.listCollections().toArray();
     expect(collections).toHaveLength(3);
-    const geoData = await LayerGeoData.find({}).lean();
+    const geoData = await LayerGeoData.default.find({}).lean();
     expect(geoData).toHaveLength(2);
     expect(geoData[0].name).toEqual(geoDataSource[0].name);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
@@ -204,25 +205,25 @@ describe('Geo data', () => {
   it('should save without geoDataUrl, if unable to store geodata', async () => {
     let uploads;
     jest.isolateModules(() => {
-      jest.mock('../config/config.js', () => {
+      jest.mock('../config/config.ts', () => {
         return {
           mongoUri: 'qwertyuiop',
           uploadDataTypes: 'mapLayers',
           dataset: 'testCountry',
         };
       });
-      jest.mock('../azureStorage/blobContainer.js', () => {
+      jest.mock('../azureStorage/blobContainer.ts', () => {
         return {
           storeFromUrlAsBlob: () => false,
         };
       });
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-    await uploads();
+    await uploads.default();
 
     const collections = await mongoose.connection.db.listCollections().toArray();
     expect(collections).toHaveLength(3);
-    const geoData = await LayerGeoData.find({}).lean();
+    const geoData = await LayerGeoData.default.find({}).lean();
     expect(geoData).toHaveLength(2);
     expect(geoData[0].referenceId).toEqual(geoDataSource[0].referenceId);
     expect(geoData[0].geoDataUrl).toBeUndefined();
@@ -237,24 +238,24 @@ describe('Geo data', () => {
 
     let uploads;
     jest.isolateModules(() => {
-      jest.mock('../config/config.js', () => {
+      jest.mock('../config/config.ts', () => {
         return {
           mongoUri: 'qwertyuiop',
           uploadDataTypes: 'mapLayers',
           dataset: 'testCountry3',
         };
       });
-      jest.mock('../azureStorage/blobContainer.js', () => {
+      jest.mock('../azureStorage/blobContainer.ts', () => {
         return {
           storeLocalFileAsBlob: () => 'newFilename.geojson',
         };
       });
       uploads = require('../index'); // eslint-disable-line  global-require
     });
-    await uploads();
+    await uploads.default();
     const collections = await mongoose.connection.db.listCollections().toArray();
     expect(collections).toHaveLength(3);
-    const geoData = await LayerGeoData.find({}).lean();
+    const geoData = await LayerGeoData.default.find({}).lean();
     expect(geoData).toHaveLength(3);
     expect(geoData[0].referenceId).toEqual(geoDataSource3[0].referenceId);
     expect(geoData[0].geoDataUrl).toEqual('/api/uploads/geojsons/newFilename.geojson');
