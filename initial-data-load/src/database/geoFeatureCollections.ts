@@ -5,6 +5,7 @@ import postgis from './postgis/geoFeatureCollection';
 // eslint-disable-next-line import/prefer-default-export
 export const storeGeoFeaturesData = (collectionName: string, data) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    // eslint-disable-next-line import/no-named-as-default-member
     return postgis.storeFeatures(collectionName, data);
   }
   if (config.mongoUri) {
