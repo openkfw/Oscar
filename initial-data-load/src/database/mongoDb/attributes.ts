@@ -18,9 +18,9 @@ const saveAttributes = async (data: Array<APIRegionAttribute>) => {
   // will not fit the types soon, needs to map from API format to mongoDb
   if (data.length) {
     const operations = data.map((itemData) => {
-      const dbData = itemData;
+      const dbData: any = itemData;
       if (dbData.valueType === 'number') {
-        dbData.valueNumber = Number.parseFloat(dbData.value, 10);
+        dbData.valueNumber = Number.parseFloat(dbData.value);
       } else if (dbData.valueType === 'text') {
         dbData.valueString = dbData.value;
       }
