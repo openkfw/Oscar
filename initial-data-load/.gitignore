@@ -4,3 +4,8 @@ node_modules
 .vscode
 spinup.sh
 .DS_Store
+
+/data
+!/data/Sample
+!/data/testCountry
+!/data/testCountry3

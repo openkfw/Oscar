@@ -7,7 +7,7 @@ import Text from 'ol/style/Text';
 
 import colormap from 'colormap';
 import { staticLayerColorTypes } from '../../constants';
-import { isNotDefinedIncl0 } from '../../helpers';
+import { isInInterval, isNotDefinedIncl0 } from '../../utils/helpers';
 
 // Styling based on feature attributes - trying generic
 export const colormaps = {
@@ -58,6 +58,10 @@ const getColorFromLayerStyle = (value, colorStyle, min, max) => {
       const index = Math.round(f * (50 - 1));
       return colorMap[index];
     }
+    if (colorStyle.type === staticLayerColorTypes.INTERVALS) {
+      const interval = colorStyle.value.find((item) => isInInterval(value, item.min, item.max));
+      return interval.color;
+    }
   } else {
     // different styles dependent on value
     if (typeof value === 'string' && colorStyle.hasOwnProperty(value.toUpperCase())) {
@@ -65,8 +69,10 @@ const getColorFromLayerStyle = (value, colorStyle, min, max) => {
       return colorStyle[value.toUpperCase()].value;
     }
     if (typeof value === 'string' && Array.isArray(colorStyle)) {
-      const colourValue = colorStyle.find(({ equal }) => equal === value.toUpperCase());
-      return colourValue.value;
+      const colorValue = colorStyle.find(({ equal }) => equal === value.toUpperCase());
+      if (colorValue && colorValue.value) {
+        return colorValue.value;
+      }
     }
     if (colorStyle.default) {
       return colorStyle.default.value;
@@ -79,7 +85,7 @@ export const regionStyleFactory = (attribute, layerStyle) => {
     let fillColor;
     const value = feature.get(attribute);
     if (isNotDefinedIncl0(value)) {
-      fillColor = layerStyle.missingValueColor || 'grey';
+      fillColor = layerStyle.missingValueColor || 'rgb(128,128,128, 0.5)';
     } else if (layerStyle.fillColor) {
       fillColor = getColorFromLayerStyle(value, layerStyle.fillColor, layerStyle.min, layerStyle.max);
     } else if (layerStyle.fillColors) {
@@ -104,7 +110,8 @@ export const pointStyleFactory = (attribute, layerStyle) => {
       if (layerStyle.fillColor) {
         fillColor = getColorFromLayerStyle(value, layerStyle.fillColor) || 'green';
       } else if (layerStyle.fillColors) {
-        fillColor = getColorFromLayerStyle(value, layerStyle.fillColors) || 'green';
+        const evaluatingProperty = layerStyle.property || attribute;
+        fillColor = getColorFromLayerStyle(singleFeature.get(evaluatingProperty), layerStyle.fillColors) || 'green';
       }
       // one feature
       return new Style({

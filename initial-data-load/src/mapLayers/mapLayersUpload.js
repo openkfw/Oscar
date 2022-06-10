@@ -3,14 +3,19 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 const logger = require('../config/winston');
-const { getOneLayerGeoData, saveMapLayers } = require('./db');
+const { getOneLayerGeoData, saveMapLayers } = require('../database/layers');
 
 const addMapLayer = async (data) => {
+  if (data.timeseries !== undefined) {
+    logger.info(
+      `DeprecationWarning: 'timeseries' key on the top level is deprecated. Move 'timeseries' key in 'layerOptions' key in ${data.referenceId} layer in mapLayers config.`,
+    );
+  }
   if (data.layerType === 'group') {
     const updatedLayers = await Promise.all([
       ...data.layers.map(async (layer) => {
-        const geoJson = await getOneLayerGeoData(layer.geoReferenceId);
-        if (geoJson) {
+        const geoData = await getOneLayerGeoData(layer.geoReferenceId);
+        if (geoData) {
           return layer;
         }
         const newLayer = { ...layer, geoReferenceId: undefined };
@@ -31,12 +36,15 @@ const addMapLayer = async (data) => {
       metadata: data.metadata,
       layers: updatedLayers,
       timeseries: data.timeseries,
+      layerOptions: data.layerOptions,
     };
   }
-  const geoJson = await getOneLayerGeoData(data.geoReferenceId);
-  if (!geoJson) {
-    logger.error(`Geo data for ${data.referenceId} by id ${data.geoReferenceId} not found.`);
-    return false;
+  if (data.geoReferenceId) {
+    const geoData = await getOneLayerGeoData(data.geoReferenceId);
+    if (!geoData) {
+      logger.error(`Geo data for ${data.referenceId} by id ${data.geoReferenceId} not found.`);
+      return false;
+    }
   }
   return {
     referenceId: data.referenceId,
@@ -46,12 +54,16 @@ const addMapLayer = async (data) => {
     title: data.title,
     attribute: data.attribute,
     attributeDescription: data.attributeDescription,
+    attributeData: data.attributeData,
     attributeTemplateName: data.attributeTemplateName,
     featureId: data.featureId,
     metadata: data.metadata,
     style: data.style,
     legend: data.legend,
     timeseries: data.timeseries,
+    layerOptions: data.layerOptions,
+    tileDataUrl: data.tileDataUrl,
+    tileAttributions: data.tileAttributions,
   };
 };
 
@@ -65,7 +77,7 @@ const uploadMapLayers = async (country) => {
       const dataForDb = await Promise.all([...checkedAndPreparedData]);
       const singleMapData = dataForDb.filter((item) => item && item.layerType !== 'group');
       const groupMapData = dataForDb.filter((item) => item && item.layerType === 'group');
-      await saveMapLayers(singleMapData, groupMapData);
+      await saveMapLayers([...singleMapData, ...groupMapData]);
     } else {
       logger.error(`Data for country ${country} not found.`);
     }

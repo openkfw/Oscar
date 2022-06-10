@@ -11,7 +11,7 @@ const createVectorSource = (layerData, handleIsLoading) => {
     loader: async (extent, resolution, projection) => {
       handleIsLoading({ title: layerData.title, type: 'geometry' }, 'add');
       try {
-        const response = await axios.get(layerData.geoJSONUrl);
+        const response = await axios.get(layerData.geoDataUrl);
         const newFeatures = vectorSource.getFormat().readFeatures(response.data, { featureProjection: projection });
         vectorSource.addFeatures(newFeatures);
       } catch (error) {
@@ -37,9 +37,11 @@ const geometryLayer = (layerData, handleIsLoading) => {
     featureId: layerData.featureId,
     type: layerData.layerType,
     source: createVectorSource(layerData, handleIsLoading),
-    zIndex: 1,
+    zIndex: 2,
     style: geometryStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
+    layerOptions: layerData.layerOptions,
+    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

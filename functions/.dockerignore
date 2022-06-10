@@ -1,0 +1,7 @@
+local.settings.json
+node_modules
+dist
+.env
+library
+templates
+tests

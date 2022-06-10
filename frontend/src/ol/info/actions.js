@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { roundNumber, isNotDefinedIncl0 } from '../../helpers';
+import { roundNumber, isNotDefinedIncl0 } from '../../utils/helpers';
 
 export const PIXEL_DETAILS = 'PIXEL_DETAILS';
 export const SET_PIXEL_COORDINATES = 'SET_PIXEL_COORDINATES';
@@ -38,6 +38,9 @@ const featureToDetails = (feature, layerTitle, attributeDescription, featureId) 
       );
       if (attributeDescription.dateText && properties.dataDate) {
         const replacedDataText = attributeDescription.dateText.replaceAll(/{{dataDate}}/g, properties.dataDate);
+        replacedAttributeDescription += `<br/> ${replacedDataText}`;
+      } else if (attributeDescription.dateText && properties.updatedDate) {
+        const replacedDataText = attributeDescription.dateText.replaceAll(/{{updatedDate}}/g, properties.updatedDate);
         replacedAttributeDescription += `<br/> ${replacedDataText}`;
       } else if (properties.date) {
         replacedAttributeDescription += `<br/> Reporting date: ${properties.date}`;

@@ -10,7 +10,8 @@ services:
     ports:
       - 8082:8082
     environment:
-      MONGO_URI: mongodb://oscar-db-service/oscar
+      MONGO_URI: ${MONGO_URI}
+      DB_NAME: ${DB_NAME}
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       COUNTRY: ${COUNTRY}
@@ -18,7 +19,31 @@ services:
       NEW_STORAGE_CONTAINERS: ${NEW_STORAGE_CONTAINERS}
       NEW_STORAGE_QUEUES: ${NEW_STORAGE_QUEUES}
       AZURE_STORAGE_LAYER_CONTAINER_NAME: ${AZURE_STORAGE_LAYER_CONTAINER_NAME}
+    depends_on:
+      - azurite
+    links:
+      - azurite
+
+  url-loader:
+    build:
+      context: ./url-loader
+    volumes:
+      - ./url-loader/src:/home/node/src
+      - ./url-loader/index.js:/home/node/index.js
+    command: yarn start
+    ports:
+      - 8083:8083
+    environment:
+      # default Azurite connection string from documentation for local development
+      AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       AZURE_STORAGE_DATA_CONTAINER_NAME: ${AZURE_STORAGE_DATA_CONTAINER_NAME}
+      MONGO_URI: ${MONGO_URI}
+      DB_NAME: ${DB_NAME}
+      URL_FILE: ${URL_FILE}
+      ONLY_SOURCE_NAMES: ${ONLY_SOURCE_NAMES}
+      EXCEPT_SOURCE_NAMES: ${EXCEPT_SOURCE_NAMES}
+      USERNAME: ${USERNAME}
+      PASSWORD: ${PASSWORD}
     depends_on:
       - azurite
     links:

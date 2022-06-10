@@ -2,6 +2,19 @@
 
 ## Prerequisites
 
+For Windows user:
+- Before cloning the repository, please make sure you are using the correct EOL (End of Line) setting. In the worst case, you will have to manually change each .js file from CRLF to LF.
+- Solution for VSCode: 
+    - Go to File/Preferences/Settings
+    - Search for EOL
+    - Please select "/n" under File:EOL
+    - Set up your Git configuration to LF with the command in terminal:  
+    ```
+    git config --global core.autocrlf false
+    ```
+
+Repository cloned locally in folder. 
+
 - yarn (https://yarnpkg.com/getting-started/install)
 - Docker (version 17.06 or higher recommended) (https://docker.com)
 - Docker-Compose (https://docs.docker.com/compose)
@@ -24,6 +37,10 @@ The backend services and MongoDB database can be run in docker with frontend sta
 ```
 ./start.sh
 ```
+or
+```
+./start_postgis.sh
+```
 
 Use 'docker ps' to check on the running containers. You should see the following output:
 
@@ -36,8 +53,92 @@ e5f8694a9ae6   mongo:3.6.18-xenial                       "docker-entrypoint.s…
 237e52634948   mongo-express                             "tini -- /docker-ent…"   35 seconds ago   Up 30 seconds   0.0.0.0:8081->8081/tcp, :::8081->8081/tcp                               oscar_mongo-express_1
 ```
 
-After startup, there is a MongoDB explorer UI available here: http://localhost:8081/
+After startup, there is a MongoDB explorer UI available here: http://localhost:8081/ or PgAdmin http://localhost:8184/ where you can log in using `admin@test.com` and `adminPass` defined in environmental variables.
 Oscar application will start here: http://localhost:3000/
+
+## Start the Application inside Minikube on Mac
+
+Prerequisities:
+- install minikube, hyperkit docker kubectl docker-compose docker-credential-helper
+```
+brew install hyperkit docker kubectl minikube docker-compose docker-credential-helper
+```
+
+- optional before running minikube if you would like to provide more resources
+```
+minikube config set cpus 4
+minikube config set memory 8g
+```
+- run minikube
+```
+minikube start --disk-size 80000mb
+```
+- from project root folder mount volume to minikube, below command will mount files from project to /minikube_volume folder inside minikube, this is where Docker will access the volumes, thus it needed to be updated in docker-compose files. Don't close this window or else the volume will be unmounted
+```
+minikube mount ./:/minikube_volume
+```
+
+Move your .env file to this folder, or it will be created on first run of below script.
+The backend services and MongoDB database can be run in docker with frontend starting locally by this helper script in the `minikube` folder.
+Run the script below in new terminal tab
+
+```
+cd ./minikube
+./start.sh
+```
+or
+```
+./start_postgis.sh
+```
+
+It will connect docker to the runtime in minikube and export minikube ip as env variable so it can be used by React proxy.
+
+After startup, there is a MongoDB explorer UI available by running
+```
+./mongo_express_ui.sh
+```
+or by running command
+```
+minikube ip
+```
+and pasting provided ip in browser with port 8081
+
+Or if app is being run by `./start_postgis.sh` there is PgAdmin UI for Postgis database available by running
+```
+./pgadmin.sh
+```
+or by running command
+```
+minikube ip
+```
+and pasting provided ip in browser with port 8184, after that you can log in using `admin@test.com` and `adminPass` defined in environmental variables.
+
+- before running other services like initial-data-load in another terminal, docker needs to be connected to minikube by running
+```
+eval $(minikube docker-env)
+```
+
+- if React frontend will be started separately from `./start.sh` or `./start_postgis.sh` script minikube ip needs to be exported in that terminal window before running `yarn start`
+```
+export API_IP=$(minikube ip)
+cd ../frontend
+yarn start
+```
+
+- Application containers can be stoped and removed by running
+```
+./stop.sh
+```
+
+- Whole minikube cluster can be destroyed by
+```
+minikube delete
+
+## Unit testing services with minikube
+1. after starting app with `start.sh` or `start_postgis.sh` in minikube folder
+2. open directory of service you want to test i.e. `api`
+3. run commands `eval $(minikube docker-env)` to connect to docker-env in minikube and `export MONGO_URI=mongodb://$(minikube ip):27017/testDb` to create new mongoDB in already running container
+4. run `yarn test` or `yarn test:coverage` or `yarn test:watch`
 
 ## Service
 

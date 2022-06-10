@@ -2,6 +2,7 @@ version: '3.2'
 services:
   test-db:
     image: mongo
+    hostname: test-db
     ports:
       - 27917:27017
   mongo-express:

@@ -1,10 +1,70 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const axios = require('axios');
+const bbox = require('@turf/bbox');
+
+const config = require('../config/config');
 const logger = require('../config/winston');
 
-const { getOneLayerGeoData, saveLayerGeoData } = require('./db');
-const { saveGeoJsonFromUrlSourceToStorage, saveGeoJsonFromFileToStorage } = require('./storage');
+const { createCollection } = require('../database');
+const { getOneLayerGeoData, saveGeoData } = require('../database/layers');
+const { storeGeoFeaturesData } = require('../database/geoFeatureCollections');
+
+const { storeLocalFileAsBlob, storeFromUrlAsBlob } = require('../azureStorage/blobContainer');
+const { clearCollection } = require('../database');
+
+const storeGeoDataToDb = async (fromFile, data, filePath) => {
+  let geojsonData;
+  logger.info(`Clearing database collection ${data.collectionName}`);
+  await clearCollection(data.collectionName);
+  logger.info(`Loading data from file ${filePath}`);
+  if (fromFile) {
+    geojsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } else {
+    const result = await axios.get(data.geoDataUrl, { responseType: 'json' });
+    if (result.status !== 200) {
+      logger.error(`Failed to fetch geojson data from ${data.geoDataUrl}`);
+      return false;
+    }
+    geojsonData = result.data;
+  }
+  logger.info(`Creating index on collection...`);
+  await createCollection(data.collectionName, undefined, 'bbox');
+  logger.info(`Generating bounding boxes for features...`);
+
+  const { features } = geojsonData;
+  if (!features || !features.length) {
+    logger.info(`No features in file ${filePath}`);
+    return;
+  }
+  const featuresWithBbox = features.map((feature) => {
+    if (feature.geometry.type === 'Point') {
+      return { ...feature, bbox: feature.geometry };
+    }
+    const [minX, minY, maxX, maxY] = bbox.default({
+      type: 'FeatureCollection',
+      name: 'Polygon',
+      features: [feature],
+    });
+    const generatedBBox = [
+      [
+        [minX, minY],
+        [minX, maxY],
+        [maxX, maxY],
+        [maxX, minY],
+        [minX, minY],
+      ],
+    ];
+    return {
+      ...feature,
+      bbox: { type: 'Polygon', coordinates: generatedBBox },
+    };
+  });
+
+  logger.info(`Storing features into database...`);
+  await storeGeoFeaturesData(data.collectionName, featuresWithBbox);
+};
 
 const formatLayerGeoData = async (data, country) => {
   const existing = await getOneLayerGeoData(data.referenceId);
@@ -13,19 +73,38 @@ const formatLayerGeoData = async (data, country) => {
     return false;
   }
   let url;
-  if (data.geoJSONUrl) {
-    logger.info(`Downloading geojson ${data.geoJSONUrl} for layer ${data.referenceId}...`);
-    const filename = await saveGeoJsonFromUrlSourceToStorage(data.geoJSONUrl);
-    if (filename) {
-      url = `/api/uploads/geojsons/${filename}`;
-      logger.info(`Layer ${data.name} has new URL for geojson: ${url}`);
+  if (data.collectionName && data.apiUrl) {
+    await createCollection(data.collectionName, undefined, 'geometry');
+    url = data.apiUrl;
+  }
+  if (data.geoDataUrl) {
+    logger.info(`Downloading geojson ${data.geoDataUrl} for layer ${data.referenceId}...`);
+    if (data.storeToDb) {
+      await storeGeoDataToDb(false, data, data.geoDataUrl);
+      url = data.apiUrl;
+      logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
+    } else {
+      const filename = await storeFromUrlAsBlob(data.geoDataUrl, config.azureStorageLayerContainerName);
+      if (filename) {
+        url = `/api/uploads/geojsons/${filename}`;
+        logger.info(`Layer ${data.name} has new URL for geojson: ${url}`);
+      }
     }
-  } else if (data.geoJSONFilename) {
-    const filePath = path.join(__dirname, '..', '..', 'data', country, 'geoData', data.geoJSONFilename);
+  } else if (data.geoDataFilename) {
+    const filePath = path.join(__dirname, '..', '..', 'data', country, 'geoData', data.geoDataFilename);
     const hasFile = fs.existsSync(filePath);
-    if (hasFile) {
-      logger.info(`Storing geojson ${data.geoJSONFilename} for layer ${data.referenceId} from file...`);
-      const filename = await saveGeoJsonFromFileToStorage(filePath, data.geoJSONFilename);
+    if (hasFile && data.storeToDb) {
+      logger.info(`Storing geodata ${data.geoDataFilename} for layer ${data.referenceId} from file...`);
+      await storeGeoDataToDb(true, data, filePath);
+      url = data.apiUrl;
+      logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
+    } else if (hasFile && !data.storeToDb) {
+      logger.info(`Storing geojson ${data.geoDataFilename} for layer ${data.referenceId} from file...`);
+      const filename = await storeLocalFileAsBlob(
+        filePath,
+        data.geoDataFilename,
+        config.azureStorageLayerContainerName,
+      );
       if (filename) {
         url = `/api/uploads/geojsons/${filename}`;
         logger.info(`Layer ${data.name} has new URL for geojson: ${url}`);
@@ -34,7 +113,7 @@ const formatLayerGeoData = async (data, country) => {
       logger.info(`Layer ${data.name} has corrupted or missing geojson file.`);
     }
   }
-  const newDataObj = { ...data, geoJSONUrl: url, updateDate: Date.now() };
+  const newDataObj = { ...data, geoDataUrl: url, updateDate: Date.now() };
   return newDataObj;
 };
 
@@ -53,7 +132,7 @@ const geoDataUpload = async (country) => {
       const savingGeoJsons = layersGeoData.map((item) => formatLayerGeoData(item, country));
       let geoDataForDb = await Promise.all([...savingGeoJsons]);
       geoDataForDb = geoDataForDb.filter((item) => item);
-      await saveLayerGeoData(geoDataForDb);
+      await saveGeoData(geoDataForDb);
       logger.info(`LayerGeoData for country ${country} successfully saved to database.`);
     } else {
       logger.error(`Data for country ${country} not found.`);

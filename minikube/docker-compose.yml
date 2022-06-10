@@ -1,0 +1,42 @@
+version: "3"
+services:
+  api-service:
+    build:
+      context: ../api
+    restart: on-failure
+    volumes:
+      - /minikube_volume/api/src:/home/node/src
+      - /minikube_volume/api/index.js:/home/node/index.js
+    command: yarn watch
+    ports:
+      - 8080:8080
+    environment:
+      MONGO_URI: ${MONGO_URI}
+      DB_NAME: ${DB_NAME}
+      # default Azurite connection string from documentation for local development
+      AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+      AUTHORIZE_TOKEN_ATTRIBUTE: ${AUTHORIZE_TOKEN_ATTRIBUTE}
+      AZURE_STORAGE_LAYER_CONTAINER_NAME: ${AZURE_STORAGE_LAYER_CONTAINER_NAME}
+      AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE: ${AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE}
+      AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE_VALUE: ${AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE_VALUE}
+    links:
+      - azurite
+
+  functions:
+    build:
+      context: ../functions
+    restart: on-failure
+    environment:
+      MONGO_URI: ${MONGO_URI}
+      DB_NAME: ${DB_NAME}
+      AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+      AzureWebJobsStorage: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;
+      KOBO_CONNECTION_STRING: ${KOBO_CONNECTION_STRING}
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    hostname: azurite
+    ports:
+      - 10000:10000
+      - 10001:10001
+    restart: always

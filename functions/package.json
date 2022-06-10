@@ -1,0 +1,46 @@
+{
+  "name": "Functions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Functions processing data and storing it to database",
+  "main": "index.ts",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "build": "tsc",
+    "copyymls": "copyfiles --up 1 data/* /home/site/wwwroot/dist/data",
+    "postbuild": "npm run copyymls",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\"",
+    "lint": "eslint . --fix --max-warnings=0",
+    "lint:ci": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "axios": "^0.21.2",
+    "bottleneck": "^2.19.5",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^8.2.0",
+    "js-yaml": "^3.14.0",
+    "mongoose": "^5.13.9",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@azure/functions": "^1.0.2-beta2",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-watch": "^7.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=8.10.0"
+  }
+}

@@ -5,11 +5,13 @@ export const staticLayersTypes = {
   GEOMETRY: 'geometry',
   GROUP: 'group',
   COMBINED: 'combined',
+  TILE: 'tile',
 };
 // static layer color types
 export const staticLayerColorTypes = {
   COLOR: 'color',
   COLORMAP: 'colormap',
+  INTERVALS: 'intervals',
 };
 // map legend types
 export const mapLegendTypes = {

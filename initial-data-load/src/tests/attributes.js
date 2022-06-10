@@ -6,6 +6,7 @@ describe('Layer attributes', () => {
   it('should save nothing, if data for country not found', async () => {
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'attributes',
         country: 'testCountry2',
       };
@@ -25,6 +26,7 @@ describe('Layer attributes', () => {
   it('should upload data with correct date', async () => {
     jest.mock('../config/config.js', () => {
       return {
+        mongoUri: 'qwertyuiop',
         uploadDataTypes: 'attributes',
         country: 'testCountry',
       };
@@ -39,7 +41,7 @@ describe('Layer attributes', () => {
 
     const inDb = await mongoose.connection.db.collection('attributes').find({}).toArray();
     expect(inDb).toHaveLength(7);
-    expect(inDb[0].attributeId).toEqual('Example Attribute');
+    expect(inDb[0].attributeId).toEqual('Sample Attribute');
     expect(inDb[0].featureId).toEqual('Province 1');
     expect(inDb[0].valueNumber).toEqual(1);
     expect(inDb[2].featureId).toEqual('Province 3');

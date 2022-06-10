@@ -7,18 +7,20 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@azure/storage-queue": "^12.2.0",
-    "@types/mongoose": "^5.10.3",
-    "axios": "^0.21.1",
+    "@hapi/joi": "^17.1.1",
+    "@turf/bbox": "^6.5.0",
+    "axios": "^0.26.0",
     "azure-storage": "^2.10.3",
     "bottleneck": "^2.19.5",
     "csvtojson": "^2.0.10",
     "dotenv": "^6.0.0",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
-    "joi": "^13.6.0",
     "js-yaml": "^4.0.0",
     "mongoose": "^5.11.11",
-    "winston": "^3.2.1"
+    "underscore": "^1.12.1",
+    "winston": "^3.2.1",
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "eslint": "^6.6.0",
@@ -43,14 +45,19 @@
     }
   },
   "resolutions": {
+    "ansi-regex": "^5.0.1",
     "bl": "^1.2.3",
     "dot-prop": "^4.2.1",
     "hosted-git-info": "^3.0.8",
+    "json-schema": "^0.4.0",
     "lodash": "^4.17.21",
     "underscore": "^1.12.1",
     "normalize-url": "^6.0.1",
     "glob-parent": "^5.1.2",
-    "ws": "^7.4.6"
+    "set-value": "^4.0.1",
+    "ws": "^7.4.6",
+    "validator": "^13.7.0",
+    "node-fetch": "^2.6.7"
   },
   "scripts": {
     "start": "node index.js",

@@ -1,0 +1,15 @@
+version: "3"
+services:
+  oscar-db-service:
+    image: mongo:3.6.18-xenial
+    hostname: oscar-db-service
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: oscar-db-service

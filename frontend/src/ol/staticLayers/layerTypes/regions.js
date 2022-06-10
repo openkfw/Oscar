@@ -1,10 +1,10 @@
 import VectorLayer from 'ol/layer/Vector';
 
 import { regionStyleFactory } from '../styles';
-import loaderVectorSource from '../utils';
+import vectorSourceLoader from '../loaders/vectorSourceLoader';
 
 const regionsLayer = (layerData, handleIsLoading) => {
-  const vectorSource = loaderVectorSource(layerData, handleIsLoading, layerData.title, 'region');
+  const vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'region');
 
   const newLayer = new VectorLayer({
     title: layerData.title,
@@ -15,8 +15,9 @@ const regionsLayer = (layerData, handleIsLoading) => {
     source: vectorSource,
     style: regionStyleFactory(layerData.attribute, layerData.style),
     legend: layerData.legend,
-    zIndex: 0,
-    timeseries: layerData.timeseries,
+    zIndex: 1,
+    layerOptions: layerData.layerOptions,
+    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

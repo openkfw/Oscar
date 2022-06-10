@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "province": {
+        "something": "else",
+        "value": 34567.45678
+      },
+      "covid19": 5
+    },
+    { "province": "Province 2", "covid19": 29 }
+  ]
+}

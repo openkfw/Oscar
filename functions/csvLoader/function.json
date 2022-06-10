@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "csvLoader",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "raw-data/csvData/{filename}",
+      "connection": "AZURE_STORAGE_CONNECTION_STRING"
+    }
+  ],
+  "scriptFile": "../dist/csvLoader/index.js"
+}

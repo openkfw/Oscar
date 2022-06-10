@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db-service:
+    build:
+      context: ../postgis_init
+    hostname: db-service
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - 5432:5432
+    restart: on-failure
+      
+  db-ui:
+    build:
+      context: ../pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 8184:80
+    restart: on-failure

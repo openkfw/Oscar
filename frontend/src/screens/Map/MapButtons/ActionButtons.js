@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { mainBackgroundColor } from '../../../oscarMuiTheme';
+import { mainBackgroundColor } from '../../../utils/oscarMuiTheme';
 import logo from '../../../data/logo_orange.png';
 import GeolocationButton from './GeolocationButton';
 import LayerButton from './LayersButton';

@@ -18,7 +18,7 @@ router.get(
     try {
       hasFile = fs.existsSync(path.join(__dirname, '..', '..', 'data', 'config', fileName));
     } catch (err) {
-      logger.error(`Country configuration not found:\n${err}`);
+      logger.error(`UI configuration not found:\n${err}`);
       return res.sendStatus(404);
     }
     if (hasFile) {
@@ -27,7 +27,7 @@ router.get(
       );
       res.send(countryConfig);
     } else {
-      logger.error('Country configuration not found');
+      logger.error('UI configuration not found');
       return res.sendStatus(404);
     }
   }),

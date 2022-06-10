@@ -3,15 +3,16 @@ import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
 
 /*
-  Tileset ID specifies which data layers to render in the tiles. Can be:            
-    'microsoft.base.road',  
-    'microsoft.base.darkgrey',
-    'microsoft.imagery', 
-    'microsoft.weather.infrared.main', 
-    'microsoft.weather.radar.main', 
-    'microsoft.base.hybrid.road',
-    'microsoft.base.labels.road'
-*/
+            Tileset ID specifies which data layers to render in the tiles. Can be:
+
+            'microsoft.base.road',
+            'microsoft.base.darkgrey',
+            'microsoft.imagery',
+            'microsoft.weather.infrared.main',
+            'microsoft.weather.radar.main',
+            'microsoft.base.hybrid.road',
+            'microsoft.base.labels.road'
+        */
 const tilesetId = 'microsoft.base.road';
 
 // The language of labels. Supported languages: https://docs.microsoft.com/en-us/azure/azure-maps/supported-languages
@@ -36,6 +37,14 @@ const mapLayers = [
     source: new XYZ({
       url: `/MAP?&tilesetId=${tilesetId}&zoom={z}&x={x}&y={y}&tileSize=256&language=${language}&view=${view}`,
       attributions: `© ${new Date().getFullYear()} TomTom, Microsoft`,
+    }),
+  }),
+  new TileLayer({
+    title: 'Here satellite Maps',
+    visible: false,
+    source: new XYZ({
+      url: `/SATELLITE/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/jpg`,
+      attributions: `© ${new Date().getFullYear()} HERE`,
     }),
   }),
 ];

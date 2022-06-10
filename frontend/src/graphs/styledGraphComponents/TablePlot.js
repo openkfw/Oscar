@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Plotly from 'plotly.js-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
-import { mainBackgroundColor, mainTextColor } from '../../oscarMuiTheme';
+import { mainBackgroundColor, mainTextColor } from '../../utils/oscarMuiTheme';
 
-import ProgressIndicator from '../../components/ProgressIndicator';
+import ProgressIndicator from '../ProgressIndicator';
 import EmptyChartMessage from '../EmptyChartMessage';
 
 const Plot = createPlotlyComponent(Plotly);
