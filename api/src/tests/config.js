@@ -1,11 +1,11 @@
-const request = require('supertest');
+import request from 'supertest';
 
 jest.mock('azure-storage');
 
 describe('GET /api/config', () => {
   it('should return configuration for "Test" country', async () => {
     let app;
-    jest.mock('../config/config.js', () => {
+    jest.mock('../config/config.ts', () => {
       return {
         authorizeTokenAttribute: false,
       };

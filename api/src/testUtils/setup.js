@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { initializeDBConnection, disconnectFromDB, removeDB } = require('../database/mongoDb/index');
+import mongoose from 'mongoose';
+import { initializeDBConnection, disconnectFromDB, removeDB } from '../database/mongoDb/index';
 
 // the default jest timeout is 5s which is sometimes not enough to initialize DB connection
 const TIMEOUT = 30000;

@@ -1,12 +1,12 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const app = require('../config/express');
-const LayerGeoData = require('../database/mongoDb/dbSchemas/layerGeoDataSchema');
-const { MapLayer, GroupMapLayer, SingleMapLayer } = require('../database/mongoDb/dbSchemas/mapLayersSchema');
-const { mapLayersInDb, layerGeoDataInDb } = require('../testUtils/testData/staticLayers');
+import app from '../config/express';
+import LayerGeoData from '../database/mongoDb/dbSchemas/layerGeoDataSchema';
+import { MapLayer, GroupMapLayer, SingleMapLayer } from '../database/mongoDb/dbSchemas/mapLayersSchema';
+import { mapLayersInDb, layerGeoDataInDb } from '../testUtils/testData/staticLayers';
 
 jest.mock('azure-storage');
-jest.mock('../config/config.js', () => {
+jest.mock('../config/config.ts', () => {
   return {
     authorizeTokenAttribute: false,
     mongoUri: 'qwertyuiop',

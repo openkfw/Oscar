@@ -1,38 +1,51 @@
-const config = require('../config/config');
-const APIError = require('../helpers/APIError');
-const logger = require('../config/winston');
-const { DEFAULT_GET_LIMIT, DEFAULT_GET_OFFSET } = require('../constants');
+import config from '../config/config';
+import APIError from '../helpers/APIError';
+import logger from '../config/winston';
+import { DEFAULT_GET_LIMIT, DEFAULT_GET_OFFSET } from '../constants';
 
-const mongoDb = require('./mongoDb/models/attributeModel');
+import mongoDb from './mongoDb/models/attributeModel';
+import postgis from './postgis/models/attributeModel';
 
-const getLatestAttributes = () => {
+export const getLatestAttributes = () => {
+  // if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+  //   return postgis.getLatestAttributes();
+  // }
   if (config.mongoUri) {
     return mongoDb.getLatestAttributes;
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false, undefined);
 };
 
-const getFilteredAttributes = () => {
+export const getFilteredAttributes = () => {
+  // if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+  //   return postgis.getFilteredAttributes();
+  // }
   if (config.mongoUri) {
     return mongoDb.getFilteredAttributes;
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false, undefined);
 };
 
-const countAttributes = () => {
+export const countAttributes = () => {
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.countAttributes();
+  }
   if (config.mongoUri) {
     return mongoDb.countAttributes;
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false, undefined);
 };
 /**
  * Get attributes from database collection
  * @param  {object} filters - object with keys for filtering
  * @param  {object} options - limit and offset for database query
  */
-const getAttributes = async (filters, options) => {
+export const getAttributes = async (filters, options) => {
   let items = [];
   let count = 0;
+  // if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+  //   return postgis.getAttributes();
+  // }
   if (config.mongoUri) {
     if (filters.latestValues) {
       items = await getLatestAttributes()(filters.attributeId, filters.attributeIdCategory, filters.featureId).catch(
@@ -66,22 +79,28 @@ const getAttributes = async (filters, options) => {
  * Returns all dates with data for given attributeId
  * @param  {string} attributeId
  */
-const getAvailableDates = (attributeId) => {
+export const getAvailableDates = (attributeId) => {
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.getAvailableDates(attributeId);
+  }
   if (config.mongoUri) {
     return mongoDb.getAvailableDates(attributeId);
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false, undefined);
 };
 
 /**
  * Returns unique featureIds for data stored for given attributeId
  * @param  {string} attributeId
  */
-const getUniqueFeatureIds = (attributeId) => {
+export const getUniqueFeatureIds = (attributeId) => {
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.getUniqueFeatureIds();
+  }
   if (config.mongoUri) {
     return mongoDb.getUniqueFeatureIds(attributeId);
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false, undefined);
 };
 
-module.exports = { getAttributes, getAvailableDates, getUniqueFeatureIds };
+export default { getAttributes, getAvailableDates, getUniqueFeatureIds };

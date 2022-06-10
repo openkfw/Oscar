@@ -1,16 +1,16 @@
-const request = require('supertest');
-const app = require('../config/express');
-const { Attribute, DataDateAttribute, NumberAttribute } = require('../database/mongoDb/dbSchemas/attributeSchema');
-const {
+import request from 'supertest';
+import app from '../config/express';
+import { Attribute, DataDateAttribute, NumberAttribute } from '../database/mongoDb/dbSchemas/attributeSchema';
+import {
   casesAttrToDb,
   deathsAttrToDb,
   categoryStringAttr,
   bedOccupancyAttrToDb,
   hospitalStayAttrToDb,
   bedOccupancyWithoutDataDateAttrToDb,
-} = require('../testUtils/testData/attributesData');
+} from '../testUtils/testData/attributesData';
 
-jest.mock('../config/config.js', () => {
+jest.mock('../config/config.ts', () => {
   return {
     authorizeTokenAttribute: false,
     mongoUri: 'qwertyuiop',
