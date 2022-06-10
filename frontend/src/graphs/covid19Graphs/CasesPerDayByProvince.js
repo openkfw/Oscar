@@ -10,7 +10,7 @@ import {
   dashboardChartBlueColor,
   dashboardChartPurpleColor,
   dashboardChartLightBlueColor,
-} from '../../utils/oscarMuiTheme';
+} from '../../muiTheme/colors';
 
 const CasesPerDayByProvince = ({ attributeId, id }) => {
   const [casesByDayProvince, setCasesByDayProvince] = useState([]);

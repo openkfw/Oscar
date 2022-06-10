@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
-import theme, { backgroundColor } from './utils/oscarMuiTheme';
+import createOscarTheme from './muiTheme/oscarMuiTheme';
+import paletteTheme from './muiTheme/darkTheme';
+import { backgroundColor } from './muiTheme/colors';
 import MobileHeader from './components/MobileHeader';
 import PublicMap from './screens/Map/PublicMap';
 import DeviceDetection from './DeviceDetection/DeviceDetectionContainer';
@@ -16,6 +18,8 @@ import DashboardTabs from './screens/Dashboard/DashboardTabs';
 import Navbar from './components/layout/Navbar';
 import { checkAuthorization } from './axiosRequests';
 import { ConfigContextProvider } from './contexts/ConfigContext';
+
+const theme = createOscarTheme(paletteTheme);
 
 const useStyles = makeStyles((theme) => ({
   message: {

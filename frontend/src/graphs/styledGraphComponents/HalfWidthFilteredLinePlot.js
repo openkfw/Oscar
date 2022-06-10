@@ -10,7 +10,7 @@ import {
   dashboardChartBlueColor,
   dashboardChartPurpleColor,
   dashboardChartLightBlueColor,
-} from '../../utils/oscarMuiTheme';
+} from '../../muiTheme/colors';
 import { hasFilters } from '../../utils/dateAndAttributeUtils';
 import EmptyChartMessage from '../EmptyChartMessage';
 import LinePlot from './LinePlot';
