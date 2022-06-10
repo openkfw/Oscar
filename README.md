@@ -1,6 +1,6 @@
 <img src='logo/Oscar_logo.svg' width='160'>
 
-# OSCAR platform
+# The OSCAR platform
 
 OSCAR is a cloud based web application for digital decision support and allows for the integration and analysis of datasets for emergency preparedness and response.
 
