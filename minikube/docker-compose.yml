@@ -6,8 +6,8 @@ services:
       target: builder
     restart: on-failure
     volumes:
-      - /minikube_volume/api/src:/home/node/src
-      - /minikube_volume/api/index.js:/home/node/index.js
+      - /minikube_volume/api/src:/app/src
+      - /minikube_volume/api/index.js:/app/index.js
     command: yarn watch
     ports:
       - 8080:8080

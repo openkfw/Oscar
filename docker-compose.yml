@@ -6,8 +6,8 @@ services:
       target: builder
     restart: on-failure
     volumes:
-      - ./api/src:/home/node/src
-      - ./api/index.js:/home/node/index.js
+      - ./api/src:/app/src
+      - ./api/index.js:/app/index.js
     command: yarn watch
     ports:
       - 8080:8080
