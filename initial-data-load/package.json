@@ -53,7 +53,6 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "watch": "tsc -w",
-    "prestart": "npm run build --scripts-prepend-node-path",
     "start": "node dist/index.js",
     "lint": "eslint . --fix --max-warnings=0",
     "lint:ci": "eslint . --max-warnings=0",
