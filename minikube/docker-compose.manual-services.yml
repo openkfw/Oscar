@@ -4,8 +4,8 @@ services:
     build:
       context: ../initial-data-load
     volumes:
-      - /minikube_volume/initial-data-load/src:/home/node/src
-      - /minikube_volume/initial-data-load/index.js:/home/node/index.js
+      - /minikube_volume/initial-data-load/src:/app/src
+      - /minikube_volume/initial-data-load/index.js:/app/index.js
     command: yarn start
     ports:
       - 8082:8082
