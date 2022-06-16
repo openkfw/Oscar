@@ -27,7 +27,6 @@ RUN yarn --frozen-lockfile && yarn cache clean
 
 COPY --from=builder /app/dist ./dist
 
-COPY --chown=node:node /data/* ./dist/data/
 
 USER node
 

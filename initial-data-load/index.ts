@@ -2,9 +2,12 @@ import logger from './src/config/winston';
 import uploads from './src/index';
 import setupAzure from './src/azureStorage/azureStorageSetup';
 import { initializeDb, disconnectFromDB } from './src/database';
+import config from './src/config/config';
 
 const main = async () => {
   try {
+    logger.info(`Loading data for dataset ${config.dataset || config.country}`);
+
     await initializeDb();
 
     await setupAzure();
