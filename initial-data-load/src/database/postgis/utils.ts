@@ -1,5 +1,5 @@
 /**
- * Converting attribute value item in API format to postgres database 'region_attributes' format
+ * Converting attribute value item in API format to postgres database 'feature_attributes' format
  * @param  {object} item - item in API format
  */
 export const attributeDataToDBFormat = (item) => ({

@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi');
+import Joi from '@hapi/joi';
 
 // require and configure dotenv, will load vars in .env in PROCESS.ENV
 require('dotenv').config();
@@ -10,8 +10,13 @@ const envVarsSchema = Joi.object({
   LOG_LABEL: Joi.string().default('oscar-url-loader-service'),
   AZURE_STORAGE_CONNECTION_STRING: Joi.string(),
   AZURE_STORAGE_DATA_CONTAINER_NAME: Joi.string(),
-  MONGO_URI: Joi.string().allow(''),
-  DB_NAME: Joi.string(),
+  MONGO_URI: Joi.string().allow('', null),
+  DB_NAME: Joi.string().allow('', null),
+  POSTGRES_USER: Joi.string().allow('', null),
+  POSTGRES_PASSWORD: Joi.string().allow('', null),
+  POSTGRES_DB: Joi.string().allow('', null),
+  POSTGRES_HOST: Joi.string().allow('', null),
+  POSTGRES_PORT: Joi.number().allow('', null),
   USERNAME: Joi.string().allow(''),
   PASSWORD: Joi.string().allow(''),
   URL_FILE: Joi.string().allow(''),
@@ -36,6 +41,10 @@ const config = {
   azureStorageRawDataContainerName: envVars.AZURE_STORAGE_DATA_CONTAINER_NAME,
   mongoUri: envVars.MONGO_URI,
   dbName: envVars.DB_NAME,
+  postgresUser: envVars.POSTGRES_USER,
+  postgresPassword: envVars.POSTGRES_PASSWORD,
+  postgresDb: envVars.POSTGRES_DB,
+  postgresHost: envVars.POSTGRES_HOST,
   username: envVars.USERNAME,
   password: envVars.PASSWORD,
   urlFile: envVars.URL_FILE,
@@ -44,4 +53,4 @@ const config = {
   bottleneckTimeLimit: envVars.URL_LOAD_BOTTLENECK_TIME_LIMIT,
   bottleneckMaxConcurrent: envVars.URL_LOAD_BOTTLENECK_MAX_CONCURRENT,
 };
-module.exports = config;
+export default config;

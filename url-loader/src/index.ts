@@ -1,9 +1,9 @@
-const Bottleneck = require('bottleneck');
+import Bottleneck from 'bottleneck';
 
-const logger = require('./config/winston');
-const config = require('./config/config');
-const reloadQueries = require('./reloadQueries');
-const storeFile = require('./storeFile');
+import logger from './config/winston';
+import config from './config/config';
+import reloadQueries from './reloadQueries';
+import storeFile from './storeFile';
 
 const limiter = new Bottleneck({
   minTime: config.bottleneckTimeLimit,
@@ -47,4 +47,4 @@ const loadDataFromUrl = async (sources) => {
   }
 };
 
-module.exports = loadDataFromUrl;
+export default loadDataFromUrl;

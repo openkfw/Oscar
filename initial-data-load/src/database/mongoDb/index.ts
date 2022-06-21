@@ -3,8 +3,13 @@ import Bottleneck from 'bottleneck';
 import config from '../../config/config';
 import logger from '../../config/winston';
 
+/**
+ * Initialize database connection.
+ *
+ * @param  {Context} context
+ */
 export const initializeDBConnection = async () => {
-  logger.info(`Connecting to database`);
+  logger.info(`Connecting to database ...`);
   if (process.env.NODE_ENV !== 'test') {
     await mongoose.set('debug', (collectionName, method, query, doc) => {
       logger.debug(`Mongoose - ${method} on collection ${collectionName} `, {

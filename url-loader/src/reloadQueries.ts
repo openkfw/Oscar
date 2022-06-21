@@ -1,7 +1,7 @@
-const logger = require('./config/winston');
-const { initializeDb, disconnectFromDB } = require('./database');
-const { setupCollectionForAttributes, getLatestAttributeDate } = require('./database/attributes');
-const { getDatesFrom, dateObjectToISODate } = require('./utils');
+import logger from './config/winston';
+import { initializeDb, disconnectFromDB } from './database';
+import { setupCollectionForAttributes, getLatestAttributeDate } from './database/attributes';
+import { getDatesFrom, dateObjectToISODate } from './utils';
 
 const isDateYesterday = (date) => {
   const dateObject = new Date(date);
@@ -58,4 +58,4 @@ const reloadQueries = async (requestQuery) => {
   }
 };
 
-module.exports = reloadQueries;
+export default reloadQueries;

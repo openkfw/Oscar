@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const { ATTRIBUTES_COLLECTION_NAME } = require('../constants');
+import { ATTRIBUTES_COLLECTION_NAME } from './constants';
 
 /**
  * Find latest date for data for given attributeId
  * @param  {string} attributeId
  */
-const getLatestAttributeDate = async (attributeId) => {
+export const getLatestAttributeDate = async (attributeId) => {
   const { connection } = mongoose;
   const { db } = connection;
 
@@ -21,4 +21,4 @@ const getLatestAttributeDate = async (attributeId) => {
   }
 };
 
-module.exports = { getLatestAttributeDate };
+export default { getLatestAttributeDate };
