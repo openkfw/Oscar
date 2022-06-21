@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 - route '/api/staticLayers', use '/api/dataLayers' [111]()
+- 'COUNTRY' environment variable for initial-data-load, use 'DATASET' instead
 
 ### Removed
 

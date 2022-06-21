@@ -34,7 +34,7 @@ const getUniqueValues = async (attributeId, property) => {
   if (config.mongoUri) {
     return mongoDb.getUniqueValues(attributeId, property);
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 
 module.exports = { getPointAttributes, getUniqueValues };

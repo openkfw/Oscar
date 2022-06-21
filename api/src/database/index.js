@@ -10,7 +10,7 @@ const initializeDb = () => {
   if (config.mongoUri) {
     return mongoDb.initializeDBConnection();
   }
-  throw new APIError('No connection string to database', 500, false);
+  throw new APIError('No credentials for database', 500, false);
 };
 
 module.exports = { initializeDb };
