@@ -22,6 +22,8 @@ const envVarsSchema = Joi.object({
   DATASET: Joi.string().allow(null),
   NEW_STORAGE_CONTAINERS: Joi.string().allow('').default(''),
   NEW_STORAGE_QUEUES: Joi.string().allow('').default(''),
+  BOTTLENECK_MAX_CONCURRENT: Joi.number().default(1),
+  BOTTLENECK_TIME_LIMIT: Joi.number().default(5000),
 })
   .unknown()
   .required();
@@ -48,6 +50,8 @@ const config = {
   dataset: envVars.DATASET,
   newStorageContainers: envVars.NEW_STORAGE_CONTAINERS,
   newStorageQueues: envVars.NEW_STORAGE_QUEUES,
+  bottleneckMaxConcurrent: envVars.BOTTLENECK_MAX_CONCURRENT,
+  bottleneckTimeLimit: envVars.BOTTLENECK_TIME_LIMIT,
 };
 
 export default config;

@@ -3,9 +3,6 @@ services:
   initial-data-load-service:
     build:
       context: ./initial-data-load
-    volumes:
-      - ./initial-data-load/src:/app/src
-      - ./initial-data-load/index.js:/app/index.js
     command: yarn start
     ports:
       - 8082:8082

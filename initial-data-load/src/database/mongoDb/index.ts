@@ -51,8 +51,8 @@ export const deleteAllFromCollection = async (collectionName) => {
 };
 
 const limiter = new Bottleneck({
-  maxConcurrent: 1,
-  minTime: 5000,
+  maxConcurrent: config.bottleneckMaxConcurrent,
+  minTime: config.bottleneckTimeLimit,
 });
 
 export const bulkStoreToDb = async (collectionName, operations, options) => {
