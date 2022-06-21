@@ -20,7 +20,7 @@ import { findPlace } from '../../axiosRequests';
 import { selectedPlaceVectorSource } from '../../ol/place';
 import FabIconButton from '../../components/FabIconButton';
 import Place from '../../components/Place';
-import { mainBackgroundColor, buttonBackgroundColor, iconColor } from '../../utils/oscarMuiTheme';
+import { mainBackgroundColor, buttonBackgroundColor, iconColor } from '../../muiTheme/colors';
 import { foundPointAddressString } from '../../utils/helpers';
 import validations from '../../utils/validations';
 

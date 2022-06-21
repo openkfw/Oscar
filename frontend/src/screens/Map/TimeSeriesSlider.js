@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
-import { accentColor, mainBackgroundColor } from '../../utils/oscarMuiTheme';
+import { accentColor, mainBackgroundColor } from '../../muiTheme/colors';
 import { debounce } from '../../utils/helpers';
 
 const TimeSlider = withStyles((theme) => ({

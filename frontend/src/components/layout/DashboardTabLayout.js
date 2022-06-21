@@ -5,7 +5,7 @@ import Fab from '@material-ui/core/Fab';
 
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
-import { backgroundColor, dashboardDateColor, mainTextColor } from '../../utils/oscarMuiTheme';
+import { backgroundColor, dashboardDateColor, mainTextColor } from '../../muiTheme/colors';
 import generatePdf from '../../utils/generatePdf';
 
 import OscarGraph from '../../graphs/OscarGraph';

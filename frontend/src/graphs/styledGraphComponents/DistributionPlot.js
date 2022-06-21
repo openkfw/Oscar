@@ -9,7 +9,7 @@ import {
   dashboardChartAxisColor,
   dashboardChartGridColor,
   mainBackgroundColor,
-} from '../../utils/oscarMuiTheme';
+} from '../../muiTheme/colors';
 import EmptyChartMessage from '../EmptyChartMessage';
 import ProgressIndicator from '../ProgressIndicator';
 

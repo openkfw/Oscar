@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { mainTextColor, accentColor } from '../../utils/oscarMuiTheme';
+import { mainTextColor, accentColor } from '../../muiTheme/colors';
 import { MAP_PAGE, EXEC_DASHBOARD_PAGE } from '../../routes';
 
 const useStyles = makeStyles(() => ({

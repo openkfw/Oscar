@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
-import { buttonBackgroundColor } from '../../../utils/oscarMuiTheme';
+import { buttonBackgroundColor } from '../../../muiTheme/colors';
 
 import { actions as mapActions } from '../../../actions';
 

@@ -12,7 +12,7 @@ import { IconButton, makeStyles, CircularProgress, ListItem, List, Collapse } fr
 import InfoIcon from '@material-ui/icons/Info';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import { accentColor } from '../../../utils/oscarMuiTheme';
+import { accentColor } from '../../../muiTheme/colors';
 import SwipeableDrawer from '../../../components/SwipeableDrawer';
 import LayerInfoModal from '../../../components/LayerInfoModal';
 
