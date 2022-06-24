@@ -1,8 +1,8 @@
-const azureStorage = require('azure-storage');
-const config = require('./config/config');
-const logger = require('./config/winston');
+import azureStorage from 'azure-storage';
+import config from './config/config';
+import logger from './config/winston';
 
-const blobService = azureStorage.createBlobService(config.azureStorageConnectionString);
+export const blobService = azureStorage.createBlobService(config.azureStorageConnectionString);
 const { azureStorageRawDataContainerName } = config;
 
 /**
@@ -10,7 +10,8 @@ const { azureStorageRawDataContainerName } = config;
  * @param  {string} fileName - Name for saved file
  * @param  {string} folderName - Folder to save the file into
  */
-const getBlobName = (fileName, folderName) => (folderName ? `${folderName}/${fileName}` : fileName);
+const getBlobName = (fileName: string, folderName: string): string =>
+  folderName ? `${folderName}/${fileName}` : fileName;
 
 /**
  * Stores stream as blob in azure storage
@@ -19,7 +20,7 @@ const getBlobName = (fileName, folderName) => (folderName ? `${folderName}/${fil
  * @param  {string} fileName - fileName of new blob in storage
  * @param  {string} folderName - folder to save the file into
  */
-const sendStreamAsBlob = (stream, streamLength, fileName, folderName) => {
+export const sendStreamAsBlob = (stream, streamLength, fileName, folderName): Promise<void> => {
   const blobName = getBlobName(fileName, folderName);
   return new Promise((resolve, reject) => {
     blobService.createBlockBlobFromStream(azureStorageRawDataContainerName, blobName, stream, streamLength, (err) => {
@@ -37,7 +38,7 @@ const sendStreamAsBlob = (stream, streamLength, fileName, folderName) => {
  * @param  {string} fileName - fileName of new blob in storage
  * @param  {string} folderName - folder to save the file into
  */
-const sendTextAsBlob = (text, fileName, folderName) => {
+export const sendTextAsBlob = (text: string, fileName: string, folderName: string): Promise<void> => {
   const blobName = getBlobName(fileName, folderName);
   return new Promise((resolve, reject) => {
     blobService.createBlockBlobFromText(azureStorageRawDataContainerName, blobName, text, (err) => {
@@ -48,10 +49,4 @@ const sendTextAsBlob = (text, fileName, folderName) => {
       resolve();
     });
   });
-};
-
-module.exports = {
-  sendStreamAsBlob,
-  sendTextAsBlob,
-  blobService,
 };

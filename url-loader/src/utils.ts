@@ -2,7 +2,7 @@
  * Get date in ISO format from javascript Date object
  * @param  {Date} dateObj
  */
-const dateObjectToISODate = (dateObj) => dateObj.toISOString().split('T')[0];
+export const dateObjectToISODate = (dateObj) => dateObj.toISOString().split('T')[0];
 
 /**
  * Get date object for yesterday
@@ -21,7 +21,7 @@ const getYesterday = () => {
  * @param {string} replacementDate specified date to replace placeholder with, yesterday by default
  * @returns {string} string with replaced values
  */
-const fillInValues = (text, replacementDate) => {
+export const fillInValues = (text, replacementDate) => {
   const ISOdate = replacementDate || dateObjectToISODate(getYesterday());
 
   // fill in date of yesterday in ISO format in query
@@ -37,7 +37,7 @@ const fillInValues = (text, replacementDate) => {
  * Get array of dates from given date till yesterday
  * @param  {string} lastDate - date in ISOString
  */
-const getDatesFrom = (lastDateISOString) => {
+export const getDatesFrom = (lastDateISOString) => {
   const yesterday = getYesterday();
   const ONE_DAY = 1000 * 60 * 60 * 24;
   const dateObj = new Date(lastDateISOString);
@@ -50,5 +50,3 @@ const getDatesFrom = (lastDateISOString) => {
   dates.push(dateObjectToISODate(yesterday));
   return dates;
 };
-
-module.exports = { fillInValues, getDatesFrom, dateObjectToISODate };

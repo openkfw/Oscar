@@ -1,6 +1,6 @@
 import logger from '../../config/winston';
 import { APIRegionAttribute, MapLayerConfigItem, PostgresRegionAttribute } from '../../types';
-import { ATTRIBUTES_TABLE, REGION_ATTRIBUTES_TABLE } from './constants';
+import { ATTRIBUTES_TABLE, FEATURE_ATTRIBUTES_TABLE } from './constants';
 import { getDb } from './index';
 import { emptyAttributesItem, attributeDataToDBFormat, attributeTypeFromMapLayerType } from './utils';
 
@@ -53,7 +53,7 @@ export const storeAttributeConfigFromMapLayer = async (data: MapLayerConfigItem,
  * @param  {Knex} db - knex
  */
 const storeAttributes = async (data: Array<PostgresRegionAttribute>, db = getDb()) => {
-  await db(REGION_ATTRIBUTES_TABLE)
+  await db(FEATURE_ATTRIBUTES_TABLE)
     .insert(data)
     .onConflict(['attribute_id', 'feature_id', 'feature_id_lvl', 'date_iso'])
     .merge();

@@ -1,11 +1,11 @@
-const yaml = require('js-yaml');
-const fs = require('fs');
-const path = require('path');
+import yaml from 'js-yaml';
+import fs from 'fs';
+import path from 'path';
 
-const logger = require('./src/config/winston');
-const config = require('./src/config/config');
+import logger from './src/config/winston';
+import config from './src/config/config';
 
-const loadDataFromUrl = require('./src');
+import loadDataFromUrl from './src';
 
 const main = async () => {
   try {
@@ -32,6 +32,8 @@ const main = async () => {
     logger.info(`Data from ${config.urlFile} stored in storage.`);
   } catch (error) {
     logger.error(error);
+  } finally {
+    process.exit();
   }
 };
 

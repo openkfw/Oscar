@@ -1,9 +1,9 @@
-const axios = require('axios');
+import axios from 'axios';
 
-const logger = require('./config/winston');
-const config = require('./config/config');
-const { sendStreamAsBlob, sendTextAsBlob } = require('./storageHandler');
-const { fillInValues } = require('./utils');
+import logger from './config/winston';
+import config from './config/config';
+import { sendStreamAsBlob, sendTextAsBlob } from './storageHandler';
+import { fillInValues } from './utils';
 
 const storeFile = async (url, requestData, credentials) => {
   const requestConfig = requestData.requestConfig || {};
@@ -55,4 +55,4 @@ const storeFile = async (url, requestData, credentials) => {
   }
 };
 
-module.exports = storeFile;
+export default storeFile;

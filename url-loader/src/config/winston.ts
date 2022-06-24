@@ -1,5 +1,5 @@
-const winston = require('winston');
-const config = require('./config');
+import winston from 'winston';
+import config from './config';
 
 const { combine, timestamp, label, printf } = winston.format;
 
@@ -10,4 +10,4 @@ const logger = winston.createLogger({
   transports: [new winston.transports.Console()],
 });
 
-module.exports = logger;
+export default logger;
