@@ -37,4 +37,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     CONSTRAINT "maplayers_PK" PRIMARY KEY (reference_id)
   );
 
+  CREATE INDEX idx_point_attributes_geometry ON point_attributes USING GIST(geometry);
+
 EOSQL

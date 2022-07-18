@@ -7,9 +7,9 @@ import mongoDb from './mongoDb/models/attributeModel';
 import postgis from './postgis/models/attributeModel';
 
 export const getLatestAttributes = () => {
-  // if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-  //   return postgis.getLatestAttributes();
-  // }
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.getLatestAttributes;
+  }
   if (config.mongoUri) {
     return mongoDb.getLatestAttributes;
   }
@@ -17,9 +17,9 @@ export const getLatestAttributes = () => {
 };
 
 export const getFilteredAttributes = () => {
-  // if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-  //   return postgis.getFilteredAttributes();
-  // }
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.getFilteredAttributes;
+  }
   if (config.mongoUri) {
     return mongoDb.getFilteredAttributes;
   }
@@ -28,7 +28,7 @@ export const getFilteredAttributes = () => {
 
 export const countAttributes = () => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-    return postgis.countAttributes();
+    return postgis.countAttributes;
   }
   if (config.mongoUri) {
     return mongoDb.countAttributes;
@@ -41,12 +41,9 @@ export const countAttributes = () => {
  * @param  {object} options - limit and offset for database query
  */
 export const getAttributes = async (filters, options) => {
-  let items = [];
-  let count = 0;
-  // if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-  //   return postgis.getAttributes();
-  // }
-  if (config.mongoUri) {
+  let items: object | typeof logger.error = {};
+  let count: number | void = 0;
+  if (config.mongoUri || (config.postgresUser && config.postgresPassword && config.postgresDb)) {
     if (filters.latestValues) {
       items = await getLatestAttributes()(filters.attributeId, filters.attributeIdCategory, filters.featureId).catch(
         (e) => logger.error(`Error: ${e.message}`),
@@ -79,7 +76,7 @@ export const getAttributes = async (filters, options) => {
  * Returns all dates with data for given attributeId
  * @param  {string} attributeId
  */
-export const getAvailableDates = (attributeId) => {
+export const getAvailableDates = (attributeId: string) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
     return postgis.getAvailableDates(attributeId);
   }
@@ -93,9 +90,9 @@ export const getAvailableDates = (attributeId) => {
  * Returns unique featureIds for data stored for given attributeId
  * @param  {string} attributeId
  */
-export const getUniqueFeatureIds = (attributeId) => {
+export const getUniqueFeatureIds = (attributeId: string) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-    return postgis.getUniqueFeatureIds();
+    return postgis.getUniqueFeatureIds(attributeId);
   }
   if (config.mongoUri) {
     return mongoDb.getUniqueFeatureIds(attributeId);

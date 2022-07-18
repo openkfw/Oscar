@@ -1,4 +1,4 @@
-export const dateIsValid = (date) => {
+export const dateIsValid = (date: string): Boolean => {
   const dateParsed = new Date(Date.parse(date));
 
   if (dateParsed.toISOString() === date) {
@@ -7,7 +7,7 @@ export const dateIsValid = (date) => {
   return false;
 };
 
-export const dateIsValidDatum = (date) => {
+export const dateIsValidDatum = (date: string): Boolean => {
   const dateParsed = new Date(Date.parse(date));
 
   if (dateParsed.toISOString().slice(0, 10) === date) {

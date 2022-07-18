@@ -70,7 +70,8 @@ app.use('/api', routes);
 
 // catches 404 and forwards to error handler
 app.use((req, res) => {
-  // const err = new APIError('API not found', httpStatus.NOT_FOUND, true);
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const err = new APIError('API not found', httpStatus.NOT_FOUND, true, undefined);
   // return next(err);
   const options = {
     root: path.join(path.dirname(require.main.filename), 'public'),

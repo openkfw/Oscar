@@ -6,7 +6,7 @@ import logger from '../config/winston';
 export const blobService = azureStorage.createBlobService(config.azureStorageConnectionString);
 export const { azureStorageLayerContainerName } = config;
 
-export const downloadBlobToResponse = (containerName: string, fileName: string, response): Promise<void> =>
+export const downloadBlobToResponse = (containerName: string, fileName: string, response: any): Promise<void> =>
   new Promise((resolve, reject) => {
     blobService.getBlobProperties(containerName, fileName, (err, blobInfo) => {
       if (err) {

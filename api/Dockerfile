@@ -9,6 +9,8 @@ RUN yarn --frozen-lockfile && yarn cache clean
 
 COPY . .
 
+COPY /data ./dist/data
+
 RUN yarn build
 
 ## this is stage two , where the app actually runs
@@ -27,7 +29,7 @@ RUN yarn --frozen-lockfile && yarn cache clean
 
 COPY --from=builder /app/dist ./dist
 
-COPY --chown=node:node /data/* ./dist/data
+COPY --chown=node:node /app/dist/data ./dist/data
 
 USER node
 

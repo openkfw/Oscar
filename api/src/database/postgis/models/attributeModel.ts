@@ -1,13 +1,19 @@
+import { Knex } from 'knex';
 import { getDb } from '../index';
 import { REGION_ATTRIBUTES_TABLE } from '../constants';
 import { dateIsValid } from '../../../helpers/utils';
-import { PostgreFilter } from '../../../types';
+import {
+  PostgreAttributeFilter,
+  PostgresRegionAttribute,
+  PostgresRegionAttributeReordered,
+  AvailableDate,
+} from '../../../types';
 import APIError from '../../../helpers/APIError';
 
 /**
  * Compose filter from settings from query
- * @param  {Array<string>} attributeIds - ids of attributes
- * @param  {any} attributeIdCategories - categories of attributes, common part of attributeId for regex search
+ * @param  {Array<string>} attributeIds - ids of region attributes
+ * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
  * @param  {Array<string>} featureIds - geographical features only to be selected
  * @param  {string} dateStart - ISOString to take attributes from
  * @param  {string} dateEnd - ISOString to take attributes until
@@ -18,8 +24,8 @@ const createAttributesFilter = (
   featureIds: Array<string>,
   dateStart: string,
   dateEnd: string,
-) => {
-  const filter: PostgreFilter = {};
+): PostgreAttributeFilter => {
+  const filter: PostgreAttributeFilter = {};
 
   if (attributeIds || attributeIdCategories) {
     let attributeIdsArray = [];
@@ -32,9 +38,9 @@ const createAttributesFilter = (
       attributeCategoryArray = Array.isArray(attributeIdCategories)
         ? attributeIdCategories
         : attributeIdCategories.split('');
-      attributeCategoryArray = attributeCategoryArray.map((attributeString) => new RegExp(`^${attributeString}`));
+      attributeCategoryArray = attributeCategoryArray.map((attributeString) => `${attributeString}%`);
+      filter.attributeIdCategory = attributeCategoryArray;
     }
-    filter.attributeId = [...attributeIdsArray, ...attributeCategoryArray];
   }
   if (featureIds) {
     filter.featureId = featureIds;
@@ -61,13 +67,41 @@ const createAttributesFilter = (
     }
     filter.dateEnd = dateEnd;
   }
-
   return filter;
 };
 
-const getAttributesFilterConditions = (filter, qb) => {
+/**
+ * Reorder returned region attributes in object with attribute Ids as keys
+ * @param  {Array<PostgresRegionAttribute>} attributes - array with objects returned from database
+ */
+const reorderAttributesByAttributeId = (
+  attributes: Array<PostgresRegionAttribute>,
+): PostgresRegionAttributeReordered => {
+  const attributesByAttributeId = {};
+  attributes.forEach((att) => {
+    attributesByAttributeId[att.attributeId] = att.features.map((ft) => ({
+      ...ft,
+      // default valueType in db is String
+      value: ft.valueType === 'Number' ? parseInt(ft.value, 10) : ft.value,
+    }));
+  });
+  return attributesByAttributeId;
+};
+
+/**
+ * Create specific conditions with the filter, that retrieved rows needs to match
+ * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
+ * @param  {Knex.QueryBuilder} qb
+ */
+const getAttributesFilterConditions = (filter: PostgreAttributeFilter, qb: Knex.QueryBuilder): void => {
   if (filter.attributeId) {
     qb.where(`${REGION_ATTRIBUTES_TABLE}.attribute_id`, 'in', filter.attributeId);
+  }
+
+  if (filter.attributeIdCategory) {
+    filter.attributeIdCategory.forEach((attributeIdCategory) =>
+      qb.orWhere(`${REGION_ATTRIBUTES_TABLE}.attribute_id`, 'like', attributeIdCategory),
+    );
   }
 
   if (filter.featureId) {
@@ -75,32 +109,132 @@ const getAttributesFilterConditions = (filter, qb) => {
   }
 
   if (filter.dateStart) {
-    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.date_iso`, '>', filter.dateStart);
+    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.date_iso`, '>=', filter.dateStart);
   }
 
   if (filter.dateEnd) {
-    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.date_iso`, '<', filter.dateEnd);
+    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.date_iso`, '<=', filter.dateEnd);
   }
 };
 
-// const getFilteredAttributesRows = (filter, db = getDb()) =>
-//   db.from(REGION_ATTRIBUTES_TABLE).where((qb) => {
-//     getAttributesFilterConditions(filter, qb);
-//   });
+/**
+ * Gets region attributes from database with given filter
+ * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
+ * @param  {number} limit - limit how many items should be returned
+ * @param  {number} offset - number from which start the returned part
+ * @param  {Knex} db - knex connection
+ */
+const getAttributes = async (
+  filter: PostgreAttributeFilter,
+  limit: number,
+  offset: number,
+  db = getDb(),
+): Promise<PostgresRegionAttributeReordered> => {
+  const attributes = await db
+    .select([
+      'attribute_id as attributeId',
+      getDb().raw(
+        `JSON_AGG(JSON_BUILD_OBJECT('attributeId', attribute_id, 'featureId', feature_id, 'featureIdLvl', feature_id_lvl, 'value', value, 'valueType', value_type,
+         'date', date_iso, 'dataDate', date_data, 'createdAt', created_at, 'updatedAt', updated_at)) AS features`,
+      ),
+    ])
+    .from(
+      getDb()
+        .select('*')
+        .from(REGION_ATTRIBUTES_TABLE)
+        .where((qb) => {
+          getAttributesFilterConditions(filter, qb);
+        })
+        .orderBy([{ column: 'date_iso' }, { column: 'feature_id' }, { column: 'attribute_id' }])
+        .limit(limit)
+        .offset(offset)
+        .as('processedTable'),
+    )
+    .groupBy('attribute_id');
+
+  return reorderAttributesByAttributeId(attributes);
+};
 
 /**
- * Counts all documents found for given filtering conditions.
- * @param  {object} filter - mongoose format of find query
+ * Get filtered region attributes from database
+ * @param  {Array<string>} attributeIds - ids of region attributes
+ * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * @param  {Array<string>} featureIds - geographical features only to be selected
+ * @param  {string} dateStart - ISOString to take attributes from
+ * @param  {string} dateEnd - ISOString to take attributes until
+ * @param  {number} limit - limit how many items should be returned
+ * @param  {number} offset - number from which start the returned part
  */
-const getFilteredAttributesCount = async (filter, db = getDb()) => {
-  const count = db
+const getFilteredAttributes = async (
+  attributeIds: Array<string>,
+  attributeIdCategories: any,
+  featureIds: Array<string>,
+  dateStart: string,
+  dateEnd: string,
+  limit: number,
+  offset: number,
+): Promise<PostgresRegionAttributeReordered> =>
+  getAttributes(
+    createAttributesFilter(attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd),
+    limit,
+    offset,
+  );
+
+/**
+ * @param  {Array<string>} attributeIds - ids of region attributes
+ * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * @param  {Array<string>} featureIds - geographical features only to be selected
+ * @param  {Knex} db - knex connection
+ */
+const getLatestAttributes = async (
+  attributeIds: Array<string>,
+  attributeIdCategories: any,
+  featureIds: Array<string>,
+  db = getDb(),
+): Promise<PostgresRegionAttributeReordered> => {
+  if (!(attributeIds || attributeIdCategories)) {
+    throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
+  }
+
+  const filter = createAttributesFilter(attributeIds, attributeIdCategories, featureIds, undefined, undefined);
+
+  const attributes = await db
+    .select([
+      'attribute_id as attributeId',
+      getDb().raw(
+        `JSON_AGG(JSON_BUILD_OBJECT('attributeId', attribute_id, 'featureId', feature_id, 'featureIdLvl', feature_id_lvl, 'value', value, 'valueType', value_type,
+         'date', date_iso, 'dataDate', date_data, 'createdAt', created_at, 'updatedAt', updated_at)) AS features`,
+      ),
+    ])
+    .from(
+      getDb()
+        .select('*')
+        .distinctOn('attribute_id', 'feature_id')
+        .from(REGION_ATTRIBUTES_TABLE)
+        .where((qb) => {
+          getAttributesFilterConditions(filter, qb);
+        })
+        .orderBy([{ column: 'attribute_id' }, { column: 'feature_id' }, { column: 'date_iso', order: 'desc' }])
+        .as('processed_table'),
+    )
+    .groupBy('attribute_id');
+
+  return reorderAttributesByAttributeId(attributes);
+};
+
+/**
+ * Counts all rows found for given filtering conditions.
+ * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
+ * @param  {Knex} db - knex connection
+ */
+const getFilteredAttributesCount = async (filter: PostgreAttributeFilter, db = getDb()): Promise<number> => {
+  const count = await db
     .from(REGION_ATTRIBUTES_TABLE)
     .count('*')
-    .filter()
     .where((qb) => {
       getAttributesFilterConditions(filter, qb);
     });
-  return count;
+  return count[0].count;
 };
 
 /**
@@ -108,13 +242,17 @@ const getFilteredAttributesCount = async (filter, db = getDb()) => {
  * @param  {string} attributeId
  * @param  {Knex} db - knex connection
  */
-const getAvailableDates = async (attributeId, db = getDb()) => {
-  await db
+const getAvailableDates = async (attributeId: string, db = getDb()): Promise<Array<AvailableDate>> => {
+  const dates = await db
     .from(REGION_ATTRIBUTES_TABLE)
-    .where('attributeId', attributeId)
-    .select('date_iso', 'date_data')
+    .where('attribute_id', attributeId)
+    .select('date_iso as date', 'date_data as dataDate')
     .distinct('date_iso', 'date_data')
     .orderBy('date_iso');
+  return dates.map((date) => ({
+    dataDate: date.dataDate,
+    date: date.date,
+  }));
 };
 
 /**
@@ -122,26 +260,36 @@ const getAvailableDates = async (attributeId, db = getDb()) => {
  * @param  {string} attributeId
  * @param  {Knex} db - knex connection
  */
-const getUniqueFeatureIds = async (attributeId, db = getDb()) => {
-  await db
+const getUniqueFeatureIds = async (attributeId: string, db = getDb()): Promise<Array<string>> => {
+  const items = await db
     .from(REGION_ATTRIBUTES_TABLE)
     .where('attribute_id', attributeId)
     .select('feature_id')
     .distinct('feature_id')
     .orderBy('feature_id');
+
+  return items.map((item) => item.feature_id);
 };
 
 /**
- * Get count of all attributes by given values
- * @param  {array} attributeIds - ids of attributes
- * @param  {array} attributeIdCategories - categories of attributes, common part of attributeId for regex search
- * @param  {array} featureIds - geographical features only to be selected
+ * Get count of all region attributes by given values
+ *
+ * @param  {Array<string>} attributeIds - ids of region attributes
+ * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * @param  {Array<string>} featureIds - geographical features only to be selected
  * @param  {string} dateStart - ISOString to take attributes from
  * @param  {string} dateEnd - ISOString to take attributes until
  */
-const countAttributes = (attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd) =>
-  getFilteredAttributesCount(
+const countAttributes = (
+  attributeIds: Array<string>,
+  attributeIdCategories: any,
+  featureIds: Array<string>,
+  dateStart: string,
+  dateEnd: string,
+): Promise<number> => {
+  return getFilteredAttributesCount(
     createAttributesFilter(attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd),
   );
+};
 
-export default { getAvailableDates, getUniqueFeatureIds, countAttributes };
+export default { getFilteredAttributes, getLatestAttributes, getAvailableDates, getUniqueFeatureIds, countAttributes };

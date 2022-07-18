@@ -2,28 +2,6 @@ export interface KnexConfig {
   [key: string]: object;
 }
 
-export interface GeoJsonFeature {
-  type: string;
-  geometry: {
-    type: string,
-    coordinates: Array<any>,
-  };
-  properties: object;
-  id?: string;
-}
-
-export interface GeoJson {
-  type: string;
-  name: string;
-  crs: {
-    type: string,
-    properties: {
-      name: string,
-    },
-  };
-  features: Array<GeoJsonFeature>;
-}
-
 export interface Metadata {
   description?: string;
   sourceWebsite?: string;
@@ -34,175 +12,6 @@ export interface Metadata {
   reliabilityScore?: string;
   dataRetrievalDescription?: string;
   dataCalculationDescription?: string;
-}
-
-// API DATA FORMATS //
-export interface APIRegionAttribute {
-  attributeId: string;
-  featureId: string;
-  value: any;
-  valueType?: string;
-  date: string;
-  dataDate?: string;
-}
-
-// CONFIG FILES FORMAT //
-export interface AttributesFileConfigItem {
-  referenceId?: string;
-  date: string;
-  csvFileName: string;
-}
-
-export interface GeoDataConfigItem {
-  name: string;
-  referenceId: string;
-  geoDataFilename?: string;
-  geoDataUrl?: string;
-  format: string;
-  storeToDb: boolean;
-  collectionName: string;
-  apiUrl?: string;
-  featureIds: Array<{
-    property: string,
-    values: Array<string>,
-  }>;
-  attributeIds: Array<string>;
-  geometryDataTypes: string;
-  metadata: Metadata;
-}
-
-export interface MapLayerConfigItem {
-  referenceId: string;
-  geoReferenceId?: string;
-  layerType: string;
-  category: string;
-  title: string;
-  attribute?: string;
-  attributeData?: {
-    attributeId: string,
-    availableDatesSource?: string,
-  };
-  attributeDescription: {
-    descriptionText?: string,
-    featureText?: string,
-    dateText?: string,
-    noDataMessage?: string,
-  };
-  attributeTemplateName: string;
-  featureId?: string;
-  style?: any;
-  legend?: Array<{
-    type: string,
-    color: string,
-    min?: number,
-    max?: number,
-    description?: string,
-  }>;
-  layerOptions?: {
-    singleDisplay?: boolean,
-    timeseries?: boolean,
-    maxResolution?: number,
-  };
-  timeseries?: boolean;
-  layers: Array<{
-    geoReferenceId: string,
-    layerType: string,
-    title: string,
-    attribute: string,
-    attributeDescription: {
-      descriptionText?: string,
-      featureText?: string,
-      dateText?: string,
-      noDataMessage?: string,
-    },
-  }>;
-  metadata: object;
-  tileDataUrl: string;
-  tileAttributions: string;
-}
-
-// MONGODB //
-export interface MongoDbMapLayer {
-  referenceId: string;
-  geoReferenceId?: string;
-  category: string;
-  title: string;
-  attributeData: {
-    attributeId: string,
-    availableDatesSource?: string,
-  };
-  attributeDescription: {
-    descriptionText?: string,
-    featureText?: string,
-    dateText?: string,
-    noDataMessage?: string,
-  };
-  attributeTemplateName: string;
-  featureId?: string;
-  style?: any;
-  legend?: Array<{
-    type: string,
-    color: string,
-    min?: number,
-    max?: number,
-    description?: string,
-  }>;
-  layerOptions?: {
-    singleDisplay?: boolean,
-    timeseries?: boolean,
-    maxResolution?: number,
-  };
-  timeseries?: boolean;
-  layers: Array<{
-    geoReferenceId: string,
-    layerType: string,
-    title: string,
-    attribute: string,
-    attributeDescription: {
-      descriptionText?: string,
-      featureText?: string,
-      dateText?: string,
-      noDataMessage?: string,
-    },
-  }>;
-  metadata: object;
-  tileDataUrl: string;
-  tileAttributions: string;
-}
-
-export interface MongoDbRegionAttribute {
-  attributeId: string;
-  featureId: string;
-  valueNumber?: number;
-  valueString?: string;
-  date: string;
-  dataDate?: string;
-}
-
-// POSTGRES - POSTGIS //
-export interface PostgresAttribute {
-  attribute_id: string;
-  attribute_type: string;
-  attribute_key: string;
-  name: string;
-  geo_data: {};
-  detail: any;
-  metadata: Metadata;
-  created_date?: number;
-  uprated_date?: number;
-}
-
-export interface PostgresRegionAttribute {
-  id?: string;
-  attribute_id: string;
-  feature_id: string;
-  feature_id_lvl?: string;
-  value: string;
-  value_type: string;
-  date_iso: string;
-  date_data?: string;
-  created_date?: number;
-  uprated_date?: number;
 }
 
 export interface PostgresLayerGeoData {
@@ -229,9 +38,175 @@ export interface Filter {
   date?: object;
 }
 
-export interface PostgreFilter {
-  attributeId?: object;
-  featureId?: object;
+export interface PostgresRegionAttribute {
+  attributeId: string;
+  features: Array<{
+    attributeId: string,
+    featureId: string,
+    featureIdLvl?: string,
+    value: string,
+    // default valueType in db is String
+    valueType: string,
+    date: string,
+    dataDate?: string,
+    createdDate?: number,
+    updatedDate?: number,
+  }>;
+}
+
+export interface PostgresRegionAttributeReordered {
+  [attributeId: string]: Array<{
+    attributeId: string,
+    featureId: string,
+    featureIdLvl?: string,
+    value: string | number,
+    valueType: string,
+    date: string,
+    dataDate?: string,
+    createdDate?: number,
+    updatedDate?: number,
+  }>;
+}
+
+export interface PostgreAttributeFilter {
+  attributeId?: Array<string>;
+  attributeIdCategory?: any;
+  featureId?: Array<string>;
   dateStart?: string;
   dateEnd?: string;
+}
+
+export interface AvailableDate {
+  dataDate: string;
+  date: string;
+}
+
+export interface PostgresMapLayerWithGeoData {
+  reference_id: string;
+  geo_reference_id?: string;
+  layer_type: string;
+  category: string;
+  title: string;
+  attribute_id?: string;
+  attribute_description?: {
+    descriptionText?: string,
+    featureText?: string,
+    dateText?: string,
+    noDataMessage?: string,
+  };
+  styles?: any;
+  legend?: Array<{
+    type: string,
+    color: string,
+    min?: number,
+    max?: number,
+    description?: string,
+  }>;
+  layer_options: {
+    singleDisplay?: boolean,
+    timeseries?: boolean,
+    maxResolution?: number,
+  };
+  layers?: Array<{
+    geoReferenceId: string,
+    layerType: string,
+    title: string,
+    attribute: string,
+    attributeDescription: {
+      descriptionText?: string,
+      featureText?: string,
+      dateText?: string,
+      noDataMessage?: string,
+    },
+  }>;
+  created_at: number;
+  updated_at: number;
+  geo_data_url: string;
+  format: string;
+  metadata: object;
+}
+
+export interface MongoDbMapLayerWithGeoData {
+  referenceId: string;
+  geoReferenceId?: string;
+  layerType: string;
+  category: string;
+  title: string;
+  attributeId?: string;
+  attributeDescription?: {
+    descriptionText?: string,
+    featureText?: string,
+    dateText?: string,
+    noDataMessage?: string,
+  };
+  styles?: any;
+  legend?: Array<{
+    type: string,
+    color: string,
+    min?: number,
+    max?: number,
+    description?: string,
+  }>;
+  layerOptions: {
+    singleDisplay?: boolean,
+    timeseries?: boolean,
+    maxResolution?: number,
+  };
+  layers?: Array<{
+    geoReferenceId: string,
+    layerType: string,
+    title: string,
+    attribute: string,
+    attributeDescription: {
+      descriptionText?: string,
+      featureText?: string,
+      dateText?: string,
+      noDataMessage?: string,
+    },
+  }>;
+  createdAt: number;
+  updatedAt: number;
+  geoDataUrl: string;
+  format: string;
+  metadata: object;
+}
+
+export interface PostgresSublayerGeoData {
+  reference_id: string;
+  geo_data_url: string;
+  format: string;
+  metadata: object;
+}
+
+export interface PostgresSublayerGeoDataWithReferenceId {
+  [key: string]: {
+    reference_id: string,
+    geo_data_url: string,
+    format: string,
+    metadata: object,
+  };
+}
+
+export interface PostgrePointAttributeFilter {
+  geometry?: {
+    type: string,
+    coordinates: Array<Array<Array<number>>>,
+  }
+  attributeId?: string;
+  dateStart?: string;
+  dateEnd?: string;
+  date?: string;
+}
+
+export interface MongoDBPointAttribute {
+  attributeId: string;
+  geometry: {
+    type: string,
+    coordinates: Array<number>,
+  };
+  properties: {
+    [key: string]: string,
+  };
+  createdDate?: number;
+  updatedDate?: number;
 }

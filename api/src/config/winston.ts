@@ -1,7 +1,7 @@
-import { createLogger, format, transports } from 'winston';
+import { createLogger, format, transports, Logger } from 'winston';
 import config from './config';
 
-const logger = createLogger({
+const logger: Logger = createLogger({
   level: 'debug',
   format: format.combine(
     format.timestamp({

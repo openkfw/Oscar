@@ -1,8 +1,14 @@
 /* eslint-disable max-classes-per-file */
 const httpStatus = require('http-status');
 
+interface ExtendableError {
+  status: string;
+  isPublic: string;
+}
+
 /**
  * @extends Error
+ * @implements ExtendableError
  */
 class ExtendableError extends Error {
   constructor(message, status, isPublic, error) {
@@ -33,4 +39,4 @@ class APIError extends ExtendableError {
   }
 }
 
-module.exports = APIError;
+export default APIError;
