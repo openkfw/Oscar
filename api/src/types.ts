@@ -38,7 +38,7 @@ export interface Filter {
   date?: object;
 }
 
-export interface PostgresRegionAttribute {
+export interface MongoDBRegionAttribute {
   attributeId: string;
   features: Array<{
     attributeId: string,
@@ -54,7 +54,7 @@ export interface PostgresRegionAttribute {
   }>;
 }
 
-export interface PostgresRegionAttributeReordered {
+export interface MongoDBRegionAttributeReordered {
   [attributeId: string]: Array<{
     attributeId: string,
     featureId: string,
@@ -68,7 +68,7 @@ export interface PostgresRegionAttributeReordered {
   }>;
 }
 
-export interface PostgreAttributeFilter {
+export interface AttributeFilter {
   attributeId?: Array<string>;
   attributeIdCategory?: any;
   featureId?: Array<string>;
@@ -187,7 +187,7 @@ export interface PostgresSublayerGeoDataWithReferenceId {
   };
 }
 
-export interface PostgrePointAttributeFilter {
+export interface MongoDBPointAttributeFilter {
   geometry?: {
     type: string,
     coordinates: Array<Array<Array<number>>>,

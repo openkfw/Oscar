@@ -3,9 +3,9 @@ import { getDb } from '../index';
 import { REGION_ATTRIBUTES_TABLE } from '../constants';
 import { dateIsValid } from '../../../helpers/utils';
 import {
-  PostgreAttributeFilter,
-  PostgresRegionAttribute,
-  PostgresRegionAttributeReordered,
+  AttributeFilter,
+  MongoDBRegionAttribute,
+  MongoDBRegionAttributeReordered,
   AvailableDate,
 } from '../../../types';
 import APIError from '../../../helpers/APIError';
@@ -24,8 +24,8 @@ const createAttributesFilter = (
   featureIds: Array<string>,
   dateStart: string,
   dateEnd: string,
-): PostgreAttributeFilter => {
-  const filter: PostgreAttributeFilter = {};
+): AttributeFilter => {
+  const filter: AttributeFilter = {};
 
   if (attributeIds || attributeIdCategories) {
     let attributeIdsArray = [];
@@ -72,11 +72,11 @@ const createAttributesFilter = (
 
 /**
  * Reorder returned region attributes in object with attribute Ids as keys
- * @param  {Array<PostgresRegionAttribute>} attributes - array with objects returned from database
+ * @param  {Array<MongoDBRegionAttribute>} attributes - array with objects returned from database
  */
 const reorderAttributesByAttributeId = (
-  attributes: Array<PostgresRegionAttribute>,
-): PostgresRegionAttributeReordered => {
+  attributes: Array<MongoDBRegionAttribute>,
+): MongoDBRegionAttributeReordered => {
   const attributesByAttributeId = {};
   attributes.forEach((att) => {
     attributesByAttributeId[att.attributeId] = att.features.map((ft) => ({
@@ -90,10 +90,10 @@ const reorderAttributesByAttributeId = (
 
 /**
  * Create specific conditions with the filter, that retrieved rows needs to match
- * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
+ * @param  {AttributeFilter} filter - filter composed from settings from query
  * @param  {Knex.QueryBuilder} qb
  */
-const getAttributesFilterConditions = (filter: PostgreAttributeFilter, qb: Knex.QueryBuilder): void => {
+const getAttributesFilterConditions = (filter: AttributeFilter, qb: Knex.QueryBuilder): void => {
   if (filter.attributeId) {
     qb.where(`${REGION_ATTRIBUTES_TABLE}.attribute_id`, 'in', filter.attributeId);
   }
@@ -119,17 +119,17 @@ const getAttributesFilterConditions = (filter: PostgreAttributeFilter, qb: Knex.
 
 /**
  * Gets region attributes from database with given filter
- * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
+ * @param  {AttributeFilter} filter - filter composed from settings from query
  * @param  {number} limit - limit how many items should be returned
  * @param  {number} offset - number from which start the returned part
  * @param  {Knex} db - knex connection
  */
 const getAttributes = async (
-  filter: PostgreAttributeFilter,
+  filter: AttributeFilter,
   limit: number,
   offset: number,
   db = getDb(),
-): Promise<PostgresRegionAttributeReordered> => {
+): Promise<MongoDBRegionAttributeReordered> => {
   const attributes = await db
     .select([
       'attribute_id as attributeId',
@@ -173,7 +173,7 @@ const getFilteredAttributes = async (
   dateEnd: string,
   limit: number,
   offset: number,
-): Promise<PostgresRegionAttributeReordered> =>
+): Promise<MongoDBRegionAttributeReordered> =>
   getAttributes(
     createAttributesFilter(attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd),
     limit,
@@ -191,7 +191,7 @@ const getLatestAttributes = async (
   attributeIdCategories: any,
   featureIds: Array<string>,
   db = getDb(),
-): Promise<PostgresRegionAttributeReordered> => {
+): Promise<MongoDBRegionAttributeReordered> => {
   if (!(attributeIds || attributeIdCategories)) {
     throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
   }
@@ -224,10 +224,10 @@ const getLatestAttributes = async (
 
 /**
  * Counts all rows found for given filtering conditions.
- * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
+ * @param  {AttributeFilter} filter - filter composed from settings from query
  * @param  {Knex} db - knex connection
  */
-const getFilteredAttributesCount = async (filter: PostgreAttributeFilter, db = getDb()): Promise<number> => {
+const getFilteredAttributesCount = async (filter: AttributeFilter, db = getDb()): Promise<number> => {
   const count = await db
     .from(REGION_ATTRIBUTES_TABLE)
     .count('*')
