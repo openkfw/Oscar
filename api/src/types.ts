@@ -118,9 +118,9 @@ export interface PostgresMapLayerWithGeoData {
       dateText?: string,
       noDataMessage?: string,
     },
-    geoDataUrl?: string;
-    format?: string;
-    metadata?: object;
+    geoDataUrl?: string,
+    format?: string,
+    metadata?: object,
   }>;
   created_at?: number;
   updated_at?: number;
@@ -166,9 +166,9 @@ export interface MongoDbMapLayerWithGeoData {
       dateText?: string,
       noDataMessage?: string,
     },
-    geoDataUrl?: string;
-    format?: string;
-    metadata?: object;
+    geoDataUrl?: string,
+    format?: string,
+    metadata?: object,
   }>;
   createdAt?: number;
   updatedAt?: number;
@@ -197,7 +197,7 @@ export interface PointAttributeFilter {
   geometry?: {
     type: string,
     coordinates: Array<Array<Array<number>>>,
-  }
+  };
   attributeId?: string;
   dateStart?: string;
   dateEnd?: string;
