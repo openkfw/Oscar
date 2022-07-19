@@ -21,6 +21,6 @@ export const DBFormatToPointAttribute = (item) => ({
   attributeId: item.attribute_id,
   geometry: item.geometry,
   properties: item.properties,
-  createdDate: item.created_date,
-  updatedDate: item.updated_date,
+  createdAt: item.created_at || null,
+  updatedAt: item.updated_at || null,
 });

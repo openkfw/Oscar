@@ -28,8 +28,8 @@ export interface PostgresLayerGeoData {
     geometryDataTypes: string,
   };
   metadata: Metadata;
-  created_date?: number;
-  uprated_date?: number;
+  created_at?: number;
+  updated_at?: number;
 }
 
 export interface Filter {
@@ -49,8 +49,8 @@ export interface MongoDBRegionAttribute {
     valueType: string,
     date: string,
     dataDate?: string,
-    createdDate?: number,
-    updatedDate?: number,
+    createdAt?: number,
+    updatedAt?: number,
   }>;
 }
 
@@ -122,8 +122,8 @@ export interface PostgresMapLayerWithGeoData {
     format?: string;
     metadata?: object;
   }>;
-  created_at: number;
-  updated_at: number;
+  created_at?: number;
+  updated_at?: number;
   geo_data_url?: string;
   format?: string;
   metadata?: object;
@@ -170,8 +170,8 @@ export interface MongoDbMapLayerWithGeoData {
     format?: string;
     metadata?: object;
   }>;
-  createdAt: number;
-  updatedAt: number;
+  createdAt?: number;
+  updatedAt?: number;
   geoDataUrl?: string;
   format?: string;
   metadata?: object;
@@ -213,6 +213,6 @@ export interface MongoDBPointAttribute {
   properties: {
     [key: string]: string,
   };
-  createdDate?: number;
-  updatedDate?: number;
+  createdAt?: number;
+  updatedAt?: number;
 }
