@@ -55,7 +55,7 @@ const getMapLayersWithGeoData = async (db = getDb()): Promise<Array<MongoDbMapLa
           if (sublayersGeoDataWithReferenceIds[lr.geo_reference_id]) {
             return {
               ...lr,
-              geo_data_url: sublayersGeoDataWithReferenceIds[lr.geo_reference_id].geo_data_url,
+              geoDataUrl: sublayersGeoDataWithReferenceIds[lr.geo_reference_id].geo_data_url,
               format: sublayersGeoDataWithReferenceIds[lr.geo_reference_id].format,
               metadata: { geoMetadata: sublayersGeoDataWithReferenceIds[lr.geo_reference_id].metadata },
             };

@@ -108,22 +108,25 @@ export interface PostgresMapLayerWithGeoData {
     maxResolution?: number,
   };
   layers?: Array<{
-    geoReferenceId: string,
+    geoReferenceId?: string,
     layerType: string,
     title: string,
-    attribute: string,
-    attributeDescription: {
+    attribute?: string,
+    attributeDescription?: {
       descriptionText?: string,
       featureText?: string,
       dateText?: string,
       noDataMessage?: string,
     },
+    geoDataUrl?: string;
+    format?: string;
+    metadata?: object;
   }>;
   created_at: number;
   updated_at: number;
-  geo_data_url: string;
-  format: string;
-  metadata: object;
+  geo_data_url?: string;
+  format?: string;
+  metadata?: object;
 }
 
 export interface MongoDbMapLayerWithGeoData {
@@ -153,22 +156,25 @@ export interface MongoDbMapLayerWithGeoData {
     maxResolution?: number,
   };
   layers?: Array<{
-    geoReferenceId: string,
+    geoReferenceId?: string,
     layerType: string,
     title: string,
-    attribute: string,
-    attributeDescription: {
+    attribute?: string,
+    attributeDescription?: {
       descriptionText?: string,
       featureText?: string,
       dateText?: string,
       noDataMessage?: string,
     },
+    geoDataUrl?: string;
+    format?: string;
+    metadata?: object;
   }>;
   createdAt: number;
   updatedAt: number;
-  geoDataUrl: string;
-  format: string;
-  metadata: object;
+  geoDataUrl?: string;
+  format?: string;
+  metadata?: object;
 }
 
 export interface PostgresSublayerGeoData {
@@ -187,7 +193,7 @@ export interface PostgresSublayerGeoDataWithReferenceId {
   };
 }
 
-export interface MongoDBPointAttributeFilter {
+export interface PointAttributeFilter {
   geometry?: {
     type: string,
     coordinates: Array<Array<Array<number>>>,
