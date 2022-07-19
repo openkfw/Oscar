@@ -71,7 +71,7 @@ const formatLayerGeoData = async (data: GeoDataConfigItem, dataset: string) => {
     return false;
   }
   let url;
-  if (data.collectionName && data.apiUrl) {
+  if (data.apiUrl) {
     url = data.apiUrl;
   }
   if (data.geoDataUrl) {
