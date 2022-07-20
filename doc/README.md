@@ -1,12 +1,12 @@
-# Oscar documentation
+# OSCAR documentation
 
-Documentation for the Oscar application.
+Documentation for the OSCAR application.
 
-[Introduction](./introduction.md) - About the Oscar application.
+[Introduction](./introduction.md) - About the OSCAR application.
 
 [Getting Started](./getting-started/README.md) - Quick guides, where to start.
 
-- [Run Application](./getting-started/run-application.md) - How to start OSCAR locally with Docker.
+- [Run the Application](./getting-started/run-application.md) - How to start OSCAR locally with Docker.
 
 [Development overview](./development/README.md) - All about development.
 

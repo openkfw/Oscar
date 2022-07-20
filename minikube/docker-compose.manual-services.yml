@@ -3,22 +3,29 @@ services:
   initial-data-load-service:
     build:
       context: ../initial-data-load
-    volumes:
-      - /minikube_volume/initial-data-load/src:/home/node/src
-      - /minikube_volume/initial-data-load/index.js:/home/node/index.js
     command: yarn start
     ports:
       - 8082:8082
     environment:
+      # mongoDb connection
       MONGO_URI: ${MONGO_URI}
       DB_NAME: ${DB_NAME}
+      # postgis connection
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       COUNTRY: ${COUNTRY}
+      DATASET: ${DATASET}
       UPLOAD_DATA_TYPES: ${UPLOAD_DATA_TYPES}
       NEW_STORAGE_CONTAINERS: ${NEW_STORAGE_CONTAINERS}
       NEW_STORAGE_QUEUES: ${NEW_STORAGE_QUEUES}
       AZURE_STORAGE_LAYER_CONTAINER_NAME: ${AZURE_STORAGE_LAYER_CONTAINER_NAME}
+      BOTTLENECK_MAX_CONCURRENT: ${BOTTLENECK_MAX_CONCURRENT}
+      BOTTLENECK_TIME_LIMIT: ${BOTTLENECK_TIME_LIMIT}
     depends_on:
       - azurite
     links:
@@ -37,8 +44,15 @@ services:
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       AZURE_STORAGE_DATA_CONTAINER_NAME: ${AZURE_STORAGE_DATA_CONTAINER_NAME}
+      # mongoDb connection
       MONGO_URI: ${MONGO_URI}
       DB_NAME: ${DB_NAME}
+      # postgis connection
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       URL_FILE: ${URL_FILE}
       ONLY_SOURCE_NAMES: ${ONLY_SOURCE_NAMES}
       EXCEPT_SOURCE_NAMES: ${EXCEPT_SOURCE_NAMES}

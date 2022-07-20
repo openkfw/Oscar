@@ -20,7 +20,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     CONSTRAINT "attributes_PK" PRIMARY KEY (attribute_id)
   );
 
-	CREATE TABLE region_attributes (
+	CREATE TABLE feature_attributes (
     id                    UUID            NOT NULL DEFAULT uuid_generate_v4(),
     attribute_id          VARCHAR         NOT NULL references attributes(attribute_id), 
     feature_id            VARCHAR         NOT NULL, 
