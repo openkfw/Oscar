@@ -13,8 +13,12 @@ const FeatureIdSchema = new mongoose.Schema(
 const layerGeoDataSchema = new mongoose.Schema({
   referenceId: { type: String, index: { unique: true } },
   name: String,
+  geoDataFilename: String,
   geoDataUrl: String,
   updateDate: String,
+  storeToDb: Boolean,
+  collectionName: String,
+  apiUrl: String,
   format: {
     type: String,
     enum: GEO_FORMATS,

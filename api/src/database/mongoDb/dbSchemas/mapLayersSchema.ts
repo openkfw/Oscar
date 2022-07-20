@@ -65,6 +65,22 @@ export const LayerOptionsSchema = new mongoose.Schema(
   { _id: false },
 );
 
+export const LayerSchema = new mongoose.Schema(
+  {
+      geoReferenceId: String,
+      layerType: String,
+      title: String,
+      attribute: String,
+      attributeDescription: {
+        descriptionText: String,
+        featureText: String,
+        dateText: String,
+        noDataMessage: String,
+      }
+  },
+  { _id: false },
+)
+
 export const OneMapLayerData = new mongoose.Schema(
   {
     layerType: {
@@ -88,18 +104,24 @@ export const OneMapLayerData = new mongoose.Schema(
 export const MapLayerSchema = new mongoose.Schema({
   referenceId: { type: String, index: { unique: true } },
   geoReferenceId: String,
+  layerType: String,
   category: {
     type: String,
     enum: ['Baseline data', 'Health facilities', 'Covid-19'],
   },
+  attributeData: {
+    attributeId: String,
+    availableDatesSource: String,
+  },
   title: String,
-  attribute: String,
   attributeDescription: AttributeDescriptionSchema,
   attributeTemplateName: String,
   featureId: String,
   metadata: MetadataSchema,
   timeseries: Boolean,
+  layers: [LayerSchema],
   layerOptions: LayerOptionsSchema,
+  style: mongoose.Schema.Types.Mixed,
   tileDataUrl: String,
   tileAttributions: String,
 });

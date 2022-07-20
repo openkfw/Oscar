@@ -38,7 +38,7 @@ export interface Filter {
   date?: object;
 }
 
-export interface MongoDBRegionAttribute {
+export interface RegionAttribute {
   attributeId: string;
   features: Array<{
     attributeId: string,
@@ -54,7 +54,7 @@ export interface MongoDBRegionAttribute {
   }>;
 }
 
-export interface MongoDBRegionAttributeReordered {
+export interface RegionAttributeReordered {
   [attributeId: string]: Array<{
     attributeId: string,
     featureId: string,
@@ -129,7 +129,7 @@ export interface PostgresMapLayerWithGeoData {
   metadata?: object;
 }
 
-export interface MongoDbMapLayerWithGeoData {
+export interface MapLayerWithGeoData {
   referenceId: string;
   geoReferenceId?: string;
   layerType: string;
@@ -177,6 +177,143 @@ export interface MongoDbMapLayerWithGeoData {
   metadata?: object;
 }
 
+export interface MongoDBMapLayerWithoutGeoData {
+  referenceId: string;
+  geoReferenceId?: string;
+  layerType: string;
+  category: string;
+  title: string;
+  attributeData: {
+    attributeId: string;
+    availableDatesSource?: string;
+  };
+  attributeDescription: {
+    descriptionText?: string;
+    featureText?: string;
+    dateText?: string;
+    noDataMessage?: string;
+  };
+  attributeTemplateName: string;
+  featureId?: string;
+  style?: any;
+  legend?: Array<{
+    type: string;
+    color: string;
+    min?: number;
+    max?: number;
+    description?: string;
+  }>;
+  layerOptions?: {
+    singleDisplay?: boolean;
+    timeseries?: boolean;
+    maxResolution?: number;
+  };
+  timeseries?: boolean;
+  layers: Array<{
+    geoReferenceId: string;
+    layerType: string;
+    title: string;
+    attribute: string;
+    attributeDescription: {
+      descriptionText?: string;
+      featureText?: string;
+      dateText?: string;
+      noDataMessage?: string;
+    };
+  }>;
+  metadata: object;
+  tileDataUrl: string;
+  tileAttributions: string;
+}
+
+export interface MongoDBMapLayerWithGeoData {
+  referenceId: string;
+  geoReferenceId?: string;
+  layerType: string;
+  category: string;
+  title: string;
+  attributeData: {
+    attributeId: string;
+    availableDatesSource?: string;
+  };
+  attributeDescription: {
+    descriptionText?: string;
+    featureText?: string;
+    dateText?: string;
+    noDataMessage?: string;
+  };
+  attributeTemplateName: string;
+  featureId?: string;
+  style?: any;
+  legend?: Array<{
+    type: string;
+    color: string;
+    min?: number;
+    max?: number;
+    description?: string;
+  }>;
+  layerOptions?: {
+    singleDisplay?: boolean;
+    timeseries?: boolean;
+    maxResolution?: number;
+  };
+  timeseries?: boolean;
+  layers: Array<{
+    geoReferenceId: string;
+    layerType: string;
+    title: string;
+    attribute: string;
+    attributeDescription: {
+      descriptionText?: string;
+      featureText?: string;
+      dateText?: string;
+      noDataMessage?: string;
+    };
+    geoDataUrl?: string;
+    format?: string;
+    metadata?: object;
+  }>;
+  metadata: object;
+  tileDataUrl: string;
+  tileAttributions: string;
+  geoDataUrl?: string;
+  format?: string;
+}
+
+export interface MongoDBSublayerWithGeoData {
+  geoReferenceId?: string;
+  layerType: string;
+  title: string;
+  attribute: string;
+  attributeDescription: {
+    descriptionText?: string;
+    featureText?: string;
+    dateText?: string;
+    noDataMessage?: string;
+  };
+  geoDataUrl?: string;
+  format?: string;
+  metadata?: object;
+}
+
+export interface MongoDBGeoData {
+  name: string;
+  referenceId: string;
+  geoDataFilename?: string;
+  geoDataUrl?: string;
+  format: string;
+  storeToDb: boolean;
+  collectionName: string;
+  apiUrl?: string;
+  featureIds: Array<{
+    property: string;
+    values: Array<string>;
+  }>;
+  attributeIds: Array<string>;
+  geometryDataTypes: string;
+  metadata: Metadata;
+}
+
 export interface PostgresSublayerGeoData {
   reference_id: string;
   geo_data_url: string;
@@ -204,7 +341,7 @@ export interface PointAttributeFilter {
   date?: string;
 }
 
-export interface MongoDBPointAttribute {
+export interface PointAttribute {
   attributeId: string;
   geometry: {
     type: string,

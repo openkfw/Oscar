@@ -4,8 +4,8 @@ import { REGION_ATTRIBUTES_TABLE } from '../constants';
 import { dateIsValid } from '../../../helpers/utils';
 import {
   AttributeFilter,
-  MongoDBRegionAttribute,
-  MongoDBRegionAttributeReordered,
+  RegionAttribute,
+  RegionAttributeReordered,
   AvailableDate,
 } from '../../../types';
 import APIError from '../../../helpers/APIError';
@@ -72,9 +72,9 @@ const createAttributesFilter = (
 
 /**
  * Reorder returned region attributes in object with attribute Ids as keys
- * @param  {Array<MongoDBRegionAttribute>} attributes - array with objects returned from database
+ * @param  {Array<RegionAttribute>} attributes - array with objects returned from database
  */
-const reorderAttributesByAttributeId = (attributes: Array<MongoDBRegionAttribute>): MongoDBRegionAttributeReordered => {
+const reorderAttributesByAttributeId = (attributes: Array<RegionAttribute>): RegionAttributeReordered => {
   const attributesByAttributeId = {};
   attributes.forEach((att) => {
     attributesByAttributeId[att.attributeId] = att.features.map((ft) => ({
@@ -127,7 +127,7 @@ const getAttributes = async (
   limit: number,
   offset: number,
   db = getDb(),
-): Promise<MongoDBRegionAttributeReordered> => {
+): Promise<RegionAttributeReordered> => {
   const attributes = await db
     .select([
       'attribute_id as attributeId',
@@ -171,7 +171,7 @@ const getFilteredAttributes = async (
   dateEnd: string,
   limit: number,
   offset: number,
-): Promise<MongoDBRegionAttributeReordered> =>
+): Promise<RegionAttributeReordered> =>
   getAttributes(
     createAttributesFilter(attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd),
     limit,
@@ -189,7 +189,7 @@ const getLatestAttributes = async (
   attributeIdCategories: any,
   featureIds: Array<string>,
   db = getDb(),
-): Promise<MongoDBRegionAttributeReordered> => {
+): Promise<RegionAttributeReordered> => {
   if (!(attributeIds || attributeIdCategories)) {
     throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
   }

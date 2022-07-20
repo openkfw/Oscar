@@ -4,7 +4,7 @@ import { getDb } from '../index';
 import { LAYER_GEO_DATA_TABLE, MAP_LAYERS_TABLE } from '../constants';
 import {
   PostgresMapLayerWithGeoData,
-  MongoDbMapLayerWithGeoData,
+  MapLayerWithGeoData,
   PostgresSublayerGeoData,
   PostgresSublayerGeoDataWithReferenceId,
 } from '../../../types';
@@ -14,7 +14,7 @@ import { DBFormatToMapLayerWithGeoData } from '../utils';
  * Returns map layers from mapLayers collection with link to GeoJson file from layerGeoData collection
  * @param  {Knex} db - knex connection
  */
-const getMapLayersWithGeoData = async (db = getDb()): Promise<Array<MongoDbMapLayerWithGeoData>> => {
+const getMapLayersWithGeoData = async (db = getDb()): Promise<Array<MapLayerWithGeoData>> => {
   const singleMapLayersWithGeoData: Array<PostgresMapLayerWithGeoData> = await db
     .select(
       `${MAP_LAYERS_TABLE}.*`,
