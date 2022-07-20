@@ -74,9 +74,7 @@ const createAttributesFilter = (
  * Reorder returned region attributes in object with attribute Ids as keys
  * @param  {Array<MongoDBRegionAttribute>} attributes - array with objects returned from database
  */
-const reorderAttributesByAttributeId = (
-  attributes: Array<MongoDBRegionAttribute>,
-): MongoDBRegionAttributeReordered => {
+const reorderAttributesByAttributeId = (attributes: Array<MongoDBRegionAttribute>): MongoDBRegionAttributeReordered => {
   const attributesByAttributeId = {};
   attributes.forEach((att) => {
     attributesByAttributeId[att.attributeId] = att.features.map((ft) => ({
