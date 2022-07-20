@@ -184,42 +184,42 @@ export interface MongoDBMapLayerWithoutGeoData {
   category: string;
   title: string;
   attributeData: {
-    attributeId: string;
-    availableDatesSource?: string;
+    attributeId: string,
+    availableDatesSource?: string,
   };
   attributeDescription: {
-    descriptionText?: string;
-    featureText?: string;
-    dateText?: string;
-    noDataMessage?: string;
+    descriptionText?: string,
+    featureText?: string,
+    dateText?: string,
+    noDataMessage?: string,
   };
   attributeTemplateName: string;
   featureId?: string;
   style?: any;
   legend?: Array<{
-    type: string;
-    color: string;
-    min?: number;
-    max?: number;
-    description?: string;
+    type: string,
+    color: string,
+    min?: number,
+    max?: number,
+    description?: string,
   }>;
   layerOptions?: {
-    singleDisplay?: boolean;
-    timeseries?: boolean;
-    maxResolution?: number;
+    singleDisplay?: boolean,
+    timeseries?: boolean,
+    maxResolution?: number,
   };
   timeseries?: boolean;
   layers: Array<{
-    geoReferenceId: string;
-    layerType: string;
-    title: string;
-    attribute: string;
+    geoReferenceId: string,
+    layerType: string,
+    title: string,
+    attribute: string,
     attributeDescription: {
-      descriptionText?: string;
-      featureText?: string;
-      dateText?: string;
-      noDataMessage?: string;
-    };
+      descriptionText?: string,
+      featureText?: string,
+      dateText?: string,
+      noDataMessage?: string,
+    },
   }>;
   metadata: object;
   tileDataUrl: string;
@@ -233,45 +233,45 @@ export interface MongoDBMapLayerWithGeoData {
   category: string;
   title: string;
   attributeData: {
-    attributeId: string;
-    availableDatesSource?: string;
+    attributeId: string,
+    availableDatesSource?: string,
   };
   attributeDescription: {
-    descriptionText?: string;
-    featureText?: string;
-    dateText?: string;
-    noDataMessage?: string;
+    descriptionText?: string,
+    featureText?: string,
+    dateText?: string,
+    noDataMessage?: string,
   };
   attributeTemplateName: string;
   featureId?: string;
   style?: any;
   legend?: Array<{
-    type: string;
-    color: string;
-    min?: number;
-    max?: number;
-    description?: string;
+    type: string,
+    color: string,
+    min?: number,
+    max?: number,
+    description?: string,
   }>;
   layerOptions?: {
-    singleDisplay?: boolean;
-    timeseries?: boolean;
-    maxResolution?: number;
+    singleDisplay?: boolean,
+    timeseries?: boolean,
+    maxResolution?: number,
   };
   timeseries?: boolean;
   layers: Array<{
-    geoReferenceId: string;
-    layerType: string;
-    title: string;
-    attribute: string;
+    geoReferenceId: string,
+    layerType: string,
+    title: string,
+    attribute: string,
     attributeDescription: {
-      descriptionText?: string;
-      featureText?: string;
-      dateText?: string;
-      noDataMessage?: string;
-    };
-    geoDataUrl?: string;
-    format?: string;
-    metadata?: object;
+      descriptionText?: string,
+      featureText?: string,
+      dateText?: string,
+      noDataMessage?: string,
+    },
+    geoDataUrl?: string,
+    format?: string,
+    metadata?: object,
   }>;
   metadata: object;
   tileDataUrl: string;
@@ -286,10 +286,10 @@ export interface MongoDBSublayerWithGeoData {
   title: string;
   attribute: string;
   attributeDescription: {
-    descriptionText?: string;
-    featureText?: string;
-    dateText?: string;
-    noDataMessage?: string;
+    descriptionText?: string,
+    featureText?: string,
+    dateText?: string,
+    noDataMessage?: string,
   };
   geoDataUrl?: string;
   format?: string;
@@ -306,8 +306,8 @@ export interface MongoDBGeoData {
   collectionName: string;
   apiUrl?: string;
   featureIds: Array<{
-    property: string;
-    values: Array<string>;
+    property: string,
+    values: Array<string>,
   }>;
   attributeIds: Array<string>;
   geometryDataTypes: string;

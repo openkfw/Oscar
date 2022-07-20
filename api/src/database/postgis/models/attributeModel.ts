@@ -2,12 +2,7 @@ import { Knex } from 'knex';
 import { getDb } from '../index';
 import { REGION_ATTRIBUTES_TABLE } from '../constants';
 import { dateIsValid } from '../../../helpers/utils';
-import {
-  AttributeFilter,
-  RegionAttribute,
-  RegionAttributeReordered,
-  AvailableDate,
-} from '../../../types';
+import { AttributeFilter, RegionAttribute, RegionAttributeReordered, AvailableDate } from '../../../types';
 import APIError from '../../../helpers/APIError';
 
 /**

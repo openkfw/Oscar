@@ -67,19 +67,19 @@ export const LayerOptionsSchema = new mongoose.Schema(
 
 export const LayerSchema = new mongoose.Schema(
   {
-      geoReferenceId: String,
-      layerType: String,
-      title: String,
-      attribute: String,
-      attributeDescription: {
-        descriptionText: String,
-        featureText: String,
-        dateText: String,
-        noDataMessage: String,
-      }
+    geoReferenceId: String,
+    layerType: String,
+    title: String,
+    attribute: String,
+    attributeDescription: {
+      descriptionText: String,
+      featureText: String,
+      dateText: String,
+      noDataMessage: String,
+    },
   },
   { _id: false },
-)
+);
 
 export const OneMapLayerData = new mongoose.Schema(
   {
