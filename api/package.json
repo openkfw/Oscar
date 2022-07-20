@@ -50,7 +50,8 @@
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1",
     "supertest": "^3.0.0",
-    "ts-jest": "^26.4.4"
+    "ts-jest": "^26.4.4",
+    "ts-node": "^10.9.1"
   },
   "husky": {
     "hooks": {
