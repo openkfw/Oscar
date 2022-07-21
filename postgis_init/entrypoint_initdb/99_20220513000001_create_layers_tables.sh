@@ -26,7 +26,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     title                  VARCHAR         NOT NULL,
     attribute_id           VARCHAR         references attributes(attribute_id),
     attribute_description  JSONB,
-    styles                 JSONB,
+    style                  JSONB,
     legend                 JSONB[],
     layer_options          JSONB           NOT NULL,
     layers                 JSONB[],

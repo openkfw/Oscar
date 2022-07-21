@@ -94,7 +94,7 @@ export interface PostgresMapLayerWithGeoData {
     dateText?: string,
     noDataMessage?: string,
   };
-  styles?: any;
+  style?: any;
   legend?: Array<{
     type: string,
     color: string,
@@ -142,7 +142,7 @@ export interface MapLayerWithGeoData {
     dateText?: string,
     noDataMessage?: string,
   };
-  styles?: any;
+  style?: any;
   legend?: Array<{
     type: string,
     color: string,
