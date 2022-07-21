@@ -11,7 +11,7 @@ describe('GET /api/config', () => {
       };
     });
     jest.isolateModules(() => {
-      app = require('../config/express'); // eslint-disable-line  global-require
+      app = require('../config/express').default; // eslint-disable-line  global-require
     });
     const res = await request(app).get('/api/config');
     expect(res.status).toEqual(200);
