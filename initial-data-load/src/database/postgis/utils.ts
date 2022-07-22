@@ -54,7 +54,7 @@ export const mapLayerToDBFormat = (item) => ({
   title: item.title,
   attribute_id: item.attributeData.attributeId,
   attribute_description: item.attributeDescription || null,
-  styles: item.style || null,
+  style: item.style || null,
   legend: item.legend || null,
   layer_options: item.layerOptions || {},
   layers: item.layers || null,

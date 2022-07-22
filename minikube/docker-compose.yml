@@ -3,16 +3,24 @@ services:
   api-service:
     build:
       context: ../api
+      target: builder
     restart: on-failure
     volumes:
-      - /minikube_volume/api/src:/home/node/src
-      - /minikube_volume/api/index.js:/home/node/index.js
+      - /minikube_volume/api/src:/app/src
+      - /minikube_volume/api/index.js:/app/index.js
     command: yarn watch
     ports:
       - 8080:8080
     environment:
+      # mongoDb connection
       MONGO_URI: ${MONGO_URI}
       DB_NAME: ${DB_NAME}
+      # postgis connection
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       # default Azurite connection string from documentation for local development
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
       AUTHORIZE_TOKEN_ATTRIBUTE: ${AUTHORIZE_TOKEN_ATTRIBUTE}
