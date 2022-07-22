@@ -38,7 +38,7 @@ export interface Filter {
   date?: object;
 }
 
-export interface RegionAttribute {
+export interface FeatureAttribute {
   attributeId: string;
   features: Array<{
     attributeId: string,
@@ -54,7 +54,7 @@ export interface RegionAttribute {
   }>;
 }
 
-export interface RegionAttributeReordered {
+export interface FeatureAttributeReordered {
   [attributeId: string]: Array<{
     attributeId: string,
     featureId: string,

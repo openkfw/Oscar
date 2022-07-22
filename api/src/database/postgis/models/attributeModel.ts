@@ -1,14 +1,14 @@
 import { Knex } from 'knex';
 import { getDb } from '../index';
-import { REGION_ATTRIBUTES_TABLE } from '../constants';
+import { FEATURE_ATTRIBUTES_TABLE } from '../constants';
 import { dateIsValid } from '../../../helpers/utils';
-import { AttributeFilter, RegionAttribute, RegionAttributeReordered, AvailableDate } from '../../../types';
+import { AttributeFilter, FeatureAttribute, FeatureAttributeReordered, AvailableDate } from '../../../types';
 import APIError from '../../../helpers/APIError';
 
 /**
  * Compose filter from settings from query
- * @param  {Array<string>} attributeIds - ids of region attributes
- * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * @param  {Array<string>} attributeIds - ids of feature attributes
+ * @param  {any} attributeIdCategories - categories of feature attributes, common part of attributeId for regex search
  * @param  {Array<string>} featureIds - geographical features only to be selected
  * @param  {string} dateStart - ISOString to take attributes from
  * @param  {string} dateEnd - ISOString to take attributes until
@@ -66,10 +66,10 @@ const createAttributesFilter = (
 };
 
 /**
- * Reorder returned region attributes in object with attribute Ids as keys
- * @param  {Array<RegionAttribute>} attributes - array with objects returned from database
+ * Reorder returned feature attributes in object with attribute Ids as keys
+ * @param  {Array<FeatureAttribute>} attributes - array with objects returned from database
  */
-const reorderAttributesByAttributeId = (attributes: Array<RegionAttribute>): RegionAttributeReordered => {
+const reorderAttributesByAttributeId = (attributes: Array<FeatureAttribute>): FeatureAttributeReordered => {
   const attributesByAttributeId = {};
   attributes.forEach((att) => {
     attributesByAttributeId[att.attributeId] = att.features.map((ft) => ({
@@ -88,30 +88,30 @@ const reorderAttributesByAttributeId = (attributes: Array<RegionAttribute>): Reg
  */
 const getAttributesFilterConditions = (filter: AttributeFilter, qb: Knex.QueryBuilder): void => {
   if (filter.attributeId) {
-    qb.where(`${REGION_ATTRIBUTES_TABLE}.attribute_id`, 'in', filter.attributeId);
+    qb.where(`${FEATURE_ATTRIBUTES_TABLE}.attribute_id`, 'in', filter.attributeId);
   }
 
   if (filter.attributeIdCategory) {
     filter.attributeIdCategory.forEach((attributeIdCategory) =>
-      qb.orWhere(`${REGION_ATTRIBUTES_TABLE}.attribute_id`, 'like', attributeIdCategory),
+      qb.orWhere(`${FEATURE_ATTRIBUTES_TABLE}.attribute_id`, 'like', attributeIdCategory),
     );
   }
 
   if (filter.featureId) {
-    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.feature_id`, 'in', filter.featureId);
+    qb.andWhere(`${FEATURE_ATTRIBUTES_TABLE}.feature_id`, 'in', filter.featureId);
   }
 
   if (filter.dateStart) {
-    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.date_iso`, '>=', filter.dateStart);
+    qb.andWhere(`${FEATURE_ATTRIBUTES_TABLE}.date_iso`, '>=', filter.dateStart);
   }
 
   if (filter.dateEnd) {
-    qb.andWhere(`${REGION_ATTRIBUTES_TABLE}.date_iso`, '<=', filter.dateEnd);
+    qb.andWhere(`${FEATURE_ATTRIBUTES_TABLE}.date_iso`, '<=', filter.dateEnd);
   }
 };
 
 /**
- * Gets region attributes from database with given filter
+ * Gets feature attributes from database with given filter
  * @param  {AttributeFilter} filter - filter composed from settings from query
  * @param  {number} limit - limit how many items should be returned
  * @param  {number} offset - number from which start the returned part
@@ -122,7 +122,7 @@ const getAttributes = async (
   limit: number,
   offset: number,
   db = getDb(),
-): Promise<RegionAttributeReordered> => {
+): Promise<FeatureAttributeReordered> => {
   const attributes = await db
     .select([
       'attribute_id as attributeId',
@@ -134,7 +134,7 @@ const getAttributes = async (
     .from(
       getDb()
         .select('*')
-        .from(REGION_ATTRIBUTES_TABLE)
+        .from(FEATURE_ATTRIBUTES_TABLE)
         .where((qb) => {
           getAttributesFilterConditions(filter, qb);
         })
@@ -149,9 +149,9 @@ const getAttributes = async (
 };
 
 /**
- * Get filtered region attributes from database
- * @param  {Array<string>} attributeIds - ids of region attributes
- * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * Get filtered feature attributes from database
+ * @param  {Array<string>} attributeIds - ids of feature attributes
+ * @param  {any} attributeIdCategories - categories of feature attributes, common part of attributeId for regex search
  * @param  {Array<string>} featureIds - geographical features only to be selected
  * @param  {string} dateStart - ISOString to take attributes from
  * @param  {string} dateEnd - ISOString to take attributes until
@@ -166,7 +166,7 @@ const getFilteredAttributes = async (
   dateEnd: string,
   limit: number,
   offset: number,
-): Promise<RegionAttributeReordered> =>
+): Promise<FeatureAttributeReordered> =>
   getAttributes(
     createAttributesFilter(attributeIds, attributeIdCategories, featureIds, dateStart, dateEnd),
     limit,
@@ -174,8 +174,8 @@ const getFilteredAttributes = async (
   );
 
 /**
- * @param  {Array<string>} attributeIds - ids of region attributes
- * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * @param  {Array<string>} attributeIds - ids of feature attributes
+ * @param  {any} attributeIdCategories - categories of feature attributes, common part of attributeId for regex search
  * @param  {Array<string>} featureIds - geographical features only to be selected
  * @param  {Knex} db - knex connection
  */
@@ -184,7 +184,7 @@ const getLatestAttributes = async (
   attributeIdCategories: any,
   featureIds: Array<string>,
   db = getDb(),
-): Promise<RegionAttributeReordered> => {
+): Promise<FeatureAttributeReordered> => {
   if (!(attributeIds || attributeIdCategories)) {
     throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
   }
@@ -203,7 +203,7 @@ const getLatestAttributes = async (
       getDb()
         .select('*')
         .distinctOn('attribute_id', 'feature_id')
-        .from(REGION_ATTRIBUTES_TABLE)
+        .from(FEATURE_ATTRIBUTES_TABLE)
         .where((qb) => {
           getAttributesFilterConditions(filter, qb);
         })
@@ -222,7 +222,7 @@ const getLatestAttributes = async (
  */
 const getFilteredAttributesCount = async (filter: AttributeFilter, db = getDb()): Promise<number> => {
   const count = await db
-    .from(REGION_ATTRIBUTES_TABLE)
+    .from(FEATURE_ATTRIBUTES_TABLE)
     .count('*')
     .where((qb) => {
       getAttributesFilterConditions(filter, qb);
@@ -237,7 +237,7 @@ const getFilteredAttributesCount = async (filter: AttributeFilter, db = getDb())
  */
 const getAvailableDates = async (attributeId: string, db = getDb()): Promise<Array<AvailableDate>> => {
   const dates = await db
-    .from(REGION_ATTRIBUTES_TABLE)
+    .from(FEATURE_ATTRIBUTES_TABLE)
     .where('attribute_id', attributeId)
     .select('date_iso as date', 'date_data as dataDate')
     .distinct('date_iso', 'date_data')
@@ -255,7 +255,7 @@ const getAvailableDates = async (attributeId: string, db = getDb()): Promise<Arr
  */
 const getUniqueFeatureIds = async (attributeId: string, db = getDb()): Promise<Array<string>> => {
   const items = await db
-    .from(REGION_ATTRIBUTES_TABLE)
+    .from(FEATURE_ATTRIBUTES_TABLE)
     .where('attribute_id', attributeId)
     .select('feature_id')
     .distinct('feature_id')
@@ -265,10 +265,10 @@ const getUniqueFeatureIds = async (attributeId: string, db = getDb()): Promise<A
 };
 
 /**
- * Get count of all region attributes by given values
+ * Get count of all feature attributes by given values
  *
- * @param  {Array<string>} attributeIds - ids of region attributes
- * @param  {any} attributeIdCategories - categories of region attributes, common part of attributeId for regex search
+ * @param  {Array<string>} attributeIds - ids of feature attributes
+ * @param  {any} attributeIdCategories - categories of feature attributes, common part of attributeId for regex search
  * @param  {Array<string>} featureIds - geographical features only to be selected
  * @param  {string} dateStart - ISOString to take attributes from
  * @param  {string} dateEnd - ISOString to take attributes until
