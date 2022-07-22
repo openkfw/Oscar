@@ -7,7 +7,7 @@ export const DBFormatToMapLayerWithGeoData = (item) => ({
   attributeId: item.attribute_id || null,
   attribute: item.attribute_id || null, // attribute property is here for legacy and consistency
   attributeDescription: item.attribute_description || null,
-  style: item.styles || null,
+  style: item.style || null,
   legend: item.legend || null,
   layerOptions: item.layer_options || {},
   layers: item.layers || null,
