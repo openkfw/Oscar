@@ -17,10 +17,4 @@ export const DBFormatToMapLayerWithGeoData = (item) => ({
   metadata: item.metadata || {},
 });
 
-export const DBFormatToPointAttribute = (item) => ({
-  attributeId: item.attribute_id,
-  geometry: item.geometry,
-  properties: item.properties,
-  createdAt: item.created_at || null,
-  updatedAt: item.updated_at || null,
-});
+export default { DBFormatToMapLayerWithGeoData };

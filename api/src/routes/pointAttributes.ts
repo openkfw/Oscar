@@ -34,7 +34,7 @@ router.get(
   '/:attributeId/unique/:property',
   swaggerValidation.validate,
   utils.forwardError(async (req, res) => {
-    let items = [];
+    let items: Array<any> | void = [];
     items = await getUniqueValues(req.params.attributeId, req.params.property);
     res.send(items);
   }),
