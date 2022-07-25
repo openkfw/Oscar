@@ -19,10 +19,11 @@ export const getPointAttributes = async (
   dateStart: string,
   dateEnd: string,
   lastDate: string,
+  proj: string,
 ) => {
   if (lastDate) {
     if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-      return postgis.getLastDatePointAttributes(attributeId, bottomLeft, topRight);
+      return postgis.getLastDatePointAttributes(attributeId, bottomLeft, topRight, proj);
     }
     if (config.mongoUri) {
       return mongoDb.getLastDatePointAttributes(attributeId, bottomLeft, topRight);
@@ -30,7 +31,7 @@ export const getPointAttributes = async (
     throw new APIError('No credentials for database', 500, false, undefined);
   } else {
     if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-      return postgis.getFilteredPointAttributes(attributeId, bottomLeft, topRight, dateStart, dateEnd);
+      return postgis.getFilteredPointAttributes(attributeId, bottomLeft, topRight, dateStart, dateEnd, proj);
     }
     if (config.mongoUri) {
       return mongoDb.getFilteredPointAttributes(attributeId, bottomLeft, topRight, dateStart, dateEnd);

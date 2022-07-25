@@ -339,6 +339,7 @@ export interface PointAttributeFilter {
   dateStart?: string;
   dateEnd?: string;
   date?: string;
+  proj?: number;
 }
 
 export interface PointAttribute {

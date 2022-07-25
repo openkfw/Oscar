@@ -28,11 +28,48 @@ const getAttributesFilterConditions = (filter: PointAttributeFilter, qb: Knex.Qu
     qb.andWhere(getDb().raw(`properties->>'date' = ?`, [filter.date]));
   }
 
-  if (filter.geometry) {
+  if (filter.geometry && filter.proj) {
     qb.andWhere(
-      getDb().raw(`ST_Intersects(ST_SetSRID(geometry, 4326), ST_GeomFromGeoJSON(?))`, [
+      getDb().raw(`ST_Intersects(geometry, ST_SetSRID(ST_GeomFromGeoJSON(?), ${filter.proj}))`, [
         JSON.stringify(filter.geometry),
       ]),
+    );
+  }
+};
+
+const getProjectionFilter = async (proj, db = getDb()) => {
+  let SRID = 0;
+  // if projection is in query, it must correspond to SRID in geometry column
+  if (proj) {
+    const SRIDarr = await db
+      .distinct(db.raw(`ST_SRID(${POINT_ATTRIBUTES_TABLE}.geometry)`))
+      .from(POINT_ATTRIBUTES_TABLE);
+
+    SRID = SRIDarr[0].st_srid;
+    const projNum = parseInt(proj.split(':')[1], 10);
+
+    if (SRID === projNum) {
+      return projNum;
+    }
+    throw new APIError(
+      `Projection SRID ${projNum} doesn't correspond to geometry column SRID ${SRID}`,
+      400,
+      true,
+      undefined,
+    );
+
+    // if projection is not in query, geometry column must have default SRID
+  } else {
+    const SRIDdefault = 4326;
+
+    if (SRID === SRIDdefault) {
+      return SRIDdefault;
+    }
+    throw new APIError(
+      `Geometry column must have default SRID ${SRIDdefault} if proj parameter is missing in query but has SRID ${SRID}`,
+      400,
+      true,
+      undefined,
     );
   }
 };
@@ -51,6 +88,7 @@ const getFilteredPointAttributes = async (
   topRight: string,
   dateStart: string,
   dateEnd: string,
+  proj: string,
   db = getDb(),
 ): Promise<Array<PointAttribute>> => {
   const filter: PointAttributeFilter = {};
@@ -59,6 +97,10 @@ const getFilteredPointAttributes = async (
   }
   if (attributeId) {
     filter.attributeId = attributeId;
+  }
+
+  if (filter.geometry) {
+    filter.proj = await getProjectionFilter(proj);
   }
 
   // date filters
@@ -113,6 +155,7 @@ const getLastDatePointAttributes = async (
   attributeId: string,
   bottomLeft: string,
   topRight: string,
+  proj: string,
   db = getDb(),
 ): Promise<Array<PointAttribute>> => {
   const filter: PointAttributeFilter = {};
@@ -121,6 +164,9 @@ const getLastDatePointAttributes = async (
   }
   if (attributeId) {
     filter.attributeId = attributeId;
+  }
+  if (filter.geometry) {
+    filter.proj = await getProjectionFilter(proj);
   }
 
   const lastDate = await db

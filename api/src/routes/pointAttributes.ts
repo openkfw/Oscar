@@ -10,9 +10,9 @@ router.get(
   '/',
   swaggerValidation.validate,
   utils.forwardError(async (req, res) => {
-    const { bottomLeft, topRight, attributeId, dateStart, dateEnd, lastDate } = req.query;
+    const { bottomLeft, topRight, attributeId, dateStart, dateEnd, lastDate, proj } = req.query;
 
-    const attributes = await getPointAttributes(attributeId, bottomLeft, topRight, dateStart, dateEnd, lastDate);
+    const attributes = await getPointAttributes(attributeId, bottomLeft, topRight, dateStart, dateEnd, lastDate, proj);
 
     if (attributes && attributes.length) {
       res.send({

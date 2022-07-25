@@ -12,9 +12,9 @@ export const getBoundingBox = (bottomLeft: string, topRight: string) => {
     coordinates: [
       [
         bottomLeftArr,
-        [bottomLeftArr[0], topRightArr[1]],
-        topRightArr,
         [topRightArr[0], bottomLeftArr[1]],
+        topRightArr,
+        [bottomLeftArr[0], topRightArr[1]],
         bottomLeftArr,
       ],
     ],
