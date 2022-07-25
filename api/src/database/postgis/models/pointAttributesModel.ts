@@ -11,26 +11,26 @@ import { PointAttributeFilter, PointAttribute } from '../../../types';
  * @param  {PostgreAttributeFilter} filter - filter composed from settings from query
  * @param  {Knex.QueryBuilder} qb
  */
-const getAttributesFilterConditions = (filter: PointAttributeFilter, qb: Knex.QueryBuilder): void => {
+const getAttributesFilterConditions = (filter: PointAttributeFilter, qb: Knex.QueryBuilder, db = getDb()): void => {
   if (filter.attributeId) {
     qb.whereRaw(`properties->>'attributeId' = ?`, [filter.attributeId]);
   }
 
   if (filter.dateStart) {
-    qb.andWhere(getDb().raw(`properties->>'date' >= ?`, [filter.dateStart]));
+    qb.andWhere(db.raw(`properties->>'date' >= ?`, [filter.dateStart]));
   }
 
   if (filter.dateEnd) {
-    qb.andWhere(getDb().raw(`properties->>'date' <= ?`, [filter.dateEnd]));
+    qb.andWhere(db.raw(`properties->>'date' <= ?`, [filter.dateEnd]));
   }
 
   if (filter.date) {
-    qb.andWhere(getDb().raw(`properties->>'date' = ?`, [filter.date]));
+    qb.andWhere(db.raw(`properties->>'date' = ?`, [filter.date]));
   }
 
   if (filter.geometry && filter.proj) {
     qb.andWhere(
-      getDb().raw(`ST_Intersects(geometry, ST_SetSRID(ST_GeomFromGeoJSON(?), ${filter.proj}))`, [
+      db.raw(`ST_Intersects(geometry, ST_SetSRID(ST_GeomFromGeoJSON(?), ${filter.proj}))`, [
         JSON.stringify(filter.geometry),
       ]),
     );
@@ -130,7 +130,7 @@ const getFilteredPointAttributes = async (
     .from(POINT_ATTRIBUTES_TABLE)
     .select(
       'attribute_id as attributeId',
-      getDb().raw(`ST_AsGeoJSON(geometry) as geometry`),
+      db.raw(`ST_AsGeoJSON(geometry) as geometry`),
       'properties',
       'created_at as createdAt',
       'updated_at as updatedAt',
@@ -190,7 +190,7 @@ const getLastDatePointAttributes = async (
   const pointAttributes = await db
     .select(
       'attribute_id as attributeId',
-      getDb().raw(`ST_AsGeoJSON(geometry) as geometry`),
+      db.raw(`ST_AsGeoJSON(geometry) as geometry`),
       'properties',
       'created_at as createdAt',
       'updated_at as updatedAt',

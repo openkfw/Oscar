@@ -126,13 +126,13 @@ const getAttributes = async (
   const attributes = await db
     .select([
       'attribute_id as attributeId',
-      getDb().raw(
+      db.raw(
         `JSON_AGG(JSON_BUILD_OBJECT('attributeId', attribute_id, 'featureId', feature_id, 'featureIdLvl', feature_id_lvl, 'value', value, 'valueType', value_type,
          'date', date_iso, 'dataDate', date_data, 'createdAt', created_at, 'updatedAt', updated_at)) AS features`,
       ),
     ])
     .from(
-      getDb()
+      db
         .select('*')
         .from(FEATURE_ATTRIBUTES_TABLE)
         .where((qb) => {
@@ -194,13 +194,13 @@ const getLatestAttributes = async (
   const attributes = await db
     .select([
       'attribute_id as attributeId',
-      getDb().raw(
+      db.raw(
         `JSON_AGG(JSON_BUILD_OBJECT('attributeId', attribute_id, 'featureId', feature_id, 'featureIdLvl', feature_id_lvl, 'value', value, 'valueType', value_type,
          'date', date_iso, 'dataDate', date_data, 'createdAt', created_at, 'updatedAt', updated_at)) AS features`,
       ),
     ])
     .from(
-      getDb()
+      db
         .select('*')
         .distinctOn('attribute_id', 'feature_id')
         .from(FEATURE_ATTRIBUTES_TABLE)
