@@ -38,14 +38,16 @@ const getAttributesFilterConditions = (filter: PointAttributeFilter, qb: Knex.Qu
 };
 
 const getProjectionFilter = async (proj, db = getDb()) => {
-  let SRID = 0;
-  // if projection is in query, it must correspond to SRID in geometry column
+  // projection in query must correspond to SRID in geometry column
   if (proj) {
     const SRIDarr = await db
       .distinct(db.raw(`ST_SRID(${POINT_ATTRIBUTES_TABLE}.geometry)`))
       .from(POINT_ATTRIBUTES_TABLE);
 
-    SRID = SRIDarr[0].st_srid;
+    if (!SRIDarr.length) {
+      return;
+    }
+    const SRID = SRIDarr[0].st_srid;
     const projNum = parseInt(proj.split(':')[1], 10);
 
     if (SRID === projNum) {
@@ -53,20 +55,6 @@ const getProjectionFilter = async (proj, db = getDb()) => {
     }
     throw new APIError(
       `Projection SRID ${projNum} doesn't correspond to geometry column SRID ${SRID}`,
-      400,
-      true,
-      undefined,
-    );
-
-    // if projection is not in query, geometry column must have default SRID
-  } else {
-    const SRIDdefault = 4326;
-
-    if (SRID === SRIDdefault) {
-      return SRIDdefault;
-    }
-    throw new APIError(
-      `Geometry column must have default SRID ${SRIDdefault} if proj parameter is missing in query but has SRID ${SRID}`,
       400,
       true,
       undefined,
