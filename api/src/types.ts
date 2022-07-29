@@ -322,7 +322,7 @@ export interface PostgresSublayerGeoData {
 }
 
 export interface PostgresSublayerGeoDataWithReferenceId {
-  [key: string]: {
+  [reference_id: string]: {
     reference_id: string,
     geo_data_url: string,
     format: string,
@@ -353,4 +353,11 @@ export interface PointAttribute {
   };
   createdAt?: number;
   updatedAt?: number;
+}
+
+export interface AttributeGeoData {
+  [geo_data: string]: {
+    featureId?: string,
+    referenceId: string,
+  };
 }

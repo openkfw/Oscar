@@ -72,11 +72,7 @@ const createAttributesFilter = (
 const reorderAttributesByAttributeId = (attributes: Array<FeatureAttribute>): FeatureAttributeReordered => {
   const attributesByAttributeId = {};
   attributes.forEach((att) => {
-    attributesByAttributeId[att.attributeId] = att.features.map((ft) => ({
-      ...ft,
-      // default valueType in db is String
-      value: ft.valueType === 'Number' ? parseInt(ft.value, 10) : ft.value,
-    }));
+    attributesByAttributeId[att.attributeId] = att.features;
   });
   return attributesByAttributeId;
 };

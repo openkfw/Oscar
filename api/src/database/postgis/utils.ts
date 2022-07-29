@@ -16,6 +16,11 @@ export const DBFormatToMapLayerWithGeoData = (item) => ({
   format: item.format || 'geojson', // no other formats supported yet
   geoDataUrl: item.geo_data_url,
   metadata: item.metadata || {},
+  featureId: item.feature_id || null,
 });
 
-export default { DBFormatToMapLayerWithGeoData };
+export const getUniqueValuesFromArr = (value, index, self) => {
+  return self.indexOf(value) === index;
+};
+
+export default { DBFormatToMapLayerWithGeoData, getUniqueValuesFromArr };
