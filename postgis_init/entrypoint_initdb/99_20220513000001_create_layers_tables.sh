@@ -3,7 +3,7 @@ set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 	CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
+  
   CREATE TABLE layer_geo_data (
     reference_id          VARCHAR         NOT NULL, 
     name                  VARCHAR         NOT NULL, 
@@ -14,6 +14,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
+
     CONSTRAINT "layergeodata_PK" PRIMARY KEY (reference_id)
   );
 
@@ -25,13 +26,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     title                  VARCHAR         NOT NULL,
     attribute_id           VARCHAR         references attributes(attribute_id),
     attribute_description  JSONB,
-    styles                 JSONB,
+    style                  JSONB,
     legend                 JSONB[],
     layer_options          JSONB           NOT NULL,
     layers                 JSONB[],
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
+    
     CONSTRAINT "maplayers_PK" PRIMARY KEY (reference_id)
   );
 

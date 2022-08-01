@@ -16,7 +16,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
-    
+
     CONSTRAINT "attributes_PK" PRIMARY KEY (attribute_id)
   );
 
@@ -39,12 +39,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE TABLE point_attributes (
     id                    UUID            NOT NULL DEFAULT uuid_generate_v4(),
     attribute_id          VARCHAR         NOT NULL references attributes(attribute_id), 
-    geometry              GEOMETRY        NOT NULL,
+    geometry              GEOMETRY(Point,3857)        NOT NULL,
     properties            JSONB           NOT NULL,
-
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
-
+    
     CONSTRAINT "pointAttribbute_PK" PRIMARY KEY (id)
   );
+
+  CREATE INDEX idx_point_attributes_geometry ON point_attributes USING GIST(geometry);
+
 EOSQL

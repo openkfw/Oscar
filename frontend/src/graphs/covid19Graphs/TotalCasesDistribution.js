@@ -10,7 +10,7 @@ const restructureApiItem = (item) => ({
   geoUnit: item.attributeId.includes('Country') || item.attributeId.includes('Admin0') ? 'National' : item.featureId, // Country will be changed for Admin0
   sex: SEX_CATEGORIES.find((cat) => item.attributeId.includes(cat)),
   age: AGE_CATEGORIES.find((cat) => item.attributeId.includes(cat)),
-  value: item.value,
+  value: item.valueType === 'number' ? parseFloat(item.value) : item.value,
 });
 
 const useStyles = makeStyles({
