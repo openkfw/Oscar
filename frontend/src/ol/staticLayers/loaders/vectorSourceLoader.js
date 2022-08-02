@@ -46,7 +46,8 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
                     ...feature,
                     properties: {
                       ...feature.properties,
-                      [layerData.attribute]: additionalData.value,
+                      [layerData.attribute]:
+                        additionalData.valueType === 'number' ? parseFloat(additionalData.value) : additionalData.value,
                       date: additionalData.date.substring(0, additionalData.date.indexOf('T')),
                       dataDate: additionalData.dataDate,
                     },

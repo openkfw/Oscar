@@ -24,7 +24,7 @@
     "http-proxy-middleware": "^1.0.3",
     "immutable": "^3.8.2",
     "jspdf": "^2.4.0",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "ol": "^6.3.1",
     "plotly.js-dist": "^1.58.4",
     "postcss": "^8.2.13",
@@ -61,7 +61,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^8.0.1",
     "prettier": "^2.2.1",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.1"
   },
   "husky": {
     "hooks": {
@@ -71,7 +71,8 @@
   "resolutions": {
     "nth-check": "^2.0.1",
     "postcss": "^8.2.13",
-    "node-forge": "^1.0.0"
+    "node-forge": "^1.0.0",
+    "terser": "^5.14.2"
   },
   "author": "",
   "browserslist": {
