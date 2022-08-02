@@ -71,14 +71,13 @@ const formatLayerGeoData = async (data: GeoDataConfigItem, dataset: string) => {
     return false;
   }
   let url;
-  if (data.collectionName && data.apiUrl) {
+  if (data.apiUrl) {
     url = data.apiUrl;
   }
   if (data.geoDataUrl) {
     logger.info(`Downloading geojson ${data.geoDataUrl} for layer ${data.referenceId}...`);
     if (data.storeToDb) {
       await storeGeoDataToDb(false, data, data.geoDataUrl);
-      url = data.apiUrl;
       logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
     } else {
       const filename = await storeFromUrlAsBlob(data.geoDataUrl, config.azureStorageLayerContainerName);
