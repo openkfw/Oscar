@@ -7,7 +7,7 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
   const vectorSource = new VectorSource({
     format: new GeoJSON(),
     loader: async (extent, resolution, projection) => {
-      handleIsLoading({ title: layerTitle, type }, 'add');
+      handleIsLoading({ title, type }, 'add');
       const url = layerData.geoDataUrl;
 
       const response = await getGeoData(url);
@@ -64,13 +64,13 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
               .readFeatures(featuresStruct, { featureProjection: projection });
 
             vectorSource.addFeatures(newDbFeatures);
-            handleIsLoading(layerTitle, 'remove');
+            handleIsLoading(title, 'remove');
           } else {
             const newFeatures = vectorSource.getFormat().readFeatures(response, { featureProjection: projection });
             vectorSource.addFeatures(newFeatures);
           }
         }
-        handleIsLoading(layerTitle, 'remove');
+        handleIsLoading(title, 'remove');
       }
     },
   });
