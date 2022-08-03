@@ -21,6 +21,7 @@ const envVarsSchema = Joi.object({
   AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE: Joi.string().allow(''),
   AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE_VALUE: Joi.string().allow(''),
   APPINSIGHTS_INSTRUMENTATIONKEY: Joi.string().allow(''),
+  OPENAPI_SCHEMA_FILE: Joi.string().default('src/openapi/apiSchema.yml'),
 })
   .unknown()
   .required();
@@ -47,6 +48,7 @@ const config = {
   authorizationExpectedTokenAttribute: envVars.AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE,
   authorizationExpectedTokenAttributeValue: envVars.AUTHORIZATION_EXPECTED_TOKEN_ATTRIBUTE_VALUE,
   appInsightsInstrumentationKey: envVars.APPINSIGHTS_INSTRUMENTATIONKEY,
+  openApiSchemaFile: envVars.OPENAPI_SCHEMA_FILE,
 };
 
 export default config;
