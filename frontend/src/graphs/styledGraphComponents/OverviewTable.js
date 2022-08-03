@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card } from '@material-ui/core';
+import { Card, Tooltip } from '@material-ui/core';
 import {
   mainTextColor,
   dashboardDateColor,
@@ -35,6 +35,7 @@ const useStyles = makeStyles(() => ({
   },
   cardNumber: {
     fontSize: '1.85rem',
+    overflowX: 'auto',
   },
   cardTitle: {
     fontSize: '1.1rem',
@@ -59,9 +60,11 @@ const OverviewTable = ({ data, color, highlightedPrefix, primaryText, secondaryT
 
   return (
     <Card className={classes.card}>
-      <span className={`${classes.cardNumber}`} style={{ color }}>
-        {data.primaryValue === 0 ? 0 : data.primaryValue || 'n/a'}
-      </span>
+      <Tooltip placement="top-start" arrow title={data.primaryValue || 'n/a'}>
+        <span className={`${classes.cardNumber}`} style={{ color }}>
+          {data.primaryValue === 0 ? 0 : data.primaryValue || 'n/a'}
+        </span>
+      </Tooltip>
       <span className={`${classes.cardTitle}`} style={{ color }}>
         {highlightedPrefix} <span className={classes.cardText}>{primaryText}</span>
       </span>

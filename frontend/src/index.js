@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import theme, { backgroundColor } from './utils/oscarMuiTheme';
 import MobileHeader from './components/MobileHeader';
-import PublicMap from './screens/Map/PublicMap';
+import PublicMap from './screens/Map/PublicMapContainer';
 import DeviceDetection from './DeviceDetection/DeviceDetectionContainer';
 import './index.css';
 

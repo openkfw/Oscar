@@ -40,6 +40,7 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   mapLayers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  layers: PropTypes.arrayOf(PropTypes.object).isRequired,
   staticLayersData: PropTypes.arrayOf(PropTypes.object).isRequired,
   closeSidebar: PropTypes.func.isRequired,
   currentActivity: PropTypes.string.isRequired,

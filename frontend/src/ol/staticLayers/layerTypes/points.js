@@ -2,8 +2,8 @@ import VectorLayer from 'ol/layer/Vector';
 import ClusterSource from 'ol/source/Cluster';
 
 import { pointStyleFactory } from '../styles';
-import vectorSourceLoader from '../loaders/vectorSourceLoader';
-import boxReloadVectorSourceLoader from '../loaders/boxReloadVectorSourceLoader';
+import vectorSourceLoader from '../vectorSourceLoader';
+import boxReloadVectorSourceLoader from '../boxReloadVectorSourceLoader';
 
 const pointsLayer = (layerData, handleIsLoading) => {
   let vectorSource;
@@ -27,7 +27,6 @@ const pointsLayer = (layerData, handleIsLoading) => {
     legend: layerData.legend,
     zIndex: 3,
     layerOptions: layerData.layerOptions,
-    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

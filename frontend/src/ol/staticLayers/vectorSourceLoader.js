@@ -1,13 +1,13 @@
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 
-import { getAttributesData, getGeoData } from '../../../axiosRequests';
+import { getAttributesData, getGeoData } from '../../axiosRequests';
 
 const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
   const vectorSource = new VectorSource({
     format: new GeoJSON(),
     loader: async (extent, resolution, projection) => {
-      handleIsLoading({ title, type }, 'add');
+      handleIsLoading({ title: layerTitle, type }, 'add');
       const url = layerData.geoDataUrl;
 
       const response = await getGeoData(url);
@@ -63,13 +63,13 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
               .readFeatures(featuresStruct, { featureProjection: projection });
 
             vectorSource.addFeatures(newDbFeatures);
-            handleIsLoading(title, 'remove');
+            handleIsLoading(layerTitle, 'remove');
           } else {
             const newFeatures = vectorSource.getFormat().readFeatures(response, { featureProjection: projection });
             vectorSource.addFeatures(newFeatures);
           }
         }
-        handleIsLoading(title, 'remove');
+        handleIsLoading(layerTitle, 'remove');
       }
     },
   });
