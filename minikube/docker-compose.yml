@@ -7,7 +7,7 @@ services:
     restart: on-failure
     volumes:
       - /minikube_volume/api/src:/app/src
-      - /minikube_volume/api/index.js:/app/index.js
+      - /minikube_volume/api/index.ts:/app/index.ts
     command: yarn watch
     ports:
       - 8080:8080

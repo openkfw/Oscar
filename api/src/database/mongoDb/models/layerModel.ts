@@ -1,20 +1,12 @@
 import { MapLayer } from '../dbSchemas/mapLayersSchema';
 import LayerGeoDataSchema from '../dbSchemas/layerGeoDataSchema';
-// import {
-//   MongoDBMapLayerWithGeoData,
-//   MongoDBMapLayerWithoutGeoData,
-//   MongoDBSublayerWithGeoData,
-//   MongoDBGeoData
-// } from '../../../types';
 
 const getMapLayers = async (filter) => {
-  // const getMapLayers = async (filter): Promise<Array<MongoDBMapLayerWithoutGeoData>> => {
   const items = await MapLayer.find(filter).sort({ title: 'asc' }).lean().exec();
   return items;
 };
 
 const getLayerGeoDataWithUrl = () =>
-  // const getLayerGeoDataWithUrl = (): Promise<Array<MongoDBGeoData>>  =>
   LayerGeoDataSchema.find({ geoDataUrl: { $ne: null } })
     .lean()
     .exec();
@@ -23,7 +15,6 @@ const getLayerGeoDataWithUrl = () =>
  * Returns map layers from mapLayers collection with link to GeoJson file from layerGeoData collection
  */
 const getMapLayersWithGeoData = async () => {
-  // const getMapLayersWithGeoData = async (): Promise<Array<MongoDBMapLayerWithGeoData>> => {
   // find all available geoData
   const haveGeoData = await getLayerGeoDataWithUrl();
 
@@ -57,7 +48,6 @@ const getMapLayersWithGeoData = async () => {
   const layersWithGeoDataUrl = layers.map((layer) => {
     if (layer.layerType === 'group') {
       const sublayers = layer.layers.map((lr) => {
-        // const sublayers: Array<MongoDBSublayerWithGeoData> = layer.layers.map((lr) => {
         if (geoData[lr.geoReferenceId]) {
           return {
             ...lr,
