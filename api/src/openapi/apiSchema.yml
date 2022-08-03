@@ -160,6 +160,7 @@ paths:
           schema:
             type: string
           description: Projection for coordinates values.
+          required: true
       responses:
         200:
           description: Successful response
