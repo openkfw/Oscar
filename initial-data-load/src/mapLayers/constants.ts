@@ -1,2 +1,2 @@
-export const LAYER_TYPES = ['points', 'regions', 'geometry', 'combined'];
-export const GEO_FORMATS = ['geojson'];
+export const LAYER_TYPES = ['points', 'regions', 'geometry', 'combined', 'tile'];
+export const GEO_FORMATS = ['geojson', 'tiles'];

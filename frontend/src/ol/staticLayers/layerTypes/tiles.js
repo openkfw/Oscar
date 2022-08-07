@@ -9,8 +9,10 @@ const tileLayer = (layerData) => {
     featureId: layerData.featureId,
     type: layerData.layerType,
     source: new XYZ({
-      url: layerData.tileDataUrl,
-      attributions: layerData.tileAttributions,
+      url: layerData.tileDataUrl || layerData.geoDataUrl,
+      attributions:
+        layerData.tileAttributions ||
+        (layerData.metadata && layerData.metadata.geoMetadata && layerData.metadata.geoMetadata.description),
     }),
     zIndex: 0,
     layerOptions: layerData.layerOptions,

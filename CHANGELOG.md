@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - route '/api/staticLayers', use '/api/dataLayers' [111]()
 - 'COUNTRY' environment variable for initial-data-load, use 'DATASET' instead
+- 'tileDataUrl' and 'tileAttributions' keys on the top level in ./initial-data-load/data/{country}/GeoData.yml configuration file are now deprecated. Use 'apiUrl' key instead of 'tileDataUrl' key and 'metadata.description' key instead of 'tileAttributions' key. You can find out more about these settings in [docs](./doc/data-structures/config-files.md#geoData.yml).
 
 ### Removed
 
