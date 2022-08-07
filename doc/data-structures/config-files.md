@@ -98,7 +98,7 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
   attributeIds: list of all available Features properties
   geometryDataTypes: types of geographical data
   metadata: information about the geographical data in file
-    description: String
+    description: String, this property is also used for tileAttributions
     sourceWebsite: String
     sourceOrganization: String
     updateDate: String
@@ -116,6 +116,8 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
   collectionName: "nameOfNewCollection"
   apiUrl: "urlInApiThatReturnsStoredGeodata"
 ```
+
+for returning data from API, but not storing them in the database just use apiUrl. (for example for tile data)
 
 ## mapLayers.yml
 
@@ -139,11 +141,6 @@ This config file is one long array with settings for layers in map. As there are
 - **dateText**: description of date, if it should be displayed,
 
 **featureId**: property in Feature in geojson file under which the value for 'featureId' in attributes is stored,
-
-**tileDataUrl**: url of map tile layer data source,
-
-**tileAttributions**: attributions of the tile layer data source,
-
 **metadata**: informations about data in layer, they are shown when you click on info button aside from map layer in layers menu
 
 - **description**:,

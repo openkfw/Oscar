@@ -65,8 +65,6 @@ const oneMapLayerItem = async (data: MapLayerConfigItem) => {
     style: data.style,
     legend: data.legend,
     layerOptions: data.layerOptions,
-    tileDataUrl: data.tileDataUrl,
-    tileAttributions: data.tileAttributions,
   };
 };
 

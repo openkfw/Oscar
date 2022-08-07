@@ -95,8 +95,6 @@ export const OneMapLayerData = new mongoose.Schema(
     featureId: String,
     style: StyleSchema,
     legend: [LegendSchema],
-    tileDataUrl: String,
-    tileAttributions: String,
   },
   { _id: false },
 );
@@ -122,8 +120,6 @@ export const MapLayerSchema = new mongoose.Schema({
   layers: [LayerSchema],
   layerOptions: LayerOptionsSchema,
   style: mongoose.Schema.Types.Mixed,
-  tileDataUrl: String,
-  tileAttributions: String,
 });
 
 export const MapLayer = mongoose.model('MapLayer', MapLayerSchema, 'mapLayers');

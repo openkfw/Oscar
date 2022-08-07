@@ -117,8 +117,6 @@ export interface MapLayerConfigItem {
     };
   }>;
   metadata: object;
-  tileDataUrl: string;
-  tileAttributions: string;
 }
 
 // MONGODB //
@@ -166,8 +164,6 @@ export interface MongoDbMapLayer {
     };
   }>;
   metadata: object;
-  tileDataUrl: string;
-  tileAttributions: string;
 }
 
 export interface MongoDbRegionAttribute {
