@@ -186,6 +186,84 @@ paths:
         "200":
           description: Successful response
 
+  /api/geodata/{tableName}:
+    get:
+      summary: Get geodata stored in database table
+      description: Get all geodata stored in database table
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+          description: name of table
+          required: true
+      responses:
+        200:
+          description: Successful response
+
+  /api/geodata/{tableName}/properties/{propertyName}:
+    get:
+      summary: Get all values for one property
+      description: Get all values for one property
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+          description: name of table
+          required: true
+        - in: path
+          name: propertyName
+          schema:
+            type: string
+          description: name of property
+          required: true
+      responses:
+        200:
+          description: Successful response
+
+  /api/geodata/{tableName}/uniqueProperties/{propertyName}:
+    get:
+      summary: Get all unique values for one property
+      description: Get all unique values for one property
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+            description: name of table
+          required: true
+        - in: path
+          name: propertyName
+          schema:
+            type: string
+          description: name of property
+          required: true
+      responses:
+        200:
+          description: Successfull response
+
+  /api/geodata/{tableName}/properties/{propertyName}/sum:
+    get:
+      summary: Get sum of all values for property
+      description: Get sum of all values for property
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+          description: name of table
+          required: true
+        - in: path
+          name: propertyName
+          schema:
+            type: string
+          description: name of property
+          required: true
+      responses:
+        200:
+          description: Successful resposne
+
   /api/staticLayers:
     get:
       summary: Gets static layers data
