@@ -12,7 +12,7 @@ const tileLayer = (layerData) => {
       url: layerData.tileDataUrl || layerData.geoDataUrl,
       attributions:
         layerData.tileAttributions ||
-        (layerData.metadata && layerData.metadata.geoMetadata && layerData.metadata.geoMetadata.description),
+        (layerData.metadata && layerData.metadata.geoMetadata && layerData.metadata.geoMetadata.attributions),
     }),
     zIndex: 0,
     layerOptions: layerData.layerOptions,

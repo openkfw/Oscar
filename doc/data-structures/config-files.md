@@ -77,6 +77,7 @@ _with geodata file provided by url to publicly available source_
   geometryDataTypes: types of geographical data
   metadata: information about the geographical data in file
     description: String
+    attributions: String
     sourceWebsite: String
     sourceOrganization: String
     updateDate: String
@@ -99,6 +100,7 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
   geometryDataTypes: types of geographical data
   metadata: information about the geographical data in file
     description: String
+    attributions: String
     sourceWebsite: String
     sourceOrganization: String
     updateDate: String
@@ -147,6 +149,7 @@ This config file is one long array with settings for layers in map. As there are
 **metadata**: informations about data in layer, they are shown when you click on info button aside from map layer in layers menu
 
 - **description**:,
+- **attributions**: attributions of the layer data source,
 - **sourceWebsite**:,
 - **sourceOrganisation**:,
 - **updateDate**:,

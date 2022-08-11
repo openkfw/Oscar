@@ -26,6 +26,7 @@ export interface GeoJson {
 
 export interface Metadata {
   description?: string;
+  attributions?: string;
   sourceWebsite?: string;
   sourceOrganisation?: string;
   updateDate: string;
