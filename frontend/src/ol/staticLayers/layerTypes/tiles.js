@@ -10,7 +10,7 @@ const tileLayer = (layerData) => {
     type: layerData.layerType,
     source: new XYZ({
       url: layerData.geoDataUrl,
-      attributions: layerData.metadata && layerData.metadata.geoMetadata && layerData.metadata.geoMetadata.description,
+      attributions: layerData.metadata && layerData.metadata.geoMetadata && layerData.metadata.geoMetadata.attributions,
     }),
     zIndex: 0,
     layerOptions: layerData.layerOptions,

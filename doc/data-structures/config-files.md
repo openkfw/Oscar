@@ -98,7 +98,7 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
   attributeIds: list of all available Features properties
   geometryDataTypes: types of geographical data
   metadata: information about the geographical data in file
-    description: String, this property is also used for tileAttributions
+    description: String
     sourceWebsite: String
     sourceOrganization: String
     updateDate: String
