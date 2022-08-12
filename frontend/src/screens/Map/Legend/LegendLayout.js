@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 
 import Previous from '@material-ui/icons/KeyboardArrowLeft';
 import Next from '@material-ui/icons/KeyboardArrowRight';
-import { mainBackgroundColor } from '../../../utils/oscarMuiTheme';
+import { mainBackgroundColor } from '../../../muiTheme/colors';
 import LegendItem from './LegendItem';
 import LegendTitle from './LegendTitle';
 

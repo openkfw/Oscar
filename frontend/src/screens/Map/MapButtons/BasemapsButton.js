@@ -11,7 +11,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 
-import { lightTextColor, accentColor, buttonBackgroundColor } from '../../../utils/oscarMuiTheme';
+import { lightTextColor, accentColor, buttonBackgroundColor } from '../../../muiTheme/colors';
 
 const useStyles = makeStyles((theme) => ({
   popover: {

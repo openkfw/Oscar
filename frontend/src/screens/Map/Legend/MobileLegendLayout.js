@@ -8,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
 import Modal from '@material-ui/core/Modal';
 
-import { mainBackgroundColor } from '../../../utils/oscarMuiTheme';
+import { mainBackgroundColor } from '../../../muiTheme/colors';
 import LegendItem from './LegendItem';
 import LegendTitle from './LegendTitle';
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Icon, Typography } from '@material-ui/core';
-import { mainBackgroundColor } from '../utils/oscarMuiTheme';
+import { mainBackgroundColor } from '../muiTheme/colors';
 
 const minHeight = 50;
 const padding = 16;

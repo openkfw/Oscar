@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { getAttributesData } from '../../axiosRequests';
 import OverviewTable from '../styledGraphComponents/OverviewTable';
-import { backgroundColor, dashboardDateColor, mainTextColor } from '../../utils/oscarMuiTheme';
+import { backgroundColor, dashboardDateColor, mainTextColor } from '../../muiTheme/colors';
 
 const useStyles = makeStyles({
   rowTitle: {

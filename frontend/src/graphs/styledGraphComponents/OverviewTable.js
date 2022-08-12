@@ -8,7 +8,7 @@ import {
   dashboardCardGreyColor,
   mainBackgroundColor,
   mainBoxShadow,
-} from '../../utils/oscarMuiTheme';
+} from '../../muiTheme/colors';
 
 const useStyles = makeStyles(() => ({
   wrapper: {

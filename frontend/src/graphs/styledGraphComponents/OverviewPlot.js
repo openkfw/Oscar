@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import Plotly from 'plotly.js-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
-import { mainBackgroundColor, mainTextColor } from '../../utils/oscarMuiTheme';
+import { mainBackgroundColor, mainTextColor } from '../../muiTheme/colors';
 import ProgressIndicator from '../ProgressIndicator';
 import EmptyChartMessage from '../EmptyChartMessage';
 

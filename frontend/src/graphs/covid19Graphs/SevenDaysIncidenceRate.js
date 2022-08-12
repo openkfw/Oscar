@@ -10,7 +10,7 @@ import {
   dashboardChartBlueColor,
   dashboardChartPurpleColor,
   dashboardChartLightBlueColor,
-} from '../../utils/oscarMuiTheme';
+} from '../../muiTheme/colors';
 
 const SevenDaysIncidenceRate = ({ attributeId, id }) => {
   // 7 days incidence

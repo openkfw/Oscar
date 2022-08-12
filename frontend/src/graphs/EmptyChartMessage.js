@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import { mainBackgroundColor, lightGreyTextColor } from '../utils/oscarMuiTheme';
+import { mainBackgroundColor, lightGreyTextColor } from '../muiTheme/colors';
 
 const useStyles = makeStyles({
   root: {
