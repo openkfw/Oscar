@@ -20,8 +20,6 @@ export const initializeDBConnection = async () => {
     });
   }
   await mongoose.connect(config.mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     socketTimeoutMS: 200000,
     dbName: config.dbName,
   } as ConnectOptions);
