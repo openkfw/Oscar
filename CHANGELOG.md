@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-- new color style type 'intervals' [117](https://github.com/openkfw/Oscar/pull/120)
 
 ### Changed
 
@@ -16,10 +15,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+### Removed
+
+## [1.5.0] - 2022-08-12
+
+Introducing option to use postgresql as database, with the exception of functions
+
+### Added
+
+- dateStart and dateEnd filter options for /pointAttributes [#126](https://github.com/openkfw/Oscar/pull/126)
+- postgresql database structure on service start [#129](https://github.com/openkfw/Oscar/issues/129) [#130](https://github.com/openkfw/Oscar/pull/130)
+- initial-data-load with postgresql database [#113](https://github.com/openkfw/Oscar/issues/113)
+- url-loader with postgresql database [#114](https://github.com/openkfw/Oscar/issues/114)
+- api with postgresql database [#116](https://github.com/openkfw/Oscar/issues/116)
+
+### Changed
+
+- url loader returns error code, if one load fails [#128](https://github.com/openkfw/Oscar/pull/128)
+
+### Fixed
+
+- in GeoData.yml, layer can be defined with just 'apiUrl' and not automatically storing data to database [#142](https://github.com/openkfw/Oscar/pull/142)
+
+### Deprecated
+
 - route '/api/staticLayers', use '/api/dataLayers' [111]()
 - 'COUNTRY' environment variable for initial-data-load, use 'DATASET' instead
 
 ### Removed
+
+## [1.4.0] - 2022-04-29
+
+### Added
+
+- added option to run app with Postgis container based on Postgres, default DB is still MongoDB as backend is not reworked yet [#119]  (https://github.com/openkfw/Oscar/pull/119/files)
+- refactored MongoDB functionalities [#111] (https://github.com/openkfw/Oscar/pull/118/files)
+- styling of region layers [#117] (https://github.com/openkfw/Oscar/pull/120/files)
+- filtering pointAttributes by date (https://github.com/openkfw/Oscar/pull/126/files)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+- security updates
+
 
 ## [1.3.2] - 2022-02-21
 
