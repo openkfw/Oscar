@@ -117,6 +117,8 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
   apiUrl: "urlInApiThatReturnsStoredGeodata"
 ```
 
+for returning data from API, but not storing them in the database just use apiUrl. (for example for tile data)
+
 ## mapLayers.yml
 
 This config file is one long array with settings for layers in map. As there are multiple types of layers (regions, points on map, any geometrical objects or even combination of them and tile layers) and also multiple sources of data for one layer, the structure of items in array may vary greatly.
@@ -139,11 +141,6 @@ This config file is one long array with settings for layers in map. As there are
 - **dateText**: description of date, if it should be displayed,
 
 **featureId**: property in Feature in geojson file under which the value for 'featureId' in attributes is stored,
-
-**tileDataUrl**: url of map tile layer data source,
-
-**tileAttributions**: attributions of the tile layer data source,
-
 **metadata**: informations about data in layer, they are shown when you click on info button aside from map layer in layers menu
 
 - **description**:,
