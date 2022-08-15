@@ -4,6 +4,7 @@ import attributes from './attributes';
 import pointAttributes from './pointAttributes';
 import geodata from './geodata';
 import uploads from './uploads';
+import isochrones from './isochrones';
 import authorization from './authorization';
 import config from './config';
 
@@ -14,6 +15,7 @@ router.use('/staticLayers', dataLayers);
 router.use('/attributes', attributes);
 router.use('/pointAttributes', pointAttributes);
 router.use('/geodata', geodata);
+router.use('/isochrones', isochrones);
 router.use('/uploads', uploads);
 router.use('/authorization', authorization);
 router.use('/config', config);

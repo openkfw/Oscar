@@ -61,4 +61,23 @@ const getPropertySum = async (tableName: string, propertyName: string) => {
   return data;
 };
 
-export default { getGeoData, getProperty, getUniqueValuesForProperty, getPropertySum };
+const getCoordinatesFromPointsCollection = async (collectionName: string, bottomLeft: string, topRight: string) => {
+  let coordinateFilter = {};
+  if (bottomLeft && topRight) {
+    coordinateFilter = { bbox: filterCoordinates(coordinateFilter, bottomLeft, topRight) };
+  }
+
+  const { connection } = mongoose;
+  const { db } = connection;
+
+  const data = await db.collection(collectionName).find(coordinateFilter).toArray();
+  return data.map((item) => item.geometry.coordinates);
+};
+
+export default {
+  getGeoData,
+  getProperty,
+  getUniqueValuesForProperty,
+  getPropertySum,
+  getCoordinatesFromPointsCollection,
+};
