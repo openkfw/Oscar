@@ -1,4 +1,5 @@
 import config from '../config/config';
+import logger from '../config/winston';
 import APIError from '../helpers/APIError';
 
 import mongoDb from './mongoDb/models/geoDataModel';
@@ -39,6 +40,24 @@ export const getPropertySum = async (tableName, propertyName) => {
   }
   if (config.mongoUri) {
     return mongoDb.getPropertySum(tableName, propertyName);
+  }
+};
+
+/**
+ * Returns coordinates of points in database
+ * @param  {string} collectionName
+ */
+export const getCoordinatesFromPointsCollection = async (
+  collectionName: string,
+  bottomLeft: string,
+  topRight: string,
+) => {
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    logger.info('Functionality is not yet implemented in postgresql.');
+    return;
+  }
+  if (config.mongoUri) {
+    return mongoDb.getCoordinatesFromPointsCollection(collectionName, bottomLeft, topRight);
   }
 };
 
