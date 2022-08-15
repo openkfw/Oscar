@@ -41,7 +41,7 @@ Introducing option to use postgresql as database, with the exception of function
 
 ### Deprecated
 
-- route '/api/staticLayers', use '/api/dataLayers' [111]()
+- route '/api/staticLayers', use '/api/dataLayers' [#111](https://github.com/openkfw/Oscar/issues/111)
 - 'COUNTRY' environment variable for initial-data-load, use 'DATASET' instead
 
 ### Removed
