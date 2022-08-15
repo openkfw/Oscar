@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [1.5.0] - 2022-08-12
+## [1.5.0] - 2022-08-15
 
 Introducing option to use postgresql as database, with the exception of functions
 
@@ -28,6 +28,8 @@ Introducing option to use postgresql as database, with the exception of function
 - initial-data-load with postgresql database [#113](https://github.com/openkfw/Oscar/issues/113)
 - url-loader with postgresql database [#114](https://github.com/openkfw/Oscar/issues/114)
 - api with postgresql database [#116](https://github.com/openkfw/Oscar/issues/116)
+- /geodata route for collections as sources for geodata [#140](https://github.com/openkfw/Oscar/issues/140)
+- /isochrones route for specifically isochrones in one collection [#151](https://github.com/openkfw/Oscar/pull/151)
 
 ### Changed
 
