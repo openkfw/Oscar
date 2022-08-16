@@ -49,7 +49,7 @@ const mapLayers = [
   }),
   new TileLayer({
     title: 'Carto Positron',
-    visible: true,
+    visible: false,
     source: new XYZ({
       url: `https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png`,
       cacheSize: 8192,

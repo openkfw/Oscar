@@ -77,7 +77,7 @@ const TimeSeriesSlider = ({ availableDates, modifiedLayer, updateLayerFnc }) => 
   const marks = [];
   const labels = [];
 
-  const setLabel = (incomingDate) => (incomingDate.dataDate ? incomingDate.dataDate : incomingDate.date.split('-')[0]);
+  const setLabel = (incomingDate) => (incomingDate.dataDate ? incomingDate.dataDate : incomingDate.date.split('T')[0]);
 
   for (let i = 0; i < availableDates.length; i++) {
     if (i === 0 || i === availableDates.length - 1) {
