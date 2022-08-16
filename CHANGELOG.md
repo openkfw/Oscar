@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - new color style type 'intervals' [117](https://github.com/openkfw/Oscar/pull/120)
-- 'metadata.attributions' key in ./initial-data-load/data/{country}/GeoData.yml configuration file as a substite for 'tileAttributions' key on the top level that is now deprecated. You can find out more about these settings in [docs](./doc/data-structures/config-files.md#geoData.yml). [#146](https://github.com/openkfw/Oscar/pull/146/files)
-- 'metadata.attributions' key in ./initial-data-load/data/{country}/MapLayers.yml configuration file
+- 'metadata.attributions' key in ./initial-data-load/data/{dataset}/GeoData.yml configuration file as a substite for 'tileAttributions' key on the top level that is now deprecated. You can find out more about these settings in [docs](./doc/data-structures/config-files.md#geoData.yml). [#146](https://github.com/openkfw/Oscar/pull/146/files)
+- 'metadata.attributions' key in ./initial-data-load/data/{dataset}/MapLayers.yml configuration file
 
 ### Changed
 
