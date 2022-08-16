@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import APIError from '../../../helpers/APIError';
 import { POINT_ATTRIBUTES_TABLE } from '../constants';
-import { getBoundingBox } from '../filters';
+import { getBoundingBox, getProjectionFilter } from '../filters';
 import { dateIsValidDatum } from '../../../helpers/utils';
 import { getDb } from '../index';
 import { PointAttributeFilter, PointAttribute } from '../../../types';
@@ -37,31 +37,6 @@ const getAttributesFilterConditions = (filter: PointAttributeFilter, qb: Knex.Qu
   }
 };
 
-const getProjectionFilter = async (proj, db = getDb()) => {
-  // projection in query must correspond to SRID in geometry column
-  if (proj) {
-    const SRIDarr = await db
-      .distinct(db.raw(`ST_SRID(${POINT_ATTRIBUTES_TABLE}.geometry)`))
-      .from(POINT_ATTRIBUTES_TABLE);
-
-    if (!SRIDarr.length) {
-      return;
-    }
-    const SRID = SRIDarr[0].st_srid;
-    const projNum = parseInt(proj.split(':')[1], 10);
-
-    if (SRID === projNum) {
-      return projNum;
-    }
-    throw new APIError(
-      `Projection SRID ${projNum} doesn't correspond to geometry column SRID ${SRID}`,
-      400,
-      true,
-      undefined,
-    );
-  }
-};
-
 /**
  * Compose filter from settings from query
  * @param  {string} attributeId - id of point attribute
@@ -88,7 +63,7 @@ const getFilteredPointAttributes = async (
   }
 
   if (filter.geometry) {
-    filter.proj = await getProjectionFilter(proj);
+    filter.proj = await getProjectionFilter(proj, POINT_ATTRIBUTES_TABLE);
   }
 
   // date filters
@@ -154,7 +129,7 @@ const getLastDatePointAttributes = async (
     filter.attributeId = attributeId;
   }
   if (filter.geometry) {
-    filter.proj = await getProjectionFilter(proj);
+    filter.proj = await getProjectionFilter(proj, POINT_ATTRIBUTES_TABLE);
   }
 
   const lastDate = await db

@@ -186,6 +186,115 @@ paths:
         "200":
           description: Successful response
 
+  /api/geodata/{tableName}:
+    get:
+      summary: Get geodata stored in database table
+      description: Get all geodata stored in database table
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+          description: name of table
+          required: true
+      responses:
+        200:
+          description: Successful response
+
+  /api/geodata/{tableName}/properties/{propertyName}:
+    get:
+      summary: Get all values for one property
+      description: Get all values for one property
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+          description: name of table
+          required: true
+        - in: path
+          name: propertyName
+          schema:
+            type: string
+          description: name of property
+          required: true
+      responses:
+        200:
+          description: Successful response
+
+  /api/geodata/{tableName}/uniqueProperties/{propertyName}:
+    get:
+      summary: Get all unique values for one property
+      description: Get all unique values for one property
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+            description: name of table
+          required: true
+        - in: path
+          name: propertyName
+          schema:
+            type: string
+          description: name of property
+          required: true
+      responses:
+        200:
+          description: Successfull response
+
+  /api/geodata/{tableName}/properties/{propertyName}/sum:
+    get:
+      summary: Get sum of all values for property
+      description: Get sum of all values for property
+      parameters:
+        - in: path
+          name: tableName
+          schema:
+            type: string
+          description: name of table
+          required: true
+        - in: path
+          name: propertyName
+          schema:
+            type: string
+          description: name of property
+          required: true
+      responses:
+        200:
+          description: Successful resposne
+  /api/isochrones:
+    get:
+      summary: Get isochrones
+      parameters:
+        - in: query
+          name: pointsSource
+          schema:
+            type: string
+          description: one of specified sources for points of interest
+        - in: query
+          name: bottomLeft
+          schema:
+            type: string
+            pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
+          description: Bottom left corner of selected area to fetch features from
+          required: false
+        - in: query
+          name: topRight
+          schema:
+            type: string
+            pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
+          description: Top right corner of selected area to fetch features from
+          required: false
+        - in: query
+          name: proj
+          schema:
+            type: string
+          description: Projection for coordinates values.
+      responses:
+        200:
+          description: Successful response
+
   /api/staticLayers:
     get:
       summary: Gets static layers data
