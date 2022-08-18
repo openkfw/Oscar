@@ -1,4 +1,4 @@
-import appInsights from 'applicationinsights';
+let appInsights = require('applicationinsights');
 import config from './src/config/config';
 import logger from './src/config/winston';
 import { initializeDb } from './src/database';
