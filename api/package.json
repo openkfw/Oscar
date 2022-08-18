@@ -7,7 +7,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "applicationinsights": "^1.8.10",
+    "applicationinsights": "^2.3.4",
     "azure-storage": "^2.10.1",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
