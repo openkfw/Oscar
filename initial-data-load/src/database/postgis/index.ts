@@ -33,13 +33,16 @@ export const disconnect = async () => {
 
 export const checkIfTableExists = (tableName: string, db = getDb()) => db.schema.hasTable(tableName);
 
-export const createGeometryTable = (tableName: string, db = getDb()) =>
-  db.schema.createTable(tableName, (table) => {
+export const createGeometryTable = async (tableName: string, db = getDb()) => {
+  await db.raw('create extension if not exists "uuid-ossp"');
+  return db.schema.createTable(tableName, (table) => {
+    table.uuid('id', { primaryKey: true }).defaultTo(knex.raw('uuid_generate_v4()'));
     table.text('type');
     table.json('properties');
     table.geometry('geometry');
     table.geometry('bbox');
   });
+};
 
 /**
  * Clear all rows from table

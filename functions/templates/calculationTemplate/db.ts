@@ -30,8 +30,6 @@ export const initializeDBConnection = async (context: Context) => {
     });
   }
   await mongoose.connect(config.mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     connectTimeoutMS: 360000,
     socketTimeoutMS: 360000,
     dbName: config.dbName,
@@ -105,7 +103,7 @@ export const storeToDb = async (collectionName: string, data: Array<Attribute>) 
         attributeId: item.attributeId,
       },
       update: {
-        $set: item,
+        $set: { ...item },
       },
       upsert: true,
     },

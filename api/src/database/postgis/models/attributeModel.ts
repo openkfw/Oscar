@@ -236,12 +236,9 @@ const getAvailableDates = async (attributeId: string, db = getDb()): Promise<Arr
     .from(FEATURE_ATTRIBUTES_TABLE)
     .where('attribute_id', attributeId)
     .select('date_iso as date', 'date_data as dataDate')
-    .distinct('date_iso', 'date_data')
+    .distinctOn('date_iso', 'date_data')
     .orderBy('date_iso');
-  return dates.map((date) => ({
-    dataDate: date.dataDate,
-    date: date.date,
-  }));
+  return dates;
 };
 
 /**

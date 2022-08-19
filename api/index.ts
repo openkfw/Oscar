@@ -1,4 +1,7 @@
-import appInsights from 'applicationinsights';
+/* eslint import/first: 0 */
+// eslint-disable-next-line
+const appInsights = require('applicationinsights');
+
 import config from './src/config/config';
 import logger from './src/config/winston';
 import { initializeDb } from './src/database';

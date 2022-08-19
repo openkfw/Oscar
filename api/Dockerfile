@@ -22,14 +22,13 @@ WORKDIR /app
 ARG NODE_ENV=production
 
 ENV NODE_ENV=production
+ENV OPENAPI_SCHEMA_FILE=dist/src/openapi/apiSchema.yml
 
 COPY --chown=node:node package.json yarn.lock ./
 
 RUN yarn --frozen-lockfile && yarn cache clean
 
 COPY --from=builder /app/dist ./dist
-
-COPY --chown=node:node /app/dist/data ./dist/data
 
 USER node
 

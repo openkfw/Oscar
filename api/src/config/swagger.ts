@@ -1,5 +1,6 @@
 import swaggerValidation from 'openapi-validator-middleware';
+import config from './config';
 
-swaggerValidation.init('src/openapi/apiSchema.yml');
+swaggerValidation.init(config.openApiSchemaFile || 'src/openapi/apiSchema.yml');
 
 export default swaggerValidation;
