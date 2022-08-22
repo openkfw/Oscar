@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
-import { accentColor, mainBackgroundColor } from '../../utils/oscarMuiTheme';
-import { debounce } from '../../utils/helpers';
+import { accentColor, mainBackgroundColor } from '../../../utils/oscarMuiTheme';
+import { debounce } from '../../../utils/helpers';
 
 const TimeSlider = withStyles((theme) => ({
   root: {
@@ -68,53 +68,32 @@ const ValueLabelComponent = (props) => {
   );
 };
 
-const changeModifiedLayerSource = (value, modifiedLayer) => {
-  if (modifiedLayer) {
-    modifiedLayer.getSource().set('sliderDate', new Date(value).toISOString());
-    modifiedLayer.getSource().refresh();
-  }
-};
+const TimeSeriesSlider = ({ availableDates, modifiedLayer, updateLayerFnc }) => {
+  const [currentValue, setCurrentValue] = useState(undefined);
+  useEffect(() => {
+    setCurrentValue(undefined);
+  }, [modifiedLayer]);
 
-const debounceSourceChange = debounce(changeModifiedLayerSource, 200);
-
-const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
   const marks = [];
   const labels = [];
-  let dataDate;
+
+  const setLabel = (incomingDate) => (incomingDate.dataDate ? incomingDate.dataDate : incomingDate.date.split('T')[0]);
 
   for (let i = 0; i < availableDates.length; i++) {
-    dataDate = availableDates[i].dataDate;
     if (i === 0 || i === availableDates.length - 1) {
-      if (dataDate) {
-        marks.push({
-          value: new Date(availableDates[i].date).getTime(),
-          label: availableDates[i].dataDate,
-        });
-        labels.push({
-          label: availableDates[i].dataDate,
-        });
-      } else {
-        marks.push({
-          value: new Date(availableDates[i].date).getTime(),
-          label: availableDates[i].date.split('T')[0],
-        });
-        labels.push({
-          label: availableDates[i].date.split('T')[0],
-        });
-      }
-    } else if (dataDate) {
       marks.push({
         value: new Date(availableDates[i].date).getTime(),
+        label: setLabel(availableDates[i]),
       });
       labels.push({
-        label: availableDates[i].dataDate,
+        label: setLabel(availableDates[i]),
       });
     } else {
       marks.push({
         value: new Date(availableDates[i].date).getTime(),
       });
       labels.push({
-        label: availableDates[i].date.split('T')[0],
+        label: setLabel(availableDates[i]),
       });
     }
   }
@@ -122,11 +101,11 @@ const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
   const minValue = marks[0].value;
   const maxValue = marks[marks.length - 1].value;
 
-  const [currentValue, setCurrentValue] = useState(undefined);
+  const changeModifiedLayerSource = (value) => {
+    updateLayerFnc('sliderDate', new Date(value).toISOString());
+  };
 
-  useEffect(() => {
-    setCurrentValue(undefined);
-  }, [modifiedLayer]);
+  const debounceSourceChange = debounce(changeModifiedLayerSource, 200);
 
   const valueLabelFormat = (value) => {
     if (!currentValue) {
@@ -136,25 +115,23 @@ const TimeSeriesSlider = ({ availableDates, modifiedLayer }) => {
       return 'LAST';
     }
     const currentMarkIndex = marks.findIndex((mark) => mark.value === value);
-    return labels[currentMarkIndex].label;
+    return (labels[currentMarkIndex] && labels[currentMarkIndex].label) || 'LAST';
   };
 
   return (
-    <>
-      <TimeSlider
-        valueLabelFormat={valueLabelFormat}
-        aria-labelledby="discrete-slider-restrict"
-        step={null}
-        valueLabelDisplay="on"
-        ValueLabelComponent={ValueLabelComponent}
-        marks={marks}
-        value={currentValue || maxValue}
-        min={minValue}
-        max={maxValue}
-        onChange={(_, value) => (value !== currentValue ? setCurrentValue(value) : null)}
-        onChangeCommitted={() => debounceSourceChange(currentValue, modifiedLayer, availableDates, dataDate)}
-      />
-    </>
+    <TimeSlider
+      valueLabelFormat={valueLabelFormat}
+      aria-labelledby="discrete-slider-restrict"
+      step={null}
+      valueLabelDisplay="on"
+      ValueLabelComponent={ValueLabelComponent}
+      marks={marks}
+      value={currentValue || maxValue}
+      min={minValue}
+      max={maxValue}
+      onChange={(_, value) => (value !== currentValue ? setCurrentValue(value) : null)}
+      onChangeCommitted={() => debounceSourceChange(currentValue, modifiedLayer, availableDates)}
+    />
   );
 };
 

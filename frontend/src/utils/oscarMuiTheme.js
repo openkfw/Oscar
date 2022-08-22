@@ -25,6 +25,7 @@ export const dashboardChartAxisColor = 'rgba(255, 255, 255, 0.64)';
 export const dashboardCardGreyColor = 'rgba(255, 255, 255, 0.3)';
 export const dashboardChartGridColor = 'rgba(248, 248, 248, 0.11)';
 export const dashboardChartRedColor = 'rgb(243, 62, 62)';
+export const dashboardChartLightRedColor = 'rgb(228, 83, 83)';
 export const dashboardChartGreenColor = 'rgb(87, 243, 62)';
 export const dashboardChartYellowColor = 'rgb(220, 195, 64)';
 export const dashboardChartBlueColor = 'rgb(64, 70, 220)';
@@ -33,6 +34,47 @@ export const dashboardChartLightBlueColor = 'rgb(64, 220, 220)';
 export const iconColor = 'rgb(248, 248, 248)';
 
 export const mainBoxShadow = '0px 1px 34px 2px rgba(39, 44, 55, 0.41)';
+
+export const actionButtonStyles = () => ({
+  actionButton: {
+    width: '165px',
+    color: mainTextColor,
+    background: buttonBackgroundColor,
+    textTransform: 'none',
+    fontSize: '0.75rem',
+    borderRadius: '8px',
+    marginRight: '0px',
+    marginLeft: '0px',
+    height: '40px',
+    boxShadow: '0px 4px 13px rgba(0, 0, 0, 0.33)',
+    '&:active': {
+      backgroundColor: activeButtonBackgroundColor,
+      color: accentColor.main,
+    },
+    '&:focus': {
+      backgroundColor: activeButtonBackgroundColor,
+      color: accentColor.main,
+    },
+  },
+});
+
+export const clickableStyles = (theme) => ({
+  clickable: {
+    color: theme.palette.secondary.main,
+    cursor: 'pointer',
+  },
+});
+
+export const customSnackbarStyles = (theme) => ({
+  snackbar: {
+    marginTop: '0px',
+    opacity: '50',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '60px',
+      marginRight: '60px',
+    },
+  },
+});
 
 const theme = createTheme({
   palette: {

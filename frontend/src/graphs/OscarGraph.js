@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+import CasesByProvincePieChart from './covid19Graphs/CasesByProvincePieChart';
 import CasesPerDayByProvince from './covid19Graphs/CasesPerDayByProvince';
 import CurrentCovid19Situation from './covid19Graphs/CurrentCovid19Situation';
 import SevenDaysIncidenceRate from './covid19Graphs/SevenDaysIncidenceRate';
@@ -23,14 +24,14 @@ const useStyles = () => ({
 });
 
 const Default = () => <p>Default</p>;
-
-const InvalidGraphMessage = (props) => (
-  <EmptyChartMessage title={`Incorrect graphs settings for graph ${props.graphName}`} />
+const IncorrectGraphSettingsMessage = ({ graphName }) => (
+  <EmptyChartMessage title={`Incorrect graphs settings for graph ${graphName}`} />
 );
 
 class OscarGraph extends Component {
   graphs = {
     covid19Graphs: {
+      CasesByProvincePieChart,
       CasesPerDayByProvince,
       CurrentCovid19Situation,
       SevenDaysIncidenceRate,
@@ -55,12 +56,12 @@ class OscarGraph extends Component {
       if (this.graphs[category][graphName]) {
         return this.graphs[category][graphName];
       }
-      return InvalidGraphMessage;
+      return IncorrectGraphSettingsMessage;
     }
     if (this.graphs.default[graphName]) {
       return this.graphs.default[graphName];
     }
-    return InvalidGraphMessage;
+    return IncorrectGraphSettingsMessage;
   };
 
   render() {

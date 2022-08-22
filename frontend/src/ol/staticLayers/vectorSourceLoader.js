@@ -1,7 +1,7 @@
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 
-import { getAttributesData, getGeoData } from '../../../axiosRequests';
+import { getAttributesData, getGeoData } from '../../axiosRequests';
 
 const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
   const vectorSource = new VectorSource({

@@ -22,9 +22,8 @@ export const findPlace = async (searchedPlace, lat, lon) => {
   }
   return [];
 };
-
-export const getAttributesData = async (searchParams) => {
-  const response = await axios.get(`/api/attributes?${searchParams}`);
+export const getAttributesData = async (searchParams, baseUrl = '/api/attributes?') => {
+  const response = await axios.get(`${baseUrl}${searchParams}`);
 
   if (Object.keys(response.data).length === 0) {
     return [];
@@ -46,7 +45,7 @@ export const getAttributesData = async (searchParams) => {
   const finalResponseProcessed = [{}];
 
   while (remainingCount > 0) {
-    const newPromise = axios.get(`/api/attributes?${searchParams}&offset=${responseLimit * count}`);
+    const newPromise = axios.get(`${baseUrl}${searchParams}&offset=${responseLimit * count}`);
     allPromises.push(newPromise);
     remainingCount -= responseLimit;
     count += 1;
@@ -90,10 +89,7 @@ export const getAttributesData = async (searchParams) => {
 
 export const getGeoData = async (url) => {
   const response = await axios.get(url);
-  if (response && response.data) {
-    return response.data;
-  }
-  return [];
+  return response.data;
 };
 
 export const checkAuthorization = async () => {

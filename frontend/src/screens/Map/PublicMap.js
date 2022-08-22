@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import Map from 'ol/Map';
@@ -8,7 +8,7 @@ import { defaults as defaultControls } from 'ol/control';
 
 import { defaults as defaultInteractions } from 'ol/interaction';
 
-import { ConfigContext, PublicMapConsumer, PublicMapProvider } from '../../contexts';
+import { PublicMapConsumer, PublicMapProvider } from '../../contexts';
 import { staticLayersTypes } from '../../constants';
 import { selectedPlaceLayer } from '../../ol/place';
 import PointInfo from '../../ol/info/PointInfoContainer';
@@ -16,28 +16,22 @@ import PointInfo from '../../ol/info/PointInfoContainer';
 import ShowPlaceLayer from '../../ol/ShowPlaceLayer';
 
 import mapLayerOptions from '../../ol/staticLayers/mapLayers';
-import { getStaticLayersData, getAvailableDates } from '../../axiosRequests';
+import { getStaticLayersData } from '../../axiosRequests';
 import staticLayerGenerator from '../../ol/staticLayers/staticLayerGenerator';
 import AzureMapSearch from './AzureMapSearch';
 import ActionButtons from './MapButtons/ActionButtons';
 import Sidebar from './Sidebar/SidebarContainer';
 
 import Legend from './Legend/LegendContainer';
-import TimeSeriesSlider from './TimeSeriesSlider';
-
-// Popup imports
+import TimeSeries from './TimeSeriesSlider/TimeSeriesContainer';
 
 // css
 import '../../index.css';
 
-const PublicMap = ({ isLoading, handleIsLoading }) => {
+const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
   const [mapLayers, setMapLayers] = useState(mapLayerOptions);
-  // eslint-disable-next-line no-unused-vars
   const [staticLayers, setStaticLayers] = useState([]);
   const [staticLayersData, setStaticLayersData] = useState([]);
-  const configContext = useContext(ConfigContext);
-  const { config } = configContext;
-  const mapConfig = config.map;
 
   // eslint-disable-next-line no-unused-vars
   const [basicLayers, setBasicLayers] = useState([
@@ -48,32 +42,8 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
     selectedPlaceLayer,
   ]);
   const [legends, setLegends] = useState([]);
-  const [timeSeriesSlider, setTimeSeriesSlider] = useState(false);
-  const [availableDates, setAvailableDates] = useState(null);
-  const [modifiedLayer, setModifiedLayer] = useState(null);
+  const [timeSeriesLayer, setTimeSeriesLayer] = useState(undefined);
   const [mapPosition, setMapPosition] = useState(null);
-
-  useEffect(() => {
-    const getZoomAndCenter = () => {
-      let zoom;
-      let center;
-      if (window.location !== '') {
-        const hash = window.location.hash.replace('#map=', '');
-        const parts = hash.split('/');
-        if (parts.length === 4) {
-          zoom = parseInt(parts[0], 10);
-          center = [parseFloat(parts[1]), parseFloat(parts[2])];
-        }
-      }
-      setMapPosition({
-        center: center || [mapConfig.x, mapConfig.y],
-        zoom: zoom || mapConfig.zoom,
-      });
-    };
-    if (mapConfig) {
-      getZoomAndCenter();
-    }
-  }, [mapConfig]);
 
   // eslint-disable-next-line no-unused-vars
   const [map, setMap] = useState(
@@ -90,8 +60,8 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
       }),
       layers: basicLayers,
       view: new View({
-        center: mapPosition ? mapPosition.center : undefined,
-        zoom: mapPosition ? mapPosition.zoom : null,
+        center: mapPosition ? mapPosition.center : [mapConfig.x, mapConfig.y],
+        zoom: mapPosition ? mapPosition.zoom : mapConfig.zoom,
         minZoom: 2,
       }),
     }),
@@ -135,13 +105,19 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
     return legends;
   };
 
-  const showTimeseriesSlider = (availableDates, layer) => {
-    setAvailableDates(availableDates);
-    setTimeSeriesSlider(true);
-    setModifiedLayer(layer);
-    layer.getSource().unset('sliderDate');
-    layer.getSource().unset('dataDate');
-    layer.getSource().refresh();
+  const setLayerSourceProp = (layer, key, value) => {
+    if (layer) {
+      layer.getSource().set(key, value);
+      layer.getSource().refresh();
+    }
+  };
+
+  const setupTimeseriesLayer = (layer) => {
+    setTimeSeriesLayer(layer);
+    if (layer) {
+      layer.getSource().unset('sliderDate');
+      layer.getSource().refresh();
+    }
   };
 
   const toggleStaticLayer = async (title) => {
@@ -157,7 +133,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         // layer is selected, deselecting
         modifiedLayer.setVisible(false);
         // if any of the layers that are still visible on the map have time series, show slider for one of them
-        const timeseriesLayerIndex = staticLayers.findIndex(
+        const timeseriesLayer = staticLayers.find(
           (layer) =>
             layer.get('title') !== title &&
             layer.get('layerOptions') &&
@@ -165,16 +141,10 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
             layer.get('layerOptions').timeseries &&
             layer.getVisible(),
         );
-        const timeseriesLayer = staticLayers[timeseriesLayerIndex];
         if (timeseriesLayer) {
-          const availableDates = await getAvailableDates(timeseriesLayer.get('attribute'));
-          if (availableDates && availableDates.length > 1) {
-            showTimeseriesSlider(availableDates, timeseriesLayer);
-          }
-          // for last layer with time series that is being deselected, hide slider and clear modifiedLayer state
+          setupTimeseriesLayer(timeseriesLayer);
         } else if (modifiedLayer.get('layerOptions') && modifiedLayer.get('layerOptions').timeseries) {
-          setTimeSeriesSlider(false);
-          setModifiedLayer(null);
+          setupTimeseriesLayer(undefined);
         }
       } else {
         // layer is not selected, selecting
@@ -185,8 +155,8 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
             staticLayers.forEach((layer) => {
               if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
                 const layerLayerOptions = layer.get('layerOptions') || {};
-                if (layerLayerOptions.timeseries && layer.getVisible()) {
-                  setTimeSeriesSlider(false);
+                if (!timeSeriesLayer && layerLayerOptions.timeseries && layer.getVisible()) {
+                  setTimeSeriesLayer(undefined);
                 }
                 layer.setVisible(false);
               }
@@ -204,26 +174,18 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
             const singleDisplayLayer = staticLayers[singleDisplayLayerIndex];
             if (singleDisplayLayer) {
               if (singleDisplayLayer.get('layerOptions').timeseries) {
-                setTimeSeriesSlider(false);
+                setTimeSeriesLayer(undefined);
               }
               singleDisplayLayer.setVisible(false);
             }
           }
         }
-
         // select correct layer and timeline, if timeseries data available
         const layerOptions = modifiedLayer.get('layerOptions');
-        if ((layerOptions && layerOptions.timeseries) || modifiedLayer.timeseries) {
-          const availableDates = await getAvailableDates(modifiedLayer.get('attribute'));
-          if (availableDates && availableDates.length > 1) {
-            showTimeseriesSlider(availableDates, modifiedLayer);
-            modifiedLayer.setVisible(true);
-          } else {
-            modifiedLayer.setVisible(true);
-          }
-        } else {
-          modifiedLayer.setVisible(true);
+        if ((!timeSeriesLayer && layerOptions && layerOptions.timeseries) || modifiedLayer.timeseries) {
+          setupTimeseriesLayer(modifiedLayer);
         }
+        modifiedLayer.setVisible(true);
       }
     }
 
@@ -241,6 +203,7 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
         return;
       }
     }
+
     map.getView().setCenter(mapPosition.center);
     map.getView().setZoom(mapPosition.zoom);
     const hash = `#map=${map.getView().getZoom()}/${Math.round(map.getView().getCenter()[0] * 100) / 100}/${
@@ -318,9 +281,12 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
       <ActionButtons switchMapLayers={switchMapLayers} mapLayers={mapLayers} map={map} />
       <AzureMapSearch map={map} />
       <Legend data={legends} />
-      {timeSeriesSlider && modifiedLayer ? (
-        <TimeSeriesSlider availableDates={availableDates} modifiedLayer={modifiedLayer} />
-      ) : null}
+      {timeSeriesLayer && (
+        <TimeSeries
+          layer={timeSeriesLayer}
+          updateLayerFnc={(key, value) => setLayerSourceProp(timeSeriesLayer, key, value)}
+        />
+      )}
       <Sidebar
         isLoading={isLoading}
         mapLayers={mapLayers}
@@ -337,6 +303,8 @@ const PublicMap = ({ isLoading, handleIsLoading }) => {
 PublicMap.propTypes = {
   isLoading: PropTypes.arrayOf(PropTypes.any).isRequired,
   handleIsLoading: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  mapConfig: PropTypes.object,
 };
 
 const PublicMapWrapper = (props) => (

@@ -1,10 +1,15 @@
 import VectorLayer from 'ol/layer/Vector';
-
+import boxReloadVectorSourceLoader from '../boxReloadVectorSourceLoader';
+import vectorSourceLoader from '../vectorSourceLoader';
 import { regionStyleFactory } from '../styles';
-import vectorSourceLoader from '../loaders/vectorSourceLoader';
 
 const regionsLayer = (layerData, handleIsLoading) => {
-  const vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'region');
+  let vectorSource;
+  if (layerData.geoDataUrl.includes('uploads')) {
+    vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'region');
+  } else {
+    vectorSource = boxReloadVectorSourceLoader(layerData, handleIsLoading, layerData.title);
+  }
 
   const newLayer = new VectorLayer({
     title: layerData.title,
@@ -17,7 +22,6 @@ const regionsLayer = (layerData, handleIsLoading) => {
     legend: layerData.legend,
     zIndex: 1,
     layerOptions: layerData.layerOptions,
-    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

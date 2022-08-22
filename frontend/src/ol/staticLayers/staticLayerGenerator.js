@@ -8,30 +8,28 @@ import tileLayer from './layerTypes/tiles';
 import groupLayer from './layerTypes/group';
 
 const staticLayerGenerator = (layerData, handleIsLoading) => {
-  let layerOptions;
-  if (layerData.timeseries !== null) {
-    layerOptions = { timeseries: layerData.timeseries };
-  } else {
-    layerOptions = layerData.layerOptions;
+  if (!layerData.layerOptions) {
+    // eslint-disable-next-line no-param-reassign
+    layerData.layerOptions = { timeseries: layerData.timeseries, maxResolution: layerData.maxResolution };
   }
   switch (layerData.layerType) {
     case staticLayersTypes.REGIONS: {
-      return regionsLayer({ ...layerData, layerOptions }, handleIsLoading);
+      return regionsLayer(layerData, handleIsLoading);
     }
     case staticLayersTypes.POINTS: {
-      return pointsLayer({ ...layerData, layerOptions }, handleIsLoading);
+      return pointsLayer(layerData, handleIsLoading);
     }
     case staticLayersTypes.GEOMETRY: {
-      return geometryLayer({ ...layerData, layerOptions }, handleIsLoading);
+      return geometryLayer(layerData, handleIsLoading);
     }
     case staticLayersTypes.GROUP: {
-      return groupLayer({ ...layerData, layerOptions }, handleIsLoading);
+      return groupLayer(layerData, handleIsLoading);
     }
     case staticLayersTypes.COMBINED: {
-      return combinedLayer({ ...layerData, layerOptions }, handleIsLoading);
+      return combinedLayer(layerData, handleIsLoading);
     }
     case staticLayersTypes.TILE: {
-      return tileLayer({ ...layerData, layerOptions }, handleIsLoading);
+      return tileLayer(layerData, handleIsLoading);
     }
     // eslint-disable-next-line no-empty
     default: {

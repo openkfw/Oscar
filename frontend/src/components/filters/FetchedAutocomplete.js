@@ -13,8 +13,17 @@ const FetchedAutocomplete = ({ title, name, itemsSource, selectedValue, options,
       const fetchedItems = await axios.get(itemsSource);
       let transformedOptions = [];
       if (fetchedItems.data && fetchedItems.data.length) {
-        transformedOptions = fetchedItems.data.map((item, idx) => ({ label: item, id: idx }));
+        transformedOptions = fetchedItems.data.map((item) => {
+          if (typeof item === 'object' && item !== null) {
+            return { label: item.value || item.id, id: item.id };
+          }
+          if (item === null) {
+            return { label: 'missing value', id: null };
+          }
+          return { label: item.toString(), id: item };
+        });
       }
+
       setFilterOptions(name, transformedOptions);
     }
     if (itemsSource && (!options || options.length === 0)) {
@@ -44,6 +53,7 @@ const FetchedAutocomplete = ({ title, name, itemsSource, selectedValue, options,
         <TextField
           {...params}
           style={{ backgroundColor: 'rgba(0,0,0,0)', ...params.style }}
+          label={title}
           InputLabelProps={{
             style: {
               ...params.InputLabelProps.style,
@@ -82,7 +92,7 @@ FetchedAutocomplete.propTypes = {
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   itemsSource: PropTypes.string.isRequired,
-  selectedValue: PropTypes.string || undefined,
+  selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) || undefined,
   updateFilter: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object),
   setFilterOptions: PropTypes.func.isRequired,

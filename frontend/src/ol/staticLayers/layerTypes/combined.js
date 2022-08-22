@@ -1,5 +1,5 @@
 import VectorLayer from 'ol/layer/Vector';
-import vectorSourceLoader from '../loaders/vectorSourceLoader';
+import vectorSourceLoader from '../vectorSourceLoader';
 import { combinedStyleFactory } from '../styles';
 
 const combinedLayer = (layerData, handleIsLoading) => {
@@ -17,7 +17,6 @@ const combinedLayer = (layerData, handleIsLoading) => {
     legend: layerData.legend,
     minZoom: 11,
     layerOptions: layerData.layerOptions,
-    maxResolution: (layerData.layerOptions && layerData.layerOptions.maxResolution) || layerData.maxResolution,
   });
   newLayer.selectable = true;
   if (layerData.visible) {

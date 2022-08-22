@@ -47,5 +47,13 @@ const mapLayers = [
       attributions: `© ${new Date().getFullYear()} HERE`,
     }),
   }),
+  new TileLayer({
+    title: 'Carto Positron',
+    visible: false,
+    source: new XYZ({
+      url: `https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png`,
+      cacheSize: 8192,
+    }),
+  }),
 ];
 export default mapLayers;
