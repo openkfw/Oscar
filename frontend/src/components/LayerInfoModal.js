@@ -69,6 +69,16 @@ const LayerInfoModal = ({ isOpen, handleModalClose, modalData, title }) => {
               </Grid>
             </Grid>
           )}
+          {modalData.attributions && (
+            <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+              <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                Attributions
+              </Grid>
+              <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                {modalData.attributions}
+              </Grid>
+            </Grid>
+          )}
           {modalData.sourceWebsite && (
             <Grid container item xs={12} spacing={2} className={classes.modalRow}>
               <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
@@ -165,6 +175,16 @@ const LayerInfoModal = ({ isOpen, handleModalClose, modalData, title }) => {
                   </Grid>
                   <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
                     {modalData.geoMetadata.description}
+                  </Grid>
+                </Grid>
+              )}
+              {modalData.geoMetadata.attributions && (
+                <Grid container item xs={12} spacing={2} className={classes.modalRow}>
+                  <Grid item xs={12} sm={4} className={classes.modalRowLabel}>
+                    Attributions
+                  </Grid>
+                  <Grid item xs={12} sm={8} className={classes.modalRowDescription}>
+                    {modalData.geoMetadata.attributions}
                   </Grid>
                 </Grid>
               )}

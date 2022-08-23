@@ -25,6 +25,7 @@ attributeIds: list of all available Features properties
 geometryDataTypes: types of geographical data
 metadata: information about the geographical data in file
   description: String
+  attributions: String
   sourceWebsite: String
   sourceOrganization: String
   updateDate: String
@@ -47,6 +48,7 @@ attributeIds: list of all available Features properties
 geometryDataTypes: types of geographical data
 metadata: information about the geographical data in file
   description: String
+  attributions: String
   sourceWebsite: String
   sourceOrganization: String
   updateDate: String

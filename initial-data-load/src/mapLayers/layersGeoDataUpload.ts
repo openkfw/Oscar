@@ -92,7 +92,6 @@ const formatLayerGeoData = async (data: GeoDataConfigItem, dataset: string) => {
     if (hasFile && data.storeToDb) {
       logger.info(`Storing geodata ${data.geoDataFilename} for layer ${data.referenceId} from file...`);
       await storeGeoDataToDb(true, data, filePath);
-      url = data.apiUrl;
       logger.info(`Layer ${data.name} has new URL for geodata: ${url}`);
     } else if (hasFile && !data.storeToDb) {
       logger.info(`Storing geojson ${data.geoDataFilename} for layer ${data.referenceId} from file...`);

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const MetadataSchema = new mongoose.Schema(
   {
     description: String,
+    attributions: String,
     sourceWebsite: String,
     sourceOrganisation: String,
     updateDate: String,
