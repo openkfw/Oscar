@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Deprecated
+- 'tileDataUrl' and 'tileAttributions' keys on the top level in ./initial-data-load/data/{country}/GeoData.yml configuration file. Use 'apiUrl' key instead of 'tileDataUrl' key and 'metadata.attributions' key instead of 'tileAttributions' key. You can find out more about these settings in [docs](./doc/data-structures/config-files.md#geoData.yml). [#146](https://github.com/openkfw/Oscar/pull/146/files)
 
 ### Removed
 
@@ -45,7 +46,6 @@ Introducing option to use postgresql as database, with the exception of function
 
 - route '/api/staticLayers', use '/api/dataLayers' [#111](https://github.com/openkfw/Oscar/issues/111)
 - 'COUNTRY' environment variable for initial-data-load, use 'DATASET' instead
-- 'tileDataUrl' and 'tileAttributions' keys on the top level in ./initial-data-load/data/{country}/GeoData.yml configuration file. Use 'apiUrl' key instead of 'tileDataUrl' key and 'metadata.attributions' key instead of 'tileAttributions' key. You can find out more about these settings in [docs](./doc/data-structures/config-files.md#geoData.yml). [#146](https://github.com/openkfw/Oscar/pull/146/files)
 
 ### Removed
 
