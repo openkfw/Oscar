@@ -2,8 +2,8 @@
   referenceId: "slovakiaRegionsStoredInDB"
   geoDataFilename: "slovakia_regions.geojson"
   format: "geojson"
-  storeToDb: true
-  collectionName: "slovakiaRegionsGeoData"
+  createTable: "slovakiaRegionsGeoData"
+  storeToTable: "slovakiaRegionsGeoData"
   apiUrl: "/api/geodata/slovakiaRegionsGeoData"
   featureIds:
     [
