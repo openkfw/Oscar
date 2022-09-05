@@ -2,7 +2,6 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
-import swaggerValidation from '../config/swagger';
 import utils from '../helpers/utils';
 import logger from '../config/winston';
 import config from '../config/config';
@@ -11,7 +10,6 @@ const router = express.Router();
 
 router.get(
   '/',
-  swaggerValidation.validate,
   utils.forwardError(async (req, res) => {
     let hasFile = false;
     const fileName = config.env === 'test' ? 'configTest.yml' : 'config.yml';

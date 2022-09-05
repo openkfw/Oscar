@@ -80,7 +80,7 @@ paths:
                 type: integer
               description: Total count of data in the database matching the search criteria.
 
-  /attributes/{attributeId}/availableDates:
+  /api/attributes/{attributeId}/availableDates:
     get:
       summary: Gets available dates for attributeId
       parameters:
@@ -95,7 +95,7 @@ paths:
         "200":
           description: Successful response
 
-  /attributes/{attributeId}/uniqueFeatures:
+  /api/attributes/{attributeId}/uniqueFeatures:
     get:
       summary: Get featureIds of values for this attributeId
       parameters:
