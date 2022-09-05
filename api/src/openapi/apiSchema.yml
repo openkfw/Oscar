@@ -325,7 +325,7 @@ paths:
         200:
           description: Successful response
 
-  /api/staticLayers:
+  /api/dataLayers:
     get:
       summary: Gets static layers data
       description: Gets static layers data for display in openlayers map
