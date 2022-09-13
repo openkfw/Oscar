@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Map from 'ol/Map';
@@ -194,29 +194,6 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
     setStaticLayers([...staticLayers]);
   };
 
-  const updateMap = useCallback(() => {
-    if (!mapPosition) {
-      return;
-    }
-    if (mapPosition) {
-      if (Number.isNaN(parseFloat(mapPosition.center[0]))) {
-        return;
-      }
-    }
-
-    map.getView().setCenter(mapPosition.center);
-    map.getView().setZoom(mapPosition.zoom);
-    const hash = `#map=${map.getView().getZoom()}/${Math.round(map.getView().getCenter()[0] * 100) / 100}/${
-      Math.round(map.getView().getCenter()[1] * 100) / 100
-    }/${map.getView().getRotation()}`;
-    window.location = hash;
-  }, [map, mapPosition]);
-
-  // update map when moved
-  useEffect(() => {
-    updateMap();
-  }, [mapPosition, updateMap]);
-
   // initiate map & listeners
   useEffect(() => {
     const mapInitiation = async () => {
@@ -227,10 +204,12 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
         const center = map.getView().getCenter();
         const zoom = map.getView().getZoom();
         setMapPosition({ center, zoom });
-        // await updateMap();
+        const hash = `#map=${map.getView().getZoom()}/${Math.round(map.getView().getCenter()[0] * 100) / 100}/${
+          Math.round(map.getView().getCenter()[1] * 100) / 100
+        }/${map.getView().getRotation()}`;
+        window.location = hash;
       });
 
-      await updateMap();
       await map.updateSize();
       window.addEventListener('load', () => {
         // Hide the address bar!
