@@ -80,7 +80,7 @@ paths:
                 type: integer
               description: Total count of data in the database matching the search criteria.
 
-  /attributes/{attributeId}/availableDates:
+  /api/attributes/{attributeId}/availableDates:
     get:
       summary: Gets available dates for attributeId
       parameters:
@@ -95,7 +95,7 @@ paths:
         "200":
           description: Successful response
 
-  /attributes/{attributeId}/uniqueFeatures:
+  /api/attributes/{attributeId}/uniqueFeatures:
     get:
       summary: Get featureIds of values for this attributeId
       parameters:
@@ -197,6 +197,36 @@ paths:
             type: string
           description: name of table
           required: true
+        - in: query
+          name: bottomLeft
+          schema:
+            type: string
+            pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
+          description: Bottom left corner of selected area to fetch features from
+          required: false
+        - in: query
+          name: topRight
+          schema:
+            type: string
+            pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
+          description: Top right corner of selected area to fetch features from
+          required: false
+        - in: query
+          name: proj
+          schema:
+            type: string
+          description: Projection for coordinates values.
+          required: false
+        - in: query
+          name: properties
+          schema:
+            type: object
+            additionalProperties: # Schema for parameter values
+              type: string
+              pattern: "^[A-Za-z][A-Za-z0-9]*$"
+            example:
+              property1: propertyValue1
+              property2: propertyValue2
       responses:
         200:
           description: Successful response
@@ -295,7 +325,7 @@ paths:
         200:
           description: Successful response
 
-  /api/staticLayers:
+  /api/dataLayers:
     get:
       summary: Gets static layers data
       description: Gets static layers data for display in openlayers map
@@ -538,12 +568,16 @@ components:
           description: Tab index.
         attributeIds:
           type: array
+          items:
+            type: string
           description: Array of attributeIds used in tab.
         admin1LocalName:
           type: string
           description: Country's local name for admin1 level unit
         admin1:
           type: array
+          items:
+            type: string
           description: List of country's admin1 level units
         data:
           type: object

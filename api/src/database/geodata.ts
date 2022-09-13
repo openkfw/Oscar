@@ -5,12 +5,18 @@ import APIError from '../helpers/APIError';
 import mongoDb from './mongoDb/models/geoDataModel';
 import postgis from './postgis/models/geoDataModel';
 
-export const getGeoData = async (tableName: string, bottomLeft: string, topRight: string, proj: string) => {
+export const getGeoData = async (
+  tableName: string,
+  bottomLeft: string,
+  topRight: string,
+  proj: string,
+  properties: object,
+) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
-    return postgis.getGeoData(tableName, bottomLeft, topRight, proj);
+    return postgis.getGeoData(tableName, bottomLeft, topRight, proj, properties);
   }
   if (config.mongoUri) {
-    return mongoDb.getGeoData(tableName, bottomLeft, topRight);
+    return mongoDb.getGeoData(tableName, bottomLeft, topRight, properties);
   }
   throw new APIError('No credentials for database', 500, false, undefined);
 };

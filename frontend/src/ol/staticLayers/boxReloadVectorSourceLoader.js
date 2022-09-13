@@ -19,11 +19,15 @@ const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
       const topRight = toLonLat(getTopRight(extent));
 
       let baseUrl;
+      let escapedAttribute;
+      if (layerData.attribute) {
+        escapedAttribute = encodeURIComponent(layerData.attribute);
+      }
       if (layerData.geoDataUrl) {
         baseUrl = `${layerData.geoDataUrl}?`;
       } else {
         const searchParams = new URLSearchParams();
-        searchParams.append('attributeId', layerData.attribute);
+        searchParams.append('attributeId', escapedAttribute);
         baseUrl = `/api/pointAttributes?${searchParams}`;
       }
       const url = `${baseUrl}&bottomLeft=${bottomLeft.join(',')}&topRight=${topRight.join(',')}&proj=${proj}`;
@@ -35,13 +39,13 @@ const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
           if (layerData.attribute) {
             if (vectorSource.get('sliderDate') && layerData.timeseries) {
               const searchParams = new URLSearchParams();
-              searchParams.append('attributeId', layerData.attribute);
+              searchParams.append('attributeId', escapedAttribute);
               searchParams.append('dateStart', vectorSource.get('sliderDate'));
               searchParams.append('dateEnd', vectorSource.get('sliderDate'));
               attributes = await getAttributesData(searchParams);
             } else {
               const searchParams = new URLSearchParams();
-              searchParams.append('attributeId', layerData.attribute);
+              searchParams.append('attributeId', escapedAttribute);
               searchParams.append('latestValues', true);
               attributes = await getAttributesData(searchParams);
             }

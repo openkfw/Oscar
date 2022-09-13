@@ -1,13 +1,16 @@
 import mongoose from 'mongoose';
-import { filterCoordinates } from '../filters';
+import { filterCoordinates, filterProperties } from '../filters';
 
-const getGeoData = async (tableName: string, bottomLeft: string, topRight: string) => {
+const getGeoData = async (tableName: string, bottomLeft: string, topRight: string, properties: object) => {
   const { connection } = mongoose;
   const { db } = connection;
 
   let filter = {};
   if (bottomLeft && topRight) {
     filter = { bbox: filterCoordinates(filter, bottomLeft, topRight) };
+  }
+  if (Object.keys(properties).length) {
+    filter = filterProperties(filter, properties);
   }
 
   const features = await db

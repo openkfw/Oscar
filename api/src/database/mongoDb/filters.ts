@@ -30,4 +30,12 @@ export const filterCoordinates = (filter, bottomLeft, topRight) => {
   };
 };
 
-export default { filterCoordinates };
+export const filterProperties = (filter, properties) => {
+  Object.keys(properties).forEach((key) => {
+    // eslint-disable-next-line no-param-reassign
+    filter[`properties.${key}`] = properties[key];
+  });
+  return filter;
+};
+
+export default { filterCoordinates, filterProperties };

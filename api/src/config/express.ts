@@ -8,7 +8,7 @@ import expressWinston from 'express-winston';
 import helmet from 'helmet';
 import path from 'path';
 import jwtDecode from 'jwt-decode';
-import swaggerValidation from './swagger';
+import * as OpenApiValidator from 'express-openapi-validator';
 
 import winstonInstance from './winston';
 
@@ -65,6 +65,15 @@ if (config.authorizeTokenAttribute) {
   });
 }
 
+// swagger validation
+app.use(
+  OpenApiValidator.middleware({
+    apiSpec: config.openApiSchemaFile || 'src/openapi/apiSchema.yml',
+    validateRequests: true, // (default)
+    validateResponses: false, // false by default
+  }),
+);
+
 // mount all routes on /api path
 app.use('/api', routes);
 
@@ -83,15 +92,6 @@ app.use((req, res) => {
   };
 
   res.sendFile('index.html', options);
-});
-
-app.use((err, req, res, next) => {
-  if (err instanceof swaggerValidation.InputValidationError) {
-    // logging the validation errors
-    winstonInstance.error(err);
-    return res.status(400).json({ more_info: JSON.stringify(err.errors) });
-  }
-  return next(err);
 });
 
 // converts error if it's not an instanceOf APIError

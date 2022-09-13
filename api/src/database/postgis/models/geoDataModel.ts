@@ -4,7 +4,14 @@ import { getDb } from '../index';
 import { getBoundingBox, getProjectionFilter } from '../filters';
 import APIError from '../../../helpers/APIError';
 
-const getGeoData = async (tableName: string, bottomLeft?: string, topRight?: string, proj?: string, db = getDb()) => {
+const getGeoData = async (
+  tableName: string,
+  bottomLeft?: string,
+  topRight?: string,
+  proj?: string,
+  properties?: object,
+  db = getDb(),
+) => {
   const filter: {
     geometry?: {
       type: string,
@@ -27,6 +34,11 @@ const getGeoData = async (tableName: string, bottomLeft?: string, topRight?: str
             JSON.stringify(filter.geometry),
           ]),
         );
+      }
+      if (Object.keys(properties).length) {
+        Object.keys(properties).forEach((key) => {
+          qb.andWhere(db.raw(`properties->>'${key}'`), properties[key]);
+        });
       }
     });
   return data.map((item) => ({ ...item, geometry: JSON.parse(item.geometry) }));

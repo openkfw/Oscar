@@ -1,5 +1,4 @@
 import express from 'express';
-import swaggerValidation from '../config/swagger';
 import utils from '../helpers/utils';
 
 import { getIsochronesByPointsSource } from '../actions/isochrones';
@@ -8,7 +7,6 @@ const router = express.Router();
 
 router.get(
   '/',
-  swaggerValidation.validate,
   utils.forwardError(async (req, res) => {
     const { bottomLeft, topRight, pointsSource } = req.query;
 
