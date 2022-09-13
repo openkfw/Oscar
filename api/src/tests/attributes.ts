@@ -25,7 +25,7 @@ describe('GET /api/attributes', () => {
     expect(res.body[categoryStringAttr[0].attributeId]).toHaveLength(1);
   });
 
-  it('should return 400 when attributeIdCategories and attributeId are missing', async () => {
+  it('should return 400 when attributeIdCategories or attributeId are missing', async () => {
     await DataDateAttribute.insertMany([...bedOccupancyAttrToDb]);
     await request(app).get(`/api/attributes?latestValues=true`).expect(400);
   });

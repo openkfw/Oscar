@@ -181,10 +181,6 @@ const getLatestAttributes = async (
   featureIds: Array<string>,
   db = getDb(),
 ): Promise<FeatureAttributeReordered> => {
-  if (!(attributeIds || attributeIdCategories)) {
-    throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
-  }
-
   const filter = createAttributesFilter(attributeIds, attributeIdCategories, featureIds, undefined, undefined);
 
   const attributes = await db
