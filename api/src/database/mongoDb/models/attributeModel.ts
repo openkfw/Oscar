@@ -150,11 +150,11 @@ const getFilteredAttributes = async (
  * @param  {array} attributeIdCategories - categories of attributes, common part of attributeId for regex search
  * @param  {array} featureIds - geographical features only to be selected
  */
-const getLatestAttributes = async (attributeIds, attributeIdCategories, featureIds) => {
+const getLatestAttributes = async (attributeIds, attributeIdCategory, featureIds) => {
   const { connection } = mongoose;
   const { db } = connection;
 
-  const match = createAttributesFilter(attributeIds, attributeIdCategories, featureIds, undefined, undefined);
+  const match = createAttributesFilter(attributeIds, attributeIdCategory, featureIds, undefined, undefined);
 
   const attributes = await db
     .collection(ATTRIBUTES_COLLECTION_NAME)
