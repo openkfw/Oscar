@@ -151,9 +151,6 @@ const getFilteredAttributes = async (
  * @param  {array} featureIds - geographical features only to be selected
  */
 const getLatestAttributes = async (attributeIds, attributeIdCategories, featureIds) => {
-  if (!(attributeIds || attributeIdCategories)) {
-    throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
-  }
   const { connection } = mongoose;
   const { db } = connection;
 

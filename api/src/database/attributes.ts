@@ -44,6 +44,9 @@ export const getAttributes = async (filters, options) => {
   let items: object | typeof logger.error = {};
   let count: number | void = 0;
   if (config.mongoUri || (config.postgresUser && config.postgresPassword && config.postgresDb)) {
+    if (!(filters.attributeIds || filters.attributeIdCategories)) {
+      throw new APIError('Failed to fetch data. Missing attributeIdCategories and attributeId.', 500, true, undefined);
+    }
     if (filters.latestValues) {
       items = await getLatestAttributes()(filters.attributeId, filters.attributeIdCategory, filters.featureId).catch(
         (e) => logger.error(`Error: ${e.message}`),
