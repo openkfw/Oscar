@@ -18,15 +18,16 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
             let attributes = [];
 
             if (layerData.attribute) {
+              const escapedAttribute = encodeURIComponent(layerData.attribute);
               if (vectorSource.get('sliderDate') && layerData.layerOptions.timeseries) {
                 const searchParams = new URLSearchParams();
-                searchParams.append('attributeId', layerData.attribute);
+                searchParams.append('attributeId', escapedAttribute);
                 searchParams.append('dateStart', vectorSource.get('sliderDate'));
                 searchParams.append('dateEnd', vectorSource.get('sliderDate'));
                 attributes = await getAttributesData(searchParams);
               } else {
                 const searchParams = new URLSearchParams();
-                searchParams.append('attributeId', layerData.attribute);
+                searchParams.append('attributeId', escapedAttribute);
                 searchParams.append('latestValues', true);
                 attributes = await getAttributesData(searchParams);
               }

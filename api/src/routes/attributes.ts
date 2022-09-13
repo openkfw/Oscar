@@ -8,8 +8,8 @@ const router = express.Router();
 router.get(
   '/',
   utils.forwardError(async (req, res) => {
-    const { limit, offset, dateStart, dateEnd, attributeId, attributeIdCategory, featureId, latestValues } = req.query;
-
+    const { limit, offset, dateStart, dateEnd, attributeIdCategory, featureId, latestValues } = req.query;
+    const attributeId = decodeURIComponent(req.query.attributeId);
     const { items, count } = await getAttributes(
       { attributeId, attributeIdCategory, featureId, dateStart, dateEnd, latestValues },
       { limit, offset },
