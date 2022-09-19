@@ -72,6 +72,7 @@ export interface GeoDataConfigItem {
   storeToDb: boolean;
   collectionName: string;
   metadata: Metadata;
+  updateDate?: string;
 }
 
 export interface MapLayerConfigItem {
