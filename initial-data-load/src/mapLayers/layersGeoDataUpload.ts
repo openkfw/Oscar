@@ -6,7 +6,7 @@ import Joi from '@hapi/joi';
 import config from '../config/config';
 import logger from '../config/winston';
 
-import { createOrClearCollection } from '../database';
+import { createOrClearCollection, checkIfCollectionExists, createCollection } from '../database';
 import { getOneLayerGeoData, saveGeoData } from '../database/layers';
 import { storeGeoFeaturesData } from '../database/geoFeatureCollections';
 
@@ -122,7 +122,7 @@ const handleGeoDataFilename = async (data: GeoDataConfigItem, dataset: string) =
 };
 
 /**
- * Proces single geodata item in config file, store data in file storage or database
+ * Process single geoData item in config file, store data in file storage or database
  * @param  {GeoDataConfigItem} data - configuration of single geoData item
  * @param  {string} dataset - name of dataset for referencing file, in case data are stored in file in dataset folder
  * @returns item in format for database
@@ -139,7 +139,11 @@ const formatLayerGeoData = async (data: GeoDataConfigItem, dataset: string) => {
     logger.info(`Creating or clearing collection for geo data...`);
     await createOrClearCollection(data.createTable, undefined, 'bbox');
   } else if (data.storeToTable) {
-    // TODO: check if table exists, if not, create
+    logger.info(`Checking if collection for geo data exists and creating it if not...`);
+    const exists = await checkIfCollectionExists(data.storeToTable);
+    if (!exists) {
+      await createCollection(data.storeToTable, undefined, 'bbox');
+    }
   }
   // deprecated
   if (data.storeToDb && data.collectionName) {

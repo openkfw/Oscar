@@ -90,6 +90,11 @@ export const removeDB = async () => {
   logger.info('Successfully dropped database.');
 };
 
+export const checkIfCollectionExists = async (collectionName: string) => {
+  const collectionInfo = await mongoose.connection.db.listCollections({ name: collectionName }).toArray();
+  return collectionInfo.length === 1;
+};
+
 export default {
   initializeDBConnection,
   createRegularIndex,
@@ -99,4 +104,5 @@ export default {
   bulkStoreToDb,
   disconnectFromDB,
   removeDB,
+  checkIfCollectionExists,
 };

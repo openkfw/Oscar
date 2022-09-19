@@ -114,9 +114,16 @@ _or with geodata file provided in folder './initial-data-load/data/{COUNTRY}/geo
 \_in addition geodata can be stored in newly created database collection by adding the following into an item structure
 
 ```
-  storeToDb: true
-  collectionName: "nameOfNewCollection"
+  storeToDb: true //deprecated
+  collectionName: "nameOfNewCollection" //deprecated
   apiUrl: "urlInApiThatReturnsStoredGeodata"
+```
+
+\_storeToDb and collectionName are now deprecated, use storeToTable key instead. Use createTable key if you want to create new table or clear old table.
+
+```
+  storeToTable: "nameOfNewTable"
+  createTable: "nameOfNewTable"
 ```
 
 ## mapLayers.yml
