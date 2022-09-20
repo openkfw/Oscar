@@ -57,19 +57,22 @@ export interface AttributesFileConfigItem {
 export interface GeoDataConfigItem {
   name: string;
   referenceId: string;
-  geoDataFilename?: string;
-  geoDataUrl?: string;
   format: string;
-  storeToDb: boolean;
-  collectionName: string;
-  apiUrl?: string;
+  geometryDataTypes: string;
   featureIds: Array<{
     property: string;
     values: Array<string>;
   }>;
   attributeIds: Array<string>;
-  geometryDataTypes: string;
+  apiUrl?: string;
+  geoDataUrl?: string;
+  geoDataFilename?: string;
+  createTable: string;
+  storeToTable: string;
+  storeToDb: boolean;
+  collectionName: string;
   metadata: Metadata;
+  updateDate?: string;
 }
 
 export interface MapLayerConfigItem {

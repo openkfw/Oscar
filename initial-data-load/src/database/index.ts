@@ -59,6 +59,24 @@ export const createOrClearCollection = async (collectionName: string, index, geo
     await mongoDb.deleteAllFromCollection(collectionName);
     return mongoDb.createCollection(collectionName, index, geoIndex);
   }
+  throw new Error('No credentials for database');
 };
 
-export default { initializeDb, disconnectFromDB, clearCollection, createCollection, createOrClearCollection };
+export const checkIfCollectionExists = async (collectionName: string) => {
+  if (config.postgresUser && config.postgresPassword && config.postgresDb) {
+    return postgis.checkIfTableExists(collectionName);
+  }
+  if (config.mongoUri) {
+    return mongoDb.checkIfCollectionExists(collectionName);
+  }
+  throw new Error('No credentials for database');
+};
+
+export default {
+  initializeDb,
+  disconnectFromDB,
+  clearCollection,
+  createCollection,
+  createOrClearCollection,
+  checkIfCollectionExists,
+};
