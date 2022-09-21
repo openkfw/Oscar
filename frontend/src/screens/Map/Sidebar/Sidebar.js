@@ -23,8 +23,8 @@ class Sidebar extends React.Component {
             isLoading={this.props.isLoading}
             mapLayers={this.props.mapLayers}
             layers={this.props.layers}
-            staticLayersData={this.props.staticLayersData}
-            toggleStaticLayer={this.props.toggleStaticLayer}
+            dataLayersData={this.props.dataLayersData}
+            toggleDataLayer={this.props.toggleDataLayer}
             selectLayer={(title) => this.props.selectLayers(title)}
             switchMapLayers={this.props.switchMapLayers}
             handleClose={this.props.closeSidebar}
@@ -41,11 +41,11 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   mapLayers: PropTypes.arrayOf(PropTypes.object).isRequired,
   layers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  staticLayersData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dataLayersData: PropTypes.arrayOf(PropTypes.object).isRequired,
   closeSidebar: PropTypes.func.isRequired,
   currentActivity: PropTypes.string.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
-  toggleStaticLayer: PropTypes.func.isRequired,
+  toggleDataLayer: PropTypes.func.isRequired,
   switchMapLayers: PropTypes.func.isRequired,
   selectLayers: PropTypes.func,
   isLoading: PropTypes.arrayOf(PropTypes.any).isRequired,

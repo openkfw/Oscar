@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import { colormaps } from '../../../ol/staticLayers/styles';
+import { colormaps } from '../../../ol/dataLayers/styles';
 
 import { mapLegendTypes } from '../../../constants';
 

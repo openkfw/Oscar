@@ -9,15 +9,15 @@ import { defaults as defaultControls } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
 
 import { PublicMapConsumer, PublicMapProvider } from '../../contexts';
-import { staticLayersTypes } from '../../constants';
+import { dataLayersTypes } from '../../constants';
 import { selectedPlaceLayer } from '../../ol/place';
 import PointInfo from '../../ol/info/PointInfoContainer';
 
 import ShowPlaceLayer from '../../ol/ShowPlaceLayer';
 
-import mapLayerOptions from '../../ol/staticLayers/mapLayers';
-import { getStaticLayersData } from '../../axiosRequests';
-import staticLayerGenerator from '../../ol/staticLayers/staticLayerGenerator';
+import mapLayerOptions from '../../ol/dataLayers/mapLayers';
+import { getDataLayersData } from '../../axiosRequests';
+import dataLayerGenerator from '../../ol/dataLayers/dataLayerGenerator';
 import AzureMapSearch from './AzureMapSearch';
 import ActionButtons from './MapButtons/ActionButtons';
 import Sidebar from './Sidebar/SidebarContainer';
@@ -30,8 +30,8 @@ import '../../index.css';
 
 const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
   const [mapLayers, setMapLayers] = useState(mapLayerOptions);
-  const [staticLayers, setStaticLayers] = useState([]);
-  const [staticLayersData, setStaticLayersData] = useState([]);
+  const [dataLayers, setDataLayers] = useState([]);
+  const [dataLayersData, setDataLayersData] = useState([]);
 
   // eslint-disable-next-line no-unused-vars
   const [basicLayers, setBasicLayers] = useState([
@@ -120,20 +120,20 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
     }
   };
 
-  const toggleStaticLayer = async (title) => {
-    const staticLayersGroup = map
+  const toggleDataLayer = async (title) => {
+    const dataLayersGroup = map
       .getLayers()
       .getArray()
-      .find((layer) => layer instanceof LayerGroup && layer.get('title') === 'staticLayers');
-    const staticLayers = staticLayersGroup.getLayers().getArray();
-    const modifiedLayer = staticLayers.find((layer) => layer.get('title') === title);
+      .find((layer) => layer instanceof LayerGroup && layer.get('title') === 'dataLayers');
+    const dataLayers = dataLayersGroup.getLayers().getArray();
+    const modifiedLayer = dataLayers.find((layer) => layer.get('title') === title);
     if (modifiedLayer) {
       // layer with the title found
       if (modifiedLayer.getVisible()) {
         // layer is selected, deselecting
         modifiedLayer.setVisible(false);
         // if any of the layers that are still visible on the map have time series, show slider for one of them
-        const timeseriesLayer = staticLayers.find(
+        const timeseriesLayer = dataLayers.find(
           (layer) =>
             layer.get('title') !== title &&
             layer.get('layerOptions') &&
@@ -148,12 +148,12 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
         }
       } else {
         // layer is not selected, selecting
-        if (modifiedLayer.get('type') === staticLayersTypes.REGIONS) {
+        if (modifiedLayer.get('type') === dataLayersTypes.REGIONS) {
           const MLlayerOptions = modifiedLayer.get('layerOptions') || {};
           // deselect the rest of regions layers, if regions layer with singleDisplay true is selected
           if (MLlayerOptions.singleDisplay) {
-            staticLayers.forEach((layer) => {
-              if (layer.get('type') === staticLayersTypes.REGIONS && layer.get('title') !== title) {
+            dataLayers.forEach((layer) => {
+              if (layer.get('type') === dataLayersTypes.REGIONS && layer.get('title') !== title) {
                 const layerLayerOptions = layer.get('layerOptions') || {};
                 if (!timeSeriesLayer && layerLayerOptions.timeseries && layer.getVisible()) {
                   setTimeSeriesLayer(undefined);
@@ -163,15 +163,15 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
             });
           } else {
             // deselect regions layer, which has singleDisplay true, if regions layer with singleDisplay false is selected
-            const singleDisplayLayerIndex = staticLayers.findIndex(
+            const singleDisplayLayerIndex = dataLayers.findIndex(
               (layer) =>
-                layer.get('type') === staticLayersTypes.REGIONS &&
+                layer.get('type') === dataLayersTypes.REGIONS &&
                 layer.get('title') !== title &&
                 layer.get('layerOptions') &&
                 layer.get('layerOptions').singleDisplay &&
                 layer.getVisible(),
             );
-            const singleDisplayLayer = staticLayers[singleDisplayLayerIndex];
+            const singleDisplayLayer = dataLayers[singleDisplayLayerIndex];
             if (singleDisplayLayer) {
               if (singleDisplayLayer.get('layerOptions').timeseries) {
                 setTimeSeriesLayer(undefined);
@@ -189,9 +189,9 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
       }
     }
 
-    const legends = extractLegends(staticLayers);
+    const legends = extractLegends(dataLayers);
     setLegends(legends);
-    setStaticLayers([...staticLayers]);
+    setDataLayers([...dataLayers]);
   };
 
   // initiate map & listeners
@@ -222,24 +222,24 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
 
   // fetch data about static layers
   useEffect(() => {
-    const staticLayersFetching = async () => {
-      const staticLayersData = await getStaticLayersData();
-      if (staticLayersData.length) {
-        const generatedLayers = staticLayersData.map((layerData) => {
-          return staticLayerGenerator(layerData, handleIsLoading);
+    const dataLayersFetching = async () => {
+      const dataLayersData = await getDataLayersData();
+      if (dataLayersData.length) {
+        const generatedLayers = dataLayersData.map((layerData) => {
+          return dataLayerGenerator(layerData, handleIsLoading);
         });
 
         map.addLayer(
           new LayerGroup({
-            title: 'staticLayers',
+            title: 'dataLayers',
             layers: generatedLayers,
           }),
         );
-        setStaticLayers(generatedLayers);
-        setStaticLayersData(staticLayersData);
+        setDataLayers(generatedLayers);
+        setDataLayersData(dataLayersData);
       }
     };
-    staticLayersFetching();
+    dataLayersFetching();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -269,11 +269,11 @@ const PublicMap = ({ isLoading, handleIsLoading, mapConfig }) => {
       <Sidebar
         isLoading={isLoading}
         mapLayers={mapLayers}
-        layers={staticLayers}
-        staticLayersData={staticLayersData}
+        layers={dataLayers}
+        dataLayersData={dataLayersData}
         map={map}
         switchMapLayers={switchMapLayers}
-        toggleStaticLayer={toggleStaticLayer}
+        toggleDataLayer={toggleDataLayer}
       />
     </div>
   );

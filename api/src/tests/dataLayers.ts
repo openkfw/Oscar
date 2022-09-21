@@ -3,7 +3,7 @@ import request from 'supertest';
 import app from '../config/express';
 import LayerGeoData from '../database/mongoDb/dbSchemas/layerGeoDataSchema';
 import { MapLayer, GroupMapLayer, SingleMapLayer } from '../database/mongoDb/dbSchemas/mapLayersSchema';
-import { mapLayersInDb, layerGeoDataInDb } from '../testUtils/testData/staticLayers';
+import { mapLayersInDb, layerGeoDataInDb } from '../testUtils/testData/dataLayers';
 
 jest.mock('azure-storage');
 jest.mock('../config/config.ts', () => {

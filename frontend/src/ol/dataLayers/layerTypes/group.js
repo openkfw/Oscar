@@ -1,6 +1,6 @@
 import LayerGroup from 'ol/layer/Group';
 // eslint-disable-next-line import/no-cycle
-import staticLayerGenerator from '../staticLayerGenerator';
+import dataLayerGenerator from '../dataLayerGenerator';
 
 const groupLayer = (layerData, handleIsLoading) => {
   const newLayer = new LayerGroup({
@@ -8,7 +8,7 @@ const groupLayer = (layerData, handleIsLoading) => {
     type: layerData.layerType,
     legend: layerData.legend,
     layers: layerData.layers.map((layer) =>
-      staticLayerGenerator(
+      dataLayerGenerator(
         {
           ...layer,
           visible: true,

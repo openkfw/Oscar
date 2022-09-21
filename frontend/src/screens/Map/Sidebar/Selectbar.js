@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SelectBar = ({ layers, staticLayersData, toggleStaticLayer, handleClose, isLoading }) => {
+const SelectBar = ({ layers, dataLayersData, toggleDataLayer, handleClose, isLoading }) => {
   const classes = useStyles();
   const [modalData, setModalData] = useState({
     isOpen: false,
@@ -87,7 +87,7 @@ const SelectBar = ({ layers, staticLayersData, toggleStaticLayer, handleClose, i
                 value={title}
                 checked={layer.getVisible()}
                 onChange={() => {
-                  toggleStaticLayer(title);
+                  toggleDataLayer(title);
                 }}
                 color="secondary"
               />
@@ -119,7 +119,7 @@ const SelectBar = ({ layers, staticLayersData, toggleStaticLayer, handleClose, i
     });
     return categorizedLayers;
   };
-  const layersCategories = reduceToCategories(layers, staticLayersData);
+  const layersCategories = reduceToCategories(layers, dataLayersData);
 
   const getLayerCategories = () => {
     const categories = {};
@@ -192,8 +192,8 @@ const SelectBar = ({ layers, staticLayersData, toggleStaticLayer, handleClose, i
 SelectBar.propTypes = {
   handleClose: PropTypes.func.isRequired,
   layers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  staticLayersData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  toggleStaticLayer: PropTypes.func.isRequired,
+  dataLayersData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  toggleDataLayer: PropTypes.func.isRequired,
   isLoading: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 

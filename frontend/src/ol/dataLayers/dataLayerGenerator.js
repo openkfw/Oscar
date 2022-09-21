@@ -1,4 +1,4 @@
-import { staticLayersTypes } from '../../constants';
+import { dataLayersTypes } from '../../constants';
 import regionsLayer from './layerTypes/regions';
 import pointsLayer from './layerTypes/points';
 import geometryLayer from './layerTypes/geometry';
@@ -7,28 +7,28 @@ import tileLayer from './layerTypes/tiles';
 // eslint-disable-next-line import/no-cycle
 import groupLayer from './layerTypes/group';
 
-const staticLayerGenerator = (layerData, handleIsLoading) => {
+const dataLayerGenerator = (layerData, handleIsLoading) => {
   if (!layerData.layerOptions) {
     // eslint-disable-next-line no-param-reassign
     layerData.layerOptions = { timeseries: layerData.timeseries, maxResolution: layerData.maxResolution };
   }
   switch (layerData.layerType) {
-    case staticLayersTypes.REGIONS: {
+    case dataLayersTypes.REGIONS: {
       return regionsLayer(layerData, handleIsLoading);
     }
-    case staticLayersTypes.POINTS: {
+    case dataLayersTypes.POINTS: {
       return pointsLayer(layerData, handleIsLoading);
     }
-    case staticLayersTypes.GEOMETRY: {
+    case dataLayersTypes.GEOMETRY: {
       return geometryLayer(layerData, handleIsLoading);
     }
-    case staticLayersTypes.GROUP: {
+    case dataLayersTypes.GROUP: {
       return groupLayer(layerData, handleIsLoading);
     }
-    case staticLayersTypes.COMBINED: {
+    case dataLayersTypes.COMBINED: {
       return combinedLayer(layerData, handleIsLoading);
     }
-    case staticLayersTypes.TILE: {
+    case dataLayersTypes.TILE: {
       return tileLayer(layerData, handleIsLoading);
     }
     // eslint-disable-next-line no-empty
@@ -36,4 +36,4 @@ const staticLayerGenerator = (layerData, handleIsLoading) => {
     }
   }
 };
-export default staticLayerGenerator;
+export default dataLayerGenerator;
