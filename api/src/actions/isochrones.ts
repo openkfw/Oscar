@@ -13,17 +13,19 @@ export const getIsochronesByPointsSource = async (pointsSource: string, bottomLe
     // const pointStrings = points.map((point) => JSON.stringify(point));
     const isochrones = await getIsochronesByCoordinates(true);
     const isochroneFeatures = [];
-    isochrones.forEach((item) => {
-      item.features.forEach((feature) => {
-        const enhancedFeature = {
-          type: feature.type,
-          geometry: feature.geometry,
-          properties: feature.properties,
-          id: `${item._id}-${feature.properties.value}`,
-        };
-        isochroneFeatures.push(enhancedFeature);
+    if (isochrones && isochrones.length) {
+      isochrones.forEach((item) => {
+        item.features.forEach((feature) => {
+          const enhancedFeature = {
+            type: feature.type,
+            geometry: feature.geometry,
+            properties: feature.properties,
+            id: `${item._id}-${feature.properties.value}`,
+          };
+          isochroneFeatures.push(enhancedFeature);
+        });
       });
-    });
+    }
     return isochroneFeatures;
   }
   throw new APIError(`pointsSource ${pointsSource} is not valid.`, 400, true);
