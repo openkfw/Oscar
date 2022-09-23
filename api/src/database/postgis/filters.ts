@@ -1,5 +1,7 @@
 import { getDb } from './index';
 import APIError from '../../helpers/APIError';
+import config from '../../config/config';
+import logger from '../../config/winston';
 
 /**
  * Return bounding box in GeoJSON format used for filtering
@@ -35,23 +37,23 @@ export const getBoundingBox = (bottomLeft: string, topRight: string) => {
 export const getProjectionFilter = async (proj, tableName, db = getDb()) => {
   // projection in query must correspond to SRID in geometry column
   if (proj) {
-    const SRIDarr = await db.distinct(db.raw(`ST_SRID(${tableName}.geometry)`)).from(tableName);
+    try {
+      const tableSRID = await db.select(db.raw(`Find_SRID('${config.postgresDb}', '${tableName}', 'geometry')`));
 
-    if (!SRIDarr.length) {
-      return;
-    }
-    const SRID = SRIDarr[0].st_srid;
-    const projNum = parseInt(proj.split(':')[1], 10);
+      const projNum = parseInt(proj.split(':')[1], 10);
 
-    if (SRID === projNum) {
-      return projNum;
+      if (tableSRID === projNum) {
+        return projNum;
+      }
+      throw new APIError(
+        `Projection SRID ${projNum} doesn't correspond to geometry column SRID ${tableSRID}`,
+        400,
+        true,
+        undefined,
+      );
+    } catch (err) {
+      logger.error(`Table ${tableName} is missing SRID`);
     }
-    throw new APIError(
-      `Projection SRID ${projNum} doesn't correspond to geometry column SRID ${SRID}`,
-      400,
-      true,
-      undefined,
-    );
   }
 };
 
