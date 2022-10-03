@@ -41,7 +41,7 @@ export interface Metadata {
 export interface APIFeatureAttribute {
   attributeId: string;
   featureId: string;
-  featureType: string;
+  featureType?: string;
   value: any;
   valueType?: string;
   date: string;
@@ -53,7 +53,7 @@ export interface AttributesFileConfigItem {
   referenceId?: string;
   date: string;
   csvFileName: string;
-  featureType: string;
+  featureType?: string;
 }
 
 export interface GeoDataConfigItem {
