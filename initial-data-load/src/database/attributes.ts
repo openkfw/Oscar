@@ -1,6 +1,6 @@
 import config from '../config/config';
 import logger from '../config/winston';
-import { APIRegionAttribute } from '../types';
+import { APIFeatureAttribute } from '../types';
 import mongoDb from './mongoDb/attributes';
 import postgis from './postgis/attributes';
 
@@ -20,9 +20,9 @@ export const setupCollections = () => {
 
 /**
  * Save region attributes in collection
- * @param  {Array<APIRegionAttribute>} data
+ * @param  {Array<APIFeatureAttribute>} data
  */
-export const saveAttributes = (data: Array<APIRegionAttribute>) => {
+export const saveAttributes = (data: Array<APIFeatureAttribute>) => {
   if (config.postgresUser && config.postgresPassword && config.postgresDb) {
     return postgis.saveAttributes(data);
   }

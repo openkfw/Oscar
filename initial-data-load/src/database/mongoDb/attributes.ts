@@ -3,7 +3,7 @@ import logger from '../../config/winston';
 
 import { createRegularIndex, createGeoDataIndex } from '.';
 import { ATTRIBUTES_COLLECTION_NAME, POINT_ATTRIBUTES_COLLECTION_NAME } from './constants';
-import { APIRegionAttribute } from '../../types';
+import { APIFeatureAttribute } from '../../types';
 
 const createIndexesForAttributesCollections = async () => {
   await createRegularIndex(ATTRIBUTES_COLLECTION_NAME, { date: -1, featureId: 1, attributeId: 1 });
@@ -14,7 +14,7 @@ const createIndexesForAttributesCollections = async () => {
   await createRegularIndex(POINT_ATTRIBUTES_COLLECTION_NAME, { 'properties.updatedDate': -1 });
 };
 
-const saveAttributes = async (data: Array<APIRegionAttribute>) => {
+const saveAttributes = async (data: Array<APIFeatureAttribute>) => {
   // will not fit the types soon, needs to map from API format to mongoDb
   if (data.length) {
     const operations = data.map((itemData) => {

@@ -6,7 +6,7 @@ import csv2json from 'csvtojson';
 import logger from './config/winston';
 import { setupCollections, saveAttributes } from './database/attributes';
 import { isNumberInString } from './utils';
-import { APIRegionAttribute, AttributesFileConfigItem } from './types';
+import { APIFeatureAttribute, AttributesFileConfigItem } from './types';
 
 const limiter = new Bottleneck({
   maxConcurrent: 1,
@@ -17,13 +17,13 @@ const limiter = new Bottleneck({
  * @param  {string} date - specified date for the data in file
  * @param  {string} csvFile - file name of CSV file
  */
-const saveAttributesFromFile = async (date: string, csvFile: string) => {
+const saveAttributesFromFile = async (date: string, featureType: string, csvFile: string) => {
   logger.info(`Saving attributes from file ${csvFile}`);
   const hasFile = fs.existsSync(path.join(__dirname, csvFile));
   if (!hasFile) {
     logger.error(`File not found: ${csvFile}`);
   }
-  const attributeData: Array<APIRegionAttribute> = [];
+  const attributeData: Array<APIFeatureAttribute> = [];
 
   await csv2json({ delimiter: [',', ';'] })
     .fromFile(path.join(__dirname, csvFile))
@@ -46,9 +46,10 @@ const saveAttributesFromFile = async (date: string, csvFile: string) => {
       keys.forEach((key) => {
         const value = row[key];
         if (value || value === 0) {
-          const item: APIRegionAttribute = {
+          const item: APIFeatureAttribute = {
             date,
             featureId: geoFeature,
+            featureType,
             attributeId: key,
             value,
           };
@@ -92,7 +93,11 @@ export const uploadAttributes = async (dataSet: string) => {
       const uploadData: Array<AttributesFileConfigItem> = require(`../data/${dataSet}/attributes/index.js`);
       const uploads = uploadData.map((data) =>
         limiter.schedule(() =>
-          saveAttributesFromFile(data.date, path.join('..', 'data', dataSet, 'attributes', data.csvFileName)),
+          saveAttributesFromFile(
+            data.date,
+            data.featureType,
+            path.join('..', 'data', dataSet, 'attributes', data.csvFileName),
+          ),
         ),
       );
       await Promise.all([...uploads]);

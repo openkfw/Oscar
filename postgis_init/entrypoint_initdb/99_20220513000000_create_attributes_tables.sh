@@ -33,7 +33,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     created_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NULL DEFAULT NOW(),
 
-    CONSTRAINT "attribute_UQ" UNIQUE (attribute_id, feature_id, feature_id_lvl, date_ISO)
+    CONSTRAINT "attribute_without_feature_id_lvl_UQ" UNIQUE (attribute_id, feature_id, date_iso)
   );
 
 	CREATE TABLE point_attributes (

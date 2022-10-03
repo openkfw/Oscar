@@ -1,5 +1,5 @@
 import logger from '../../config/winston';
-import { APIRegionAttribute, MapLayerConfigItem, PostgresRegionAttribute } from '../../types';
+import { APIFeatureAttribute, MapLayerConfigItem, PostgresFeatureAttribute } from '../../types';
 import { ATTRIBUTES_TABLE, FEATURE_ATTRIBUTES_TABLE } from './constants';
 import { getDb } from './index';
 import { emptyAttributesItem, attributeDataToDBFormat, attributeTypeFromMapLayerType } from './utils';
@@ -52,25 +52,23 @@ export const storeAttributeConfigFromMapLayer = async (data: MapLayerConfigItem,
  * @param  {Array<object>} data - array of items in database format
  * @param  {Knex} db - knex
  */
-const storeAttributes = async (data: Array<PostgresRegionAttribute>, db = getDb()) => {
-  await db(FEATURE_ATTRIBUTES_TABLE)
-    .insert(data)
-    .onConflict(['attribute_id', 'feature_id', 'feature_id_lvl', 'date_iso'])
-    .merge();
+const storeAttributes = async (data: Array<PostgresFeatureAttribute>, db = getDb()) => {
+  // postgresql takes null values as unique, so we cannot use feature_id_lvl in unique index to avoid saving duplicates
+  await db(FEATURE_ATTRIBUTES_TABLE).insert(data).onConflict(['attribute_id', 'feature_id', 'date_iso']).merge();
 };
 
 /**
  * Saves region attributes in database table with all required steps for compatibility
  * @param  {Array<object>} data - data in API format
  */
-const saveAttributes = async (data: Array<APIRegionAttribute>) => {
+const saveAttributes = async (data: Array<APIFeatureAttribute>) => {
   const uniqueAttributeIds: Array<string> = data.reduce((prev, curr) => {
     if (!prev.includes(curr.attributeId)) {
       prev.push(curr.attributeId);
     }
     return prev;
   }, []) as Array<string>;
-  const dataToDb: Array<PostgresRegionAttribute> = data.map((item) => attributeDataToDBFormat(item));
+  const dataToDb: Array<PostgresFeatureAttribute> = data.map((item) => attributeDataToDBFormat(item));
   const db = getDb();
   await db.transaction(async (trx) => {
     await verifyAttributeConfigExists(uniqueAttributeIds, trx);
