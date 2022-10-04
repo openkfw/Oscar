@@ -38,9 +38,10 @@ export interface Metadata {
 }
 
 // API DATA FORMATS //
-export interface APIRegionAttribute {
+export interface APIFeatureAttribute {
   attributeId: string;
   featureId: string;
+  featureType?: string;
   value: any;
   valueType?: string;
   date: string;
@@ -52,6 +53,7 @@ export interface AttributesFileConfigItem {
   referenceId?: string;
   date: string;
   csvFileName: string;
+  featureType?: string;
 }
 
 export interface GeoDataConfigItem {
@@ -196,7 +198,7 @@ export interface PostgresAttribute {
   uprated_date?: number;
 }
 
-export interface PostgresRegionAttribute {
+export interface PostgresFeatureAttribute {
   id?: string;
   attribute_id: string;
   feature_id: string;
