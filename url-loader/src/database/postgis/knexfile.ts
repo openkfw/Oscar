@@ -10,6 +10,7 @@ const knexConfig: KnexConfig = {
       database: config.postgresDb,
       user: config.postgresUser,
       password: config.postgresPassword,
+      ssl: config.postgresSSL,
     },
     pool: {
       min: 2,
