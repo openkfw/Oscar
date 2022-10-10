@@ -18,7 +18,7 @@ const vectorSourceLoader = (layerData, handleIsLoading, title, type) => {
             let attributes = [];
 
             if (layerData.attribute) {
-              const escapedAttribute = encodeURIComponent(layerData.attribute);
+              const escapedAttribute = layerData.attribute;
               if (vectorSource.get('sliderDate') && layerData.layerOptions.timeseries) {
                 const searchParams = new URLSearchParams();
                 searchParams.append('attributeId', escapedAttribute);

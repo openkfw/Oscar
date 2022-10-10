@@ -33,7 +33,8 @@ paths:
             type: array
             items:
               type: string
-            example: Bali
+          allowReserved: true
+          example: Bali
         - name: attributeId
           in: query
           required: false
@@ -43,6 +44,7 @@ paths:
             items:
               type: string
             example: "A1_recovery rate (%)"
+          allowReserved: true
         - name: attributeIdCategory
           in: query
           required: false
@@ -52,6 +54,7 @@ paths:
             items:
               type: string
             example: "dailyCovid19Cases"
+          allowReserved: true
         - name: offset
           in: query
           required: false
@@ -93,6 +96,7 @@ paths:
           schema:
             type: string
             example: "A1_recovery rate (%)"
+          allowReserved: true
       responses:
         "200":
           description: Successful response
@@ -108,6 +112,7 @@ paths:
           schema:
             type: string
             example: "Population on admin2 level"
+          allowReserved: true
       responses:
         "200":
           description: Successful response
@@ -184,12 +189,14 @@ paths:
             type: string
           description: attributeId
           required: true
+          allowReserved: true
         - in: path
           name: property
           schema:
             type: string
           description: property on attribute
           required: true
+          allowReserved: true
       responses:
         "200":
           description: Successful response
@@ -260,6 +267,7 @@ paths:
             type: string
           description: name of property
           required: true
+          allowReserved: true
       responses:
         200:
           description: Successful response
@@ -281,6 +289,7 @@ paths:
             type: string
           description: name of property
           required: true
+          allowReserved: true
       responses:
         200:
           description: Successfull response
@@ -302,6 +311,7 @@ paths:
             type: string
           description: name of property
           required: true
+          allowReserved: true
       responses:
         200:
           description: Successful resposne
@@ -335,14 +345,15 @@ paths:
           schema:
             type: string
           description: Projection for coordinates values.
+          allowReserved: true
       responses:
         200:
           description: Successful response
 
   /api/dataLayers:
     get:
-      summary: Gets static layers data
-      description: Gets static layers data for display in openlayers map
+      summary: Gets data from layers data
+      description: Gets data from layers data for display in openlayers map
       responses:
         "200":
           description: Successful response

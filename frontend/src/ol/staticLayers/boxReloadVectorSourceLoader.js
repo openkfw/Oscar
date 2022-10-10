@@ -21,7 +21,7 @@ const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
       let baseUrl;
       let escapedAttribute;
       if (layerData.attribute) {
-        escapedAttribute = encodeURIComponent(layerData.attribute);
+        escapedAttribute = layerData.attribute;
       }
       if (layerData.geoDataUrl) {
         baseUrl = `${layerData.geoDataUrl}?`;
