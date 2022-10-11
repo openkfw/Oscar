@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const getStaticLayersData = async () => {
-  const response = await axios.get('/api/dataLayers');
+export const getDataLayersData = async () => {
+  const response = await axios.get('/api/datalayers');
   return response.data;
 };
 

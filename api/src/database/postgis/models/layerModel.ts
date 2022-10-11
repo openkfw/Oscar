@@ -30,8 +30,8 @@ const getMapLayersWithGeoData = async (db = getDb()): Promise<Array<MapLayerWith
     .innerJoin(LAYER_GEO_DATA_TABLE, function () {
       this.on(`${MAP_LAYERS_TABLE}.geo_reference_id`, '=', `${LAYER_GEO_DATA_TABLE}.reference_id`);
     })
-    .innerJoin(ATTRIBUTES_TABLE, function () {
-      this.on(`${MAP_LAYERS_TABLE}.geo_reference_id`, '=', db.raw(`${ATTRIBUTES_TABLE}.geo_data->>'referenceId'`));
+    .leftJoin(ATTRIBUTES_TABLE, function () {
+      this.on(`${MAP_LAYERS_TABLE}.attribute_id`, '=', `${ATTRIBUTES_TABLE}.attribute_id`);
     })
     .distinct(`${MAP_LAYERS_TABLE}.reference_id`);
 

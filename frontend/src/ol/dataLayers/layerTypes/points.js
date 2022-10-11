@@ -7,7 +7,7 @@ import boxReloadVectorSourceLoader from '../boxReloadVectorSourceLoader';
 
 const pointsLayer = (layerData, handleIsLoading) => {
   let vectorSource;
-  if (layerData.geoReferenceId === null) {
+  if (layerData.geoReferenceId === null || (layerData.layerOptions && layerData.layerOptions.boxReload)) {
     vectorSource = boxReloadVectorSourceLoader(layerData, handleIsLoading, layerData.title);
   } else {
     vectorSource = vectorSourceLoader(layerData, handleIsLoading, layerData.title, 'points');

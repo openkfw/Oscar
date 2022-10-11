@@ -1,5 +1,5 @@
 // static layers types
-export const staticLayersTypes = {
+export const dataLayersTypes = {
   REGIONS: 'regions',
   POINTS: 'points',
   GEOMETRY: 'geometry',
@@ -8,7 +8,7 @@ export const staticLayersTypes = {
   TILE: 'tile',
 };
 // static layer color types
-export const staticLayerColorTypes = {
+export const dataLayerColorTypes = {
   COLOR: 'color',
   COLORMAP: 'colormap',
   INTERVALS: 'intervals',

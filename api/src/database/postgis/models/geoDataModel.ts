@@ -34,6 +34,10 @@ const getGeoData = async (
             JSON.stringify(filter.geometry),
           ]),
         );
+      } else if (filter.geometry) {
+        qb.andWhere(
+          db.raw(`ST_Intersects(geometry, ST_SetSRID(ST_GeomFromGeoJSON(?), 0))`, [JSON.stringify(filter.geometry)]),
+        );
       }
       if (Object.keys(properties).length) {
         Object.keys(properties).forEach((key) => {

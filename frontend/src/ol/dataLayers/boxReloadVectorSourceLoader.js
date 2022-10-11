@@ -19,18 +19,19 @@ const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
       const topRight = toLonLat(getTopRight(extent));
 
       let baseUrl;
-      let escapedAttribute;
-      if (layerData.attribute) {
-        escapedAttribute = layerData.attribute;
-      }
       if (layerData.geoDataUrl) {
-        baseUrl = `${layerData.geoDataUrl}?`;
+        if (layerData.geoDataUrl.includes('?')) {
+          baseUrl = `${layerData.geoDataUrl}&`;
+        } else {
+          baseUrl = `${layerData.geoDataUrl}?`;
+        }
       } else {
         const searchParams = new URLSearchParams();
-        searchParams.append('attributeId', escapedAttribute);
+        searchParams.append('attributeId', layerData.attribute);
         baseUrl = `/api/pointAttributes?${searchParams}`;
       }
-      const url = `${baseUrl}&bottomLeft=${bottomLeft.join(',')}&topRight=${topRight.join(',')}&proj=${proj}`;
+
+      const url = `${baseUrl}bottomLeft=${bottomLeft.join(',')}&topRight=${topRight.join(',')}&proj=${proj}`;
       const response = await getGeoData(url);
       if (response && response.features && response.features[0]) {
         if (response.features[0].properties && !response.features[0].properties.hasOwnProperty(layerData.attribute)) {
@@ -39,13 +40,13 @@ const boxReloadVectorSourceLoader = (layerData, handleIsLoading, title) => {
           if (layerData.attribute) {
             if (vectorSource.get('sliderDate') && layerData.timeseries) {
               const searchParams = new URLSearchParams();
-              searchParams.append('attributeId', escapedAttribute);
+              searchParams.append('attributeId', layerData.attribute);
               searchParams.append('dateStart', vectorSource.get('sliderDate'));
               searchParams.append('dateEnd', vectorSource.get('sliderDate'));
               attributes = await getAttributesData(searchParams);
             } else {
               const searchParams = new URLSearchParams();
-              searchParams.append('attributeId', escapedAttribute);
+              searchParams.append('attributeId', layerData.attribute);
               searchParams.append('latestValues', true);
               attributes = await getAttributesData(searchParams);
             }

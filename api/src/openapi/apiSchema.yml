@@ -15,6 +15,7 @@ paths:
           description: Parameter for data filtering. Updated date of returned data is greater than or equal to dateStart.
           schema:
             type: string
+          allowReserved: true
           example: 2020-06-07T00:00:00.000Z
         - name: dateEnd
           in: query
@@ -22,6 +23,7 @@ paths:
           description: Parameter for data filtering. Updated date of the returned data is less than or equal to dateEnd.
           schema:
             type: string
+          allowReserved: true
           example: 2020-06-07T00:00:00.000Z
         - name: featureId
           in: query
@@ -31,7 +33,8 @@ paths:
             type: array
             items:
               type: string
-            example: Bali
+          allowReserved: true
+          example: Bali
         - name: attributeId
           in: query
           required: false
@@ -41,6 +44,7 @@ paths:
             items:
               type: string
             example: "A1_recovery rate (%)"
+          allowReserved: true
         - name: attributeIdCategory
           in: query
           required: false
@@ -50,6 +54,7 @@ paths:
             items:
               type: string
             example: "dailyCovid19Cases"
+          allowReserved: true
         - name: offset
           in: query
           required: false
@@ -91,6 +96,7 @@ paths:
           schema:
             type: string
             example: "A1_recovery rate (%)"
+          allowReserved: true
       responses:
         "200":
           description: Successful response
@@ -106,6 +112,7 @@ paths:
           schema:
             type: string
             example: "Population on admin2 level"
+          allowReserved: true
       responses:
         "200":
           description: Successful response
@@ -119,6 +126,7 @@ paths:
           schema:
             type: string
           description: attributeId
+          allowReserved: true
           required: true
         - name: dateStart
           in: query
@@ -126,6 +134,7 @@ paths:
           description: Parameter for data filtering. Updated date of returned data is greater than or equal to dateStart.
           schema:
             type: string
+          allowReserved: true
           example: 2020-06-07
         - name: dateEnd
           in: query
@@ -133,6 +142,7 @@ paths:
           description: Parameter for data filtering. Updated date of the returned data is less than or equal to dateEnd.
           schema:
             type: string
+          allowReserved: true
           example: 2020-06-07
         - name: lastDate
           in: query
@@ -147,6 +157,7 @@ paths:
             type: string
             pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
           description: Bottom left corner of selected area to fetch features from
+          allowReserved: true
           required: true
         - in: query
           name: topRight
@@ -154,12 +165,14 @@ paths:
             type: string
             pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
           description: Top right corner of selected area to fetch features from
+          allowReserved: true
           required: true
         - in: query
           name: proj
           schema:
             type: string
           description: Projection for coordinates values.
+          allowReserved: true
           required: true
       responses:
         200:
@@ -176,12 +189,14 @@ paths:
             type: string
           description: attributeId
           required: true
+          allowReserved: true
         - in: path
           name: property
           schema:
             type: string
           description: property on attribute
           required: true
+          allowReserved: true
       responses:
         "200":
           description: Successful response
@@ -204,6 +219,7 @@ paths:
             pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
           description: Bottom left corner of selected area to fetch features from
           required: false
+          allowReserved: true
         - in: query
           name: topRight
           schema:
@@ -211,12 +227,14 @@ paths:
             pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
           description: Top right corner of selected area to fetch features from
           required: false
+          allowReserved: true
         - in: query
           name: proj
           schema:
             type: string
           description: Projection for coordinates values.
           required: false
+          allowReserved: true
         - in: query
           name: properties
           schema:
@@ -227,6 +245,7 @@ paths:
             example:
               property1: propertyValue1
               property2: propertyValue2
+          allowReserved: true
       responses:
         200:
           description: Successful response
@@ -248,6 +267,7 @@ paths:
             type: string
           description: name of property
           required: true
+          allowReserved: true
       responses:
         200:
           description: Successful response
@@ -269,6 +289,7 @@ paths:
             type: string
           description: name of property
           required: true
+          allowReserved: true
       responses:
         200:
           description: Successfull response
@@ -290,6 +311,7 @@ paths:
             type: string
           description: name of property
           required: true
+          allowReserved: true
       responses:
         200:
           description: Successful resposne
@@ -308,6 +330,7 @@ paths:
             type: string
             pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
           description: Bottom left corner of selected area to fetch features from
+          allowReserved: true
           required: false
         - in: query
           name: topRight
@@ -315,17 +338,33 @@ paths:
             type: string
             pattern: ^-?[0-9]+.[0-9]+,-?[0-9]+.[0-9]+$
           description: Top right corner of selected area to fetch features from
+          allowReserved: true
           required: false
         - in: query
           name: proj
           schema:
             type: string
           description: Projection for coordinates values.
+          allowReserved: true
       responses:
         200:
           description: Successful response
 
   /api/dataLayers:
+    get:
+      summary: Gets data from layers data
+      description: Gets data from layers data for display in openlayers map
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DataLayer"
+
+  /api/staticLayers:
     get:
       summary: Gets static layers data
       description: Gets static layers data for display in openlayers map
@@ -337,7 +376,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/StaticLayer"
+                  $ref: "#/components/schemas/DataLayer"
 
   /api/uploads/geojsons/{fileName}:
     get:
@@ -381,28 +420,31 @@ paths:
                         description: Zoom level
                   tabs:
                     type: object
+                    additionalProperties: # Schema for parameter values
+                      type: string
+                      pattern: "^[A-Za-z][A-Za-z0-9]*$"
+                    $ref: "#/components/schemas/TabCofiguration"
+                    # properties:
+                    #   PublicTab:
+                    #     type: object
+                    #     description: Public tab
+
+                    #     type: object
+                    #     description: Executive tab 2
+                    #     $ref: "#/components/schemas/TabCofiguration"
+                    #   OverviewTab:
+                    #     type: object
+                    #     description: Overview tab
+                    #     $ref: "#/components/schemas/TabCofiguration"
+                    #   AnalystTab:
+                    #     type: object
+                    #     description: Analyst tab
+                    #     $ref: "#/components/schemas/TabCofiguration"
+                    #   ExecutiveTab:
+                    #     type: object
+                    #     description: Executive tab
+                    #     $ref: "#/components/schemas/TabCofiguration"
                     description: Tabs configuration
-                    properties:
-                      PublicTab:
-                        type: object
-                        description: Public tab
-                        $ref: "#/components/schemas/TabCofiguration"
-                      ExecutiveTab2:
-                        type: object
-                        description: Executive tab 2
-                        $ref: "#/components/schemas/TabCofiguration"
-                      OverviewTab:
-                        type: object
-                        description: Overview tab
-                        $ref: "#/components/schemas/TabCofiguration"
-                      AnalystTab:
-                        type: object
-                        description: Analyst tab
-                        $ref: "#/components/schemas/TabCofiguration"
-                      ExecutiveTab:
-                        type: object
-                        description: Executive tab
-                        $ref: "#/components/schemas/TabCofiguration"
 
   /api/authorization:
     get:
@@ -413,7 +455,7 @@ paths:
 
 components:
   schemas:
-    StaticLayer:
+    DataLayer:
       type: object
       description: Static layer with data
       properties:
@@ -434,22 +476,22 @@ components:
           type: string
           description: Static layer title
         style:
-          $ref: "#/components/schemas/StaticLayerStyle"
+          $ref: "#/components/schemas/DataLayerStyle"
         legend:
-          $ref: "#/components/schemas/StaticLayerLegend"
+          $ref: "#/components/schemas/DataLayerLegend"
         geoDataUrl:
           type: string
           description: Url to geodata source
         layers:
           type: array
           items:
-            $ref: "#/components/schemas/StaticLayerObject"
+            $ref: "#/components/schemas/DataLayerObject"
           description: Array with layers for 'group' layerType
       required:
         - layerType
         - title
 
-    StaticLayerObject:
+    DataLayerObject:
       type: object
       description: Static layer with data
       properties:
@@ -464,9 +506,9 @@ components:
           type: string
           description: Static layer title
         style:
-          $ref: "#/components/schemas/StaticLayerStyle"
+          $ref: "#/components/schemas/DataLayerStyle"
         legend:
-          $ref: "#/components/schemas/StaticLayerLegend"
+          $ref: "#/components/schemas/DataLayerLegend"
         geoDataUrl:
           type: string
           description: Url to geodata source
@@ -501,7 +543,7 @@ components:
         - layerType
         - title
 
-    StaticLayerStyle:
+    DataLayerStyle:
       type: object
       description: Static layer style
       properties:
@@ -521,7 +563,7 @@ components:
           type: string
           description: Custom style function name
 
-    StaticLayerLegend:
+    DataLayerLegend:
       type: object
       description: map legend for the layer
       properties:
@@ -542,7 +584,7 @@ components:
           type: number
           description: Maximal value, used with colormap
 
-    StaticLayerDescription:
+    DataLayerDescription:
       type: object
       description: Description of attribute and it's value for display
       properties:

@@ -6,7 +6,7 @@ import Stroke from 'ol/style/Stroke';
 import Text from 'ol/style/Text';
 
 import colormap from 'colormap';
-import { staticLayerColorTypes } from '../../constants';
+import { dataLayerColorTypes } from '../../constants';
 import { isInInterval, isNotDefinedIncl0 } from '../../utils/helpers';
 
 // Styling based on feature attributes - trying generic
@@ -40,10 +40,10 @@ export const colormaps = {
 const getColorFromLayerStyle = (value, colorStyle, min, max) => {
   if (colorStyle.hasOwnProperty('value') && colorStyle.hasOwnProperty('type')) {
     // only one color object
-    if (colorStyle.type === staticLayerColorTypes.COLOR) {
+    if (colorStyle.type === dataLayerColorTypes.COLOR) {
       return colorStyle.value;
     }
-    if (colorStyle.type === staticLayerColorTypes.COLORMAP) {
+    if (colorStyle.type === dataLayerColorTypes.COLORMAP) {
       let colorMap;
       if (colormaps.hasOwnProperty(colorStyle.value)) {
         colorMap = colormaps[colorStyle.value];
@@ -58,7 +58,7 @@ const getColorFromLayerStyle = (value, colorStyle, min, max) => {
       const index = Math.round(f * (50 - 1));
       return colorMap[index];
     }
-    if (colorStyle.type === staticLayerColorTypes.INTERVALS) {
+    if (colorStyle.type === dataLayerColorTypes.INTERVALS) {
       const interval = colorStyle.value.find((item) => isInInterval(value, item.min, item.max));
       return interval.color;
     }
